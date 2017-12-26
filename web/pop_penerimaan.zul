@@ -1,0 +1,162 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+    </style>
+
+
+    <window id="penerimaan_limbah"  style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;" mode="modal" width="30%" vflex="1" title="KONFIRMASI PENERIMAAN LIMBAH" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.enseval.ttss.vm.PopPenerimaanVM')" closable="true">
+        <vbox align="center">
+            <grid oddRowSclass="none">
+                <rows>
+                    <row>
+                        <vlayout>
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        Nmr Manifest.
+                                    </span>
+                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.kodeManifest)"/>
+                                </div> 
+                                    
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span> 
+                                    </span>
+                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.tglBuat)"/>
+                                </div> 
+                            </hlayout>
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
+                                    Driver.
+                                </span>
+                                <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.namaDriver)"/>
+                            </div> 
+                                
+                            <hlayout width="100%">
+                                    
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        Nomor kendaraan.
+                                    </span>
+                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.nomorKendaraan)"/>
+                                </div> 
+                                
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        Tgl angkut.
+                                    </span>
+                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.tglAngkut)"/>
+                                </div> 
+                            </hlayout>
+                            <separator/>     
+                        </vlayout>
+                    </row> 
+                    <row>
+                        <vlayout>
+                            Aktual penerimaan limbah :
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
+                                    Nama teknik.
+                                </span>
+                                <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.namaTeknikLimbah)"/>
+                            </div>
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Qty.
+                                    </span>
+                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.manifest.penerimaan.jmlKemasan)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <combobox readonly="true" 
+                                              hflex="3"
+                                              style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              value="@bind(vm.manifest.penerimaan.satuanKemasan)">
+                                        <comboitem label="Drum Logam"/>
+                                        <comboitem label="Pallet"/>
+                                        <comboitem label="Pcs"/>
+                                        <comboitem label="Tin"/>
+                                        <comboitem label="Box"/>
+                                        <comboitem label="R.O Container"/>
+                                        <comboitem label="Kemasan Karton atau plastik"/>
+                                        <comboitem label="Drum Plastik"/>
+                                        <comboitem label="Karung Kain, plastik, kertas"/>
+                                        <comboitem label="Silinder"/>
+                                        <comboitem label="Tangki"/>
+                                        <comboitem label="Gerbong Barang"/>
+                                        <comboitem label="Wheel Bin"/>
+                                        <comboitem label="Jumbo Bag"/>
+                                        <comboitem label="IBC Tank"/>
+                                        <comboitem label="Wadah Hopper"/>
+                                        <comboitem label="Box Besi"/>
+                                        <comboitem label="Tanpa Kemasan"/>
+                                        <comboitem label="Drum kayu"/>
+                                        <comboitem label="Jerycan"/>
+                                        <comboitem label="Multibox/IBC Box"/>
+                                    </combobox>
+                                </div>
+                            </hlayout>
+                            <hlayout>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Total berat.
+                                    </span>
+                                    <longbox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.manifest.penerimaan.jmlBerat)"/>
+                                </div>
+                                <combobox readonly="true" 
+                                          hflex="3"
+                                          style="width:100%;height:100%"
+                                          constraint="no empty"  
+                                          value="@bind(vm.manifest.penerimaan.satuanBerat)">
+                                    <comboitem label="Liter"/>
+                                    <comboitem label="KG"/>
+                                    <comboitem label="Ton"/>
+                                </combobox>
+                            </hlayout>
+                            <separator />
+                        </vlayout>
+                    </row>
+                    <row>
+
+                        <vlayout>
+                            <checkbox checked="@bind(vm.manifest.penerimaan.isRevisi)" label="Ajukan revisi manifest ?" value="@bind(vm.manifest.penerimaan.isRevisi)"/>
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Ket. revisi.
+                                </span>
+                                <textbox value="@save(vm.manifest.penerimaan.ketRevisi)" readonly="@bind(!vm.manifest.penerimaan.isRevisi)" sclass="form-control input-primary"/>
+                            </div>
+                        </vlayout>
+                    </row>
+                                         
+                </rows>
+                <foot>
+                    <footer span="2" align="left">
+                        <div class="btn-group" style="float:right;">
+                            <button onClick="@command('konfirmasiPenerimaan')" sclass="btn-success" iconSclass="glyphicon glyphicon-ok" label="KONFIRMASI">
+                            </button>
+                            <button onClick="penerimaan_limbah.detach()">BATAL</button>
+                        </div>
+                    </footer>
+                </foot>
+            </grid>
+        </vbox>
+    </window>
+</zk>

@@ -1,0 +1,341 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:#ffffeb !important}
+    </style>
+
+
+    <window id="input_manifest"  style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;" mode="modal" width="70%" vflex="1" 
+            title="INPUT MANIFEST BARU" 
+            border="normal" 
+            apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.enseval.ttss.vm.PopInputManifestVM')" 
+            closable="true">
+        <vbox align="center">
+            <grid>
+                <columns>
+                    <column align="right" width="20%"/>
+                    <column/>
+                </columns>
+                <rows>
+                    <row>
+                        Nomor Manifest
+                        <textbox hflex="1" value="@save(vm.manifest.kodeManifest)" constraint="no empty" sclass="form-control input-primary"/> 
+                    </row> 
+                    <row>
+                        Perusahaan Pengirim
+                        <vlayout>
+                            <div class="input-group" width="100%">
+                                <textbox sclass="form-control input-primary" hflex="3" placeholder="Nama Customer" readonly="true" value="@load(vm.manifest.customerPenghasil.nama)"/>
+                                <span class="input-group-btn">
+                                    <button iconSclass="glyphicon glyphicon-search" sclass="btn-primary"  width="50px" onClick="@command('showCustomer', isPengirim=true)"/>
+                                </span>
+                            </div>
+                            <div class="input-group" hflex="3" width="100%">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-home"></span> 
+                                </span>
+                                <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.customerPenghasil.alamat)"/>
+                            </div>
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-envelope"></span> 
+                                    </span>
+                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.customerPenghasil.email)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-user"></span> 
+                                    </span>
+                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.customerPenghasil.namaKontak)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-phone-alt"></span> 
+                                    </span>
+                                    <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.manifest.customerPenghasil.nomorKontak)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-print"></span> 
+                                    </span>
+                                    <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.manifest.customerPenghasil.fax)"/>
+                                </div>
+                            </hlayout>
+                        </vlayout>
+                    </row> 
+                    <row>
+                        Jenis limbah 
+                        <hlayout width="100%" >
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Kode.
+                                </span>
+                                <textbox sclass="form-control input-primary" hflex="3" placeholder="Kode Jenis" readonly="true" value="@load(vm.manifest.jenisLimbah.kodeJenis)"/>
+                                <span class="input-group-btn">
+                                    <button iconSclass="glyphicon glyphicon-search" sclass="btn-primary"  width="50px" onClick="@command('showJenisLimbah')"/>
+                                </span>
+                            </div>
+                            <div class="input-group" hflex="7">
+                                <span class="input-group-addon" >
+                                    Ket.
+                                </span>
+                                <textbox readonly="true" hflex="1" class="form-control input-primary" value="@load(vm.manifest.jenisLimbah.keterangan)"/>
+                            </div>
+                        </hlayout>
+                    </row> 
+                    <row>
+                        Karakteristik
+                        <combobox id="cmbKarakterLimbah" readonly="true" width="97%" 
+                                  hflex="3"
+                                  constraint="no empty" 
+                                  value="@save(vm.manifest.karakteristikLimbah)">
+                            <comboitem label="-"/>
+                            <comboitem label="Beracun (toxic - T)"/>
+                            <comboitem label="Infeksius (infectious - X)"/>
+                            <comboitem label="Reaktif (reactive - R)"/>
+                            <comboitem label="Padatan Mudah menyala (ignitable - I)"/>
+                            <comboitem label="Cairan Mudah menyala (ignitable - I)"/>
+                            <comboitem label="Padatan Mudah meledak (explosive – E)"/>
+                            <comboitem label="Cairan Mudah meledak (explosive – E)"/>
+                            <comboitem label="Campuran ( Miscellaneous )"/>
+                                    
+                        </combobox>
+                    </row>
+                            
+                    <row>
+                        Nama Teknik
+                        <combobox id="namaTeknik"  
+                                  model="@load(vm.listNamaTeknik)" 
+                                  autodrop="true" 
+                                  buttonVisible="true" 
+                                  value="@save(vm.manifest.namaTeknikLimbah)" 
+                                  width="100%" 
+                                  constraint="no empty">
+                            <template name="model">
+                                <comboitem label="@load(each.namaTeknikLimbah)"/>
+                            </template>
+                        </combobox>
+                    </row> 
+                            
+                    <row>
+                        Kemasan
+                        <hlayout width="100%">
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Qty.
+                                </span>
+                                <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@save(vm.manifest.jmlKemasan)"/>
+                            </div>
+                            <div class="input-group" hflex="3">
+                                <combobox readonly="true" 
+                                          style="width:100%"
+                                          constraint="no empty"  
+                                          value="@save(vm.manifest.satuanKemasan)">
+                                    <attribute name="onCreate">
+                                        self.setSelectedIndex(0);
+                                    </attribute>
+                                    <comboitem label="Drum Logam"/>
+                                    <comboitem label="Pallet"/>
+                                    <comboitem label="Pcs"/>
+                                    <comboitem label="Tin"/>
+                                    <comboitem label="Box"/>
+                                    <comboitem label="R.O Container"/>
+                                    <comboitem label="Kemasan Karton atau plastik"/>
+                                    <comboitem label="Drum Plastik"/>
+                                    <comboitem label="Karung Kain, plastik, kertas"/>
+                                    <comboitem label="Silinder"/>
+                                    <comboitem label="Tangki"/>
+                                    <comboitem label="Gerbong Barang"/>
+                                    <comboitem label="Wheel Bin"/>
+                                    <comboitem label="Jumbo Bag"/>
+                                    <comboitem label="IBC Tank"/>
+                                    <comboitem label="Wadah Hopper"/>
+                                    <comboitem label="Box Besi"/>
+                                    <comboitem label="Tanpa Kemasan"/>
+                                    <comboitem label="Drum kayu"/>
+                                    <comboitem label="Jerycan"/>
+                                    <comboitem label="Multibox/IBC Box"/>
+                                </combobox>
+                            </div>
+                            <space hflex="1"/>
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Total berat.
+                                </span>
+                                <longbox sclass="form-control input-primary" placeholder="Banyak" value="@save(vm.manifest.jmlBerat)"/>
+                            </div>
+                            <combobox readonly="true" 
+                                      constraint="no empty" 
+                                      style="width:100%;height:100%"
+                                      hflex="3" 
+                                      value="@save(vm.manifest.satuanBerat)">
+                                <attribute name="onCreate">
+                                    self.setSelectedIndex(0);
+                                </attribute>
+                                <comboitem label="Liter"/>
+                                <comboitem label="KG"/>
+                                <comboitem label="Ton"/>
+                            </combobox>
+                        </hlayout>
+                    </row>
+                            
+                    <row>
+                        Transportasi
+                        <hlayout width="100%">
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Driver.
+                                </span>
+                                <combobox model="@load(vm.listDriver)" 
+                                          hflex="3"
+                                          height="100%"
+                                          value="@save(vm.manifest.namaDriver)" 
+                                          style="width:100%;height:100%" 
+                                          class="input-primary">
+                                    <template name="model">
+                                        <comboitem label="@load(each.namaDriver)"/>
+                                    </template>
+                                </combobox>
+                            </div>
+                            
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Nomor kendaraan.
+                                </span>
+                                <combobox model="@load(vm.listNomorKendaraan)" 
+                                          hflex="3"
+                                          height="100%"
+                                          value="@save(vm.manifest.nomorKendaraan)" 
+                                          style="width:100%;height:100%" 
+                                          class="input-primary">
+                                    <template name="model">
+                                        <comboitem label="@load(each.nomorKendaraan)"/>
+                                    </template>
+                                </combobox>
+                            </div>
+                            
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Tanggal angkut.
+                                </span>
+                                <datebox cols="12" 
+                                         format="dd-MM-yyyy" 
+                                         onCreate="self.value = new Date()" 
+                                         readonly="true"
+                                         style="height:30px;"
+                                         hflex="3"
+                                         value="@save(vm.manifest.tglAngkut)"/>
+                            </div>
+                                    
+                            
+                        </hlayout>
+                                
+                    </row> 
+                            
+                    <row>
+                        Perusahaan Tujuan
+                        <vlayout>
+                            <div class="input-group" width="100%">
+                                <textbox sclass="form-control input-primary" hflex="3" placeholder="Nama Perusahaan" readonly="true" value="@load(vm.manifest.customerTujuan.nama)"/>
+                                <span class="input-group-btn">
+                                    <button iconSclass="glyphicon glyphicon-search" sclass="btn-primary"  width="50px" onClick="@command('showCustomer',isPengirim=false)"/>
+                                </span>
+                            </div>
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-home"></span> 
+                                </span>
+                                <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.customerTujuan.alamat)"/>
+                            </div>
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-envelope"></span> 
+                                    </span>
+                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.customerTujuan.email)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-user"></span> 
+                                    </span>
+                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.customerTujuan.namaKontak)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-phone-alt"></span> 
+                                    </span>
+                                    <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.manifest.customerTujuan.nomorKontak)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-print"></span> 
+                                    </span>
+                                    <textbox readonly="true" hflex="3" width="100%" class="form-control input-primary" value="@load(vm.manifest.customerTujuan.fax)"/>
+                                </div>
+                            </hlayout>
+                            <hlayout>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Penanda tangan.
+                                    </span>
+                                    <combobox model="@load(vm.listPenandaTangan)" 
+                                              hflex="3"
+                                              height="100%"
+                                              value="@save(vm.manifest.penandaTangan)" 
+                                              style="width:100%;height:100%" 
+                                              class="input-primary">
+                                        <template name="model">
+                                            <comboitem label="@load(each.penandaTangan)"/>
+                                        </template>
+                                    </combobox>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        Jabatan.
+                                    </span>
+                                    <combobox model="@load(vm.listJabatanPenandaTangan)" 
+                                              hflex="3"
+                                              height="100%"
+                                              value="@save(vm.manifest.jabatanPenandaTangan)" 
+                                              style="width:100%;height:100%" 
+                                              class="input-primary">
+                                        <template name="model">
+                                            <comboitem label="@load(each.jabatanPenandaTangan)"/>
+                                        </template>
+                                    </combobox>
+                                </div>
+                            </hlayout>
+                        </vlayout>
+                    </row> 
+                            
+                            
+                </rows>
+                <foot>
+                    <footer span="2" align="left">
+                        <div class="btn-group" style="float:right;">
+                            <button onClick="@command('simpanManifest')" sclass="btn-success" iconSclass="glyphicon glyphicon-floppy-disk" label="SIMPAN">
+                            </button>
+                            <button onClick="input_manifest.detach()">BATAL</button>
+                        </div>
+                    </footer>
+                </foot>
+            </grid>
+        </vbox>
+    </window>
+</zk>

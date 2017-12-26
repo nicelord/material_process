@@ -1,0 +1,79 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        text-transform:uppercase;
+        
+        }
+     
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        
+        
+        }
+        
+       
+    </style>
+
+    <hbox align="center" pack="center" spacing="20px">
+
+        <window id="pop_jenis_limbah" 
+                style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
+                position="center,top" 
+                mode="modal" 
+                width="800px" 
+                vflex="1" 
+                title="CARI JENIS LIMBAH" 
+                border="normal" 
+                closable="true" 
+                apply="org.zkoss.bind.BindComposer" 
+                viewModel="@id('vm') @init('com.enseval.ttss.vm.PopJenisLimbahVM')">
+        
+            <listbox id="listCust" mold="paging" width="100%" vflex="true" 
+                     
+                     pageSize="10"
+                     emptyMessage="Tidak ada data"
+                     selectedItem="@bind(vm.jenisLimbah)"
+                     model="@load(vm.listJenisLimbah)">        
+                                             
+                <auxhead>
+                    <auxheader colspan="3">
+                        <hlayout >
+                            <textbox id="txtCari" hflex="3" width="720px" value="" sclass="form-control input-primary" placeholder="kata kunci"/>
+                            <button iconSclass="glyphicon glyphicon-search" sclass="btn-primary" onClick="@command('cari')"/>
+                        </hlayout>
+                    </auxheader>
+                </auxhead>
+                        
+                <listhead sizable="true" visible="true" >
+                    <listheader sort="auto(id)" label="ID" width="100px" />
+                    <listheader sort="auto(kodeJenis)" label="KODE JENIS" width="130px" />
+                    <listheader sort="auto(keterangan)" label="KETERANGAN" />
+                </listhead>
+                        
+                
+                <template name="model" var="s">
+                    <listitem sclass="mainList">
+                        <listcell label="@load(s.id)"/>
+                        <listcell label="@load(s.kodeJenis)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                        <listcell label="@load(s.keterangan)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    </listitem>
+                </template>
+                    
+                <listfoot>
+                    <listfooter span="7" valign="middle">
+                            <div class="btn-group" style="float:right;">
+                                <button onClick="@command('pilihJenisLimbah')" sclass="btn-success" label="OK"/>
+                                <button onClick="pop_jenis_limbah.detach()">BATAL</button>
+                            </div>
+                    </listfooter>
+                </listfoot>		
+            </listbox>
+       
+        </window>
+
+    </hbox>
+</zk>

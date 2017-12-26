@@ -1,0 +1,87 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        text-transform:uppercase;
+        
+        }
+     
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        
+        
+        }
+        
+       
+    </style>
+
+    <hbox align="center" pack="center" spacing="20px">
+
+        <window id="pop_customer" 
+                style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
+                position="center,top" 
+                mode="modal" 
+                width="800px" 
+                vflex="1" 
+                title="CARI CUSTOMER" 
+                border="normal" 
+                closable="true" 
+                apply="org.zkoss.bind.BindComposer" 
+                viewModel="@id('vm') @init('com.enseval.ttss.vm.PopCustomerVM')">
+        
+            <listbox id="listCust" mold="paging" width="100%" vflex="true" 
+                     
+                     pageSize="10"
+                     emptyMessage="Tidak ada data"
+                     selectedItem="@bind(vm.customer)"
+                     model="@load(vm.listCustomers)">        
+                                             
+                <auxhead>
+                    <auxheader colspan="7">
+                        <hlayout >
+                            <textbox id="txtCari" hflex="3" width="720px" value="" sclass="form-control input-primary" placeholder="cari nama"/>
+                            <button id="btnCustID" iconSclass="glyphicon glyphicon-search" sclass="btn-primary" onClick="@command('cari')"/>
+                        </hlayout>
+                    </auxheader>
+                </auxhead>
+                        
+                <listhead sizable="true" visible="true" >
+                    <listheader sort="auto(id)" label="ID" width="130px" />
+                    <listheader sort="auto(nama)" label="NAMA" />
+                    <listheader sort="auto(alamat)" label="ALAMAT" />
+                    <listheader sort="auto(nomorKontak)" label="TELP" />
+                    <listheader sort="auto(namKontak)" label="NAMA KONTAK" />
+                    <listheader sort="auto(email)" label="EMAIL" />
+                    <listheader sort="auto(fax)" label="FAX" />
+                </listhead>
+                        
+                
+                <template name="model" var="s">
+                    <listitem sclass="mainList">
+                        <listcell label="@load(s.id)"/>
+                        <listcell label="@load(s.nama)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                        <listcell label="@load(s.alamat)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                        <listcell label="@load(s.nomorKontak)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                        <listcell label="@load(s.namaKontak)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                        <listcell label="@load(s.email)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                        <listcell label="@load(s.fax)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    </listitem>
+                </template>
+                    
+                <listfoot>
+                    <listfooter span="7" valign="middle">
+                            <div class="btn-group" style="float:right;">
+                                <button onClick="@command('pilihCustomer')" sclass="btn-success" label="OK"/>
+                                <button onClick="pop_customer.detach()">BATAL</button>
+                            </div>
+                    </listfooter>
+                </listfoot>		
+            </listbox>
+       
+        </window>
+
+    </hbox>
+</zk>

@@ -1,0 +1,235 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:#ffffeb !important}
+    </style>
+
+
+    <window id="view_manifest"  
+            style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;" 
+            mode="modal" width="70%" vflex="1" 
+            title="@load('DETAIL MANIFEST '.concat(vm.manifest.kodeManifest))" 
+            border="normal" 
+            apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.enseval.ttss.vm.PopInputManifestVM')" 
+            closable="true">
+        <vbox align="center">
+            <grid>
+                <columns>
+                    <column align="right" width="20%"/>
+                    <column/>
+                </columns>
+                <rows>
+                    <row>
+                        Nomor Manifest
+                        <textbox hflex="1" readonly="true" value="@load(vm.manifest.kodeManifest)" constraint="no empty" sclass="form-control input-primary"/> 
+                    </row> 
+                    <row>
+                        Perusahaan Pengirim
+                        <vlayout>
+                            <div class="input-group" width="100%">
+                                <textbox sclass="form-control input-primary" hflex="3" placeholder="Nama Customer" readonly="true" value="@load(vm.manifest.customerPenghasil.nama)"/>
+                            </div>
+                            <div class="input-group" hflex="3" width="100%">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-home"></span> 
+                                </span>
+                                <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.customerPenghasil.alamat)"/>
+                            </div>
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-envelope"></span> 
+                                    </span>
+                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.customerPenghasil.email)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-user"></span> 
+                                    </span>
+                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.customerPenghasil.namaKontak)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-phone-alt"></span> 
+                                    </span>
+                                    <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.manifest.customerPenghasil.nomorKontak)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-print"></span> 
+                                    </span>
+                                    <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.manifest.customerPenghasil.fax)"/>
+                                </div>
+                            </hlayout>
+                        </vlayout>
+                    </row> 
+                    <row>
+                        Jenis limbah 
+                        <hlayout width="100%" >
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Kode.
+                                </span>
+                                <textbox sclass="form-control input-primary" hflex="3" placeholder="Kode Jenis" readonly="true" value="@load(vm.manifest.jenisLimbah.kodeJenis)"/>
+                            </div>
+                            <div class="input-group" hflex="7">
+                                <span class="input-group-addon" >
+                                    Ket.
+                                </span>
+                                <textbox readonly="true" hflex="1" class="form-control input-primary" value="@load(vm.manifest.jenisLimbah.keterangan)"/>
+                            </div>
+                        </hlayout>
+                    </row> 
+                    <row>
+                        Karakteristik
+                        <textbox readonly="true" hflex="1" class="form-control input-primary" value="@load(vm.manifest.karakteristikLimbah)"/>
+                    </row>
+                            
+                    <row>
+                        Nama Teknik
+                        <textbox readonly="true" hflex="1" class="form-control input-primary" value="@load(vm.manifest.namaTeknikLimbah)"/>
+                    </row> 
+                            
+                    <row>
+                        Kemasan
+                        <hlayout width="100%">
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Qty.
+                                </span>
+                                <longbox readonly="true" sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.manifest.jmlKemasan)"/>
+                                <span class="input-group-addon" >
+                                    <label value="@load(vm.manifest.satuanKemasan)"/>
+                                </span>
+                            </div>
+                            <space hflex="1"/>
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Total berat.
+                                </span>
+                                <longbox readonly="true" sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.manifest.jmlBerat)"/>
+                            </div>
+                            <span class="input-group-addon" >
+                                <label value="@load(vm.manifest.satuanBerat)"/>
+                            </span>
+                        </hlayout>
+                    </row>
+                            
+                    <row>
+                        Transportasi
+                        <hlayout width="100%">
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Driver.
+                                </span>
+                                <textbox readonly="true" hflex="1" class="form-control input-primary" value="@load(vm.manifest.namaDriver)"/>
+                            </div>
+                            
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Nomor kendaraan.
+                                </span>
+                                <textbox readonly="true" hflex="1" class="form-control input-primary" value="@load(vm.manifest.nomorKendaraan)"/>
+                            </div>
+                            
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Tanggal angkut.
+                                </span>
+                                <datebox cols="12" 
+                                         format="dd-MM-yyyy" 
+                                         readonly="true"
+                                         style="height:30px;"
+                                         hflex="3"
+                                         buttonVisible="false"
+                                         value="@load(vm.manifest.tglAngkut)"/>
+                            </div>
+                                    
+                            
+                        </hlayout>
+                                
+                    </row> 
+                            
+                    <row>
+                        Perusahaan Tujuan
+                        <vlayout>
+                            <div class="input-group" width="100%">
+                                <textbox sclass="form-control input-primary" hflex="3" readonly="true" value="@load(vm.manifest.customerTujuan.nama)"/>
+                            </div>
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-home"></span> 
+                                </span>
+                                <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.customerTujuan.alamat)"/>
+                            </div>
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-envelope"></span> 
+                                    </span>
+                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.customerTujuan.email)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-user"></span> 
+                                    </span>
+                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.customerTujuan.namaKontak)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-phone-alt"></span> 
+                                    </span>
+                                    <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.manifest.customerTujuan.nomorKontak)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-print"></span> 
+                                    </span>
+                                    <textbox readonly="true" hflex="3" width="100%" class="form-control input-primary" value="@load(vm.manifest.customerTujuan.fax)"/>
+                                </div>
+                            </hlayout>
+                            <hlayout>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Penanda tangan.
+                                    </span>
+                                    <textbox readonly="true" hflex="3" width="100%" class="form-control input-primary" value="@load(vm.manifest.penandaTangan)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        Jabatan.
+                                    </span>
+                                    <textbox readonly="true" hflex="3" width="100%" class="form-control input-primary" value="@load(vm.manifest.jabatanPenandaTangan)"/>
+                                </div>
+                            </hlayout>
+                        </vlayout>
+                    </row> 
+                            
+                            
+                </rows>
+                <foot>
+                    <footer span="2" align="left">
+                        <div class="btn-group" style="float:right;">
+                            <button onClick="view_manifest.detach()">TUTUP</button>
+                        </div>
+                    </footer>
+                </foot>
+            </grid>
+        </vbox>
+    </window>
+</zk>

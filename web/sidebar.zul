@@ -1,0 +1,48 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <div>
+        <tabbox mold="accordion" style="border: 0; border-bottom: 1px solid #cfcfcf;">
+            <tabs>
+                <tab />
+
+            </tabs>
+            
+            <tabpanels>
+                <tabpanel style="padding: 0px; border: 0;">
+                    
+                    <listbox id="sidebar" zclass="mylist-cell">
+                        
+                        <listhead>
+                            <listheader label="" width="35px"/>
+                            <listheader label=""/>
+                        </listhead>
+                        
+                        <listitem id="defaultMenu" style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='ADMIN'||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR' || 
+                                        sessionScope.userCredential.getRoles()=='AKUNTING' || 
+                                        sessionScope.userCredential.getRoles()=='PENERIMA'}"
+                           
+                                  onClick="@command('changePage', page='page_manifest.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="MANIFEST"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='PENERIMA'||
+                                        sessionScope.userCredential.getRoles()=='AKUNTING'||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                           
+                                  onClick="@command('changePage', page='page_penerimaan.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="PENERIMAAN"/>
+                        </listitem>
+                        
+                            
+                    </listbox>                    
+                </tabpanel>
+            </tabpanels>
+        </tabbox>
+    </div>
+</zk>

@@ -1,0 +1,494 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>
+
+    <style>
+        .z-combobox-input{
+            height : 100%;
+            width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+            margin : 10px 10px 10px 10px;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+            border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+        
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+            cursor: not-allowed;
+            background-color: #f5f5f5;
+        }
+        
+        .input-group-addon > span {
+            font-weight : 500;
+        }
+        
+        .panel-body{
+            padding-right: 5px;
+            padding-left: 5px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        
+        .z-datebox-input{
+            height:100%;
+        }
+        
+    </style>
+
+    <window id="mainWin" title="MANIFEST" vflex="3" apply="org.zkoss.bind.BindComposer"  viewModel="@id('vm') @init('com.enseval.ttss.vm.PageManifestVM')">
+        <borderlayout>
+            <center>
+                <listbox id="list_manifest" mold="paging" width="100%" vflex="true" autopaging="true" 
+                         checkmark="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}" 
+                         multiple="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}" 
+                         selectedItems="@bind(vm.selectedManifests)"
+                         emptyMessage="Tidak ada data"
+                         model="@load(vm.listManifest)">   
+                    <custom-attributes org.zkoss.zul.nativebar="true"/>  
+                
+                    <auxhead>
+                        <auxheader colspan="3">
+                            <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="INPUT MANIFEST" onClick="@command('inputManifest')" />
+                        </auxheader>
+                        <auxheader colspan="5">
+                        </auxheader>
+                    </auxhead>
+                
+                    <listhead sizable="true" visible="true" >
+                        <listheader width="30px" />
+                        <listheader sort="auto(kodeManifest)" label="NOMOR" width="70px" />
+                        <listheader sort="auto(customerPenghasil.nama)" label="PENGIRIM" width="200px"/>
+                        <listheader sort="auto(jenisLimbah.kodeJenis)" label="KODE LIMBAH"/>
+                        <listheader sort="auto(namaTeknikLimbah)" label="NAMA LIMBAH"/>
+                        <listheader sort="auto(jmlKemasan)" label="BANYAK"/>
+                        <listheader sort="auto(jmlBerat)" label="BERAT"/>
+                        <listheader sort="auto(statusApproval)" label="APPROVAL"
+                                    if="${sessionScope.userCredential.getRoles()!='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                        <listheader sort="auto(penerimaan.statusPenerimaan)" label="PENERIMAAN"
+                                    if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                    </listhead>
+                
+                    <template name="model" var="s">
+                        <listitem sclass="mainList" onClick="@command('showDetail', manifest=s)">
+                            <listcell />
+                            <listcell label="@load(s.kodeManifest)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.customerPenghasil.nama)"/>
+                            </listcell>
+                            <listcell label="@load(s.jenisLimbah.kodeJenis)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.namaTeknikLimbah)"/>
+                            </listcell>
+                        
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))"/>
+                            </listcell>
+                        
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(''.concat(s.jmlBerat).concat(' ').concat(s.satuanBerat))"/>
+                            </listcell>
+                        
+                            <listcell 
+                                if="${sessionScope.userCredential.getRoles()!='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                                style="text-overflow: ellipsis; white-space: nowrap;">
+                                
+                                <label 
+                                    value="@load(s.statusApproval)" 
+                                    sclass="label label-warning" 
+                                    visible="@load(s.statusApproval.equals('pending'))"
+                                />
+                                <label 
+                                    value="@load(s.statusApproval)" 
+                                    sclass="label label-danger" 
+                                    visible="@load(s.statusApproval.equals('rejected'))"
+                                />
+                                <label 
+                                    value="@load(s.statusApproval)" 
+                                    sclass="label label-success" 
+                                    visible="@load(s.statusApproval.equals('approved'))"
+                                />
+                            </listcell>
+                            
+                            <listcell 
+                                if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                                style="text-overflow: ellipsis; white-space: nowrap;">
+                                
+                                <label value="@load(s.penerimaan.statusPenerimaan)" />
+                            </listcell>
+                            
+                        </listitem>
+                    </template>
+                
+                
+                    <listfoot>
+                        <listfooter span="6" valign="middle">
+                            <div style="float:left;">
+                                
+                                <button onClick="@command('downloadXLS')" iconSclass="glyphicon glyphicon-download-alt" label="DOWNLOAD TO EXCEL" 
+                                        if="${sessionScope.userCredential.getRoles()=='SUPERVISOR' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                </button>
+                            </div>
+                            <div style="float:right;">
+                                <label value="TOTAL NILAI "/>
+                            </div>
+                        </listfooter>
+                    </listfoot>	
+                     
+                </listbox>
+                
+            </center>
+            <east title="DETAIL MANIFEST" size="45%" splittable="true" collapsible="true">
+                <div vflex="3" hflex="3">
+                    <vbox align="center" hflex="3" vflex="3">
+                        <grid hflex="3" vflex="3" oddRowSclass="none">
+                            <custom-attributes org.zkoss.zul.nativebar="true"/> 
+                            <rows>   
+                                <row if="${sessionScope.userCredential.getRoles()!='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                    <panel title="Approval akunting" sclass="panel-success">
+                                        <panelchildren >
+                                            <vlayout>
+                                                <hlayout width="100%">
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            Status.
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.statusApproval)"/>
+                                                    </div> 
+                                    
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span> 
+                                                        </span>
+                                                        <datebox cols="12" 
+                                                                format="dd-MM-yyyy"
+                                                                readonly="true"
+                                                                style="height:32px;"
+                                                                hflex="3"
+                                                                buttonVisible="false"
+                                                                value="@load(vm.selectedManifest.tglApprove)"/>
+                                                    </div> 
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-user"></span> 
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.userAkunting.nama)"/>
+                                                    </div> 
+                                                </hlayout>
+                                                <div class="input-group" hflex="3">
+                                                    <span class="input-group-addon">
+                                                        Note Akunting.
+                                                    </span>
+                                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.ketApprovalAkunting)"/>
+                                                </div>                                     
+                                            </vlayout>
+                                        </panelchildren>
+                                    </panel>
+                                    
+                                </row>
+                                                         
+                                <row>
+                                    <panel title="Data manifest" sclass="panel-primary">
+                                        <panelchildren >
+                                            <vlayout>
+                                                <hlayout width="100%">
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            nmr.
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.kodeManifest)"/>
+                                                    </div> 
+                                    
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span> 
+                                                        </span>
+                                                        <datebox cols="12" 
+                                                                format="dd-MM-yyyy"
+                                                                readonly="true"
+                                                                style="height:30px;"
+                                                                hflex="3"
+                                                                buttonVisible="false"
+                                                                value="@load(vm.selectedManifest.tglBuat)"/>
+                                                    </div> 
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-user"></span> 
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.user.nama)"/>
+                                                    </div> 
+                                                </hlayout>
+                                                <separator/>
+                                                <div class="input-group" hflex="3">
+                                                    <span class="input-group-addon">
+                                                        Pengirim.
+                                                    </span>
+                                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.customerPenghasil.nama)"/>
+                                                </div> 
+                                                <div class="input-group" hflex="3">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-home"></span> 
+                                                    </span>
+                                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.customerPenghasil.alamat)"/>
+                                                </div> 
+                                                <hlayout width="100%">
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-envelope"></span> 
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.customerPenghasil.email)"/>
+                                                    </div>
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-user"></span> 
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.customerPenghasil.namaKontak)"/>
+                                                    </div>
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-phone-alt"></span> 
+                                                        </span>
+                                                        <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.selectedManifest.customerPenghasil.nomorKontak)"/>
+                                                    </div>
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-print"></span> 
+                                                        </span>
+                                                        <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.selectedManifest.customerPenghasil.fax)"/>
+                                                    </div>
+                                                </hlayout>
+                                                <separator/>
+                                                
+                                                <hlayout width="100%">
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            Kode Jenis.
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.jenisLimbah.kodeJenis)"/>
+                                                    </div>
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            Karakteristik.
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.karakteristikLimbah)"/>
+                                                    </div>
+                                                </hlayout>
+                                                <div class="input-group" hflex="3">
+                                                    <span class="input-group-addon">
+                                                        Nama teknik.
+                                                    </span>
+                                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.namaTeknikLimbah)"/>
+                                                </div>
+                                                <hlayout width="100%">
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            Qty.
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.jmlKemasan)"/>
+                                                        <span class="input-group-addon">
+                                                            <label value="@load(vm.selectedManifest.satuanKemasan)"/>
+                                                        </span>
+                                                    </div>
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            Berat.
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.jmlBerat)"/>
+                                                        <span class="input-group-addon">
+                                                            <label value="@load(vm.selectedManifest.satuanBerat)"/>
+                                                        </span>
+                                                    </div>
+                                                </hlayout>
+                                                <separator/>
+                                                
+                                                <hlayout width="100%">
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            Driver.
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.namaDriver)"/>
+                                                    </div>
+                                            
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            No. Kendaraan.
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.nomorKendaraan)"/>
+                                                    </div>
+                                            
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            Tgl angkut.
+                                                        </span>
+                                                        <datebox cols="12" 
+                                                            format="dd-MM-yyyy" 
+                                                            readonly="true"
+                                                            style="height:30px;"
+                                                            hflex="3"
+                                                            buttonVisible="false"
+                                                            value="@load(vm.selectedManifest.tglAngkut)"/>
+                                                    </div>
+                                                </hlayout>
+                                                <separator/>
+                                                
+                                                <div class="input-group" hflex="3">
+                                                    <span class="input-group-addon">
+                                                        Penerima.
+                                                    </span>
+                                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.customerTujuan.nama)"/>
+                                                </div> 
+                                                <div class="input-group" hflex="3">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-home"></span> 
+                                                    </span>
+                                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.customerTujuan.alamat)"/>
+                                                </div>
+                                                <hlayout width="100%">
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-envelope"></span> 
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.customerTujuan.email)"/>
+                                                    </div>
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-user"></span> 
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.customerTujuan.namaKontak)"/>
+                                                    </div>
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-phone-alt"></span> 
+                                                        </span>
+                                                        <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.selectedManifest.customerTujuan.nomorKontak)"/>
+                                                    </div>
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-print"></span> 
+                                                        </span>
+                                                        <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.selectedManifest.customerTujuan.fax)"/>
+                                                    </div>
+                                                </hlayout>
+                                                <hlayout width="100%">
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            Penanda tangan.
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.penandaTangan)"/>
+                                                    </div>
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            Jabatan
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.jabatanPenandaTangan)"/>
+                                                    </div>
+                                                </hlayout>                                    
+                                            </vlayout>
+                                        </panelchildren>
+                                    </panel>
+                                    
+                                </row>
+                                <row>
+                                    <panel title="Status penerimaan" sclass="panel-warning">
+                                        <panelchildren>
+                                            <vlayout>
+                                                <hlayout width="100%">
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            Status.
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.penerimaan.statusPenerimaan)"/>
+                                                    </div> 
+                                    
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span> 
+                                                        </span>
+                                                        <datebox cols="12" 
+                                                                format="dd-MM-yyyy" 
+                                                                readonly="true"
+                                                                style="height:30px;"
+                                                                hflex="3"
+                                                                buttonVisible="false"
+                                                                value="@load(vm.selectedManifest.penerimaan.tglPenerimaan)"/>
+                                                    </div> 
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-user"></span> 
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.penerimaan.userPenerima.nama)"/>
+                                                    </div> 
+                                                </hlayout>
+                                                <div class="input-group" hflex="3">
+                                                    <span class="input-group-addon">
+                                                        Ket. revisi.
+                                                    </span>
+                                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.penerimaan.ketRevisi)"/>
+                                                </div> 
+                                            </vlayout>
+                                        </panelchildren>
+                                    </panel>
+                                </row>
+                                
+                            </rows>
+                            <foot>
+                                <footer>
+                                    <hlayout>
+                                        <button onClick="@command('approve')" hflex="3" sclass="btn-success" iconSclass="glyphicon glyphicon-ok" label="APPROVE" 
+                                                disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.statusApproval ne 'pending')"
+                                                if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                        <button onClick="@command('showRejectNote')" hflex="3" sclass="btn-danger" iconSclass="glyphicon glyphicon-remove" label="REJECT" 
+                                                disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.statusApproval ne 'pending')"
+                                                if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                        <button onClick="@command('revisiManifest', manifest=vm.selectedManifest)" hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-edit" label="REVISI" 
+                                                disabled="@load(vm.selectedManifest eq null || (vm.selectedManifest.statusApproval eq 'approved' and vm.selectedManifest.penerimaan.isRevisi ne 'true'))"
+                                                if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                        <button onClick="@command('cetakManifest')" hflex="3" sclass="" iconSclass="glyphicon glyphicon-print" label="CETAK DOKUMEN MANIFEST" 
+                                                disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.statusApproval ne 'approved')"
+                                                if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                        <button onClick="@command('showWinPenerimaan')" hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-check" label="TERIMA LIMBAH" 
+                                                disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.penerimaan.isDiterima eq 'true')"
+                                                if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                       
+                                    </hlayout>
+                                </footer>
+                            </foot>
+                        </grid>
+                    </vbox>
+                      
+                </div>
+            
+            </east>
+        </borderlayout>
+        
+        <window id="win" title="Keterangan penolakan" border="normal" mode="modal" 
+                visible="@bind(vm.showWin)"
+                style="padding: 3px; min-width:350px; max-width: 450px; min-height: 100px;">
+            <div style="padding: 5px;">
+                Tambahkan keterangan penolakan jika diperlukan :
+                <separator style="margin: 5px;" ></separator>
+                <hlayout width="100%">
+                    <textbox multiline="true" rows="5" value="@save(vm.selectedManifest.ketApprovalAkunting)" hflex="3"/>
+                </hlayout>
+                <separator style="margin: 5px;" ></separator>
+                <div align="center">
+                    <hlayout>
+                        <button onClick="@command('reject')" hflex="3" sclass="btn-danger" label="OK" 
+                                if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                        <button onClick="@command('hideWin')" hflex="3" label="BATAL" 
+                                if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                    </hlayout>
+                </div>
+            </div>
+        </window>
+    </window>
+    
+    
+
+</zk>
+
