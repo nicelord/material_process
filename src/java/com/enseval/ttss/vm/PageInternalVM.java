@@ -7,6 +7,7 @@ import com.enseval.ttss.model.ProsessLimbah;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,16 @@ public class PageInternalVM {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class).orderBy("id desc").findList();
         }
 
+    }
+
+    @Command
+    @NotifyChange({"listProsesLimbah"})
+    public void terimaLimbah(@BindingParam("prosesLimbah") ProsessLimbah prosessLimbah) {
+        if (prosessLimbah.getTglTerima() == null) {
+            prosessLimbah.setUserPenerima(userLogin);
+            prosessLimbah.setTglTerima(new Date());
+            Ebean.update(prosessLimbah);
+        }
     }
 
     public User getUserLogin() {

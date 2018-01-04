@@ -123,10 +123,10 @@
                                     Total berat.
                                 </span>
                                 <longbox readonly="true" sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.manifest.jmlBerat)"/>
+                                <span class="input-group-addon" >
+                                    <label value="@load(vm.manifest.satuanBerat)"/>
+                                </span>
                             </div>
-                            <span class="input-group-addon" >
-                                <label value="@load(vm.manifest.satuanBerat)"/>
-                            </span>
                         </hlayout>
                     </row>
                             

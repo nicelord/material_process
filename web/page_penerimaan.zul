@@ -69,7 +69,11 @@
                                 </radiogroup>
                             </hlayout>
                         </auxheader>
-                        <auxheader colspan="6">
+                        <auxheader colspan="8"
+                                   if="${sessionScope.userCredential.getRoles()!='AKUNTING'}">
+                        </auxheader>
+                        <auxheader colspan="6"
+                                   if="${sessionScope.userCredential.getRoles()=='AKUNTING'}">
                         </auxheader>
                     </auxhead>
                 
@@ -89,6 +93,14 @@
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                             sort="" 
                             label="STATUS PROSES"/>
+                        <listheader 
+                            if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                            sort="" 
+                            label="TGL DITERIMA"/>
+                        <listheader 
+                            if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                            sort="" 
+                            label="USER PENERIMA"/>
                         <listheader label=""/>
                     </listhead>
                 
@@ -120,6 +132,26 @@
                                 if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.prosessLimbahs.isEmpty()?'belum proses':s.prosessLimbahs.get(s.prosessLimbahs.size()-1).gudangTujuan)"/>
+                            </listcell>
+                            
+                            <listcell 
+                                if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                                style="text-overflow: ellipsis; white-space: nowrap;">
+
+                                <label 
+                                    value="belum proses"
+                                    if="${s.prosessLimbahs.isEmpty()}"/>
+                                
+                                <label 
+                                    if="${!s.prosessLimbahs.isEmpty()}"
+                                    value="@load(s.prosessLimbahs.get(s.prosessLimbahs.size()-1).tglTerima) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                                                                
+                            </listcell>
+                            
+                            <listcell 
+                                if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                                style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.prosessLimbahs.isEmpty()?'belum proses':s.prosessLimbahs.get(s.prosessLimbahs.size()-1).userPenerima.nama)"/>
                             </listcell>
                             
                             <listcell>

@@ -57,6 +57,7 @@
                 
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
+                        <listheader sort="auto(penerimaan.manifest.kodeManifest)" label="NMR MANIFEST" />
                         <listheader sort="auto(gudangPengirim)" label="GUDANG PENGIRIM" />
                         <listheader sort="auto(userPengirim.nama)" label="USER PENGIRIM" />
                         <listheader sort="auto(tglKirim)" label="TGL KIRIM" />
@@ -76,6 +77,7 @@
                     <template name="model" var="s">
                         <listitem sclass="mainList">
                             <listcell />
+                            <listcell label="@load(s.penerimaan.manifest.kodeManifest)"/>
                             <listcell label="@load(s.gudangPengirim)"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.userPengirim.nama)"/>
@@ -115,8 +117,14 @@
                             
                             <listcell>
                                 <hlayout>
-                                    <button vflex="3" hflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-saved" label="TERIMA LIMBAH"/>
-                                    <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" label="KIRIM RESIDU"/>
+                                    <button 
+                                        vflex="3" hflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-saved" 
+                                        label="TERIMA LIMBAH" 
+                                        onClick="@command('terimaLimbah',prosesLimbah=s)"
+                                        disabled="@load(s.tglTerima ne null)"/>
+                                    <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" 
+                                            label="KIRIM RESIDU"
+                                            disabled="@load(s.tglTerima eq null)"/>
                                 </hlayout>
                        
                             </listcell>
