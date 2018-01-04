@@ -1,0 +1,151 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>
+
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+        
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        cursor: not-allowed;
+        background-color: #f5f5f5;
+        }
+        
+        .input-group-addon > span {
+        font-weight : 500;
+        }
+        
+        .panel-body{
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        }
+        
+    </style>
+
+    <window id="page_internal" 
+            title="INTERNAL PROSES" 
+            vflex="3" apply="org.zkoss.bind.BindComposer"  
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageInternalVM')">
+        <borderlayout>
+            <center>
+                <listbox id="list_invoice" 
+                         mold="paging" width="100%" vflex="true" autopaging="true"  
+                         multiple="true"
+                         checkmark="true"
+                         emptyMessage="Tidak ada data"
+                         model="@load(vm.listProsesLimbah)">   
+                    <custom-attributes org.zkoss.zul.nativebar="true"/>  
+                
+<!--                    <auxhead>
+                        
+                    </auxhead>-->
+                
+                    <listhead sizable="true" visible="true" >
+                        <listheader width="30px" />
+                        <listheader sort="auto(gudangPengirim)" label="GUDANG PENGIRIM" />
+                        <listheader sort="auto(userPengirim.nama)" label="USER PENGIRIM" />
+                        <listheader sort="auto(tglKirim)" label="TGL KIRIM" />
+                        <listheader sort="auto(namaLimbah)" label="NAMA LIMBAH" width="200px" />
+                        <listheader sort="auto(jmlKemasan)" label="BANYAK" />
+                        <listheader sort="auto(jmlBerat)" label="BERAT" />
+                        <listheader sort="auto(gudangTujuan)" label="GUDANG TUJUAN" 
+                                    if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
+                                    sessionScope.userCredential.getRoles()=='REPORTING'}"/>
+                        <listheader sort="auto(userPenerima.nama)" label="USER PENERIMA"
+                                        if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
+                                    sessionScope.userCredential.getRoles()=='REPORTING'}"/>
+                        <listheader sort="auto(tglTerima)" label="TGL TERIMA"/>
+                        <listheader sort="auto(tglTerima)" label="PROSES" width="270px"/>
+                    </listhead>
+                
+                    <template name="model" var="s">
+                        <listitem sclass="mainList">
+                            <listcell />
+                            <listcell label="@load(s.gudangPengirim)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.userPengirim.nama)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.tglKirim) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                            </listcell>
+                            
+                            
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.namaLimbah)"/>
+                            </listcell>
+                        
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))"/>
+                            </listcell>
+                        
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(''.concat(s.jmlBerat).concat(' ').concat(s.satuanBerat))"/>
+                            </listcell>
+                            
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" 
+                                      if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
+                                        sessionScope.userCredential.getRoles()=='REPORTING'}">
+                                <label value="@load(s.gudangTujuan)"/>
+                            </listcell>
+                            
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;"
+                                      if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
+                                        sessionScope.userCredential.getRoles()=='REPORTING'}">
+                                <label value="@load(s.userPenerima.nama)"/>
+                            </listcell>
+                            
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.tglTerima) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                            </listcell>
+                            
+                            <listcell>
+                                <hlayout>
+                                    <button vflex="3" hflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-saved" label="TERIMA LIMBAH"/>
+                                    <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" label="KIRIM RESIDU"/>
+                                </hlayout>
+                       
+                            </listcell>
+                            
+                        </listitem>
+                    </template>
+                
+                
+                    <listfoot>
+<!--                        <listfooter span="9" valign="middle">
+                            <div style="float:left;">
+                                
+                                <button onClick="@command('showFormInvoice')" iconSclass="glyphicon glyphicon-download-alt" label="CETAK INVOICE" 
+                                        if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                </button>
+                            </div>
+                            <div style="float:right;">
+                                
+                            </div>
+                        </listfooter>-->
+                    </listfoot>	
+                     
+                </listbox>
+                
+            </center>
+        </borderlayout>
+    </window>
+    
+    
+
+</zk>
+

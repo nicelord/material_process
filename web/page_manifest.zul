@@ -451,7 +451,7 @@
                                         <button onClick="@command('cetakManifest')" hflex="3" sclass="" iconSclass="glyphicon glyphicon-print" label="CETAK DOKUMEN MANIFEST" 
                                                 disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.statusApproval ne 'approved')"
                                                 if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
-                                        <button onClick="@command('showWinPenerimaan')" hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-check" label="TERIMA LIMBAH" 
+                                        <button onClick="@command('showWinPenerimaan')" hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-saved" label="TERIMA LIMBAH" 
                                                 disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.penerimaan.isDiterima eq 'true')"
                                                 if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                                        

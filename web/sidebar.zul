@@ -39,6 +39,17 @@
                             <listcell label="PENERIMAAN"/>
                         </listitem>
                         
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='PENERIMA'||
+                                        sessionScope.userCredential.getRoles()=='GUDANG 1'||
+                                        sessionScope.userCredential.getRoles()=='SORTIR'||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                           
+                                  onClick="@command('changePage', page='page_internal.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="INTERNAL PROSES"/>
+                        </listitem>
+                        
                             
                     </listbox>                    
                 </tabpanel>
