@@ -1,0 +1,87 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        text-transform:uppercase;
+        
+        }
+     
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        
+        
+        }
+        
+       
+    </style>
+
+    <window id="pop_add_customer" 
+            style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
+            position="center,top" 
+            mode="modal" 
+            width="800px" 
+            vflex="1" 
+            title="TAMBAH CUSTOMER" 
+            border="normal" 
+            closable="true" 
+            apply="org.zkoss.bind.BindComposer" 
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PopAddCustomerVM')">
+        
+        <vlayout>
+            <div class="input-group" hflex="3">
+                <span class="input-group-addon">
+                    Nama Perusahaan :
+                </span>
+                <textbox constraint="no empty" class="form-control input-primary" value="@save(vm.customer.nama)"/>
+            </div>
+            <div class="input-group" hflex="3">
+                <span class="input-group-addon">
+                    Alamat :
+                </span>
+                <textbox constraint="no empty" class="form-control input-primary" value="@save(vm.customer.alamat)"/>
+            </div>
+            <hlayout>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Telp :
+                    </span>
+                    <textbox constraint="no empty" class="form-control input-primary" value="@save(vm.customer.nomorKontak)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Fax :
+                    </span>
+                    <textbox class="form-control input-primary" value="@save(vm.customer.fax)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Email :
+                    </span>
+                    <textbox class="form-control input-primary" value="@save(vm.customer.email)"/>
+                </div>
+            </hlayout> 
+            <hlayout>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        NPWP :
+                    </span>
+                    <textbox class="form-control input-primary" value="@save(vm.customer.npwp)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Nama Kontak :
+                    </span>
+                    <textbox class="form-control input-primary" value="@save(vm.customer.namaKontak)"/>
+                </div>
+            </hlayout>    
+            <separator bar="true"/>
+            <hlayout style="float:right;">
+                 <button iconSclass="glyphicon glyphicon-floppy-disk" sclass="btn-success" onClick="@command('simpanCustomer')" label="SIMPAN"/>    
+            </hlayout>
+                  
+        </vlayout>
+    </window>
+</zk>

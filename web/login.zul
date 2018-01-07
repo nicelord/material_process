@@ -28,10 +28,8 @@
     <hbox vflex="1" hflex="1" align="center" pack="center" spacing="20px" style="background-image: url('bg.jpg');background-size: 100%;">
         
         <vlayout apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.enseval.ttss.vm.LoginVM')">
-            <div style="float:center;text-align: right;font: italic bold 10px arial, sans-serif;">
-                CASHMON 2
-            </div>
-            <window id="loginWin" title="LOGIN CASH MONITORING" border="normal" hflex="min">
+            
+            <window id="loginWin" title="LOGIN" border="normal" hflex="min">
                 <vbox hflex="min" align="center">
                     <grid hflex="min">
                         <columns>

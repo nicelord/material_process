@@ -1,0 +1,54 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        text-transform:uppercase;
+        
+        }
+     
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        
+        
+        }
+        
+       
+    </style>
+
+    <window id="pop_add_jenis_limbah" 
+            style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
+            position="center,top" 
+            mode="modal" 
+            width="500px" 
+            vflex="1" 
+            title="TAMBAH JENIS LIMBAH" 
+            border="normal" 
+            closable="true" 
+            apply="org.zkoss.bind.BindComposer" 
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PopAddJenisLimbahVM')">
+        
+        <vlayout>
+            <div class="input-group" hflex="3">
+                <span class="input-group-addon">
+                    KODE JENIS :
+                </span>
+                <textbox constraint="no empty" class="form-control input-primary" value="@save(vm.jenisLimbah.kodeJenis)"/>
+            </div>
+            <div class="input-group" hflex="3">
+                <span class="input-group-addon">
+                    KETERANGAN :
+                </span>
+                <textbox class="form-control input-primary" value="@save(vm.jenisLimbah.keterangan)"/>
+            </div>
+            
+            <separator bar="true"/>
+            <hlayout style="float:right;">
+                 <button iconSclass="glyphicon glyphicon-floppy-disk" sclass="btn-success" onClick="@command('simpanJenisLimbah')" label="SIMPAN"/>    
+            </hlayout>
+                  
+        </vlayout>
+    </window>
+</zk>

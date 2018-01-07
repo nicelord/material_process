@@ -18,8 +18,10 @@ import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Messagebox;
@@ -47,6 +49,7 @@ public class PopJenisLimbahVM {
          this.listJenisLimbah = Ebean.find(JenisLimbah.class).where().or(
                 Expr.like("kodeJenis", "%" + txtCari.getValue() + "%"),
                 Expr.like("keterangan", "%" + txtCari.getValue() + "%"))
+                .orderBy("id desc")
                 .findList();
     }
 
@@ -64,11 +67,20 @@ public class PopJenisLimbahVM {
 
     @AfterCompose
     public void initSetup(@ContextParam(ContextType.VIEW) Component view) {
-        this.listJenisLimbah = Ebean.find(JenisLimbah.class).findList();
+        this.listJenisLimbah = Ebean.find(JenisLimbah.class).orderBy("id desc").findList();
         Selectors.wireComponents(view, this, false);
     }
 
+    @Command
+    public void showTambahJenisLimbah(){
+        Executions.createComponents("pop_add_jenis_limbah.zul", (Component) null, null);
+    }
     
+    @GlobalCommand
+    @NotifyChange({"listJenisLimbah"})
+    public void refresh(){
+        this.listJenisLimbah = Ebean.find(JenisLimbah.class).orderBy("id desc").findList();
+    }
 
     public Textbox getTxtCari() {
         return txtCari;

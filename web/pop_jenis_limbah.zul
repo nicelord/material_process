@@ -18,8 +18,6 @@
        
     </style>
 
-    <hbox align="center" pack="center" spacing="20px">
-
         <window id="pop_jenis_limbah" 
                 style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
                 position="center,top" 
@@ -42,14 +40,15 @@
                 <auxhead>
                     <auxheader colspan="3">
                         <hlayout >
-                            <textbox id="txtCari" hflex="3" width="720px" value="" sclass="form-control input-primary" placeholder="kata kunci"/>
-                            <button iconSclass="glyphicon glyphicon-search" sclass="btn-primary" onClick="@command('cari')"/>
+                            <textbox id="txtCari" hflex="7" value="" sclass="form-control input-primary" placeholder="kata kunci"/>
+                            <button hflex="1" iconSclass="glyphicon glyphicon-search" sclass="btn-primary" onClick="@command('cari')"/>
+                            <button  hflex="2" iconSclass="glyphicon glyphicon-plus" sclass="btn-success" onClick="@command('showTambahJenisLimbah')" label="TAMBAH"/>
                         </hlayout>
                     </auxheader>
                 </auxhead>
                         
                 <listhead sizable="true" visible="true" >
-                    <listheader sort="auto(id)" label="ID" width="100px" />
+                    <listheader sort="auto(id)" label="ID" width="50px" />
                     <listheader sort="auto(kodeJenis)" label="KODE JENIS" width="130px" />
                     <listheader sort="auto(keterangan)" label="KETERANGAN" />
                 </listhead>
@@ -75,5 +74,4 @@
        
         </window>
 
-    </hbox>
 </zk>

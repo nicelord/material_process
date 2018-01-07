@@ -18,8 +18,10 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Messagebox;
@@ -46,7 +48,7 @@ public class PopCustomerVM {
     @Command
     @NotifyChange("listCustomers")
     public void cari() {
-        this.listCustomers = Ebean.find(Customer.class).where().like("nama", "%" + this.txtCari.getValue() + "%").findList();
+        this.listCustomers = Ebean.find(Customer.class).where().like("nama", "%" + this.txtCari.getValue() + "%").orderBy("id desc").findList();
     }
 
     @Command
@@ -65,9 +67,20 @@ public class PopCustomerVM {
     @AfterCompose
     public void initSetup(@ContextParam(ContextType.VIEW) Component view,
             @ExecutionArgParam("isPengirim") boolean isPengirim) {
-        this.listCustomers = Ebean.find(Customer.class).findList();
+        this.listCustomers = Ebean.find(Customer.class).orderBy("id desc").findList();
         this.isPengirim = isPengirim;
         Selectors.wireComponents(view, this, false);
+    }
+    
+    @Command
+    public void showTambahCustomer(){
+        Executions.createComponents("pop_add_customer.zul", (Component) null, null);
+    }
+    
+    @GlobalCommand
+    @NotifyChange({"listCustomers"})
+    public void refresh(){
+        this.listCustomers = Ebean.find(Customer.class).where().like("nama", "%" + this.txtCari.getValue() + "%").orderBy("id desc").findList();
     }
 
     public Window getWinPopCustomer() {

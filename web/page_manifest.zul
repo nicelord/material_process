@@ -54,7 +54,9 @@
                 
                     <auxhead>
                         <auxheader colspan="3">
-                            <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="INPUT MANIFEST" onClick="@command('inputManifest')" />
+                            <button 
+                                if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR' || sessionScope.userCredential.getRoles()=='ADMIN'}"
+                                vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="INPUT MANIFEST" onClick="@command('inputManifest')" />
                         </auxheader>
                         <auxheader colspan="5">
                         </auxheader>

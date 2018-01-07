@@ -45,8 +45,8 @@
             <center>
                 <listbox id="list_invoice" 
                          mold="paging" width="100%" vflex="true" autopaging="true"  
-                         multiple="true"
-                         checkmark="true"
+                         multiple="false"
+                         checkmark="false"
                          selectedItems="@bind(vm.selectedPenerimaans)"
                          emptyMessage="Tidak ada data"
                          model="@load(vm.listPenerimaan)">   

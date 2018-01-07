@@ -38,7 +38,13 @@
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span> 
                                     </span>
-                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.manifest.tglBuat)"/>
+                                    <datebox cols="12" 
+                                             format="dd-MM-yyyy"
+                                             readonly="true"
+                                             style="height:30px;"
+                                             hflex="3"
+                                             buttonVisible="false"
+                                             value="@load(vm.manifest.tglBuat)"/>
                                 </div> 
                             </hlayout>
                             <div class="input-group" hflex="3">

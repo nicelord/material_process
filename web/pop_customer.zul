@@ -18,8 +18,6 @@
        
     </style>
 
-    <hbox align="center" pack="center" spacing="20px">
-
         <window id="pop_customer" 
                 style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
                 position="center,top" 
@@ -33,7 +31,6 @@
                 viewModel="@id('vm') @init('com.enseval.ttss.vm.PopCustomerVM')">
         
             <listbox id="listCust" mold="paging" width="100%" vflex="true" 
-                     
                      pageSize="10"
                      emptyMessage="Tidak ada data"
                      selectedItem="@bind(vm.customer)"
@@ -42,14 +39,15 @@
                 <auxhead>
                     <auxheader colspan="7">
                         <hlayout >
-                            <textbox id="txtCari" hflex="3" width="720px" value="" sclass="form-control input-primary" placeholder="cari nama"/>
-                            <button id="btnCustID" iconSclass="glyphicon glyphicon-search" sclass="btn-primary" onClick="@command('cari')"/>
+                            <textbox id="txtCari" hflex="7" value="" sclass="form-control input-primary" placeholder="cari nama"/>
+                            <button id="btnCustID" hflex="1" iconSclass="glyphicon glyphicon-search" sclass="btn-primary" onClick="@command('cari')"/>
+                            <button  hflex="2" iconSclass="glyphicon glyphicon-plus" sclass="btn-success" onClick="@command('showTambahCustomer')" label="TAMBAH"/>
                         </hlayout>
                     </auxheader>
                 </auxhead>
                         
                 <listhead sizable="true" visible="true" >
-                    <listheader sort="auto(id)" label="ID" width="130px" />
+                    <listheader sort="auto(id)" label="ID" width="50px" />
                     <listheader sort="auto(nama)" label="NAMA" />
                     <listheader sort="auto(alamat)" label="ALAMAT" />
                     <listheader sort="auto(nomorKontak)" label="TELP" />
@@ -82,6 +80,4 @@
             </listbox>
        
         </window>
-
-    </hbox>
 </zk>
