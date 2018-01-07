@@ -57,6 +57,8 @@ public class PopInputManifestVM {
             this.manifest = manifest;
         } else {
             this.manifest = new Manifest();
+            this.manifest.setKodeManifest("JL ");
+            this.manifest.setTglAngkut(new Date());
         }
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         this.listNamaTeknik = Ebean.find(Manifest.class).select("namaTeknikLimbah").setDistinct(true).findList();

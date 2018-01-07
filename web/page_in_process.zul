@@ -38,9 +38,9 @@
     </style>
 
     <window id="page_internal" 
-            title="INTERNAL PROSES" 
+            title="LIMBAH SEDANG DALAM PROSES" 
             vflex="3" apply="org.zkoss.bind.BindComposer"  
-            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageInternalVM')">
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageInProcessVM')">
         <borderlayout>
             <center>
                 <listbox id="list_invoice" 
@@ -58,9 +58,7 @@
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
                         <listheader sort="auto(penerimaan.manifest.kodeManifest)" label="NMR MANIFEST" />
-                        <listheader sort="auto(gudangPengirim)" label="GUDANG PENGIRIM" />
-                        <listheader sort="auto(userPengirim.nama)" label="USER PENGIRIM" />
-                        <listheader sort="auto(tglKirim)" label="TGL KIRIM" />
+                        <listheader sort="auto(tglTerima)" label="TGL TERIMA" />
                         <listheader sort="auto(namaLimbah)" label="NAMA LIMBAH" width="200px" />
                         <listheader sort="auto(jmlKemasan)" label="BANYAK" />
                         <listheader sort="auto(jmlBerat)" label="BERAT" />
@@ -70,23 +68,16 @@
                         <listheader sort="auto(userPenerima.nama)" label="USER PENERIMA"
                                         if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
                                     sessionScope.userCredential.getRoles()=='REPORTING'}"/>
-                        <listheader sort="auto(tglTerima)" label="TGL TERIMA"/>
-                        <listheader sort="auto(tglTerima)" label="PROSES" width="270px"/>
+                        <listheader sort="auto(tglTerima)" label="TGL PROSES"/>
                     </listhead>
                 
                     <template name="model" var="s">
                         <listitem sclass="mainList">
                             <listcell />
                             <listcell label="@load(s.penerimaan.manifest.kodeManifest)"/>
-                            <listcell label="@load(s.gudangPengirim)"/>
-                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.userPengirim.nama)"/>
-                            </listcell>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.tglKirim) @converter('formatedDate', format='dd-MM-yyyy')"/>
                             </listcell>
-                            
-                            
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.namaLimbah)"/>
                             </listcell>
@@ -112,40 +103,33 @@
                             </listcell>
                             
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.tglTerima) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                                <label value="@load(s.tglProses) @converter('formatedDate', format='dd-MM-yyyy')"/>
                             </listcell>
                             
-                            <listcell>
+<!--                            <listcell>
                                 <hlayout>
-                                    <button 
-                                        vflex="3" hflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-saved" 
-                                        label="TERIMA LIMBAH" 
-                                        onClick="@command('terimaLimbah',prosesLimbah=s)"
-                                        disabled="@load(s.tglTerima ne null)"/>
-                                    <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" 
-                                            label="PROSES"
-                                            onClick="@command('prosesLimbah',prosesLimbah=s)"
-                                            disabled="@load(s.tglTerima eq null || (s.tglTerima ne null and s.tglProses ne null))"/>
+                                   
+                                    
                                 </hlayout>
                        
-                            </listcell>
+                            </listcell>-->
                             
                         </listitem>
                     </template>
                 
                 
                     <listfoot>
-<!--                        <listfooter span="9" valign="middle">
+                        <listfooter span="9" valign="middle">
                             <div style="float:left;">
                                 
-                                <button onClick="@command('showFormInvoice')" iconSclass="glyphicon glyphicon-download-alt" label="CETAK INVOICE" 
-                                        if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                <button sclass="btn-success" onClick="@command('kirimResidu')" iconSclass="glyphicon glyphicon-share-alt" label="KIRIM RESIDU" 
+                                        if="${sessionScope.userCredential.getRoles().startsWith('GUDANG') || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                                 </button>
                             </div>
                             <div style="float:right;">
                                 
                             </div>
-                        </listfooter>-->
+                        </listfooter>
                     </listfoot>	
                      
                 </listbox>

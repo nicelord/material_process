@@ -31,7 +31,6 @@
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles()=='PENERIMA'||
-                                        sessionScope.userCredential.getRoles()=='AKUNTING'||
                                         sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                            
                                   onClick="@command('changePage', page='page_penerimaan.zul')">
@@ -40,14 +39,32 @@
                         </listitem>
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
-                                  if="${sessionScope.userCredential.getRoles()=='PENERIMA'||
-                                        sessionScope.userCredential.getRoles()=='GUDANG 1'||
+                                  if="${sessionScope.userCredential.getRoles()=='AKUNTING'||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                           
+                                  onClick="@command('changePage', page='page_penerimaan.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="INVOICES"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')||
                                         sessionScope.userCredential.getRoles()=='SORTIR'||
                                         sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                            
                                   onClick="@command('changePage', page='page_internal.zul')">
                             <listcell iconSclass="glyphicon glyphicon-list-alt"/>
-                            <listcell label="INTERNAL PROSES"/>
+                            <listcell label="LIMBAH MASUK"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')||
+                                        sessionScope.userCredential.getRoles()=='SORTIR'||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                           
+                                  onClick="@command('changePage', page='page_in_process.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="DALAM PROSES"/>
                         </listitem>
                         
                             

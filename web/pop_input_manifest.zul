@@ -34,7 +34,7 @@
                 <rows>
                     <row>
                         Nomor Manifest
-                        <textbox hflex="1" value="@save(vm.manifest.kodeManifest)" constraint="no empty" sclass="form-control input-primary"/> 
+                        <textbox hflex="1" value="@bind(vm.manifest.kodeManifest)" constraint="no empty" sclass="form-control input-primary"/> 
                     </row> 
                     <row>
                         Perusahaan Pengirim
@@ -188,8 +188,8 @@
                                 <attribute name="onCreate">
                                     self.setSelectedIndex(0);
                                 </attribute>
-                                <comboitem label="Liter"/>
                                 <comboitem label="KG"/>
+                                <comboitem label="Liter"/>
                                 <comboitem label="Ton"/>
                             </combobox>
                         </hlayout>
@@ -240,7 +240,7 @@
                                          readonly="true"
                                          style="height:30px;"
                                          hflex="3"
-                                         value="@save(vm.manifest.tglAngkut)"/>
+                                         value="@bind(vm.manifest.tglAngkut)"/>
                             </div>
                                     
                             

@@ -45,8 +45,8 @@
         <borderlayout>
             <center>
                 <listbox id="list_manifest" mold="paging" width="100%" vflex="true" autopaging="true" 
-                         checkmark="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}" 
-                         multiple="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}" 
+                         checkmark="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR' || sessionScope.userCredential.getRoles()=='ADMIN'}" 
+                         multiple="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR' || sessionScope.userCredential.getRoles()=='ADMIN'}" 
                          selectedItems="@bind(vm.selectedManifests)"
                          emptyMessage="Tidak ada data"
                          model="@load(vm.listManifest)">   
@@ -64,7 +64,7 @@
                 
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
-                        <listheader sort="auto(kodeManifest)" label="NOMOR" width="70px" />
+                        <listheader sort="auto(kodeManifest)" label="NOMOR" width="80px" />
                         <listheader sort="auto(customerPenghasil.nama)" label="PENGIRIM" width="200px"/>
                         <listheader sort="auto(jenisLimbah.kodeJenis)" label="KODE LIMBAH"/>
                         <listheader sort="auto(namaTeknikLimbah)" label="NAMA LIMBAH"/>
@@ -132,12 +132,12 @@
                         <listfooter span="6" valign="middle">
                             <div style="float:left;">
                                 
-                                <button onClick="@command('downloadXLS')" iconSclass="glyphicon glyphicon-download-alt" label="DOWNLOAD TO EXCEL" 
-                                        if="${sessionScope.userCredential.getRoles()=='SUPERVISOR' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                <button onClick="@command('showSertifikat')" iconSclass="glyphicon glyphicon-list-alt" label="BUAT SERTIFIKAT" 
+                                        if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                                 </button>
                             </div>
                             <div style="float:right;">
-                                <label value="TOTAL NILAI "/>
+                                
                             </div>
                         </listfooter>
                     </listfoot>	

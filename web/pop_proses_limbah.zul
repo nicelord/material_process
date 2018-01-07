@@ -107,8 +107,7 @@
                                         <comboitem label="GUDANG 3"/>
                                         <comboitem label="GUDANG 4"/>
                                         <comboitem label="GUDANG 5"/>
-                                        <comboitem label="GUDANG 6"/>
-                                        <comboitem label="PENGIRIMAN"/>
+                                        <comboitem label="EXTERNAL"/>
                                     </combobox>
                                 </div>
                             </hlayout>

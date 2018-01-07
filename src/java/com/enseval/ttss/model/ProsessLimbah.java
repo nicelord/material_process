@@ -46,7 +46,7 @@ public class ProsessLimbah implements Serializable {
     Date tglTerima;
     
     @Temporal(TemporalType.DATE)
-    Date tglSelesai;
+    Date tglProses;
     
     String satuanKemasan = "";
     Long jmlKemasan = 0L;
@@ -171,13 +171,15 @@ public class ProsessLimbah implements Serializable {
         this.tglTerima = tglTerima;
     }
 
-    public Date getTglSelesai() {
-        return tglSelesai;
+    public Date getTglProses() {
+        return tglProses;
     }
 
-    public void setTglSelesai(Date tglSelesai) {
-        this.tglSelesai = tglSelesai;
+    public void setTglProses(Date tglProses) {
+        this.tglProses = tglProses;
     }
+
+  
     
     
     

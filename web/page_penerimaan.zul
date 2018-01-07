@@ -45,8 +45,8 @@
             <center>
                 <listbox id="list_invoice" 
                          mold="paging" width="100%" vflex="true" autopaging="true"  
-                         multiple="false"
-                         checkmark="false"
+                         multiple="@load(vm.userLogin.akses eq 'AKUNTING'?'true':'false')"
+                         checkmark="@load(vm.userLogin.akses eq 'AKUNTING'?'true':'false')"
                          selectedItems="@bind(vm.selectedPenerimaans)"
                          emptyMessage="Tidak ada data"
                          model="@load(vm.listPenerimaan)">   

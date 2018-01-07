@@ -65,7 +65,7 @@
             <hlayout>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
-                        SIAL.
+                        Izin Angkut.
                     </span>
                     <textbox class="form-control input-primary" value="@save(vm.invoice.sial)"/>
                 </div>   
