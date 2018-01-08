@@ -47,12 +47,17 @@ public class PopPenerimaanVM {
     Manifest manifest;
     User userLogin;
     List<PenandaTangan> listPenandaTangan = new ArrayList<>();
+    
+    List<Manifest> listDriver = new ArrayList<>();
+    List<Manifest> listNomorKendaraan = new ArrayList<>();
 
     @AfterCompose
     public void initSetup(@ContextParam(ContextType.VIEW) final Component view, @ExecutionArgParam("manifest") Manifest manifest) {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         this.manifest = manifest;
         this.listPenandaTangan = Ebean.find(PenandaTangan.class).findList();
+        this.listDriver = Ebean.find(Manifest.class).select("namaDriver").setDistinct(true).findList();
+        this.listNomorKendaraan = Ebean.find(Manifest.class).select("nomorKendaraan").setDistinct(true).findList();
         Selectors.wireComponents(view, (Object) this, false);
     }
     
@@ -63,6 +68,7 @@ public class PopPenerimaanVM {
         this.manifest.getPenerimaan().setStatusPenerimaan("diterima");
         this.manifest.getPenerimaan().setIsDiterima(true);
         Ebean.update(this.manifest.getPenerimaan());
+        Ebean.update(this.manifest);
         BindUtils.postGlobalCommand(null, null, "refresh", null);
         this.winPenerimaanLimbah.detach();
         
@@ -106,6 +112,22 @@ public class PopPenerimaanVM {
 
     public void setIsRevisi(boolean isRevisi) {
         this.isRevisi = isRevisi;
+    }
+
+    public List<Manifest> getListDriver() {
+        return listDriver;
+    }
+
+    public void setListDriver(List<Manifest> listDriver) {
+        this.listDriver = listDriver;
+    }
+
+    public List<Manifest> getListNomorKendaraan() {
+        return listNomorKendaraan;
+    }
+
+    public void setListNomorKendaraan(List<Manifest> listNomorKendaraan) {
+        this.listNomorKendaraan = listNomorKendaraan;
     }
 
     

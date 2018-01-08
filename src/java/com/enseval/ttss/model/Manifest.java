@@ -43,7 +43,7 @@ public class Manifest implements Serializable {
     Long jmlBerat = 0L;
     String nomorKendaraan = "";
     @Temporal(TemporalType.DATE)
-    Date tglApprove;
+    Date tglApprove = new Date();
     String statusApproval = "pending";
     String ketApprovalAkunting = "";
     @ManyToOne

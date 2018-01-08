@@ -70,10 +70,10 @@
                         <listheader sort="auto(namaTeknikLimbah)" label="NAMA LIMBAH"/>
                         <listheader sort="auto(jmlKemasan)" label="BANYAK"/>
                         <listheader sort="auto(jmlBerat)" label="BERAT"/>
-                        <listheader sort="auto(statusApproval)" label="APPROVAL"
-                                    if="${sessionScope.userCredential.getRoles()!='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+<!--                        <listheader sort="auto(statusApproval)" label="APPROVAL"
+                                    if="${sessionScope.userCredential.getRoles()!='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>-->
                         <listheader sort="auto(penerimaan.statusPenerimaan)" label="PENERIMAAN"
-                                    if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                    if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                     </listhead>
                 
                     <template name="model" var="s">
@@ -96,7 +96,7 @@
                                 <label value="@load(''.concat(s.jmlBerat).concat(' ').concat(s.satuanBerat))"/>
                             </listcell>
                         
-                            <listcell 
+<!--                            <listcell 
                                 if="${sessionScope.userCredential.getRoles()!='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
                                 
@@ -115,13 +115,23 @@
                                     sclass="label label-success" 
                                     visible="@load(s.statusApproval.equals('approved'))"
                                 />
-                            </listcell>
+                            </listcell>-->
                             
                             <listcell 
-                                if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                                if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
                                 
-                                <label value="@load(s.penerimaan.statusPenerimaan)" />
+<!--                                <label value="@load(s.penerimaan.statusPenerimaan)" />-->
+                                <label 
+                                    value="@load(s.penerimaan.statusPenerimaan)" 
+                                    sclass="label label-warning" 
+                                    visible="@load(s.penerimaan.statusPenerimaan.equals('belum diterima'))"
+                                />
+                                <label 
+                                    value="@load(s.penerimaan.statusPenerimaan)" 
+                                    sclass="label label-success" 
+                                    visible="@load(s.penerimaan.statusPenerimaan.equals('diterima'))"
+                                />
                             </listcell>
                             
                         </listitem>
@@ -151,7 +161,7 @@
                         <grid hflex="3" vflex="3" oddRowSclass="none">
                             <custom-attributes org.zkoss.zul.nativebar="true"/> 
                             <rows>   
-                                <row if="${sessionScope.userCredential.getRoles()!='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+<!--                                <row if="${sessionScope.userCredential.getRoles()!='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                                     <panel title="Approval akunting" sclass="panel-success">
                                         <panelchildren >
                                             <vlayout>
@@ -192,7 +202,7 @@
                                         </panelchildren>
                                     </panel>
                                     
-                                </row>
+                                </row>-->
                                                          
                                 <row>
                                     <panel title="Data manifest" sclass="panel-primary">
@@ -441,12 +451,12 @@
                             <foot>
                                 <footer>
                                     <hlayout>
-                                        <button onClick="@command('approve')" hflex="3" sclass="btn-success" iconSclass="glyphicon glyphicon-ok" label="APPROVE" 
+<!--                                        <button onClick="@command('approve')" hflex="3" sclass="btn-success" iconSclass="glyphicon glyphicon-ok" label="APPROVE" 
                                                 disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.statusApproval ne 'pending')"
                                                 if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                                         <button onClick="@command('showRejectNote')" hflex="3" sclass="btn-danger" iconSclass="glyphicon glyphicon-remove" label="REJECT" 
                                                 disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.statusApproval ne 'pending')"
-                                                if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                                if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>-->
                                         <button onClick="@command('revisiManifest', manifest=vm.selectedManifest)" hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-edit" label="REVISI" 
                                                 disabled="@load(vm.selectedManifest eq null || (vm.selectedManifest.statusApproval eq 'approved' and vm.selectedManifest.penerimaan.isRevisi ne 'true'))"
                                                 if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>

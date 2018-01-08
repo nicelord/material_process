@@ -58,7 +58,6 @@ public class PopInputManifestVM {
         } else {
             this.manifest = new Manifest();
             this.manifest.setKodeManifest("JL ");
-            this.manifest.setTglAngkut(new Date());
         }
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         this.listNamaTeknik = Ebean.find(Manifest.class).select("namaTeknikLimbah").setDistinct(true).findList();
@@ -107,11 +106,26 @@ public class PopInputManifestVM {
     @Command
     public void simpanManifest() {
         try {
+
+            Penerimaan p = new Penerimaan();
+            p.setStatusPenerimaan("belum diterima");
+            p.setManifest(this.manifest);
+            p.setJmlKemasan(this.manifest.getJmlKemasan());
+            p.setSatuanKemasan(this.manifest.getSatuanKemasan());
+            p.setJmlBerat(this.manifest.getJmlBerat());
+            p.setSatuanBerat(this.manifest.getSatuanBerat());
+            Ebean.save(p);
+
             this.manifest.setUser(userLogin);
             this.manifest.setTglBuat(new Date());
-            if(this.manifest.getStatusApproval().equals("rejected")){
+            if (this.manifest.getStatusApproval().equals("rejected")) {
                 this.manifest.setStatusApproval("pending");
             }
+
+            this.manifest.setStatusApproval("approved");
+            this.manifest.setTglApprove(new Date());
+            this.manifest.setPenerimaan(p);
+
             Ebean.save(this.manifest);
             BindUtils.postGlobalCommand((String) null, (String) null, "refresh", (Map) null);
             this.winInputManifest.detach();

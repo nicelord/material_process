@@ -143,8 +143,7 @@
                                 <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@save(vm.manifest.jmlKemasan)"/>
                             </div>
                             <div class="input-group" hflex="3">
-                                <combobox readonly="true" 
-                                          style="width:100%"
+                                <combobox style="width:100%"
                                           constraint="no empty"  
                                           value="@save(vm.manifest.satuanKemasan)">
                                     <attribute name="onCreate">
@@ -152,6 +151,7 @@
                                     </attribute>
                                     <comboitem label="Drum Logam"/>
                                     <comboitem label="Pallet"/>
+                                    <comboitem label="Unit"/>
                                     <comboitem label="Pcs"/>
                                     <comboitem label="Tin"/>
                                     <comboitem label="Box"/>
@@ -236,7 +236,6 @@
                                 </span>
                                 <datebox cols="12" 
                                          format="dd-MM-yyyy" 
-                                         onCreate="self.value = new Date()" 
                                          readonly="true"
                                          style="height:30px;"
                                          hflex="3"

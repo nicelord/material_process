@@ -53,7 +53,7 @@
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
                 
                     <auxhead>
-                        <auxheader colspan="3">
+                        <auxheader colspan="@load(vm.userLogin.akses.equals('AKUNTING')?'10':'12')">
                             <hlayout>
                                 <radiogroup 
                                     if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
@@ -69,12 +69,14 @@
                                 </radiogroup>
                             </hlayout>
                         </auxheader>
-                        <auxheader colspan="8"
-                                   if="${sessionScope.userCredential.getRoles()!='AKUNTING'}">
-                        </auxheader>
-                        <auxheader colspan="6"
-                                   if="${sessionScope.userCredential.getRoles()=='AKUNTING'}">
-                        </auxheader>
+                    </auxhead>
+                    
+                    <auxhead
+                        if="${sessionScope.userCredential.getRoles()!='AKUNTING'}">
+                        <auxheader colspan="8" label="DATA PENERIMAAN"/>
+                        <auxheader colspan="4"
+                                   if="${sessionScope.userCredential.getRoles()!='AKUNTING'}" 
+                                    label="STATUS PROSES LIMBAH"/>
                     </auxhead>
                 
                     <listhead sizable="true" visible="true" >
@@ -85,6 +87,7 @@
                         <listheader sort="auto(manifest.namaTeknikLimbah)" label="NAMA LIMBAH"/>
                         <listheader sort="auto(jmlKemasan)" label="BANYAK"/>
                         <listheader sort="auto(jmlBerat)" label="BERAT"/>
+                        <listheader sort="auto(jmlBerat)" label="TGL DITERIMA"/>
                         <listheader 
                             if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                             sort="auto(jmlBerat)" 
@@ -92,6 +95,7 @@
                         <listheader 
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                             sort="" 
+                            width="150px"
                             label="STATUS PROSES"/>
                         <listheader 
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
@@ -123,24 +127,24 @@
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(''.concat(s.jmlBerat).concat(' ').concat(s.satuanBerat))"/>
                             </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.tglPenerimaan) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                            </listcell>
+                            
                             <listcell 
                                 if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.invoice.nomorInvoice)"/>
-                            </listcell>
+                            </listcell>                           
                             <listcell 
                                 if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.prosessLimbahs.isEmpty()?'belum proses':s.prosessLimbahs.get(s.prosessLimbahs.size()-1).gudangTujuan)"/>
+                                <label sclass="@load(s.prosessLimbahs.isEmpty()?'label label-warning':'label label-success')" value="@load(s.prosessLimbahs.isEmpty()?'belum proses':s.prosessLimbahs.get(s.prosessLimbahs.size()-1).gudangTujuan)"/>
                             </listcell>
                             
                             <listcell 
                                 if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
-
-                                <label 
-                                    value="belum proses"
-                                    if="${s.prosessLimbahs.isEmpty()}"/>
                                 
                                 <label 
                                     if="${!s.prosessLimbahs.isEmpty()}"
@@ -151,7 +155,7 @@
                             <listcell 
                                 if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.prosessLimbahs.isEmpty()?'belum proses':s.prosessLimbahs.get(s.prosessLimbahs.size()-1).userPenerima.nama)"/>
+                                <label value="@load(s.prosessLimbahs.isEmpty()?'':s.prosessLimbahs.get(s.prosessLimbahs.size()-1).userPenerima.nama)"/>
                             </listcell>
                             
                             <listcell>
