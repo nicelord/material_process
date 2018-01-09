@@ -4,6 +4,8 @@ drop table customer;
 
 drop table invoice;
 
+drop table invoice_penerimaan;
+
 drop table jenis_limbah;
 
 drop table manifest;

@@ -135,64 +135,150 @@
                             
                     <row>
                         Kemasan
-                        <hlayout width="100%">
-                            <div class="input-group" hflex="3">
-                                <span class="input-group-addon" >
-                                    Qty.
-                                </span>
-                                <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@save(vm.manifest.jmlKemasan)"/>
-                            </div>
-                            <div class="input-group" hflex="3">
-                                <combobox style="width:100%"
-                                          constraint="no empty"  
-                                          value="@save(vm.manifest.satuanKemasan)">
+                        <vlayout>
+                            
+                        
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Kemasan 1
+                                    </span>
+                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@save(vm.manifest.jmlKemasan)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <combobox style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              hflex="3"
+                                              value="@save(vm.manifest.satuanKemasan)">
+                                        <attribute name="onCreate">
+                                            self.setSelectedIndex(0);
+                                        </attribute>
+                                        <comboitem label="Drum Logam"/>
+                                        <comboitem label="Pallet"/>
+                                        <comboitem label="Unit"/>
+                                        <comboitem label="Pcs"/>
+                                        <comboitem label="Tin"/>
+                                        <comboitem label="Box"/>
+                                        <comboitem label="R.O Container"/>
+                                        <comboitem label="Kemasan Karton atau plastik"/>
+                                        <comboitem label="Drum Plastik"/>
+                                        <comboitem label="Karung Kain, plastik, kertas"/>
+                                        <comboitem label="Silinder"/>
+                                        <comboitem label="Tangki"/>
+                                        <comboitem label="Gerbong Barang"/>
+                                        <comboitem label="Wheel Bin"/>
+                                        <comboitem label="Jumbo Bag"/>
+                                        <comboitem label="IBC Tank"/>
+                                        <comboitem label="Wadah Hopper"/>
+                                        <comboitem label="Box Besi"/>
+                                        <comboitem label="Tanpa Kemasan"/>
+                                        <comboitem label="Drum kayu"/>
+                                        <comboitem label="Jerycan"/>
+                                        <comboitem label="Multibox/IBC Box"/>
+                                    </combobox>
+                                </div>
+                                <!--<separator hflex="1"/>-->
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Kemasan 2
+                                    </span>
+                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@save(vm.manifest.jmlKemasan2)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <combobox style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              hflex="3"
+                                              value="@save(vm.manifest.satuanKemasan2)">
+                                        <attribute name="onCreate">
+                                            self.setSelectedIndex(4);
+                                        </attribute>
+                                        <comboitem label="Drum Logam"/>
+                                        <comboitem label="Pallet"/>
+                                        <comboitem label="Unit"/>
+                                        <comboitem label="Pcs"/>
+                                        <comboitem label="Tin"/>
+                                        <comboitem label="Box"/>
+                                        <comboitem label="R.O Container"/>
+                                        <comboitem label="Kemasan Karton atau plastik"/>
+                                        <comboitem label="Drum Plastik"/>
+                                        <comboitem label="Karung Kain, plastik, kertas"/>
+                                        <comboitem label="Silinder"/>
+                                        <comboitem label="Tangki"/>
+                                        <comboitem label="Gerbong Barang"/>
+                                        <comboitem label="Wheel Bin"/>
+                                        <comboitem label="Jumbo Bag"/>
+                                        <comboitem label="IBC Tank"/>
+                                        <comboitem label="Wadah Hopper"/>
+                                        <comboitem label="Box Besi"/>
+                                        <comboitem label="Tanpa Kemasan"/>
+                                        <comboitem label="Drum kayu"/>
+                                        <comboitem label="Jerycan"/>
+                                        <comboitem label="Multibox/IBC Box"/>
+                                    </combobox>
+                                </div>
+                            </hlayout>
+                            <hlayout width="100%">
+                                
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Kemasan 3
+                                    </span>
+                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@save(vm.manifest.jmlKemasan3)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <combobox style="width:100%;height:100%"
+                                              hflex="3"
+                                              constraint="no empty"  
+                                              value="@save(vm.manifest.satuanKemasan3)">
+                                        <attribute name="onCreate">
+                                            self.setSelectedIndex(4);
+                                        </attribute>
+                                        <comboitem label="Drum Logam"/>
+                                        <comboitem label="Pallet"/>
+                                        <comboitem label="Unit"/>
+                                        <comboitem label="Pcs"/>
+                                        <comboitem label="Tin"/>
+                                        <comboitem label="Box"/>
+                                        <comboitem label="R.O Container"/>
+                                        <comboitem label="Kemasan Karton atau plastik"/>
+                                        <comboitem label="Drum Plastik"/>
+                                        <comboitem label="Karung Kain, plastik, kertas"/>
+                                        <comboitem label="Silinder"/>
+                                        <comboitem label="Tangki"/>
+                                        <comboitem label="Gerbong Barang"/>
+                                        <comboitem label="Wheel Bin"/>
+                                        <comboitem label="Jumbo Bag"/>
+                                        <comboitem label="IBC Tank"/>
+                                        <comboitem label="Wadah Hopper"/>
+                                        <comboitem label="Box Besi"/>
+                                        <comboitem label="Tanpa Kemasan"/>
+                                        <comboitem label="Drum kayu"/>
+                                        <comboitem label="Jerycan"/>
+                                        <comboitem label="Multibox/IBC Box"/>
+                                    </combobox>
+                                </div>
+                                <!--<separator hflex="1"/>-->
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Total berat.
+                                    </span>
+                                    <longbox sclass="form-control input-primary" placeholder="Banyak" value="@save(vm.manifest.jmlBerat)"/>
+                                </div>
+                                <combobox readonly="true" 
+                                          constraint="no empty" 
+                                          style="width:100%;height:100%"
+                                          hflex="3" 
+                                          value="@save(vm.manifest.satuanBerat)">
                                     <attribute name="onCreate">
                                         self.setSelectedIndex(0);
                                     </attribute>
-                                    <comboitem label="Drum Logam"/>
-                                    <comboitem label="Pallet"/>
-                                    <comboitem label="Unit"/>
-                                    <comboitem label="Pcs"/>
-                                    <comboitem label="Tin"/>
-                                    <comboitem label="Box"/>
-                                    <comboitem label="R.O Container"/>
-                                    <comboitem label="Kemasan Karton atau plastik"/>
-                                    <comboitem label="Drum Plastik"/>
-                                    <comboitem label="Karung Kain, plastik, kertas"/>
-                                    <comboitem label="Silinder"/>
-                                    <comboitem label="Tangki"/>
-                                    <comboitem label="Gerbong Barang"/>
-                                    <comboitem label="Wheel Bin"/>
-                                    <comboitem label="Jumbo Bag"/>
-                                    <comboitem label="IBC Tank"/>
-                                    <comboitem label="Wadah Hopper"/>
-                                    <comboitem label="Box Besi"/>
-                                    <comboitem label="Tanpa Kemasan"/>
-                                    <comboitem label="Drum kayu"/>
-                                    <comboitem label="Jerycan"/>
-                                    <comboitem label="Multibox/IBC Box"/>
+                                    <comboitem label="KG"/>
+                                    <comboitem label="Liter"/>
+                                    <comboitem label="Ton"/>
                                 </combobox>
-                            </div>
-                            <space hflex="1"/>
-                            <div class="input-group" hflex="3">
-                                <span class="input-group-addon" >
-                                    Total berat.
-                                </span>
-                                <longbox sclass="form-control input-primary" placeholder="Banyak" value="@save(vm.manifest.jmlBerat)"/>
-                            </div>
-                            <combobox readonly="true" 
-                                      constraint="no empty" 
-                                      style="width:100%;height:100%"
-                                      hflex="3" 
-                                      value="@save(vm.manifest.satuanBerat)">
-                                <attribute name="onCreate">
-                                    self.setSelectedIndex(0);
-                                </attribute>
-                                <comboitem label="KG"/>
-                                <comboitem label="Liter"/>
-                                <comboitem label="Ton"/>
-                            </combobox>
-                        </hlayout>
+                            </hlayout>
+                        </vlayout>
+                        
                     </row>
                             
                     <row>

@@ -31,6 +31,7 @@
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles()=='PENERIMA'||
+                                        sessionScope.userCredential.getRoles()=='AKUNTING'||
                                         sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                            
                                   onClick="@command('changePage', page='page_penerimaan.zul')">
@@ -42,9 +43,18 @@
                                   if="${sessionScope.userCredential.getRoles()=='AKUNTING'||
                                         sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                            
-                                  onClick="@command('changePage', page='page_penerimaan.zul')">
+                                  onClick="@command('changePage', page='page_invoices.zul')">
                             <listcell iconSclass="glyphicon glyphicon-list-alt"/>
                             <listcell label="INVOICES"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='ADMIN'||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                           
+                                  onClick="@command('changePage', page='page_sertifikat.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="SERTIFIKAT"/>
                         </listitem>
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 

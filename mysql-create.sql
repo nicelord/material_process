@@ -45,6 +45,10 @@ create table manifest (
   nama_teknik_limbah        varchar(255),
   satuan_kemasan            varchar(255),
   jml_kemasan               bigint,
+  satuan_kemasan2           varchar(255),
+  jml_kemasan2              bigint,
+  satuan_kemasan3           varchar(255),
+  jml_kemasan3              bigint,
   satuan_berat              varchar(255),
   jml_berat                 bigint,
   nomor_kendaraan           varchar(255),
@@ -75,9 +79,12 @@ create table penanda_tangan (
 
 create table penerimaan (
   id                        bigint auto_increment not null,
-  invoice_id                bigint,
   satuan_kemasan            varchar(255),
   jml_kemasan               bigint,
+  satuan_kemasan2           varchar(255),
+  jml_kemasan2              bigint,
+  satuan_kemasan3           varchar(255),
+  jml_kemasan3              bigint,
   satuan_berat              varchar(255),
   jml_berat                 bigint,
   user_penerima_id          bigint,
@@ -100,11 +107,17 @@ create table prosess_limbah (
   user_penerima_id          bigint,
   tgl_kirim                 datetime,
   tgl_terima                datetime,
-  tgl_selesai               datetime,
+  tgl_proses                datetime,
   satuan_kemasan            varchar(255),
   jml_kemasan               bigint,
+  satuan_kemasan2           varchar(255),
+  jml_kemasan2              bigint,
+  satuan_kemasan3           varchar(255),
+  jml_kemasan3              bigint,
   satuan_berat              varchar(255),
   jml_berat                 bigint,
+  keterangan                varchar(255),
+  nama_limbah               varchar(255),
   constraint pk_prosess_limbah primary key (id))
 ;
 
@@ -124,6 +137,12 @@ create table user (
   constraint pk_user primary key (id))
 ;
 
+
+create table invoice_penerimaan (
+  invoice_id                     bigint not null,
+  penerimaan_id                  bigint not null,
+  constraint pk_invoice_penerimaan primary key (invoice_id, penerimaan_id))
+;
 alter table invoice add constraint fk_invoice_customer_1 foreign key (customer_id) references customer (id) on delete restrict on update restrict;
 create index ix_invoice_customer_1 on invoice (customer_id);
 alter table manifest add constraint fk_manifest_penerimaan_2 foreign key (penerimaan_id) references penerimaan (id) on delete restrict on update restrict;
@@ -138,15 +157,17 @@ alter table manifest add constraint fk_manifest_user_6 foreign key (user_id) ref
 create index ix_manifest_user_6 on manifest (user_id);
 alter table manifest add constraint fk_manifest_userAkunting_7 foreign key (user_akunting_id) references user (id) on delete restrict on update restrict;
 create index ix_manifest_userAkunting_7 on manifest (user_akunting_id);
-alter table penerimaan add constraint fk_penerimaan_invoice_8 foreign key (invoice_id) references invoice (id) on delete restrict on update restrict;
-create index ix_penerimaan_invoice_8 on penerimaan (invoice_id);
-alter table penerimaan add constraint fk_penerimaan_userPenerima_9 foreign key (user_penerima_id) references user (id) on delete restrict on update restrict;
-create index ix_penerimaan_userPenerima_9 on penerimaan (user_penerima_id);
-alter table prosess_limbah add constraint fk_prosess_limbah_penerimaan_10 foreign key (penerimaan_id) references penerimaan (id) on delete restrict on update restrict;
-create index ix_prosess_limbah_penerimaan_10 on prosess_limbah (penerimaan_id);
-alter table prosess_limbah add constraint fk_prosess_limbah_userPengirim_11 foreign key (user_pengirim_id) references user (id) on delete restrict on update restrict;
-create index ix_prosess_limbah_userPengirim_11 on prosess_limbah (user_pengirim_id);
-alter table prosess_limbah add constraint fk_prosess_limbah_userPenerima_12 foreign key (user_penerima_id) references user (id) on delete restrict on update restrict;
-create index ix_prosess_limbah_userPenerima_12 on prosess_limbah (user_penerima_id);
+alter table penerimaan add constraint fk_penerimaan_userPenerima_8 foreign key (user_penerima_id) references user (id) on delete restrict on update restrict;
+create index ix_penerimaan_userPenerima_8 on penerimaan (user_penerima_id);
+alter table prosess_limbah add constraint fk_prosess_limbah_penerimaan_9 foreign key (penerimaan_id) references penerimaan (id) on delete restrict on update restrict;
+create index ix_prosess_limbah_penerimaan_9 on prosess_limbah (penerimaan_id);
+alter table prosess_limbah add constraint fk_prosess_limbah_userPengirim_10 foreign key (user_pengirim_id) references user (id) on delete restrict on update restrict;
+create index ix_prosess_limbah_userPengirim_10 on prosess_limbah (user_pengirim_id);
+alter table prosess_limbah add constraint fk_prosess_limbah_userPenerima_11 foreign key (user_penerima_id) references user (id) on delete restrict on update restrict;
+create index ix_prosess_limbah_userPenerima_11 on prosess_limbah (user_penerima_id);
 
 
+
+alter table invoice_penerimaan add constraint fk_invoice_penerimaan_invoice_01 foreign key (invoice_id) references invoice (id) on delete restrict on update restrict;
+
+alter table invoice_penerimaan add constraint fk_invoice_penerimaan_penerimaan_02 foreign key (penerimaan_id) references penerimaan (id) on delete restrict on update restrict;

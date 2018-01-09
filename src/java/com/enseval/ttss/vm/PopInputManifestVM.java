@@ -112,6 +112,10 @@ public class PopInputManifestVM {
             p.setManifest(this.manifest);
             p.setJmlKemasan(this.manifest.getJmlKemasan());
             p.setSatuanKemasan(this.manifest.getSatuanKemasan());
+            p.setJmlKemasan2(this.manifest.getJmlKemasan2());
+            p.setSatuanKemasan2(this.manifest.getSatuanKemasan2());
+            p.setJmlKemasan3(this.manifest.getJmlKemasan3());
+            p.setSatuanKemasan3(this.manifest.getSatuanKemasan3());
             p.setJmlBerat(this.manifest.getJmlBerat());
             p.setSatuanBerat(this.manifest.getSatuanBerat());
             Ebean.save(p);

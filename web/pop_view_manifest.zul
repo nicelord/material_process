@@ -107,27 +107,49 @@
                             
                     <row>
                         Kemasan
-                        <hlayout width="100%">
-                            <div class="input-group" hflex="3">
-                                <span class="input-group-addon" >
-                                    Qty.
-                                </span>
-                                <longbox readonly="true" sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.manifest.jmlKemasan)"/>
-                                <span class="input-group-addon" >
-                                    <label value="@load(vm.manifest.satuanKemasan)"/>
-                                </span>
-                            </div>
-                            <space hflex="1"/>
-                            <div class="input-group" hflex="3">
-                                <span class="input-group-addon" >
-                                    Total berat.
-                                </span>
-                                <longbox readonly="true" sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.manifest.jmlBerat)"/>
-                                <span class="input-group-addon" >
-                                    <label value="@load(vm.manifest.satuanBerat)"/>
-                                </span>
-                            </div>
-                        </hlayout>
+                        <vlayout>
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Kemasan 1
+                                    </span>
+                                    <longbox readonly="true" sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.manifest.jmlKemasan)"/>
+                                    <span class="input-group-addon" >
+                                        <label value="@load(vm.manifest.satuanKemasan)"/>
+                                    </span>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Kemasan 2
+                                    </span>
+                                    <longbox readonly="true" sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.manifest.jmlKemasan2)"/>
+                                    <span class="input-group-addon" >
+                                        <label value="@load(vm.manifest.satuanKemasan2)"/>
+                                    </span>
+                                </div>
+                            
+                            </hlayout>
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Kemasan 3
+                                    </span>
+                                    <longbox readonly="true" sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.manifest.jmlKemasan3)"/>
+                                    <span class="input-group-addon" >
+                                        <label value="@load(vm.manifest.satuanKemasan3)"/>
+                                    </span>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Total berat.
+                                    </span>
+                                    <longbox readonly="true" sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.manifest.jmlBerat)"/>
+                                    <span class="input-group-addon" >
+                                        <label value="@load(vm.manifest.satuanBerat)"/>
+                                    </span>
+                                </div>
+                            </hlayout>
+                        </vlayout>
                     </row>
                             
                     <row>

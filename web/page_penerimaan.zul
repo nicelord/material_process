@@ -76,7 +76,7 @@
                         <auxheader colspan="8" label="DATA PENERIMAAN"/>
                         <auxheader colspan="4"
                                    if="${sessionScope.userCredential.getRoles()!='AKUNTING'}" 
-                                    label="STATUS PROSES LIMBAH"/>
+                                   label="STATUS PROSES LIMBAH"/>
                     </auxhead>
                 
                     <listhead sizable="true" visible="true" >
@@ -91,7 +91,7 @@
                         <listheader 
                             if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                             sort="auto(jmlBerat)" 
-                            label="NOMOR INVOICE"/>
+                            label="INVOICES"/>
                         <listheader 
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                             sort="" 
@@ -105,7 +105,7 @@
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                             sort="" 
                             label="USER PENERIMA"/>
-                        <listheader label=""/>
+                        <listheader label="MANIFEST"/>
                     </listhead>
                 
                     <template name="model" var="s">
@@ -122,6 +122,8 @@
                         
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))"/>
+                                <label if="${s.jmlKemasan2 ne 0}" value="@load(' + '.concat(s.jmlKemasan2).concat(' ').concat(s.satuanKemasan2))"/>
+                                <label if="${s.jmlKemasan3 ne 0}" value="@load(' + '.concat(s.jmlKemasan3).concat(' ').concat(s.satuanKemasan3))"/>
                             </listcell>
                         
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
@@ -134,7 +136,14 @@
                             <listcell 
                                 if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.invoice.nomorInvoice)"/>
+                                <label 
+                                    if="${s.invoices.isEmpty()}"
+                                    sclass="label label-warning" value="belum ada invoice"/>
+                                
+                                <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" label="" 
+                                            onClick="@command('showInvoices',penerimaan=s)"
+                                            if="${!s.invoices.isEmpty()}"/>
+                            
                             </listcell>                           
                             <listcell 
                                 if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
@@ -185,7 +194,7 @@
                         <listfooter span="9" valign="middle">
                             <div style="float:left;">
                                 
-                                <button onClick="@command('showFormInvoice')" iconSclass="glyphicon glyphicon-download-alt" label="CETAK INVOICE" 
+                                <button onClick="@command('showFormInvoice')" iconSclass="glyphicon glyphicon-list-alt" label="BUAT INVOICE" 
                                         if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                                 </button>
                             </div>

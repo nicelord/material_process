@@ -35,7 +35,9 @@ public class Invoice implements Serializable {
     Date tglInvoice = new Date();
     @ManyToOne
     Customer customer;
-    @OneToMany(mappedBy = "invoice")
+    
+    
+    @ManyToMany
     List<Penerimaan> listPenerimaan;
     
     String ccPerson = "";

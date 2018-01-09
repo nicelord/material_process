@@ -90,6 +90,8 @@
                         
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))"/>
+                                <label if="${s.jmlKemasan2 ne 0}" value="@load(' + '.concat(s.jmlKemasan2).concat(' ').concat(s.satuanKemasan2))"/>
+                                <label if="${s.jmlKemasan3 ne 0}" value="@load(' + '.concat(s.jmlKemasan3).concat(' ').concat(s.satuanKemasan3))"/>
                             </listcell>
                         
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
@@ -221,12 +223,12 @@
                                                             <span class="glyphicon glyphicon-calendar"></span> 
                                                         </span>
                                                         <datebox cols="12" 
-                                                                format="dd-MM-yyyy"
-                                                                readonly="true"
-                                                                style="height:30px;"
-                                                                hflex="3"
-                                                                buttonVisible="false"
-                                                                value="@load(vm.selectedManifest.tglBuat)"/>
+                                                                 format="dd-MM-yyyy"
+                                                                 readonly="true"
+                                                                 style="height:30px;"
+                                                                 hflex="3"
+                                                                 buttonVisible="false"
+                                                                 value="@load(vm.selectedManifest.tglBuat)"/>
                                                     </div> 
                                                     <div class="input-group" hflex="3">
                                                         <span class="input-group-addon">
@@ -299,11 +301,31 @@
                                                 <hlayout width="100%">
                                                     <div class="input-group" hflex="3">
                                                         <span class="input-group-addon">
-                                                            Qty.
+                                                            Kemasan 1
                                                         </span>
                                                         <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.jmlKemasan)"/>
                                                         <span class="input-group-addon">
                                                             <label value="@load(vm.selectedManifest.satuanKemasan)"/>
+                                                        </span>
+                                                    </div>
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            Kemasan 2
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.jmlKemasan2)"/>
+                                                        <span class="input-group-addon">
+                                                            <label value="@load(vm.selectedManifest.satuanKemasan2)"/>
+                                                        </span>
+                                                    </div>
+                                                </hlayout>
+                                                <hlayout>
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
+                                                            Kemasan 3
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.jmlKemasan3)"/>
+                                                        <span class="input-group-addon">
+                                                            <label value="@load(vm.selectedManifest.satuanKemasan3)"/>
                                                         </span>
                                                     </div>
                                                     <div class="input-group" hflex="3">
@@ -338,12 +360,12 @@
                                                             Tgl angkut.
                                                         </span>
                                                         <datebox cols="12" 
-                                                            format="dd-MM-yyyy" 
-                                                            readonly="true"
-                                                            style="height:30px;"
-                                                            hflex="3"
-                                                            buttonVisible="false"
-                                                            value="@load(vm.selectedManifest.tglAngkut)"/>
+                                                                 format="dd-MM-yyyy" 
+                                                                 readonly="true"
+                                                                 style="height:30px;"
+                                                                 hflex="3"
+                                                                 buttonVisible="false"
+                                                                 value="@load(vm.selectedManifest.tglAngkut)"/>
                                                     </div>
                                                 </hlayout>
                                                 <separator/>
@@ -422,12 +444,12 @@
                                                             <span class="glyphicon glyphicon-calendar"></span> 
                                                         </span>
                                                         <datebox cols="12" 
-                                                                format="dd-MM-yyyy" 
-                                                                readonly="true"
-                                                                style="height:30px;"
-                                                                hflex="3"
-                                                                buttonVisible="false"
-                                                                value="@load(vm.selectedManifest.penerimaan.tglPenerimaan)"/>
+                                                                 format="dd-MM-yyyy" 
+                                                                 readonly="true"
+                                                                 style="height:30px;"
+                                                                 hflex="3"
+                                                                 buttonVisible="false"
+                                                                 value="@load(vm.selectedManifest.penerimaan.tglPenerimaan)"/>
                                                     </div> 
                                                     <div class="input-group" hflex="3">
                                                         <span class="input-group-addon">
@@ -451,17 +473,17 @@
                             <foot>
                                 <footer>
                                     <hlayout>
-<!--                                        <button onClick="@command('approve')" hflex="3" sclass="btn-success" iconSclass="glyphicon glyphicon-ok" label="APPROVE" 
-                                                disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.statusApproval ne 'pending')"
-                                                if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
-                                        <button onClick="@command('showRejectNote')" hflex="3" sclass="btn-danger" iconSclass="glyphicon glyphicon-remove" label="REJECT" 
-                                                disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.statusApproval ne 'pending')"
-                                                if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>-->
+                                        <!--                                        <button onClick="@command('approve')" hflex="3" sclass="btn-success" iconSclass="glyphicon glyphicon-ok" label="APPROVE" 
+                                        disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.statusApproval ne 'pending')"
+                                        if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                <button onClick="@command('showRejectNote')" hflex="3" sclass="btn-danger" iconSclass="glyphicon glyphicon-remove" label="REJECT" 
+                                        disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.statusApproval ne 'pending')"
+                                        if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>-->
                                         <button onClick="@command('revisiManifest', manifest=vm.selectedManifest)" hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-edit" label="REVISI" 
-                                                disabled="@load(vm.selectedManifest eq null || (vm.selectedManifest.statusApproval eq 'approved' and vm.selectedManifest.penerimaan.isRevisi ne 'true'))"
+                                                disabled="@load(vm.selectedManifest eq null)"
                                                 if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                                         <button onClick="@command('cetakManifest')" hflex="3" sclass="" iconSclass="glyphicon glyphicon-print" label="CETAK DOKUMEN MANIFEST" 
-                                                disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.statusApproval ne 'approved')"
+                                                disabled="@load(vm.selectedManifest eq null)"
                                                 if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                                         <button onClick="@command('showWinPenerimaan')" hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-saved" label="TERIMA LIMBAH" 
                                                 disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.penerimaan.isDiterima eq 'true')"

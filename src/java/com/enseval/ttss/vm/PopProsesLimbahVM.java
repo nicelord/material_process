@@ -51,6 +51,10 @@ public class PopProsesLimbahVM {
             this.prosesLimbah.setNamaLimbah(this.penerimaan.getManifest().getNamaTeknikLimbah());
             this.prosesLimbah.setSatuanKemasan(this.penerimaan.getManifest().getSatuanKemasan());
             this.prosesLimbah.setJmlKemasan(this.penerimaan.getManifest().getJmlKemasan());
+            this.prosesLimbah.setSatuanKemasan2(this.penerimaan.getManifest().getSatuanKemasan2());
+            this.prosesLimbah.setJmlKemasan2(this.penerimaan.getManifest().getJmlKemasan2());
+            this.prosesLimbah.setSatuanKemasan3(this.penerimaan.getManifest().getSatuanKemasan3());
+            this.prosesLimbah.setJmlKemasan3(this.penerimaan.getManifest().getJmlKemasan3());
             this.prosesLimbah.setSatuanBerat(this.penerimaan.getManifest().getSatuanBerat());
             this.prosesLimbah.setJmlBerat(this.penerimaan.getManifest().getJmlBerat());
         }

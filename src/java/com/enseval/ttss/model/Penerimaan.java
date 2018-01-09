@@ -27,11 +27,13 @@ import javax.persistence.Transient;
 @Entity
 public class Penerimaan implements Serializable {
 
+    @ManyToMany(mappedBy = "listPenerimaan")
+    private List<Invoice> invoices;
+
     @OneToMany(mappedBy = "penerimaan")
     private List<ProsessLimbah> prosessLimbahs;
 
-    @ManyToOne
-    private Invoice invoice;
+    
 
     @OneToOne(mappedBy = "penerimaan")
     private Manifest manifest;
@@ -41,6 +43,13 @@ public class Penerimaan implements Serializable {
     
     String satuanKemasan = "";
     Long jmlKemasan = 0L;
+    
+    String satuanKemasan2 = "";
+    Long jmlKemasan2 = 0L;
+    
+    String satuanKemasan3 = "";
+    Long jmlKemasan3 = 0L;
+    
     String satuanBerat = "";
     Long jmlBerat = 0L;
     
@@ -174,13 +183,15 @@ public class Penerimaan implements Serializable {
         this.jmlBerat = jmlBerat;
     }
 
-    public Invoice getInvoice() {
-        return invoice;
+    public List<Invoice> getInvoices() {
+        return invoices;
     }
 
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
     }
+
+ 
 
     public Long getHargaSatuanInvoice() {
         return hargaSatuanInvoice;
@@ -196,6 +207,38 @@ public class Penerimaan implements Serializable {
 
     public void setProsessLimbahs(List<ProsessLimbah> prosessLimbahs) {
         this.prosessLimbahs = prosessLimbahs;
+    }
+
+    public String getSatuanKemasan2() {
+        return satuanKemasan2;
+    }
+
+    public void setSatuanKemasan2(String satuanKemasan2) {
+        this.satuanKemasan2 = satuanKemasan2;
+    }
+
+    public Long getJmlKemasan2() {
+        return jmlKemasan2;
+    }
+
+    public void setJmlKemasan2(Long jmlKemasan2) {
+        this.jmlKemasan2 = jmlKemasan2;
+    }
+
+    public String getSatuanKemasan3() {
+        return satuanKemasan3;
+    }
+
+    public void setSatuanKemasan3(String satuanKemasan3) {
+        this.satuanKemasan3 = satuanKemasan3;
+    }
+
+    public Long getJmlKemasan3() {
+        return jmlKemasan3;
+    }
+
+    public void setJmlKemasan3(Long jmlKemasan3) {
+        this.jmlKemasan3 = jmlKemasan3;
     }
 
  

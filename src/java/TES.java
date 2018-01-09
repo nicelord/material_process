@@ -36,6 +36,13 @@ public class TES {
         u.setAkses("PENERIMA");
         u.setNama("p");
         Ebean.save(u);
+        
+        u = new User();
+        u.setUsername("g1");
+        u.setPassword("g1");
+        u.setAkses("GUDANG 1");
+        u.setNama("g1");
+        Ebean.save(u);
 
         
         

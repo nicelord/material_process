@@ -83,7 +83,7 @@ public class PopBuatInvoiceVM {
         try {
             Ebean.save(this.invoice);
             for (Penerimaan penerimaan : listPenerimaan) {
-                penerimaan.setInvoice(invoice);
+                penerimaan.getInvoices().add(invoice);
                 Ebean.save(penerimaan);
             }
             BindUtils.postGlobalCommand(null, null, "refresh", null);

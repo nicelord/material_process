@@ -35,10 +35,20 @@ public class Manifest implements Serializable {
     Customer customerPenghasil;
     @ManyToOne
     JenisLimbah jenisLimbah;
+    
     String karakteristikLimbah = "";
     String namaTeknikLimbah;
+    
     String satuanKemasan = "Drum Logam";
     Long jmlKemasan = 0L;
+    
+    String satuanKemasan2 = "Tin";
+    Long jmlKemasan2 = 0L;
+    
+    String satuanKemasan3 = "Tin";
+    Long jmlKemasan3 = 0L;
+    
+    
     String satuanBerat = "KG";
     Long jmlBerat = 0L;
     String nomorKendaraan = "";
@@ -246,6 +256,38 @@ public class Manifest implements Serializable {
 
     public void setNamaDriver(String namaDriver) {
         this.namaDriver = namaDriver.toUpperCase();
+    }
+
+    public String getSatuanKemasan2() {
+        return satuanKemasan2;
+    }
+
+    public void setSatuanKemasan2(String satuanKemasan2) {
+        this.satuanKemasan2 = satuanKemasan2;
+    }
+
+    public Long getJmlKemasan2() {
+        return jmlKemasan2;
+    }
+
+    public void setJmlKemasan2(Long jmlKemasan2) {
+        this.jmlKemasan2 = jmlKemasan2;
+    }
+
+    public String getSatuanKemasan3() {
+        return satuanKemasan3;
+    }
+
+    public void setSatuanKemasan3(String satuanKemasan3) {
+        this.satuanKemasan3 = satuanKemasan3;
+    }
+
+    public Long getJmlKemasan3() {
+        return jmlKemasan3;
+    }
+
+    public void setJmlKemasan3(Long jmlKemasan3) {
+        this.jmlKemasan3 = jmlKemasan3;
     }
 
 }
