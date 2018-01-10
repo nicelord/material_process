@@ -19,7 +19,7 @@ public class TES {
         u = new User();
         u.setUsername("ak");
         u.setPassword("ak");
-        u.setAkses("AKUNTANSI");
+        u.setAkses("AKUNTING");
         u.setNama("ak");
         Ebean.save(u);
         

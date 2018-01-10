@@ -1,0 +1,70 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        text-transform:uppercase;
+        
+        }
+     
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        
+        
+        }
+        
+       
+    </style>
+
+    <window id="pop_list_invoice" 
+            style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
+            position="center,top" 
+            mode="modal" 
+            width="800px" 
+            vflex="1" 
+            title="LIST INVOICE TERKAIT" 
+            border="normal" 
+            closable="true" 
+            apply="org.zkoss.bind.BindComposer" 
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PopListInvoiceVM')">
+        
+        
+        
+        <listbox id="list_manifest" mold="paging" width="100%" vflex="true"
+                 pageSize="10"
+                 emptyMessage="Tidak ada data"
+                 model="@load(vm.listInvoice)">   
+            
+            <auxhead>
+                <auxheader colspan="5">
+                    <label pre="true" value="@load('item-item yang sudah diterima pada manifest '.concat(vm.penerimaan.manifest.kodeManifest).concat(' terbagi dalam invoice-invoice berikut'))"/>
+                </auxheader>
+            
+            </auxhead>
+                
+            <listhead sizable="true" visible="true" >
+                <listheader label="NOMOR INVOICE" />
+                <listheader label="CUSTOMER" />
+                <listheader label="INVOICE DATE" />
+                <listheader label="TOTAL NILAI" />
+                <listheader />
+            </listhead>
+                
+            <template name="model" var="s">
+                <listitem sclass="mainList">
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.nomorInvoice)"/>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.customer.nama)"/>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.tglInvoice) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(vm.format(s.getTotalNilai()))"/>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <button vflex="3" hflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="DETAIL" 
+                                onClick="@command('showDetailInvoice',invoice=s)"/>
+                    </listcell>
+                </listitem>
+            </template>                     
+        </listbox>
+       
+    </window>
+</zk>

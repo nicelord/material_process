@@ -28,29 +28,40 @@ public class Invoice implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     String nomorInvoice;
-    String userLogin;
+    @ManyToOne
+    User userLogin;
     @Temporal(TemporalType.DATE)
     Date tglInvoice = new Date();
     @ManyToOne
     Customer customer;
-    
+
     @OneToMany(mappedBy = "invoice")
     List<InvoiceItem> listInvoiceItem;
-    
+
     @ManyToMany
     List<Penerimaan> listPenerimaan;
-    
+
     String ccPerson = "";
     String ccDept = "";
     int tax = 0;
     String term = "30 Days";
-    String gatePass = "";
     @Temporal(TemporalType.DATE)
     Date tglAngkut;
     String nmrKendaraan = "";
     String sial = "";
+
+    String nomorPo = "";
+    String nomorDo = "";
+    String nomorSpkWo = "";
+
+    String keterangan = "";
+
+    public Long getTotalNilai() {
+        Long total = listInvoiceItem.stream().mapToLong((InvoiceItem item) -> item.getHargaSatuan()).sum();
+        return total - ((total / 100) * this.getTax());
+    }
 
     public String getNomorInvoice() {
         return nomorInvoice;
@@ -60,12 +71,20 @@ public class Invoice implements Serializable {
         this.nomorInvoice = nomorInvoice;
     }
 
-    public String getUserLogin() {
+    public User getUserLogin() {
         return userLogin;
     }
 
-    public void setUserLogin(String userLogin) {
+    public void setUserLogin(User userLogin) {
         this.userLogin = userLogin;
+    }
+
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
     }
 
     public Date getTglInvoice() {
@@ -132,12 +151,28 @@ public class Invoice implements Serializable {
         this.term = term;
     }
 
-    public String getGatePass() {
-        return gatePass;
+    public String getNomorPo() {
+        return nomorPo;
     }
 
-    public void setGatePass(String gatePass) {
-        this.gatePass = gatePass;
+    public void setNomorPo(String nomorPo) {
+        this.nomorPo = nomorPo;
+    }
+
+    public String getNomorDo() {
+        return nomorDo;
+    }
+
+    public void setNomorDo(String nomorDo) {
+        this.nomorDo = nomorDo;
+    }
+
+    public String getNomorSpkWo() {
+        return nomorSpkWo;
+    }
+
+    public void setNomorSpkWo(String nomorSpkWo) {
+        this.nomorSpkWo = nomorSpkWo;
     }
 
     public Date getTglAngkut() {
@@ -171,7 +206,5 @@ public class Invoice implements Serializable {
     public void setListInvoiceItem(List<InvoiceItem> listInvoiceItem) {
         this.listInvoiceItem = listInvoiceItem;
     }
-    
-    
 
 }

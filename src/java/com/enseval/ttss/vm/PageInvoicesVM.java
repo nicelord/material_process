@@ -6,6 +6,9 @@ import com.enseval.ttss.model.Manifest;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,6 +55,17 @@ public class PageInvoicesVM {
     @NotifyChange({"listInvoice"})
     public void refresh() {
         
+    }
+    
+    @Command
+    public String format(final long nilai) {
+        final DecimalFormat kursIndonesia = (DecimalFormat) NumberFormat.getCurrencyInstance();
+        final DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        return kursIndonesia.format(nilai);
     }
 
     public List<Invoice> getListInvoice() {

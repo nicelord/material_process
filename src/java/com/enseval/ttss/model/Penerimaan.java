@@ -66,7 +66,6 @@ public class Penerimaan implements Serializable {
     
     boolean isRevisi = false;
     
-    Long hargaSatuanInvoice = 0L;
     
     public ProsessLimbah getLastProsesLimbah(){
         return this.getProsessLimbahs().get(0);
@@ -181,13 +180,7 @@ public class Penerimaan implements Serializable {
         this.jmlBerat = jmlBerat;
     } 
 
-    public Long getHargaSatuanInvoice() {
-        return hargaSatuanInvoice;
-    }
-
-    public void setHargaSatuanInvoice(Long hargaSatuanInvoice) {
-        this.hargaSatuanInvoice = hargaSatuanInvoice;
-    }
+    
 
     public List<ProsessLimbah> getProsessLimbahs() {
         return prosessLimbahs;
@@ -227,6 +220,14 @@ public class Penerimaan implements Serializable {
 
     public void setJmlKemasan3(Long jmlKemasan3) {
         this.jmlKemasan3 = jmlKemasan3;
+    }
+
+    public List<InvoiceItem> getListInvoiceItem() {
+        return listInvoiceItem;
+    }
+
+    public void setListInvoiceItem(List<InvoiceItem> listInvoiceItem) {
+        this.listInvoiceItem = listInvoiceItem;
     }
 
  

@@ -52,7 +52,7 @@
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
                 
                     <auxhead>
-                        <auxheader colspan="2">
+                        <auxheader colspan="5">
                             <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="BUAT INVOICE" onClick="@command('showFormInvoice')" />
                         </auxheader>
                     </auxhead>
@@ -60,12 +60,18 @@
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
                         <listheader label="NOMOR INVOICE" />
+                        <listheader label="CUSTOMER" />
+                        <listheader label="INVOICE DATE" />
+                        <listheader label="TOTAL NILAI" />
                     </listhead>
                 
                     <template name="model" var="s">
                         <listitem sclass="mainList" onClick="@command('showDetail', invoice=s)">
                             <listcell />
-                            <listcell />
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.nomorInvoice)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.customer.nama)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.tglInvoice) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(vm.format(s.getTotalNilai()))"/>
                         </listitem>
                     </template>
                 

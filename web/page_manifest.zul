@@ -281,7 +281,7 @@
                                                 <hlayout width="100%">
                                                     <div class="input-group" hflex="3">
                                                         <span class="input-group-addon">
-                                                            Kode Jenis.
+                                                            Kode Limbah.
                                                         </span>
                                                         <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.jenisLimbah.kodeJenis)"/>
                                                     </div>

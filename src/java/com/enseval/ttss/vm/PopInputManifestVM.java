@@ -108,7 +108,16 @@ public class PopInputManifestVM {
         try {
 
             if (this.manifest.getPenerimaan() != null) {
-
+                
+                this.manifest.getPenerimaan().setJmlKemasan(this.manifest.getJmlKemasan());
+                this.manifest.getPenerimaan().setJmlKemasan2(this.manifest.getJmlKemasan2());
+                this.manifest.getPenerimaan().setJmlKemasan3(this.manifest.getJmlKemasan3());
+                this.manifest.getPenerimaan().setSatuanKemasan(this.manifest.getSatuanKemasan());
+                this.manifest.getPenerimaan().setSatuanKemasan2(this.manifest.getSatuanKemasan2());
+                this.manifest.getPenerimaan().setSatuanKemasan3(this.manifest.getSatuanKemasan3());
+                this.manifest.getPenerimaan().setJmlBerat(this.manifest.getJmlBerat());
+                this.manifest.getPenerimaan().setSatuanBerat(this.manifest.getSatuanBerat());
+                Ebean.update(this.manifest.getPenerimaan());
                 Ebean.update(this.manifest);
 
             } else {

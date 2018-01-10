@@ -36,6 +36,8 @@ public class InvoiceItem implements Serializable {
     
     int kemasanKe;
     
+    String transportDetail = "";
+    
     
 
     @Id @GeneratedValue
@@ -111,6 +113,14 @@ public class InvoiceItem implements Serializable {
 
     public void setKemasanKe(int kemasanKe) {
         this.kemasanKe = kemasanKe;
+    }
+
+    public String getTransportDetail() {
+        return transportDetail;
+    }
+
+    public void setTransportDetail(String transportDetail) {
+        this.transportDetail = transportDetail;
     }
     
 }

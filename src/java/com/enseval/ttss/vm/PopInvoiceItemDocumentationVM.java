@@ -13,7 +13,11 @@ import com.enseval.ttss.model.Manifest;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +25,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.persistence.Temporal;
+import org.jfree.date.DateUtilities;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
@@ -45,11 +50,14 @@ public class PopInvoiceItemDocumentationVM {
     Window winPopManifestDocumentation;
 
     List<Penerimaan> listPenerimaan;
-    
-    String filterManifest = "";
-    
+
+    List<Penerimaan> listPenerimaan2;
+
+    String filterManifest = "", filterLimbah = "";
+
     Invoice invoice;
-   
+
+    Date tsAwal, tsAkhir;
 
     @AfterCompose
     public void initSetup(@ContextParam(ContextType.VIEW) final Component view,
@@ -60,8 +68,8 @@ public class PopInvoiceItemDocumentationVM {
                 .where().eq("manifest.customerPenghasil.nama", this.invoice.getCustomer().getNama())
                 .findList();
         Selectors.wireComponents(view, (Object) this, false);
-        
-        
+        this.listPenerimaan2 = this.listPenerimaan;
+
     }
 
     @Command
@@ -73,19 +81,54 @@ public class PopInvoiceItemDocumentationVM {
         this.winPopManifestDocumentation.detach();
 
     }
-    
+
     @Command
     @NotifyChange({"listPenerimaan"})
-    public void saring(){
-       
-//        this.listTemporalItem = listTemporalItem2.stream().filter(l -> 
-//                l.getKodeManifest().toLowerCase().contains(filterManifest.toLowerCase()) && 
-//                        l.getNamaTeknik().toLowerCase().contains(filterNamaLimbah.toLowerCase()) &&
-//                        l.getSatuanKemasan().toLowerCase().contains(filterSatuanKemasan.toLowerCase())).collect(Collectors.toList());
-    
+    public void saring() {
+
+        resetSaringTgl();
+        if (!this.filterManifest.isEmpty() || !this.filterLimbah.isEmpty()) {
+
+            this.listPenerimaan = listPenerimaan2.stream().filter(p
+                    -> p.getManifest().getKodeManifest().toLowerCase().contains(this.filterManifest.toLowerCase())
+                    && p.getManifest().getNamaTeknikLimbah().toLowerCase().contains(this.filterLimbah.toLowerCase()))
+                    .collect(Collectors.toList());
+        } else {
+            this.listPenerimaan = Ebean.find(Penerimaan.class)
+                    .where().eq("statusPenerimaan", "diterima")
+                    .where().eq("manifest.customerPenghasil.nama", this.invoice.getCustomer().getNama())
+                    .findList();
+        }
+
     }
 
-    
+    @Command
+    @NotifyChange({"listPenerimaan"})
+    public void saringTgl() {
+        if (tsAwal != null && tsAkhir != null) {
+            this.filterManifest = "";
+            this.filterLimbah = "";
+
+            LocalDateTime localDateTimeAwal = this.tsAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            LocalDateTime localDateTimeAkhir = this.tsAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            this.listPenerimaan = listPenerimaan2.stream().filter(p
+                    -> p.getManifest().getTglAngkut().after(Date.from(localDateTimeAwal.minusDays(1).atZone(ZoneId.systemDefault()).toInstant())) && p.getManifest().getTglAngkut().before(Date.from(localDateTimeAkhir.plusDays(1).atZone(ZoneId.systemDefault()).toInstant())))
+                    .collect(Collectors.toList());
+        }
+
+    }
+
+    @Command
+    @NotifyChange({"listPenerimaan"})
+    public void resetSaringTgl() {
+        this.tsAwal = null;
+        this.tsAkhir = null;
+        this.listPenerimaan = Ebean.find(Penerimaan.class)
+                .where().eq("statusPenerimaan", "diterima")
+                .where().eq("manifest.customerPenghasil.nama", this.invoice.getCustomer().getNama())
+                .findList();
+    }
+
     public List<Penerimaan> getListPenerimaan() {
         return listPenerimaan;
     }
@@ -118,6 +161,36 @@ public class PopInvoiceItemDocumentationVM {
         this.invoice = invoice;
     }
 
-    
+    public String getFilterLimbah() {
+        return filterLimbah;
+    }
+
+    public void setFilterLimbah(String filterLimbah) {
+        this.filterLimbah = filterLimbah;
+    }
+
+    public List<Penerimaan> getListPenerimaan2() {
+        return listPenerimaan2;
+    }
+
+    public void setListPenerimaan2(List<Penerimaan> listPenerimaan2) {
+        this.listPenerimaan2 = listPenerimaan2;
+    }
+
+    public Date getTsAwal() {
+        return tsAwal;
+    }
+
+    public void setTsAwal(Date tsAwal) {
+        this.tsAwal = tsAwal;
+    }
+
+    public Date getTsAkhir() {
+        return tsAkhir;
+    }
+
+    public void setTsAkhir(Date tsAkhir) {
+        this.tsAkhir = tsAkhir;
+    }
 
 }

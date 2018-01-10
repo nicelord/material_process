@@ -50,10 +50,12 @@ public class PopInvoiceItemDisposalVM {
     Invoice invoice;
 
     int jmlKemasan;
-    
+
     String filterManifest = "", filterNamaLimbah = "", filterSatuanKemasan = "";
-    
+
     List<TemporalItem> listTemporalItem2 = new ArrayList<>();
+
+    List<InvoiceItem> listInvoiceItem = new ArrayList<>();
 
     @AfterCompose
     public void initSetup(@ContextParam(ContextType.VIEW) final Component view,
@@ -61,71 +63,104 @@ public class PopInvoiceItemDisposalVM {
 
         this.invoice = invoice;
         this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("statusPenerimaan", "diterima").where().eq("manifest.customerPenghasil.nama", this.invoice.getCustomer().getNama()).findList();
-        
+
+        this.listInvoiceItem = Ebean.find(InvoiceItem.class)
+                .where().eq("jenisItem", "disposal cost")
+                .findList();
+
         for (Penerimaan penerimaan : listPenerimaan) {
-            for(InvoiceItem item : this.invoice.getListInvoiceItem()){
-                
-                if(item.getPenerimaan().getManifest().getKodeManifest().equals(penerimaan.getManifest().getKodeManifest())){
-                    if(item.getKemasanKe()==1){
-                        penerimaan.setJmlKemasan(penerimaan.getJmlKemasan()-item.getJmlKemasan());
-                    }
-                    if(item.getKemasanKe()==2){
-                        penerimaan.setJmlKemasan2(penerimaan.getJmlKemasan2()-item.getJmlKemasan());
-                    }
-                    if(item.getKemasanKe()==3){
-                        penerimaan.setJmlKemasan3(penerimaan.getJmlKemasan3()-item.getJmlKemasan());
+            for (InvoiceItem item : this.invoice.getListInvoiceItem()) {
+                if (item.getJenisItem().equals("disposal cost")) {
+                    if (item.getPenerimaan().getManifest().getKodeManifest().equals(penerimaan.getManifest().getKodeManifest())) {
+                        if (item.getKemasanKe() == 1) {
+                            penerimaan.setJmlKemasan(penerimaan.getJmlKemasan() - item.getJmlKemasan());
+                        }
+                        if (item.getKemasanKe() == 2) {
+                            penerimaan.setJmlKemasan2(penerimaan.getJmlKemasan2() - item.getJmlKemasan());
+                        }
+                        if (item.getKemasanKe() == 3) {
+                            penerimaan.setJmlKemasan3(penerimaan.getJmlKemasan3() - item.getJmlKemasan());
+                        }
                     }
                 }
             }
-            
-            if (penerimaan.getJmlKemasan() != 0) {
+
+            Long invoicedItem1 = 0L;
+            try {
+                invoicedItem1 = Ebean.find(InvoiceItem.class)
+                        .where().eq("jenisItem", "disposal cost")
+                        .where().eq("penerimaan", penerimaan)
+                        .where().eq("kemasanKe", 1)
+                        .findUnique().getJmlKemasan();
+            } catch (Exception e) {
+            }
+
+            if (penerimaan.getJmlKemasan() - invoicedItem1 != 0) {
                 TemporalItem ti = new TemporalItem();
                 ti.setKodeManifest(penerimaan.getManifest().getKodeManifest());
-                ti.setJmlKemasan(penerimaan.getJmlKemasan());
+                ti.setJmlKemasan(penerimaan.getJmlKemasan() - invoicedItem1);
                 ti.setSatuanKemasan(penerimaan.getSatuanKemasan());
                 ti.setNamaTeknik(penerimaan.getManifest().getNamaTeknikLimbah());
                 ti.setKemasanKe(1);
-                for (int i = 1; i <= penerimaan.getJmlKemasan(); i++) {
+                for (int i = 1; i <= ti.getJmlKemasan(); i++) {
                     ti.getListJmlKemasan().add(new Long(i));
                 }
                 listTemporalItem.add(ti);
             }
 
-            if (penerimaan.getJmlKemasan2() != 0) {
+            Long invoicedItem2 = 0L;
+            try {
+                invoicedItem2 = Ebean.find(InvoiceItem.class)
+                        .where().eq("jenisItem", "disposal cost")
+                        .where().eq("penerimaan", penerimaan)
+                        .where().eq("kemasanKe", 2)
+                        .findUnique().getJmlKemasan();
+            } catch (Exception e) {
+            }
+
+            if (penerimaan.getJmlKemasan2() - invoicedItem2 != 0) {
                 TemporalItem ti = new TemporalItem();
                 ti.setKodeManifest(penerimaan.getManifest().getKodeManifest());
-                ti.setJmlKemasan(penerimaan.getJmlKemasan2());
+                ti.setJmlKemasan(penerimaan.getJmlKemasan2() - invoicedItem2);
                 ti.setSatuanKemasan(penerimaan.getSatuanKemasan2());
                 ti.setNamaTeknik(penerimaan.getManifest().getNamaTeknikLimbah());
                 ti.setKemasanKe(2);
-                for (int i = 1; i <= penerimaan.getJmlKemasan2(); i++) {
+                for (int i = 1; i <= ti.getJmlKemasan(); i++) {
                     ti.getListJmlKemasan().add(new Long(i));
                 }
                 listTemporalItem.add(ti);
 
             }
-            if (penerimaan.getJmlKemasan3() != 0) {
+
+            Long invoicedItem3 = 0L;
+            try {
+                invoicedItem3 = Ebean.find(InvoiceItem.class)
+                        .where().eq("jenisItem", "disposal cost")
+                        .where().eq("penerimaan", penerimaan)
+                        .where().eq("kemasanKe", 3)
+                        .findUnique().getJmlKemasan();
+            } catch (Exception e) {
+            }
+
+            if (penerimaan.getJmlKemasan3() - invoicedItem3 != 0) {
                 TemporalItem ti = new TemporalItem();
                 ti.setKodeManifest(penerimaan.getManifest().getKodeManifest());
-                ti.setJmlKemasan(penerimaan.getJmlKemasan3());
+                ti.setJmlKemasan(penerimaan.getJmlKemasan3() - invoicedItem3);
                 ti.setSatuanKemasan(penerimaan.getSatuanKemasan3());
                 ti.setNamaTeknik(penerimaan.getManifest().getNamaTeknikLimbah());
                 ti.setKemasanKe(3);
-                for (int i = 1; i <= penerimaan.getJmlKemasan3(); i++) {
+                for (int i = 1; i <= ti.getJmlKemasan(); i++) {
                     ti.getListJmlKemasan().add(new Long(i));
                 }
                 listTemporalItem.add(ti);
             }
 
         }
-        
-        
 
         Selectors.wireComponents(view, (Object) this, false);
-        
+
         this.listTemporalItem2 = this.listTemporalItem;
-        
-        
+
     }
 
     @Command
@@ -137,16 +172,16 @@ public class PopInvoiceItemDisposalVM {
         this.winPopManifestDisposal.detach();
 
     }
-    
+
     @Command
     @NotifyChange({"listTemporalItem"})
-    public void saring(){
-       
-        this.listTemporalItem = listTemporalItem2.stream().filter(l -> 
-                l.getKodeManifest().toLowerCase().contains(filterManifest.toLowerCase()) && 
-                        l.getNamaTeknik().toLowerCase().contains(filterNamaLimbah.toLowerCase()) &&
-                        l.getSatuanKemasan().toLowerCase().contains(filterSatuanKemasan.toLowerCase())).collect(Collectors.toList());
-    
+    public void saring() {
+
+        this.listTemporalItem = listTemporalItem2.stream().filter(l
+                -> l.getKodeManifest().toLowerCase().contains(filterManifest.toLowerCase())
+                && l.getNamaTeknik().toLowerCase().contains(filterNamaLimbah.toLowerCase())
+                && l.getSatuanKemasan().toLowerCase().contains(filterSatuanKemasan.toLowerCase())).collect(Collectors.toList());
+
     }
 
     public Window getWinPopManifestDisposal() {
@@ -274,6 +309,5 @@ public class PopInvoiceItemDisposalVM {
     public void setFilterSatuanKemasan(String filterSatuanKemasan) {
         this.filterSatuanKemasan = filterSatuanKemasan;
     }
-    
 
 }

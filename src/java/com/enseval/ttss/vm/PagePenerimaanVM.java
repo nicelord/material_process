@@ -43,6 +43,13 @@ public class PagePenerimaanVM {
             this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
         } 
     }
+    
+    @Command
+    public void showInvoiceList(@BindingParam("penerimaan") Penerimaan penerimaan){
+        Map m = new HashMap();
+        m.put("penerimaan", penerimaan);
+        Executions.createComponents("pop_list_invoice.zul", (Component) null, m);
+    }
 
     @Command
     @NotifyChange({"listPenerimaan"})

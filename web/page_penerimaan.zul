@@ -81,7 +81,7 @@
                 
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
-                        <listheader sort="auto(manifest.kodeManifest)" label="NMR. MANIFEST" width="100px" />
+                        <listheader sort="auto(manifest.kodeManifest)" label="NO. MANIFEST" width="100px" />
                         <listheader sort="auto(manifest.customerPenghasil.nama)" label="PENGIRIM" width="200px"/>
                         <listheader sort="auto(manifest.jenisLimbah.kodeJenis)" label="KODE LIMBAH"/>
                         <listheader sort="auto(manifest.namaTeknikLimbah)" label="NAMA LIMBAH"/>
@@ -136,13 +136,13 @@
                             <listcell 
                                 if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
-<!--                                <label 
-                                    if="${s.invoices.isEmpty()}"
+                                <label 
+                                    if="${s.listInvoiceItem.isEmpty()}"
                                     sclass="label label-warning" value="belum ada invoice"/>
                                 
-                                <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" label="" 
-                                            onClick="@command('showInvoices',penerimaan=s)"
-                                            if="${!s.invoices.isEmpty()}"/>-->
+                                <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="LIST INVOICE" 
+                                        onClick="@command('showInvoiceList',penerimaan=s)"
+                                        if="${!s.listInvoiceItem.isEmpty()}"/>
                             
                             </listcell>                           
                             <listcell 

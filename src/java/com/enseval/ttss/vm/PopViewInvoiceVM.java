@@ -40,7 +40,7 @@ import org.zkoss.zul.Window;
  *
  * @author asus
  */
-public class PopBuatInvoiceVM {
+public class PopViewInvoiceVM {
 
     @Wire("#pop_buat_invoice")
     private Window winBuatInvoice;
@@ -57,15 +57,19 @@ public class PopBuatInvoiceVM {
     List<Invoice> listNmrKendaraan = new ArrayList<>();
 
     @AfterCompose
-    public void initSetup(@ContextParam(ContextType.VIEW) final Component view) {
+    public void initSetup(@ContextParam(ContextType.VIEW) final Component view,
+            @ExecutionArgParam("invoice") Invoice invoice) {
+        
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        this.invoice = new Invoice();
+        this.invoice = invoice;
+        this.listInvoiceItem = this.invoice.getListInvoiceItem();
         this.listCcPerson = Ebean.find(Invoice.class).select("ccPerson").setDistinct(true).findList();
         this.listCcDept = Ebean.find(Invoice.class).select("ccDept").setDistinct(true).findList();
         this.listTerm = Ebean.find(Invoice.class).select("term").setDistinct(true).findList();
         this.listGatePass = Ebean.find(Invoice.class).select("gatePass").setDistinct(true).findList();
         this.listNmrKendaraan = Ebean.find(Invoice.class).select("nmrKendaraan").setDistinct(true).findList();
         Selectors.wireComponents(view, (Object) this, false);
+        doCount();
     }
 
     @Command

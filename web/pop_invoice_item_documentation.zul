@@ -31,7 +31,7 @@
             viewModel="@id('vm') @init('com.enseval.ttss.vm.PopInvoiceItemDocumentationVM')">
         
         <listbox id="list_penerimaan" mold="paging" width="100%" vflex="true" 
-                 pageSize="10"
+                 pageSize="5"
                  emptyMessage="Tidak ada data"
                  model="@load(vm.listPenerimaan)">     
             
@@ -39,6 +39,9 @@
                         
             <listhead sizable="true" visible="true" >
                 <listheader sort="auto(manifest.kodeManifest)" label="MANIFEST" />
+                <listheader sort="auto(manifest.namaTeknikLimbah)" label="NAMA LIMBAH" />
+                <listheader label="BANYAK" />
+                <listheader label="TGL ANGKUT" />
                 <listheader label="PILIH ITEM" width="80px"/>
             </listhead>
             
@@ -47,7 +50,32 @@
                     <textbox instant="true" value="@bind(vm.filterManifest)" hflex="3" onChange="@command('saring')"/>
                 </auxheader>
                 <auxheader>
+                    <textbox instant="true" value="@bind(vm.filterLimbah)" hflex="3" onChange="@command('saring')"/>
+                </auxheader>
+                <auxheader>
                     
+                </auxheader>
+                <auxheader>
+                    
+                    <button popup="popupTimeChooser" iconSclass="glyphicon glyphicon-filter" label="FILTER" onClick="" sclass="btn-info btn-xs" hflex="3" />
+                          
+                    <popup id="popupTimeChooser" width="200px" style="word-wrap">
+                        <vlayout>
+                            <label value="Dari :" />
+                            <datebox id="startDate" value="@bind(vm.tsAwal)" format="dd-MM-yyyy" constraint="no future: now or never" readonly="true" hflex="3"/>
+                            <label value="Sampai :" />
+                            <datebox id="endDate" value="@bind(vm.tsAkhir)" format="dd-MM-yyyy" constraint="no future: now or never" readonly="true" hflex="3"/>
+                            <div class="btn-group" hflex="3">
+                                <button label="TAMPILKAN" onClick="@command('saringTgl')" sclass="btn-info btn-xs" hflex="3" />
+                                <button label="RESET" onClick="@command('resetSaringTgl')" sclass="btn-default btn-xs" hflex="3" >
+                                    <attribute name="onClick">
+                                        startDate.setText("");
+                                        endDate.setText("");
+                                    </attribute>
+                                </button>
+                            </div>
+                        </vlayout>
+                    </popup>
                 </auxheader>
             </auxhead>
                         
@@ -55,6 +83,13 @@
             <template name="model" var="s">
                 <listitem sclass="mainList">
                     <listcell label="@load(s.manifest.kodeManifest)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(s.manifest.namaTeknikLimbah)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))"/>
+                        <label if="${s.jmlKemasan2 ne 0}" value="@load(' + '.concat(s.jmlKemasan2).concat(' ').concat(s.satuanKemasan2))"/>
+                        <label if="${s.jmlKemasan3 ne 0}" value="@load(' + '.concat(s.jmlKemasan3).concat(' ').concat(s.satuanKemasan3))"/>
+                    </listcell>
+                    <listcell label="@load(s.manifest.tglAngkut) @converter('formatedDate', format='dd-MM-yyyy')" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                         <button hflex="3" iconSclass="glyphicon glyphicon-hand-up" onClick="@command('pilihPenerimaan', penerimaan=s)" sclass="btn-xs btn-success" label="PILIH"/>
                     </listcell>
