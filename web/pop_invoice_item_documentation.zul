@@ -1,0 +1,70 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        text-transform:uppercase;
+        
+        }
+     
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        
+        
+        }
+        
+       
+    </style>
+    
+    <window id="pop_manifest_documentation" 
+            style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
+            position="center,top" 
+            mode="modal" 
+            width="700px" 
+            vflex="1" 
+            title="LIST MANIFEST" 
+            border="normal" 
+            closable="true" 
+            apply="org.zkoss.bind.BindComposer" 
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PopInvoiceItemDocumentationVM')">
+        
+        <listbox id="list_penerimaan" mold="paging" width="100%" vflex="true" 
+                 pageSize="10"
+                 emptyMessage="Tidak ada data"
+                 model="@load(vm.listPenerimaan)">     
+            
+            <custom-attributes org.zkoss.zul.nativebar="true"/>     
+                        
+            <listhead sizable="true" visible="true" >
+                <listheader sort="auto(manifest.kodeManifest)" label="MANIFEST" />
+                <listheader label="PILIH ITEM" width="80px"/>
+            </listhead>
+            
+            <auxhead>
+                <auxheader>
+                    <textbox instant="true" value="@bind(vm.filterManifest)" hflex="3" onChange="@command('saring')"/>
+                </auxheader>
+                <auxheader>
+                    
+                </auxheader>
+            </auxhead>
+                        
+                
+            <template name="model" var="s">
+                <listitem sclass="mainList">
+                    <listcell label="@load(s.manifest.kodeManifest)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <button hflex="3" iconSclass="glyphicon glyphicon-hand-up" onClick="@command('pilihPenerimaan', penerimaan=s)" sclass="btn-xs btn-success" label="PILIH"/>
+                    </listcell>
+                </listitem>
+            </template>	
+        </listbox>
+        <separator bar="true"/>
+        <div class="btn-group" style="float:right;">
+            <button onClick="pop_manifest_documentation.detach()">BATAL</button>
+        </div>
+    </window>
+
+</zk>

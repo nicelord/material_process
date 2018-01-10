@@ -6,6 +6,8 @@ drop table invoice;
 
 drop table invoice_penerimaan;
 
+drop table invoice_item;
+
 drop table jenis_limbah;
 
 drop table manifest;

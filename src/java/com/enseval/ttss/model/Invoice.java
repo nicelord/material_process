@@ -36,6 +36,8 @@ public class Invoice implements Serializable {
     @ManyToOne
     Customer customer;
     
+    @OneToMany(mappedBy = "invoice")
+    List<InvoiceItem> listInvoiceItem;
     
     @ManyToMany
     List<Penerimaan> listPenerimaan;
@@ -160,6 +162,14 @@ public class Invoice implements Serializable {
 
     public void setSial(String sial) {
         this.sial = sial;
+    }
+
+    public List<InvoiceItem> getListInvoiceItem() {
+        return listInvoiceItem;
+    }
+
+    public void setListInvoiceItem(List<InvoiceItem> listInvoiceItem) {
+        this.listInvoiceItem = listInvoiceItem;
     }
     
     

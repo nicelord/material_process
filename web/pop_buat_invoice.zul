@@ -155,7 +155,7 @@
             <hlayout>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
-                        Cc.
+                        Attn.
                     </span>
                     <combobox model="@load(vm.listCcPerson)" 
                               hflex="3"
@@ -170,7 +170,7 @@
                 </div>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
-                        Dept.
+                        Cc Dept.
                     </span>
                     <combobox model="@load(vm.listCcDept)" 
                               hflex="3"
@@ -189,41 +189,65 @@
         <separator spacing="20px" bar="true"/>
         <listbox id="list_penerimaan" mold="paging" width="100%" vflex="true" 
                      
-                 pageSize="10"
+                 pageSize="5"
                  emptyMessage="Tidak ada data"
-                 model="@load(vm.listPenerimaan)">        
+                 model="@load(vm.listInvoiceItem)">        
                                              
-            <custom-attributes org.zkoss.zul.nativebar="true"/>  
+            
+            <auxhead>
+                <auxheader colspan="2">
+                    <button vflex="3" hflex="3" 
+                            popup="popupjenisitem"
+                            sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-plus" 
+                            label="TAMBAH ITEM" />
+                    <popup id="popupjenisitem" width="200px" style="word-wrap">
+                        <vlayout>
+                            <button label="LIMBAH" onClick="@command('showDisposalItem')" sclass="btn-info btn-xs" hflex="3" />
+                            <button label="TRANSPORTATION" onClick="@command('')" sclass="btn-info btn-xs" hflex="3" />
+                            <button label="DOCUMENTATION" onClick="@command('showDocumentationItem')" sclass="btn-info btn-xs" hflex="3" />
+                        </vlayout>
+                    </popup>
+                </auxheader>
+                <auxheader colspan="5">
+                </auxheader>
+            </auxhead>
+            
                         
             <listhead sizable="true" visible="true" >
-                <listheader sort="auto(manifest.kodeManifest)" label="MANIFEST" />
-                <listheader sort="auto(manifest.customerPenghasil.nama)" label="PENGIRIM" />
-                <listheader sort="auto(manifest.namaTeknikLimbah)" label="ITEM" />
-                <listheader sort="auto(jmlKemasan)" label="BANYAK" />
-                <listheader label="HARGA SATUAN" width="200px"/>
-                <listheader label="JML HARGA" width="200px"/>
+                <listheader label="JENIS ITEM" />
+                <listheader label="MANIFEST" />
+                <listheader label="ITEM" width="200px"/>
+                <listheader label="BANYAK" />
+                <listheader label="HARGA SATUAN" width="150px"/>
+                <listheader label="JML HARGA" width="150px"/>
+                <listheader label="HAPUS" width="50px"/>
             </listhead>
-                        
                 
             <template name="model" var="s">
                 <listitem sclass="mainList">
-                    <listcell label="@load(s.manifest.kodeManifest)" style="text-overflow: ellipsis; white-space: nowrap;"/>
-                    <listcell label="@load(s.manifest.customerPenghasil.nama)" style="text-overflow: ellipsis; white-space: nowrap;"/>
-                    <listcell label="@load(s.manifest.namaTeknikLimbah)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(s.jenisItem)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(s.penerimaan.manifest.kodeManifest)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(s.penerimaan.manifest.namaTeknikLimbah)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell label="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell>
                         <div class="input-group" hflex="3">
                             <span class="input-group-addon">Rp.</span>
-                            <longbox class="form-control input-primary" maxlength="20" format=",###.#" constraint="no empty,no negative" value="@bind(s.hargaSatuanInvoice)" onBlur="@command('doCount')"/>
-                            <span class="input-group-addon">,00</span>
+                            <longbox class="form-control input-primary" maxlength="20" format=",###.#" constraint="no empty,no negative" value="@bind(s.hargaSatuan)" onBlur="@command('doCount')"/>
+                            <!--<span class="input-group-addon">,00</span>-->
                         </div>
                     </listcell>
                     <listcell>
                         <div class="input-group" hflex="3">
                             <span class="input-group-addon">Rp.</span>
-                            <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" value="@bind(s.hargaSatuanInvoice*s.jmlKemasan)"/>
-                            <span class="input-group-addon">,00</span>
+                            <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" value="@bind(s.hargaSatuan*s.jmlKemasan)"/>
+                            <!--<span class="input-group-addon">,00</span>-->
                         </div>
+                    </listcell>
+                    <listcell>
+                        <button vflex="3" hflex="3" 
+                                sclass="btn-danger btn-xs"
+                                iconSclass="glyphicon glyphicon-remove"
+                                onClick="@command('hapusItem',item=s)" />
                     </listcell>
                 </listitem>
             </template>
@@ -246,7 +270,7 @@
                     </div>
                     
                 </listfooter>
-                <listfooter span="1" valign="middle">
+                <listfooter span="2" valign="middle">
                     <div class="input-group" hflex="3">
                         <span class="input-group-addon">Rp.</span>
                         <longbox readonly="true" 

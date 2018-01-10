@@ -8,6 +8,7 @@ package com.enseval.ttss.vm;
 import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.Customer;
 import com.enseval.ttss.model.Invoice;
+import com.enseval.ttss.model.InvoiceItem;
 import com.enseval.ttss.model.JenisLimbah;
 import com.enseval.ttss.model.Manifest;
 import com.enseval.ttss.model.PenandaTangan;
@@ -44,7 +45,7 @@ public class PopBuatInvoiceVM {
     @Wire("#pop_buat_invoice")
     private Window winBuatInvoice;
     User userLogin;
-    List<Penerimaan> listPenerimaan = new ArrayList<>();
+    List<InvoiceItem> listInvoiceItem = new ArrayList<>();
     Long totalHarga = 0L;
 
     Invoice invoice;
@@ -56,18 +57,14 @@ public class PopBuatInvoiceVM {
     List<Invoice> listNmrKendaraan = new ArrayList<>();
 
     @AfterCompose
-    public void initSetup(@ContextParam(ContextType.VIEW) final Component view, @ExecutionArgParam("penerimaan") List<Penerimaan> listPenerimaan) {
+    public void initSetup(@ContextParam(ContextType.VIEW) final Component view) {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        this.listPenerimaan = listPenerimaan;
         this.invoice = new Invoice();
         this.listCcPerson = Ebean.find(Invoice.class).select("ccPerson").setDistinct(true).findList();
         this.listCcDept = Ebean.find(Invoice.class).select("ccDept").setDistinct(true).findList();
         this.listTerm = Ebean.find(Invoice.class).select("term").setDistinct(true).findList();
         this.listGatePass = Ebean.find(Invoice.class).select("gatePass").setDistinct(true).findList();
         this.listNmrKendaraan = Ebean.find(Invoice.class).select("nmrKendaraan").setDistinct(true).findList();
-        for (Penerimaan penerimaan : listPenerimaan) {
-            penerimaan.setHargaSatuanInvoice(0L);
-        }
         Selectors.wireComponents(view, (Object) this, false);
     }
 
@@ -79,13 +76,64 @@ public class PopBuatInvoiceVM {
     }
 
     @Command
+    public void showDisposalItem() {
+        if (this.invoice.getCustomer() == null) {
+            Messagebox.show("TUJUAN PENAGIHAN BELUM DIISI!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+        Map m = new HashMap();
+        m.put("invoice", this.invoice);
+        Executions.createComponents("pop_invoice_item_disposal.zul", null, m);
+    }
+
+    @Command
+    public void showDocumentationItem() {
+        if (this.invoice.getCustomer() == null) {
+            Messagebox.show("TUJUAN PENAGIHAN BELUM DIISI!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+        Map m = new HashMap();
+        m.put("invoice", this.invoice);
+        Executions.createComponents("pop_invoice_item_documentation.zul", null, m);
+    }
+
+    @GlobalCommand
+    @NotifyChange({"listInvoiceItem"})
+    public void addInvoiceItem(@BindingParam("temporalItem") PopInvoiceItemDisposalVM.TemporalItem temporalItem) {
+
+        InvoiceItem item = new InvoiceItem();
+        item.setJenisItem("disposal cost");
+        item.setPenerimaan(Ebean.find(Penerimaan.class).where().eq("manifest.kodeManifest", temporalItem.kodeManifest).findUnique());
+        item.setJmlKemasan(temporalItem.getJmlKemasan());
+        item.setSatuanKemasan(temporalItem.getSatuanKemasan());
+        item.setKemasanKe(temporalItem.getKemasanKe());
+        this.listInvoiceItem.add(item);
+        this.invoice.setListInvoiceItem(listInvoiceItem);
+    }
+
+    @GlobalCommand
+    @NotifyChange({"listInvoiceItem"})
+    public void addDocumentationItem(@BindingParam("penerimaan") Penerimaan penerimaan) {
+        InvoiceItem item = new InvoiceItem();
+        item.setJenisItem("docs charge");
+        item.setPenerimaan(penerimaan);
+        item.setJmlKemasan(new Long(1));
+        item.setSatuanKemasan("doc(s)");
+        
+        this.listInvoiceItem.add(item);
+        this.invoice.setListInvoiceItem(listInvoiceItem);
+    }
+
+    @Command
+    @NotifyChange({"listInvoiceItem"})
+    public void hapusItem(@BindingParam("item") InvoiceItem invoiceItem) {
+        this.listInvoiceItem.remove(invoiceItem);
+    }
+
+    @Command
     public void simpanInvoice() {
         try {
-            Ebean.save(this.invoice);
-            for (Penerimaan penerimaan : listPenerimaan) {
-                penerimaan.getInvoices().add(invoice);
-                Ebean.save(penerimaan);
-            }
+
             BindUtils.postGlobalCommand(null, null, "refresh", null);
             this.winBuatInvoice.detach();
         } catch (Exception e) {
@@ -104,10 +152,10 @@ public class PopBuatInvoiceVM {
     @NotifyChange({"totalHarga"})
     public void doCount() {
         this.totalHarga = 0L;
-        for (Penerimaan penerimaan : listPenerimaan) {
-            this.totalHarga += penerimaan.getHargaSatuanInvoice() * penerimaan.getJmlKemasan();
+        for (InvoiceItem item : listInvoiceItem) {
+            this.totalHarga += item.getHargaSatuan() * item.getJmlKemasan();
         }
-        this.totalHarga += (this.totalHarga / 100) * this.invoice.getTax();
+        this.totalHarga -= (this.totalHarga / 100) * this.invoice.getTax();
     }
 
     public Window getWinBuatInvoice() {
@@ -126,12 +174,12 @@ public class PopBuatInvoiceVM {
         this.userLogin = userLogin;
     }
 
-    public List<Penerimaan> getListPenerimaan() {
-        return listPenerimaan;
+    public List<InvoiceItem> getListInvoiceItem() {
+        return listInvoiceItem;
     }
 
-    public void setListPenerimaan(List<Penerimaan> listPenerimaan) {
-        this.listPenerimaan = listPenerimaan;
+    public void setListInvoiceItem(List<InvoiceItem> listInvoiceItem) {
+        this.listInvoiceItem = listInvoiceItem;
     }
 
     public Long getTotalHarga() {

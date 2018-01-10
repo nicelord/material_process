@@ -43,9 +43,44 @@ public class TES {
         u.setAkses("GUDANG 1");
         u.setNama("g1");
         Ebean.save(u);
+        
+        Customer c = new Customer();
+        c.setNama("PT. PHILIPS INDUSTRIES BATAM");
+        c.setAlamat("Jl. Ahmad Yani PIE B1 Lot. 1-6, B2A Lot. 12-17, Muka Kuning - Batam");
+        c.setNomorKontak("123123");
+        c.setEmail("asdasd@adsad.com");
+        c.setFax("123123");
+        c.setNpwp("123-123-123");
+        Ebean.save(c);
+        
+        c = new Customer();
+        c.setNama("PT. PANASONIC INDUSTRIAL DEVICES BATAM");
+        c.setAlamat("Jl. Ahmad Yani PIE B1 Lot. 1-6, B2A Lot. 12-17, Muka Kuning - Batam");
+        c.setNomorKontak("123123");
+        c.setEmail("asdasd@adsad.com");
+        c.setFax("123123");
+        c.setNpwp("123-123-123");
+        Ebean.save(c);
+        
+        c = new Customer();
+        c.setNama("PT. DESA AIR CARGO BATAM");
+        c.setAlamat("Jl. Ahmad Yani PIE B1 Lot. 1-6, B2A Lot. 12-17, Muka Kuning - Batam");
+        c.setNomorKontak("123123");
+        c.setEmail("asdasd@adsad.com");
+        c.setFax("123123");
+        c.setNpwp("123-123-123");
+        Ebean.save(c);
 
         
+        JenisLimbah j = new JenisLimbah();
+        j.setKodeJenis("B1111");
+        j.setKeterangan("TEST1");
+        Ebean.save(j);
         
+        j = new JenisLimbah();
+        j.setKodeJenis("B2222");
+        j.setKeterangan("TEST2");
+        Ebean.save(j);
 
     }
 

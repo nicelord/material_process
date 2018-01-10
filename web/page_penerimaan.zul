@@ -55,12 +55,12 @@
                     <auxhead>
                         <auxheader colspan="@load(vm.userLogin.akses.equals('AKUNTING')?'10':'12')">
                             <hlayout>
-                                <radiogroup 
+<!--                                <radiogroup 
                                     if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                     selectedItem="@bind(vm.filterPendingInvoice)" onCheck="@command('doFilterPending')">
                                     <radio label="SEMUA" value="semua"/>
                                     <radio label="@bind('PENDING INVOICE '.concat(vm.jmlPendingInvoice))" value="pending"/>
-                                </radiogroup>
+                                </radiogroup>-->
                                 <radiogroup 
                                     if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                     selectedItem="@bind(vm.filterStatusProses)" onCheck="@command('doFilterStatusProses')">
@@ -136,13 +136,13 @@
                             <listcell 
                                 if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label 
+<!--                                <label 
                                     if="${s.invoices.isEmpty()}"
                                     sclass="label label-warning" value="belum ada invoice"/>
                                 
                                 <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" label="" 
                                             onClick="@command('showInvoices',penerimaan=s)"
-                                            if="${!s.invoices.isEmpty()}"/>
+                                            if="${!s.invoices.isEmpty()}"/>-->
                             
                             </listcell>                           
                             <listcell 
@@ -190,7 +190,7 @@
                     </template>
                 
                 
-                    <listfoot>
+<!--                    <listfoot>
                         <listfooter span="9" valign="middle">
                             <div style="float:left;">
                                 
@@ -202,7 +202,7 @@
                                 
                             </div>
                         </listfooter>
-                    </listfoot>	
+                    </listfoot>	-->
                      
                 </listbox>
                 

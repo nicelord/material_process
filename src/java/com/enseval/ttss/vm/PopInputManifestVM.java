@@ -107,30 +107,37 @@ public class PopInputManifestVM {
     public void simpanManifest() {
         try {
 
-            Penerimaan p = new Penerimaan();
-            p.setStatusPenerimaan("belum diterima");
-            p.setManifest(this.manifest);
-            p.setJmlKemasan(this.manifest.getJmlKemasan());
-            p.setSatuanKemasan(this.manifest.getSatuanKemasan());
-            p.setJmlKemasan2(this.manifest.getJmlKemasan2());
-            p.setSatuanKemasan2(this.manifest.getSatuanKemasan2());
-            p.setJmlKemasan3(this.manifest.getJmlKemasan3());
-            p.setSatuanKemasan3(this.manifest.getSatuanKemasan3());
-            p.setJmlBerat(this.manifest.getJmlBerat());
-            p.setSatuanBerat(this.manifest.getSatuanBerat());
-            Ebean.save(p);
+            if (this.manifest.getPenerimaan() != null) {
 
-            this.manifest.setUser(userLogin);
-            this.manifest.setTglBuat(new Date());
-            if (this.manifest.getStatusApproval().equals("rejected")) {
-                this.manifest.setStatusApproval("pending");
+                Ebean.update(this.manifest);
+
+            } else {
+                Penerimaan p = new Penerimaan();
+                p.setStatusPenerimaan("belum diterima");
+                p.setManifest(this.manifest);
+                p.setJmlKemasan(this.manifest.getJmlKemasan());
+                p.setSatuanKemasan(this.manifest.getSatuanKemasan());
+                p.setJmlKemasan2(this.manifest.getJmlKemasan2());
+                p.setSatuanKemasan2(this.manifest.getSatuanKemasan2());
+                p.setJmlKemasan3(this.manifest.getJmlKemasan3());
+                p.setSatuanKemasan3(this.manifest.getSatuanKemasan3());
+                p.setJmlBerat(this.manifest.getJmlBerat());
+                p.setSatuanBerat(this.manifest.getSatuanBerat());
+                Ebean.save(p);
+
+                this.manifest.setUser(userLogin);
+                this.manifest.setTglBuat(new Date());
+                if (this.manifest.getStatusApproval().equals("rejected")) {
+                    this.manifest.setStatusApproval("pending");
+                }
+
+                this.manifest.setStatusApproval("approved");
+                this.manifest.setTglApprove(new Date());
+                this.manifest.setPenerimaan(p);
+
+                Ebean.save(this.manifest);
             }
 
-            this.manifest.setStatusApproval("approved");
-            this.manifest.setTglApprove(new Date());
-            this.manifest.setPenerimaan(p);
-
-            Ebean.save(this.manifest);
             BindUtils.postGlobalCommand((String) null, (String) null, "refresh", (Map) null);
             this.winInputManifest.detach();
         } catch (Exception e) {

@@ -27,13 +27,11 @@ import javax.persistence.Transient;
 @Entity
 public class Penerimaan implements Serializable {
 
-    @ManyToMany(mappedBy = "listPenerimaan")
-    private List<Invoice> invoices;
-
     @OneToMany(mappedBy = "penerimaan")
     private List<ProsessLimbah> prosessLimbahs;
 
-    
+    @OneToMany(mappedBy = "penerimaan")
+    List<InvoiceItem> listInvoiceItem;
 
     @OneToOne(mappedBy = "penerimaan")
     private Manifest manifest;
@@ -181,17 +179,7 @@ public class Penerimaan implements Serializable {
 
     public void setJmlBerat(Long jmlBerat) {
         this.jmlBerat = jmlBerat;
-    }
-
-    public List<Invoice> getInvoices() {
-        return invoices;
-    }
-
-    public void setInvoices(List<Invoice> invoices) {
-        this.invoices = invoices;
-    }
-
- 
+    } 
 
     public Long getHargaSatuanInvoice() {
         return hargaSatuanInvoice;

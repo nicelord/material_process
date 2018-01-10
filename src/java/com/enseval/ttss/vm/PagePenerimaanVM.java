@@ -33,7 +33,6 @@ public class PagePenerimaanVM {
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
-        this.jmlPendingInvoice = listPenerimaan.stream().filter(l -> l.getInvoices().isEmpty()).collect(Collectors.toList()).size();
         this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty()).collect(Collectors.toList()).size();
     }
 
@@ -42,9 +41,7 @@ public class PagePenerimaanVM {
     public void doFilterPending() {
         if (filterPendingInvoice.equals("semua")) {
             this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
-        } else {
-            this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getInvoices().isEmpty()).collect(Collectors.toList());
-        }
+        } 
     }
 
     @Command
@@ -81,8 +78,7 @@ public class PagePenerimaanVM {
     @GlobalCommand
     @NotifyChange({"listPenerimaan", "jmlPendingInvoice","jmlPendingProses"})
     public void refresh() {
-
-        this.jmlPendingInvoice = listPenerimaan.stream().filter(l -> l.getInvoices().isEmpty()).collect(Collectors.toList()).size();
+        
         this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty()).collect(Collectors.toList()).size();
 
         if (filterPendingInvoice.equals("semua") || filterStatusProses.equals("semua")) {
@@ -90,9 +86,7 @@ public class PagePenerimaanVM {
         } else {
             if (this.userLogin.getAkses().equals("PENERIMA")) {
                 this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty()).collect(Collectors.toList());
-            } else {
-                this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getInvoices().isEmpty()).collect(Collectors.toList());
-            }
+            } 
         }
 
     }

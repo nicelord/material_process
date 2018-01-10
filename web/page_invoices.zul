@@ -53,7 +53,7 @@
                 
                     <auxhead>
                         <auxheader colspan="2">
-                            <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="BUAT INVOICE" onClick="@command('buatInvoice')" />
+                            <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="BUAT INVOICE" onClick="@command('showFormInvoice')" />
                         </auxheader>
                     </auxhead>
                 

@@ -37,7 +37,10 @@ public class PageInvoicesVM {
         Executions.createComponents("pop_buat_invoice.zul", (Component) null, null);
     }
 
-    
+    @Command
+    public void showFormInvoice() {
+        Executions.createComponents("pop_buat_invoice.zul", (Component) null, null);
+    }
 
     @Command
     @NotifyChange({"selectedInvoice"})
