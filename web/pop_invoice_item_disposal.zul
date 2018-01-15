@@ -6,11 +6,16 @@
         
         }
      
+        .z-spinner-input,.z-spinner-button{
+            border-radius: 0;
+            height:26px;
+        }
         
         input[type="checkbox"], input[type="radio"] {
         margin : 10px 10px 10px 10px;
         padding: 5px;
         box-sizing: border-box;
+        
         
         
         }
@@ -89,6 +94,10 @@
                             </template>
                         
                         </combobox>
+                        
+                        <!--<spinner value="@bind(s.jmlKemasan)" hflex="3" vflex="3" height="100%" class="input-primary" constraint="@load('no empty, min 1 max '.concat(s.jmlKemasan).concat(': no empty, minimal : 1, maksimal : '.concat(s.jmlKemasan)))"/>-->
+                        
+                        
                     </listcell>
                     <listcell label="@load(s.satuanKemasan)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell style="text-overflow: ellipsis; white-space: nowrap;">

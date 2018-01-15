@@ -3,6 +3,7 @@ package com.enseval.ttss.vm;
 import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.Manifest;
 import com.enseval.ttss.model.Penerimaan;
+import com.enseval.ttss.model.Sertifikat;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
 import java.util.ArrayList;
@@ -36,6 +37,13 @@ public class PageManifestVM {
         } else {
             this.listManifest = Ebean.find(Manifest.class).orderBy("id desc").findList();
         }
+    }
+    
+    @Command
+    public void showSertifikat(@BindingParam("sertifikat") Sertifikat s) {
+        Map m = new HashMap();
+        m.put("sertifikat", s);
+        Executions.createComponents("pop_buat_sertifikat.zul", (Component) null, m);
     }
 
     @Command

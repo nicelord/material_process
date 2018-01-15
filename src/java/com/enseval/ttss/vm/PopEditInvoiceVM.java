@@ -40,9 +40,9 @@ import org.zkoss.zul.Window;
  *
  * @author asus
  */
-public class PopBuatInvoiceVM {
+public class PopEditInvoiceVM {
 
-    @Wire("#pop_buat_invoice")
+    @Wire("#pop_edit_invoice")
     private Window winBuatInvoice;
     User userLogin;
     List<InvoiceItem> listInvoiceItem = new ArrayList<>();
@@ -55,20 +55,21 @@ public class PopBuatInvoiceVM {
     List<Invoice> listTerm = new ArrayList<>();
     List<Invoice> listGatePass = new ArrayList<>();
     List<Invoice> listNmrKendaraan = new ArrayList<>();
-    
-   
 
     @AfterCompose
-    public void initSetup(@ContextParam(ContextType.VIEW) final Component view) {
+    public void initSetup(@ContextParam(ContextType.VIEW) final Component view,
+            @ExecutionArgParam("invoice") Invoice invoice) {
+        
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        this.invoice = new Invoice();
-        this.invoice.setUserLogin(userLogin);
+        this.invoice = invoice;
+        this.listInvoiceItem = this.invoice.getListInvoiceItem();
         this.listCcPerson = Ebean.find(Invoice.class).select("ccPerson").setDistinct(true).findList();
         this.listCcDept = Ebean.find(Invoice.class).select("ccDept").setDistinct(true).findList();
         this.listTerm = Ebean.find(Invoice.class).select("term").setDistinct(true).findList();
         this.listGatePass = Ebean.find(Invoice.class).select("gatePass").setDistinct(true).findList();
         this.listNmrKendaraan = Ebean.find(Invoice.class).select("nmrKendaraan").setDistinct(true).findList();
         Selectors.wireComponents(view, (Object) this, false);
+        doCount();
     }
 
     @Command
@@ -113,7 +114,11 @@ public class PopBuatInvoiceVM {
         this.listInvoiceItem.add(item);
         this.invoice.setListInvoiceItem(listInvoiceItem);
         
-        
+        Ebean.save(this.invoice);
+        for (InvoiceItem invoiceItem : listInvoiceItem) {
+            invoiceItem.setInvoice(invoice);
+            Ebean.save(invoiceItem);
+        }
     }
 
     @GlobalCommand
@@ -146,22 +151,25 @@ public class PopBuatInvoiceVM {
     @NotifyChange({"listInvoiceItem"})
     public void hapusItem(@BindingParam("item") InvoiceItem invoiceItem) {
         this.listInvoiceItem.remove(invoiceItem);
+        Ebean.delete(invoiceItem);
+        
     }
 
     @Command
-    @NotifyChange({"listInvoiceItem"})
     public void simpanInvoice() {
         try {
             
-            Ebean.save(this.invoice);
+            Ebean.update(this.invoice);
             
             for (InvoiceItem invoiceItem : listInvoiceItem) {
                 invoiceItem.setInvoice(this.invoice);
                 Ebean.save(invoiceItem);
             }
+
             BindUtils.postGlobalCommand(null, null, "refresh", null);
             this.winBuatInvoice.detach();
         } catch (Exception e) {
+            e.printStackTrace();
             Messagebox.show(e.getMessage(), "Error", Messagebox.OK, Messagebox.ERROR);
         }
     }

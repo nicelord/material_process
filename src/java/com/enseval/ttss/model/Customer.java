@@ -20,6 +20,9 @@ import javax.persistence.OneToMany;
 public class Customer implements Serializable {
 
     @OneToMany(mappedBy = "customer")
+    private List<Sertifikat> sertifikats;
+
+    @OneToMany(mappedBy = "customer")
     private List<Invoice> invoices;
 
     @Id

@@ -57,7 +57,7 @@
                 
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
-                        <listheader sort="auto(penerimaan.manifest.kodeManifest)" label="NMR MANIFEST" />
+                        <listheader sort="auto(penerimaan.manifest.kodeManifest)" label="NO. MANIFEST" />
                         <listheader sort="auto(tglTerima)" label="TGL TERIMA" />
                         <listheader sort="auto(namaLimbah)" label="NAMA LIMBAH" width="200px" />
                         <listheader sort="auto(jmlKemasan)" label="BANYAK" />
@@ -82,8 +82,10 @@
                                 <label value="@load(s.namaLimbah)"/>
                             </listcell>
                         
-                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))"/>
+                                <label if="${s.jmlKemasan2 ne 0}" value="@load(' + '.concat(s.jmlKemasan2).concat(' ').concat(s.satuanKemasan2))"/>
+                                <label if="${s.jmlKemasan3 ne 0}" value="@load(' + '.concat(s.jmlKemasan3).concat(' ').concat(s.satuanKemasan3))"/>
                             </listcell>
                         
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">

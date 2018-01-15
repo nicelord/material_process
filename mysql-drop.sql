@@ -12,11 +12,17 @@ drop table jenis_limbah;
 
 drop table manifest;
 
+drop table outbound_item;
+
 drop table penanda_tangan;
 
 drop table penerimaan;
 
 drop table prosess_limbah;
+
+drop table residu;
+
+drop table sertifikat;
 
 drop table setting;
 

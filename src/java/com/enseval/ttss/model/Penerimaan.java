@@ -5,10 +5,12 @@
  */
 package com.enseval.ttss.model;
 
+import com.avaje.ebean.Ebean;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -27,6 +29,13 @@ import javax.persistence.Transient;
 @Entity
 public class Penerimaan implements Serializable {
 
+    @OneToOne(mappedBy = "penerimaan")
+    private OutboundItem outboundItem;
+
+    @ManyToOne
+    @Column(unique = true, nullable = false)
+    private Sertifikat sertifikat;
+
     @OneToMany(mappedBy = "penerimaan")
     private List<ProsessLimbah> prosessLimbahs;
 
@@ -36,41 +45,87 @@ public class Penerimaan implements Serializable {
     @OneToOne(mappedBy = "penerimaan")
     private Manifest manifest;
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
-    
+
     String satuanKemasan = "";
     Long jmlKemasan = 0L;
-    
+
     String satuanKemasan2 = "";
     Long jmlKemasan2 = 0L;
-    
+
     String satuanKemasan3 = "";
     Long jmlKemasan3 = 0L;
-    
+
     String satuanBerat = "";
     Long jmlBerat = 0L;
-    
+
     @ManyToOne
     User userPenerima;
     @Temporal(TemporalType.DATE)
     Date tglPenerimaan;
-    
+
     String lokasiGudang;
-    
+
     String statusPenerimaan = "diterima";
-    
+
     String ketRevisi = "";
-    
+
     boolean isDiterima = false;
-    
+
     boolean isRevisi = false;
-    
-    
-    public ProsessLimbah getLastProsesLimbah(){
+
+  
+
+    public Long getRemainingInvoice1() {
+        Long totalInvoiced = 0L;
+        List<InvoiceItem> item = Ebean.find(InvoiceItem.class)
+                    .where().eq("jenisItem", "disposal cost")
+                    .where().eq("penerimaan.id", this.getId())
+                    .where().eq("kemasanKe", 1)
+                    .findList();
+        for (InvoiceItem invoiceItem : item) {
+            totalInvoiced += invoiceItem.getJmlKemasan();
+        }
+        
+        return totalInvoiced;
+
+        
+    }
+
+    public Long getRemainingInvoice2() {
+        Long totalInvoiced = 0L;
+        List<InvoiceItem> item = Ebean.find(InvoiceItem.class)
+                    .where().eq("jenisItem", "disposal cost")
+                    .where().eq("penerimaan.id", this.getId())
+                    .where().eq("kemasanKe", 2)
+                    .findList();
+        for (InvoiceItem invoiceItem : item) {
+            totalInvoiced += invoiceItem.getJmlKemasan();
+        }
+        
+        return totalInvoiced;
+    }
+
+    public Long getRemainingInvoice3() {
+        Long totalInvoiced = 0L;
+        List<InvoiceItem> item = Ebean.find(InvoiceItem.class)
+                    .where().eq("jenisItem", "disposal cost")
+                    .where().eq("penerimaan.id", this.getId())
+                    .where().eq("kemasanKe", 3)
+                    .findList();
+        for (InvoiceItem invoiceItem : item) {
+            totalInvoiced += invoiceItem.getJmlKemasan();
+        }
+        
+        return totalInvoiced;
+    }
+
+    public ProsessLimbah getLastProsesLimbah() {
         return this.getProsessLimbahs().get(0);
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -95,7 +150,6 @@ public class Penerimaan implements Serializable {
         this.satuanKemasan = satuanKemasan;
     }
 
-
     public String getSatuanBerat() {
         return satuanBerat;
     }
@@ -103,8 +157,6 @@ public class Penerimaan implements Serializable {
     public void setSatuanBerat(String satuanBerat) {
         this.satuanBerat = satuanBerat;
     }
-
-  
 
     public User getUserPenerima() {
         return userPenerima;
@@ -122,7 +174,13 @@ public class Penerimaan implements Serializable {
         this.tglPenerimaan = tglPenerimaan;
     }
 
+    public Sertifikat getSertifikat() {
+        return sertifikat;
+    }
 
+    public void setSertifikat(Sertifikat sertifikat) {
+        this.sertifikat = sertifikat;
+    }
 
     public String getLokasiGudang() {
         return lokasiGudang;
@@ -178,9 +236,7 @@ public class Penerimaan implements Serializable {
 
     public void setJmlBerat(Long jmlBerat) {
         this.jmlBerat = jmlBerat;
-    } 
-
-    
+    }
 
     public List<ProsessLimbah> getProsessLimbahs() {
         return prosessLimbahs;
@@ -228,9 +284,6 @@ public class Penerimaan implements Serializable {
 
     public void setListInvoiceItem(List<InvoiceItem> listInvoiceItem) {
         this.listInvoiceItem = listInvoiceItem;
-    }
+    } 
 
- 
-    
-    
 }

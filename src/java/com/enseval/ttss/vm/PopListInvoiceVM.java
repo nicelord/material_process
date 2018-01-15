@@ -56,8 +56,12 @@ public class PopListInvoiceVM {
                 .findList();
 
         for (InvoiceItem invoiceItem : listItem) {
-            this.listInvoice.add(invoiceItem.getInvoice());
+            if(!listInvoice.contains(invoiceItem.getInvoice())){
+                this.listInvoice.add(invoiceItem.getInvoice());
+            }
+            
         }
+        
 
         Selectors.wireComponents(view, (Object) this, false);
     }

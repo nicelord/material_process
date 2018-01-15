@@ -14,6 +14,10 @@ public class User implements Serializable{
     String username;
     String password;
     String akses;
+    @OneToMany(mappedBy = "userLogin")
+    private List<OutboundItem> outboundItems;
+    @OneToMany(mappedBy = "userLogin")
+    private List<Residu> residus;
     
     
     public User() {

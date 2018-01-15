@@ -58,7 +58,11 @@
                                 if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR' || sessionScope.userCredential.getRoles()=='ADMIN'}"
                                 vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="INPUT MANIFEST" onClick="@command('inputManifest')" />
                         </auxheader>
-                        <auxheader colspan="5">
+                        <auxheader colspan="6"
+                            if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                        </auxheader>
+                        <auxheader colspan="5"
+                            if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='PENERIMA'}">
                         </auxheader>
                     </auxhead>
                 
@@ -74,6 +78,8 @@
                                     if="${sessionScope.userCredential.getRoles()!='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>-->
                         <listheader sort="auto(penerimaan.statusPenerimaan)" label="PENERIMAAN"
                                     if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                        <listheader sort="auto(penerimaan.statusPenerimaan)" label="SERTIFIKAT"
+                                    if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                     </listhead>
                 
                     <template name="model" var="s">
@@ -136,6 +142,19 @@
                                 />
                             </listcell>
                             
+                            <listcell 
+                                if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                                style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label 
+                                    if="${s.penerimaan.sertifikat eq null}"
+                                    sclass="label label-warning" value="belum ada sertifikat"/>
+                                
+                                <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="LIHAT SERTIFIKAT" 
+                                        onClick="@command('showSertifikat',sertifikat=s.penerimaan.sertifikat)"
+                                        if="${s.penerimaan.sertifikat ne null}"/>
+                            
+                            </listcell>  
+                            
                         </listitem>
                     </template>
                 
@@ -144,9 +163,7 @@
                         <listfooter span="6" valign="middle">
                             <div style="float:left;">
                                 
-                                <button onClick="@command('showSertifikat')" iconSclass="glyphicon glyphicon-list-alt" label="BUAT SERTIFIKAT" 
-                                        if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
-                                </button>
+                                Total item :
                             </div>
                             <div style="float:right;">
                                 

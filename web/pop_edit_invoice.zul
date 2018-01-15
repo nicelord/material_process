@@ -25,7 +25,7 @@
 
 
     <window 
-        id="pop_buat_invoice"  
+        id="pop_edit_invoice"  
         style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
         position="center,top"  
         mode="modal" 
@@ -33,15 +33,15 @@
         title="FORM INVOICE" 
         border="normal" 
         apply="org.zkoss.bind.BindComposer" 
-        viewModel="@id('vm') @init('com.enseval.ttss.vm.PopBuatInvoiceVM')" 
-        closable="true">
+        viewModel="@id('vm') @init('com.enseval.ttss.vm.PopEditInvoiceVM')" 
+        closable="false">
         <vlayout>
             <hlayout>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Nomor invoice.
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.invoice.nomorInvoice)"/>
+                    <textbox class="form-control input-primary" value="@bind(vm.invoice.nomorInvoice)"/>
                 </div>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
@@ -67,7 +67,7 @@
                     <span class="input-group-addon">
                         Nmr Izin.
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.invoice.sial)"/>
+                    <textbox class="form-control input-primary" value="@bind(vm.invoice.sial)"/>
                 </div>   
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
@@ -76,7 +76,7 @@
                     <combobox model="@load(vm.listNmrKendaraan)" 
                               hflex="3"
                               height="100%"
-                              value="@save(vm.invoice.nmrKendaraan)" 
+                              value="@bind(vm.invoice.nmrKendaraan)" 
                               style="width:100%;height:100%" 
                               class="input-primary">
                         <template name="model">
@@ -115,19 +115,19 @@
                     <span class="input-group-addon">
                         PO No.
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.invoice.nomorPo)"/>
+                    <textbox class="form-control input-primary" value="@bind(vm.invoice.nomorPo)"/>
                 </div> 
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         DO No.
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.invoice.nomorDo)"/>
+                    <textbox class="form-control input-primary" value="@bind(vm.invoice.nomorDo)"/>
                 </div> 
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         SPK/WO
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.invoice.nomorSpkWo)"/>
+                    <textbox class="form-control input-primary" value="@bind(vm.invoice.nomorSpkWo)"/>
                 </div> 
             </hlayout>
             <separator spacing="20px" bar="true"/>        
@@ -180,7 +180,7 @@
                     <combobox model="@load(vm.listCcPerson)" 
                               hflex="3"
                               height="100%"
-                              value="@save(vm.invoice.ccPerson)" 
+                              value="@bind(vm.invoice.ccPerson)" 
                               style="width:100%;height:100%" 
                               class="input-primary">
                         <template name="model">
@@ -195,7 +195,7 @@
                     <combobox model="@load(vm.listCcDept)" 
                               hflex="3"
                               height="100%"
-                              value="@save(vm.invoice.ccDept)" 
+                              value="@bind(vm.invoice.ccDept)" 
                               style="width:100%;height:100%" 
                               class="input-primary">
                         <template name="model">
@@ -211,7 +211,9 @@
                      
                  pageSize="5"
                  emptyMessage="Tidak ada data"
-                 model="@load(vm.listInvoiceItem)">        
+                 model="@load(vm.listInvoiceItem)">    
+            
+            <custom-attributes org.zkoss.zul.nativebar="true"/>      
                                              
             
             <auxhead>
@@ -315,14 +317,13 @@
                 <span class="input-group-addon">
                     Keterangan tambahan.
                 </span>
-                <textbox class="form-control input-primary" value="@save(vm.invoice.keterangan)"/>
+                <textbox class="form-control input-primary" value="@bind(vm.invoice.keterangan)"/>
             </div> 
         </hlayout>
         <separator spacing="20px" bar="true"/>
         <div class="btn-group" style="float:right;">
             <button onClick="@command('simpanInvoice')" sclass="btn-success" iconSclass="glyphicon glyphicon-floppy-disk" label="OK">
             </button>
-            <button onClick="pop_buat_invoice.detach()">BATAL</button>
         </div>
     </window>
 </zk>

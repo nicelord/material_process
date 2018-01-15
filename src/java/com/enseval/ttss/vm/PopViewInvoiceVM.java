@@ -103,7 +103,7 @@ public class PopViewInvoiceVM {
 
     @GlobalCommand
     @NotifyChange({"listInvoiceItem"})
-    public void addInvoiceItem(@BindingParam("temporalItem") PopInvoiceItemDisposalVM.TemporalItem temporalItem) {
+    public void addInvoiceItem(@BindingParam("temporalItem") TemporalItem temporalItem) {
 
         InvoiceItem item = new InvoiceItem();
         item.setJenisItem("disposal cost");

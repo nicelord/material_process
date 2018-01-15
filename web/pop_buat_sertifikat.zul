@@ -1,0 +1,204 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        .z-datebox-input{
+        height:100%;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+    </style>
+
+
+    <window 
+        id="pop_buat_sertifikat"  
+        style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
+        position="center,top"  
+        mode="modal" 
+        width="60%" vflex="1" 
+        title="FORM SERTIFIKAT" 
+        border="normal" 
+        apply="org.zkoss.bind.BindComposer" 
+        viewModel="@id('vm') @init('com.enseval.ttss.vm.PopBuatSertifikatVM')" 
+        closable="true">
+        <vlayout>
+            <hlayout>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Nomor Sertifikat
+                    </span>
+                    <textbox class="form-control input-primary" value="@bind(vm.sertifikat.nomorSertifikat)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span> 
+                    </span>
+                    <datebox cols="12" 
+                             format="dd-MM-yyyy"
+                             readonly="true"
+                             style="height:32px;"
+                             hflex="3"
+                             buttonVisible="false"
+                             value="@load(vm.sertifikat.tglSertifkat)"/>
+                </div> 
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-user"></span> 
+                    </span>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.sertifikat.userLogin.nama)"/>
+                </div>        
+            </hlayout>
+            <hlayout>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon" >
+                        Penanda tangan.
+                    </span>
+                    <combobox model="@load(vm.listPenandaTangan)" 
+                              hflex="3"
+                              height="100%"
+                              value="@bind(vm.sertifikat.penandaTangan)" 
+                              style="width:100%;height:100%" 
+                              class="input-primary">
+                        <template name="model">
+                            <comboitem label="@load(each.penandaTangan)"/>
+                        </template>
+                    </combobox>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Jabatan.
+                    </span>
+                    <combobox model="@load(vm.listJabatanPenandaTangan)" 
+                              hflex="3"
+                              height="100%"
+                              value="@bind(vm.sertifikat.jabatanPenandaTangan)" 
+                              style="width:100%;height:100%" 
+                              class="input-primary">
+                        <template name="model">
+                            <comboitem label="@load(each.jabatanPenandaTangan)"/>
+                        </template>
+                    </combobox>
+                </div>
+            </hlayout>
+            <separator spacing="20px" bar="true"/>        
+            <div class="input-group" width="100%">
+                <span class="input-group-addon">
+                    Waste Generator.
+                </span>
+                <textbox sclass="form-control input-primary" hflex="3" placeholder="Nama Customer" readonly="true" value="@load(vm.sertifikat.customer.nama)"/>
+                <span class="input-group-btn">
+                    <button iconSclass="glyphicon glyphicon-search" sclass="btn-primary"  width="50px" onClick="@command('showCustomer')"/>
+                </span>
+            </div>
+            <div class="input-group" hflex="3" width="100%">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-home"></span> 
+                </span>
+                <textbox readonly="true" class="form-control input-primary" value="@load(vm.sertifikat.customer.alamat)"/>
+            </div>
+            <hlayout width="100%">
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-envelope"></span> 
+                    </span>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.sertifikat.customer.email)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-user"></span> 
+                    </span>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.sertifikat.customer.namaKontak)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-phone-alt"></span> 
+                    </span>
+                    <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.sertifikat.customer.nomorKontak)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-print"></span> 
+                    </span>
+                    <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.sertifikat.customer.fax)"/>
+                </div>
+            </hlayout>
+            <hlayout>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Deskripsi.
+                    </span>
+                    <textbox class="form-control input-primary" value="@bind(vm.sertifikat.description)"/>
+                </div> 
+            </hlayout>
+        </vlayout>
+        <separator spacing="20px" bar="true"/>
+        <listbox id="list_penerimaan" mold="paging" width="100%" vflex="true" 
+                     
+                 pageSize="5"
+                 emptyMessage="Tidak ada data"
+                 model="@load(vm.sertifikat.listPenerimaan)">        
+                                             
+            <auxhead>
+                <auxheader colspan="5">
+                    <button vflex="3" 
+                            onClick="@command('showListPenerimaan')"
+                            disabled="@load(vm.sertifikat.customer eq null)"
+                            sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-plus" 
+                            label="TAMBAH MANIFEST" />
+                </auxheader>
+            </auxhead>
+            
+                        
+            <listhead sizable="true" visible="true" >
+                <listheader label="TGL ANGKUT" />
+                <listheader label="WASTE NAME" />
+                <listheader label="NO. MANIFEST" />
+                <listheader label="QUANTITY" />
+                <listheader label="HAPUS" width="60px"/>
+            </listhead>
+                
+            <template name="model" var="s">
+                <listitem sclass="mainList">
+                    <listcell label="@load(s.manifest.tglAngkut) @converter('formatedDate', format='dd-MM-yyyy')" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(s.manifest.namaTeknikLimbah)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(s.manifest.kodeManifest)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))"/>
+                        <label if="${s.jmlKemasan2 ne 0}" value="@load(' + '.concat(s.jmlKemasan2).concat(' ').concat(s.satuanKemasan2))"/>
+                        <label if="${s.jmlKemasan3 ne 0}" value="@load(' + '.concat(s.jmlKemasan3).concat(' ').concat(s.satuanKemasan3))"/>
+                    </listcell>
+                    <listcell>
+                        <button vflex="3" hflex="3" 
+                                sclass="btn-danger btn-xs"
+                                iconSclass="glyphicon glyphicon-remove"
+                                onClick="@command('hapusItem',penerimaan=s)" />
+                    </listcell>
+                </listitem>
+            </template>
+            
+            <listfoot>
+                <listfooter span="5" valign="middle">
+                    <div class="btn-group" style="float:right;">
+                        <button onClick="@command('simpanSertifikat')" sclass="btn-success" iconSclass="glyphicon glyphicon-floppy-disk" label="@load(vm.editMode?'UPDATE':'SIMPAN')">
+                        </button>
+                        <button onClick="pop_buat_sertifikat.detach()">BATAL</button>
+                    </div>
+                </listfooter>
+            </listfoot>		
+        </listbox>        
+    </window>
+</zk>

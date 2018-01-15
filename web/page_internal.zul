@@ -57,7 +57,7 @@
                 
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
-                        <listheader sort="auto(penerimaan.manifest.kodeManifest)" label="NMR MANIFEST" />
+                        <listheader sort="auto(penerimaan.manifest.kodeManifest)" label="NO. MANIFEST" />
                         <listheader sort="auto(gudangPengirim)" label="GUDANG PENGIRIM" />
                         <listheader sort="auto(userPengirim.nama)" label="USER PENGIRIM" />
                         <listheader sort="auto(tglKirim)" label="TGL KIRIM" />
@@ -71,7 +71,8 @@
                                         if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
                                     sessionScope.userCredential.getRoles()=='REPORTING'}"/>
                         <listheader sort="auto(tglTerima)" label="TGL TERIMA"/>
-                        <listheader sort="auto(tglTerima)" label="PROSES" width="270px"/>
+                        <listheader sort="auto(tglTerima)" label="TGL PROSES"/>
+                        <listheader sort="auto(tglTerima)" label="PROSES" width="200px"/>
                     </listhead>
                 
                     <template name="model" var="s">
@@ -91,8 +92,10 @@
                                 <label value="@load(s.namaLimbah)"/>
                             </listcell>
                         
-                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))"/>
+                                <label if="${s.jmlKemasan2 ne 0}" value="@load(' + '.concat(s.jmlKemasan2).concat(' ').concat(s.satuanKemasan2))"/>
+                                <label if="${s.jmlKemasan3 ne 0}" value="@load(' + '.concat(s.jmlKemasan3).concat(' ').concat(s.satuanKemasan3))"/>
                             </listcell>
                         
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
@@ -114,12 +117,15 @@
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.tglTerima) @converter('formatedDate', format='dd-MM-yyyy')"/>
                             </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.tglProses) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                            </listcell>
                             
                             <listcell>
                                 <hlayout>
                                     <button 
                                         vflex="3" hflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-saved" 
-                                        label="TERIMA LIMBAH" 
+                                        label="TERIMA" 
                                         onClick="@command('terimaLimbah',prosesLimbah=s)"
                                         disabled="@load(s.tglTerima ne null)"/>
                                     <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" 

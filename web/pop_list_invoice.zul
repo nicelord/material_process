@@ -35,7 +35,9 @@
         <listbox id="list_manifest" mold="paging" width="100%" vflex="true"
                  pageSize="10"
                  emptyMessage="Tidak ada data"
-                 model="@load(vm.listInvoice)">   
+                 model="@load(vm.listInvoice)">  
+            
+             <custom-attributes org.zkoss.zul.nativebar="true"/>   
             
             <auxhead>
                 <auxheader colspan="5">

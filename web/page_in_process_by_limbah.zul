@@ -1,0 +1,153 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>
+
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+        
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        cursor: not-allowed;
+        background-color: #f5f5f5;
+        }
+        
+        .input-group-addon > span {
+        font-weight : 500;
+        }
+        
+        .panel-body{
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        }
+        
+    </style>
+
+    <window id="page_internal" 
+            title="LIMBAH SEDANG DALAM PROSES (GROUP BY NAMA LIMBAH + KEMASAN)" 
+            vflex="3" apply="org.zkoss.bind.BindComposer"  
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageInProcessByLimbahVM')">
+        <borderlayout>
+            <center>
+                <listbox id="list_invoice" 
+                         mold="paging" width="100%" vflex="true" autopaging="true"  
+                         emptyMessage="Tidak ada data"
+                         model="@load(vm.listLimbahProsesByName)">   
+                    <custom-attributes org.zkoss.zul.nativebar="true"/>  
+                
+<!--                    <auxhead>
+                        
+                    </auxhead>-->
+                
+                    <listhead sizable="true" visible="true" >
+                        <listheader width="30px" />
+                        <listheader sort="auto(namaLimbah)" label="NAMA LIMBAH" />
+                        <listheader sort="auto(satuanKemasan)" label="KEMASAN" />
+                        <listheader sort="auto(jmlKemasan)" label="BANYAK" />
+                        <!--<listheader label="LIST MANIFEST" />-->
+                    </listhead>
+                
+                    <template name="model" var="s">
+                        <listitem sclass="mainList" onClick="@command('showListManifest', proses=s)">
+                            <listcell />
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.namaLimbah)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.satuanKemasan)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.jmlKemasan)"/>
+                            </listcell>
+                            
+<!--                            <listcell>
+                                <hlayout>
+                                    <button vflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="LIST MANIFEST" 
+                                            onClick="@command('showListManifest',proses=s)" />
+                                </hlayout>
+                            </listcell>-->
+                            
+                        </listitem>
+                    </template>
+                
+                
+                    <listfoot>
+                        <listfooter span="9" valign="middle">
+                            <div style="float:left;">
+                                
+                                <button sclass="btn-success" onClick="@command('kirimResidu')" iconSclass="glyphicon glyphicon-share-alt" label="KIRIM RESIDU" 
+                                        if="${sessionScope.userCredential.getRoles().startsWith('GUDANG') || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                </button>
+                            </div>
+                            <div style="float:right;">
+                                
+                            </div>
+                        </listfooter>
+                    </listfoot>	
+                     
+                </listbox>
+                
+            </center>
+            <east title="LIST MANIFEST" size="45%" splittable="true" collapsible="true">
+                <div vflex="3" hflex="3">
+                    <listbox id="list_manifest" mold="paging" width="100%" vflex="true"
+                             pageSize="10"
+                             emptyMessage="Tidak ada data"
+                             model="@load(vm.selectedProses.listProsesLimbah)">  
+            
+                        <!--<custom-attributes org.zkoss.zul.nativebar="true"/>-->   
+            
+                
+                        <listhead sizable="true" visible="true" >
+                            <listheader label="NO. MANIFEST" />
+                            <listheader label="CUSTOMER" />
+                            <listheader label="LIMBAH" />
+                            <listheader label="BERAT" />
+                            <listheader label="TGL PROSES GUDANG" />
+                            <listheader label="" />
+                        </listhead>
+                
+                        <template name="model" var="s">
+                            <listitem sclass="mainList">
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.penerimaan.manifest.kodeManifest)"/>
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.penerimaan.manifest.customerPenghasil.nama)"/>
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                    <label value="@load(''.concat(s.penerimaan.jmlKemasan).concat(' ').concat(s.penerimaan.satuanKemasan))"/>
+                                    <label if="${s.penerimaan.jmlKemasan2 ne 0}" value="@load(' + '.concat(s.penerimaan.jmlKemasan2).concat(' ').concat(s.penerimaan.satuanKemasan2))"/>
+                                    <label if="${s.penerimaan.jmlKemasan3 ne 0}" value="@load(' + '.concat(s.penerimaan.jmlKemasan3).concat(' ').concat(s.penerimaan.satuanKemasan3))"/>
+                                </listcell>
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                    <label value="@load(''.concat(s.penerimaan.jmlBerat).concat(' ').concat(s.penerimaan.satuanBerat))"/>
+                                </listcell>
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.tglProses) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                    <button vflex="3" hflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="DETAIL" 
+                                            onClick="@command('showDetailManifest',manifest=s.penerimaan.manifest)"/>
+                                </listcell>
+                            </listitem>
+                        </template>                     
+                    </listbox>
+                </div>
+            
+            </east>
+        </borderlayout>
+    </window>
+    
+    
+
+</zk>
+

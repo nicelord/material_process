@@ -105,7 +105,11 @@
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                             sort="" 
                             label="USER PENERIMA"/>
-                        <listheader label="MANIFEST"/>
+                        <listheader 
+                            if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                            label="MANIFEST"/>
+                        <listheader 
+                            if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                     </listhead>
                 
                     <template name="model" var="s">
@@ -171,7 +175,7 @@
                                 <hlayout>
                                     <button vflex="3" hflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-file" label="@load(sessionScope.userCredential.getRoles() eq 'AKUNTING'?'LIHAT MANIFEST':'')" 
                                             onClick="@command('showManifest',manifest=s.manifest)" />
-                                    <button vflex="3" hflex="3" sclass="btn-xs" iconSclass="glyphicon glyphicon-print" label="" 
+                                    <button vflex="3" hflex="3" sclass="btn-info btn-xs" iconSclass="glyphicon glyphicon-print" label="" 
                                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                                     <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" label="" 
                                             disabled="@load(s.prosessLimbahs.isEmpty() ne 'true' and s.prosessLimbahs.get(0).gudangPengirim eq 'PENERIMAAN')"

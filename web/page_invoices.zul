@@ -52,8 +52,8 @@
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
                 
                     <auxhead>
-                        <auxheader colspan="5">
-                            <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="BUAT INVOICE" onClick="@command('showFormInvoice')" />
+                        <auxheader colspan="6">
+                            <button vflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="BUAT INVOICE" onClick="@command('showFormInvoice')" />
                         </auxheader>
                     </auxhead>
                 
@@ -63,6 +63,7 @@
                         <listheader label="CUSTOMER" />
                         <listheader label="INVOICE DATE" />
                         <listheader label="TOTAL NILAI" />
+                        <listheader width="150px"/>
                     </listhead>
                 
                     <template name="model" var="s">
@@ -72,60 +73,38 @@
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.customer.nama)"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.tglInvoice) @converter('formatedDate', format='dd-MM-yyyy')"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(vm.format(s.getTotalNilai()))"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <hlayout>
+                                    
+                                    <button vflex="3" hflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-list-alt"
+                                            onClick="@command('showDetailInvoice',invoice=s)" />
+                                    <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-edit"
+                                            onClick="@command('showEditInvoice', invoice=s)" />
+                                    <button vflex="3" hflex="3" sclass="btn-info btn-xs" iconSclass="glyphicon glyphicon-print"
+                                            onClick="@command('')" />
+                                    <button vflex="3" hflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash"
+                                            onClick="@command('hapusInvoice', invoice=s)" />
+                                </hlayout>
+                            </listcell>
                         </listitem>
                     </template>
                 
                 
-<!--                    <listfoot>
+                    <listfoot>
                         <listfooter span="6" valign="middle">
                             <div style="float:left;">
                                 
-                                <button onClick="@command('showSertifikat')" iconSclass="glyphicon glyphicon-list-alt" label="BUAT SERTIFIKAT" 
-                                        if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
-                                </button>
+                                Total data :
                             </div>
                             <div style="float:right;">
                                 
                             </div>
                         </listfooter>
-                    </listfoot>	-->
+                    </listfoot>	
                      
                 </listbox>
                 
             </center>
-            <east title="DETAIL INVOICE" size="45%" splittable="true" collapsible="true">
-                <div vflex="3" hflex="3">
-                    <vbox align="center" hflex="3" vflex="3">
-                        <grid hflex="3" vflex="3" oddRowSclass="none">
-                            <custom-attributes org.zkoss.zul.nativebar="true"/> 
-                            <rows>                                                            
-                                <row>
-                                    <panel title="Data Invoice" sclass="panel-primary">
-                                        <panelchildren >
-                                            <vlayout>
-                                                                                
-                                            </vlayout>
-                                        </panelchildren>
-                                    </panel>
-                                    
-                                </row>
-
-                            </rows>
-<!--                            <foot>
-                                <footer>
-                                    <hlayout>
-                                        <button onClick="@command('showWinPenerimaan')" hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-saved" label="TERIMA LIMBAH" 
-                                                disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.penerimaan.isDiterima eq 'true')"/>
-                                       
-                                    </hlayout>
-                                </footer>
-                            </foot>-->
-                        </grid>
-                    </vbox>
-                      
-                </div>
-            
-            </east>
         </borderlayout>  
     </window>  
 </zk>
