@@ -74,7 +74,7 @@
                            
                                   onClick="@command('changePage', page='page_in_process.zul')">
                             <listcell iconSclass="glyphicon glyphicon-list-alt"/>
-                            <listcell label="DALAM PROSES"/>
+                            <listcell label="LIMBAH DI PROSES"/>
                         </listitem>
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
@@ -85,6 +85,15 @@
                                   onClick="@command('changePage', page='page_in_process_by_limbah.zul')">
                             <listcell iconSclass="glyphicon glyphicon-chevron-right"/>
                             <listcell label="BY LIMBAH + KEMASAN"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                           
+                                  onClick="@command('changePage', page='page_residu.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="RESIDU HASIL"/>
                         </listitem>
                         
                             

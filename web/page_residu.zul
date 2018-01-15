@@ -1,0 +1,161 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>
+
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+        
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        cursor: not-allowed;
+        background-color: #f5f5f5;
+        }
+        
+        .input-group-addon > span {
+        font-weight : 500;
+        }
+        
+        .panel-body{
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        }
+        
+    </style>
+
+    <window id="page_internal" 
+            title="RESIDU YANG DIHASILKAN" 
+            vflex="3" apply="org.zkoss.bind.BindComposer"  
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageResiduVM')">
+        <borderlayout>
+            <center>
+                <listbox id="list_residu" 
+                         mold="paging" width="100%" vflex="true" autopaging="true"  
+                         multiple="false"
+                         checkmark="false"
+                         emptyMessage="Tidak ada data"
+                         model="@load(vm.listResidu)">   
+                    <custom-attributes org.zkoss.zul.nativebar="true"/>  
+                
+                    <auxhead>
+                        <auxheader colspan="7">
+                            <button 
+                                vflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="INPUT RESIDU" onClick="@command('buatResidu')" />
+                        </auxheader>
+                    </auxhead>
+                
+                    <listhead sizable="true" visible="true" >
+                        <listheader width="30px" />
+                        <listheader sort="auto(residuId)" label="KODE RESIDU" />
+                        <listheader sort="auto(gudangPenghasil)" label="GUDANG PENGHASIL" width="200px" />
+                        <listheader sort="auto(namaResidu)" label="NAMA RESIDU" />
+                        <listheader sort="auto(jmlKemasan)" label="BANYAK" />
+                        <listheader sort="auto(jmlBerat)" label="BERAT" />
+                        <listheader sort="auto(tglBuat)" label="TGL DIHASILKAN"/>
+                    </listhead>
+                    
+                    <auxhead>
+                        <auxheader>
+                            
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterId)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterGudang)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterNama)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            
+                        </auxheader>
+                        <auxheader>
+                            
+                        </auxheader>
+                        <auxheader>
+                            <button popup="popupTimeChooser" iconSclass="glyphicon glyphicon-filter" label="FILTER" onClick="" sclass="btn-info btn-xs" hflex="3" />
+                          
+                            <popup id="popupTimeChooser" width="200px" style="word-wrap">
+                                <vlayout>
+                                    <label value="Dari :" />
+                                    <datebox id="startDate" value="@bind(vm.tsAwal)" format="dd-MM-yyyy" constraint="no future: now or never" readonly="true" hflex="3"/>
+                                    <label value="Sampai :" />
+                                    <datebox id="endDate" value="@bind(vm.tsAkhir)" format="dd-MM-yyyy" constraint="no future: now or never" readonly="true" hflex="3"/>
+                                    <div class="btn-group" hflex="3">
+                                        <button label="TAMPILKAN" onClick="@command('saringTgl')" sclass="btn-info btn-xs" hflex="3" />
+                                        <button label="RESET" onClick="@command('resetSaringTgl')" sclass="btn-default btn-xs" hflex="3" >
+                                            <attribute name="onClick">
+                                                startDate.setText("");
+                                                endDate.setText("");
+                                            </attribute>
+                                        </button>
+                                    </div>
+                                </vlayout>
+                            </popup>
+                        </auxheader>
+                    </auxhead>
+                
+                    <template name="model" var="s">
+                        <listitem sclass="mainList">
+                            <listcell />
+                            <listcell label="@load(s.residuId)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.gudangPenghasil)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.namaResidu)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))"/>
+                                <label if="${s.jmlKemasan2 ne 0}" value="@load(' + '.concat(s.jmlKemasan2).concat(' ').concat(s.satuanKemasan2))"/>
+                                <label if="${s.jmlKemasan3 ne 0}" value="@load(' + '.concat(s.jmlKemasan3).concat(' ').concat(s.satuanKemasan3))"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(''.concat(s.jmlBerat).concat(' ').concat(s.satuanBerat))"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.tglBuat) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                            </listcell>
+                        </listitem>
+                    </template>
+                
+                
+                    <listfoot>
+                        <listfooter span="9" valign="middle">
+                            <div style="float:left;">
+                                
+                                Total Kemasan : <label value="@load(vm.totalKemasan)"/>
+                                <space />
+                                Total Berat : <label value="@load(vm.totalBerat)"/>
+                            </div>
+                            <div style="float:right;">
+                                
+                            </div>
+                        </listfooter>
+                    </listfoot>	
+                     
+                </listbox>
+                
+            </center>
+        </borderlayout>
+    </window>
+    
+    
+
+</zk>
+

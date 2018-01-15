@@ -1,0 +1,228 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+    </style>
+
+
+    <window id="buat_residu"  
+            style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;" 
+            mode="modal" width="30%" vflex="1" 
+            title="BUAT RESIDU" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.enseval.ttss.vm.PopBuatResiduVM')" closable="true">
+        <vbox align="center">
+            <grid oddRowSclass="none">
+                <rows>
+                    <row>
+                        <vlayout>
+                            
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
+                                    Gudang Penghasil :
+                                </span>
+                                <textbox readonly="true" class="form-control input-primary" value="@load(vm.residu.gudangPenghasil)"/>
+                            </div> 
+                                    
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
+                                    Tanggal Dihasilkan :
+                                </span>
+                                <datebox cols="12" 
+                                         format="dd-MM-yyyy"
+                                         readonly="true"
+                                         style="height:30px;"
+                                         hflex="3"
+                                         buttonVisible="false"
+                                         value="@load(vm.residu.tglBuat)"/>
+                            </div> 
+                            
+                            <separator />
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Nama Residu : 
+                                </span>
+                                <combobox model="@load(vm.listNamaResidu)" 
+                                          hflex="3"
+                                          height="100%"
+                                          value="@save(vm.residu.namaResidu)" 
+                                          style="width:100%;height:100%" 
+                                          class="input-primary">
+                                    <template name="model">
+                                        <comboitem label="@load(each.namaResidu)"/>
+                                    </template>
+                                </combobox>
+                            </div>
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Kemasan 1 :
+                                    </span>
+                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.residu.jmlKemasan)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <combobox readonly="true"
+                                              hflex="3"
+                                              style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              value="@save(vm.residu.satuanKemasan)">
+                                        <attribute name="onCreate">
+                                            self.setSelectedIndex(0);
+                                        </attribute>
+                                        <comboitem label="Drum Logam"/>
+                                        <comboitem label="Pallet"/>
+                                        <comboitem label="Pcs"/>
+                                        <comboitem label="Tin"/>
+                                        <comboitem label="Box"/>
+                                        <comboitem label="R.O Container"/>
+                                        <comboitem label="Kemasan Karton atau plastik"/>
+                                        <comboitem label="Drum Plastik"/>
+                                        <comboitem label="Karung Kain, plastik, kertas"/>
+                                        <comboitem label="Silinder"/>
+                                        <comboitem label="Tangki"/>
+                                        <comboitem label="Gerbong Barang"/>
+                                        <comboitem label="Wheel Bin"/>
+                                        <comboitem label="Jumbo Bag"/>
+                                        <comboitem label="IBC Tank"/>
+                                        <comboitem label="Wadah Hopper"/>
+                                        <comboitem label="Box Besi"/>
+                                        <comboitem label="Tanpa Kemasan"/>
+                                        <comboitem label="Drum kayu"/>
+                                        <comboitem label="Jerycan"/>
+                                        <comboitem label="Multibox/IBC Box"/>
+                                    </combobox>
+                                </div>
+                            </hlayout>
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Kemasan 2 :
+                                    </span>
+                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.residu.jmlKemasan2)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <combobox readonly="true"
+                                              hflex="3"
+                                              style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              value="@save(vm.residu.satuanKemasan2)">
+                                        <attribute name="onCreate">
+                                            self.setSelectedIndex(3);
+                                        </attribute>
+                                        <comboitem label="Drum Logam"/>
+                                        <comboitem label="Pallet"/>
+                                        <comboitem label="Pcs"/>
+                                        <comboitem label="Tin"/>
+                                        <comboitem label="Box"/>
+                                        <comboitem label="R.O Container"/>
+                                        <comboitem label="Kemasan Karton atau plastik"/>
+                                        <comboitem label="Drum Plastik"/>
+                                        <comboitem label="Karung Kain, plastik, kertas"/>
+                                        <comboitem label="Silinder"/>
+                                        <comboitem label="Tangki"/>
+                                        <comboitem label="Gerbong Barang"/>
+                                        <comboitem label="Wheel Bin"/>
+                                        <comboitem label="Jumbo Bag"/>
+                                        <comboitem label="IBC Tank"/>
+                                        <comboitem label="Wadah Hopper"/>
+                                        <comboitem label="Box Besi"/>
+                                        <comboitem label="Tanpa Kemasan"/>
+                                        <comboitem label="Drum kayu"/>
+                                        <comboitem label="Jerycan"/>
+                                        <comboitem label="Multibox/IBC Box"/>
+                                    </combobox>
+                                </div>
+                            </hlayout>
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Kemasan 3 :
+                                    </span>
+                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.residu.jmlKemasan3)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <combobox readonly="true"
+                                              hflex="3"
+                                              style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              value="@save(vm.residu.satuanKemasan3)">
+                                        <attribute name="onCreate">
+                                            self.setSelectedIndex(3);
+                                        </attribute>
+                                        <comboitem label="Drum Logam"/>
+                                        <comboitem label="Pallet"/>
+                                        <comboitem label="Pcs"/>
+                                        <comboitem label="Tin"/>
+                                        <comboitem label="Box"/>
+                                        <comboitem label="R.O Container"/>
+                                        <comboitem label="Kemasan Karton atau plastik"/>
+                                        <comboitem label="Drum Plastik"/>
+                                        <comboitem label="Karung Kain, plastik, kertas"/>
+                                        <comboitem label="Silinder"/>
+                                        <comboitem label="Tangki"/>
+                                        <comboitem label="Gerbong Barang"/>
+                                        <comboitem label="Wheel Bin"/>
+                                        <comboitem label="Jumbo Bag"/>
+                                        <comboitem label="IBC Tank"/>
+                                        <comboitem label="Wadah Hopper"/>
+                                        <comboitem label="Box Besi"/>
+                                        <comboitem label="Tanpa Kemasan"/>
+                                        <comboitem label="Drum kayu"/>
+                                        <comboitem label="Jerycan"/>
+                                        <comboitem label="Multibox/IBC Box"/>
+                                    </combobox>
+                                </div>
+                            </hlayout>
+                            <hlayout>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Total berat :
+                                    </span>
+                                    <longbox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.residu.jmlBerat)"/>
+                                </div>
+                                <combobox readonly="true" 
+                                          hflex="3"
+                                          style="width:100%;height:100%"
+                                          constraint="no empty"  
+                                          value="@save(vm.residu.satuanBerat)">
+                                    <attribute name="onCreate">
+                                        self.setSelectedIndex(1);
+                                    </attribute>
+                                    <comboitem label="Liter"/>
+                                    <comboitem label="KG"/>
+                                    <comboitem label="Ton"/>
+                                </combobox>
+                            </hlayout>
+                            
+                            <separator/>     
+                        </vlayout>
+                    </row> 
+                    
+                                         
+                </rows>
+                <foot>
+                    <footer span="2" align="left">
+                        <div class="btn-group" style="float:right;">
+                            <button onClick="@command('simpanResidu')" sclass="btn-success" iconSclass="glyphicon glyphicon-floppy-disk" label="SIMPAN">
+                            </button>
+                            <button onClick="buat_residu.detach()">TUTUP</button>
+                        </div>
+                    </footer>
+                </foot>
+            </grid>
+        </vbox>
+    </window>
+</zk>

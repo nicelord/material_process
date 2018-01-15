@@ -3,6 +3,7 @@ import org.avaje.agentloader.*;
 import com.avaje.ebean.*;
 import com.enseval.ttss.model.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,9 @@ public class TES {
 
     public static void main(final String[] args) {
         AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent", "debug=1");
+        
+        TES t = new TES();
+        t.runtest();
 //        User u = new User();
 //        u.setUsername("admin");
 //        u.setPassword("admin");
@@ -87,40 +91,96 @@ public class TES {
 //        j.setKeterangan("TEST2");
 //        Ebean.save(j);
 
-        List<ProsessLimbah> l = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", "GUDANG 1").orderBy("id desc").where().isNotNull("tglProses").findList();
-
+//        List<ProsessLimbah> l = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", "GUDANG 1").orderBy("id desc").where().isNotNull("tglProses").findList();
 //        Map<String, Map<String, Long>> counting = l.stream().collect(
 //                Collectors.groupingBy(ProsessLimbah::getNamaLimbah, 
 //                        Collectors.groupingBy(ProsessLimbah::getSatuanKemasan, 
 //                                Collectors.summingLong(ProsessLimbah::getJmlKemasan))));
-        Map<String, Map<String, List<ProsessLimbah>>> counting = l.stream().collect(
-                Collectors.groupingBy(ProsessLimbah::getNamaLimbah,
-                        Collectors.groupingBy(ProsessLimbah::getSatuanKemasan)));
+//        Map<String, Map<String, List<ProsessLimbah>>> counting = l.stream().collect(
+//                Collectors.groupingBy(ProsessLimbah::getNamaLimbah,
+//                        Collectors.groupingBy(ProsessLimbah::getSatuanKemasan)));
+//        System.out.println(counting);
+//
+//        for (Map.Entry<String, Map<String, List<ProsessLimbah>>> entry : counting.entrySet()) {
+//            String key = entry.getKey();
+//            System.out.println("-- " + key);
+//            Map<String, List<ProsessLimbah>> value = entry.getValue();
+//            for (Map.Entry<String, List<ProsessLimbah>> entry1 : value.entrySet()) {
+//                String key1 = entry1.getKey();
+//                System.out.println("--- " + key1);
+//                List<ProsessLimbah> value1 = entry1.getValue();
+//                System.out.println("--- " + value1.stream().mapToLong(m -> m.getJmlKemasan()).sum());
+//
+//            }
+//
+//        }
 
-        System.out.println(counting);
+        
+    }
 
-        for (Map.Entry<String, Map<String, List<ProsessLimbah>>> entry : counting.entrySet()) {
+    public void runtest() {
+        List<Residu> listResidu = Ebean.find(Residu.class).where().eq("gudangPenghasil", "GUDANG 1").orderBy("id desc").findList();
+
+        List<Tempx> listTempx = new ArrayList<>();
+
+        Map<String, Long> c = listResidu.stream().collect(
+                Collectors.groupingBy(Residu::getSatuanKemasan,
+                        Collectors.summingLong(Residu::getJmlKemasan)));
+
+        for (Map.Entry<String, Long> entry : c.entrySet()) {
             String key = entry.getKey();
-            System.out.println("-- " + key);
-            Map<String, List<ProsessLimbah>> value = entry.getValue();
-            for (Map.Entry<String, List<ProsessLimbah>> entry1 : value.entrySet()) {
-                String key1 = entry1.getKey();
-                System.out.println("--- " + key1);
-                List<ProsessLimbah> value1 = entry1.getValue();
-                System.out.println("--- " + value1.stream().mapToLong(m->m.getJmlKemasan()).sum());
-                
-            }
-            
+            Long value = entry.getValue();
 
+            Tempx t = new Tempx();
+            t.setSatuan(key);
+            t.setJmlSatuan(value);
+            listTempx.add(t);
+
+        }
+
+        Map<String, Long> c2 = listResidu.stream().collect(
+                Collectors.groupingBy(Residu::getSatuanKemasan2,
+                        Collectors.summingLong(Residu::getJmlKemasan2)));
+        
+        for (Map.Entry<String, Long> entry : c2.entrySet()) {
+            String key = entry.getKey();
+            Long value = entry.getValue();
+            
+            Tempx t = new Tempx();
+            t.setSatuan(key);
+            t.setJmlSatuan(value);
+            listTempx.add(t);
+            
+        }
+        
+        Map<String, Long> counted = listTempx.stream().collect(
+                Collectors.groupingBy(Tempx::getSatuan,
+                        Collectors.summingLong(Tempx::getJmlSatuan)));
+        
+        System.out.println(counted);
+    }
+
+    public class Tempx {
+
+        String satuan;
+        Long jmlSatuan;
+
+        public String getSatuan() {
+            return satuan;
+        }
+
+        public void setSatuan(String satuan) {
+            this.satuan = satuan;
+        }
+
+        public Long getJmlSatuan() {
+            return jmlSatuan;
+        }
+
+        public void setJmlSatuan(Long jmlSatuan) {
+            this.jmlSatuan = jmlSatuan;
         }
 
     }
 
-//        Map<String, Map<String, Long>> counting1 = l.stream().collect(
-//                Collectors.groupingBy(ProsessLimbah::getNamaLimbah, Collectors.groupingBy(ProsessLimbah::getSatuanKemasan2, Collectors.summingLong(ProsessLimbah::getJmlKemasan2))));
-//        System.out.println(counting1);
-//        
-//        Map<String, Map<String, Long>> counting3 = l.stream().collect(
-//                Collectors.groupingBy(ProsessLimbah::getNamaLimbah, Collectors.groupingBy(ProsessLimbah::getSatuanKemasan3, Collectors.summingLong(ProsessLimbah::getJmlKemasan3))));
-//        System.out.println(counting3);
 }

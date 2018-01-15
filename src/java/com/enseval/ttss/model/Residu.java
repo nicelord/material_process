@@ -5,9 +5,11 @@
  */
 package com.enseval.ttss.model;
 
+import com.avaje.ebean.Ebean;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -25,33 +27,32 @@ public class Residu implements Serializable {
     private OutboundItem outboundItem;
 
     @Id
+    @GeneratedValue
     private Long id;
-    
+
     String residuId;
-    
+
     @ManyToOne
     User userLogin;
-    
+
     @Temporal(TemporalType.DATE)
     Date tglBuat;
-    
+
     String gudangPenghasil;
-    
+
     String namaResidu = "";
-    
+
     String satuanKemasan = "Drum Logam";
     Long jmlKemasan = 0L;
-    
+
     String satuanKemasan2 = "Tin";
     Long jmlKemasan2 = 0L;
-    
+
     String satuanKemasan3 = "Tin";
     Long jmlKemasan3 = 0L;
-    
-    
+
     String satuanBerat = "KG";
     Long jmlBerat = 0L;
-    
 
     public Long getId() {
         return id;
@@ -164,7 +165,10 @@ public class Residu implements Serializable {
     public void setJmlBerat(Long jmlBerat) {
         this.jmlBerat = jmlBerat;
     }
-    
-    
-    
+
+    public void setCustomResiduId() {
+        int count = Ebean.find(Residu.class).where().eq("gudangPenghasil", this.getGudangPenghasil()).findRowCount();
+        this.setResiduId("DACB-" + (count+1) + "-" + this.getGudangPenghasil());
+    }
+
 }
