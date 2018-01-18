@@ -7,6 +7,7 @@ package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.Manifest;
+import com.enseval.ttss.model.OutboundItem;
 import com.enseval.ttss.model.PenandaTangan;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.ProsessLimbah;
@@ -60,11 +61,28 @@ public class PopProsesLimbahVM {
         }
         Selectors.wireComponents(view, (Object) this, false);
     }
-    
-    
+
     @Command
-    public void doProses(){
+    public void doProses() {
+        if (this.prosesLimbah.getGudangTujuan().equals("EXTERNAL")) {
+            OutboundItem out = new OutboundItem();
+            out.setPenerimaan(this.penerimaan);
+            out.setSatuanKemasan(this.penerimaan.getSatuanKemasan());
+            out.setSatuanKemasan2(this.penerimaan.getSatuanKemasan2());
+            out.setSatuanKemasan3(this.penerimaan.getSatuanKemasan3());
+            out.setJmlKemasan(this.penerimaan.getJmlKemasan());
+            out.setJmlKemasan2(this.penerimaan.getJmlKemasan2());
+            out.setJmlKemasan3(this.penerimaan.getJmlKemasan3());
+            
+            out.setSatuanBerat(this.penerimaan.getSatuanBerat());
+            out.setJmlBerat(this.penerimaan.getJmlBerat());
+            
+            out.setNamaItem(this.penerimaan.getManifest().getNamaTeknikLimbah());
+            Ebean.save(out);
+        } 
+        
         Ebean.save(this.prosesLimbah);
+
         BindUtils.postGlobalCommand(null, null, "refresh", null);
         this.winProsesLimbah.detach();
     }

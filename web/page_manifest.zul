@@ -81,6 +81,36 @@
                         <listheader sort="auto(penerimaan.statusPenerimaan)" label="SERTIFIKAT"
                                     if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                     </listhead>
+                    
+                    <auxhead>
+                        <auxheader>
+                            
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterKode)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterPenghasil)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterKodeJenis)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterNamaTeknik)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+
+                        </auxheader>
+                        <auxheader>
+                            
+                        </auxheader>
+                        <auxheader>
+                            
+                        </auxheader>
+                        <auxheader if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR' }">
+                            
+                        </auxheader>
+                    </auxhead>
                 
                     <template name="model" var="s">
                         <listitem sclass="mainList" onClick="@command('showDetail', manifest=s)">
@@ -149,7 +179,7 @@
                                     if="${s.penerimaan.sertifikat eq null}"
                                     sclass="label label-warning" value="belum ada sertifikat"/>
                                 
-                                <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="LIHAT SERTIFIKAT" 
+                                <button vflex="3" hflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="LIHAT SERTIFIKAT" 
                                         onClick="@command('showSertifikat',sertifikat=s.penerimaan.sertifikat)"
                                         if="${s.penerimaan.sertifikat ne null}"/>
                             

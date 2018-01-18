@@ -54,6 +54,8 @@ public class Residu implements Serializable {
     String satuanBerat = "KG";
     Long jmlBerat = 0L;
 
+    String tipe = "";
+
     public Long getId() {
         return id;
     }
@@ -167,8 +169,30 @@ public class Residu implements Serializable {
     }
 
     public void setCustomResiduId() {
-        int count = Ebean.find(Residu.class).where().eq("gudangPenghasil", this.getGudangPenghasil()).findRowCount();
-        this.setResiduId("DACB-" + (count+1) + "-" + this.getGudangPenghasil());
+        if (this.getTipe().equals("hasil")) {
+            int count = Ebean.find(Residu.class).where().eq("tipe", "hasil").where().eq("gudangPenghasil", this.getGudangPenghasil()).findRowCount();
+            this.setResiduId("DACB-" + (count + 1) + "-" + this.getGudangPenghasil());
+        }else{
+            int count = Ebean.find(Residu.class).where().eq("tipe", "keluar").where().eq("gudangPenghasil", this.getGudangPenghasil()).findRowCount();
+            this.setResiduId("OUT-DACB-" + (count + 1) + "-" + this.getGudangPenghasil());
+        }
+
+    }
+
+    public OutboundItem getOutboundItem() {
+        return outboundItem;
+    }
+
+    public void setOutboundItem(OutboundItem outboundItem) {
+        this.outboundItem = outboundItem;
+    }
+
+    public String getTipe() {
+        return tipe;
+    }
+
+    public void setTipe(String tipe) {
+        this.tipe = tipe;
     }
 
 }

@@ -38,9 +38,9 @@
     </style>
 
     <window id="page_internal" 
-            title="RESIDU YANG DIHASILKAN" 
+            title="RESIDU YANG DIKIRIM KE BAGIAN EXTERNAL" 
             vflex="3" apply="org.zkoss.bind.BindComposer"  
-            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageResiduVM')">
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageResiduKeluarVM')">
         <borderlayout>
             <center>
                 <listbox id="list_residu" 
@@ -65,7 +65,7 @@
                         <listheader sort="auto(namaResidu)" label="NAMA RESIDU" />
                         <listheader sort="auto(jmlKemasan)" label="BANYAK" />
                         <listheader sort="auto(jmlBerat)" label="BERAT" />
-                        <listheader sort="auto(tglBuat)" label="TGL DIHASILKAN"/>
+                        <listheader sort="auto(tglBuat)" label="TGL DIKELUARKAN"/>
                     </listhead>
                     
                     <auxhead>

@@ -1,0 +1,106 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>
+
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+        
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        cursor: not-allowed;
+        background-color: #f5f5f5;
+        }
+        
+        .input-group-addon > span {
+        font-weight : 500;
+        }
+        
+        .panel-body{
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        }
+        
+    </style>
+
+    <window id="page_internal" 
+            title="GUDANG EXTERNAL" 
+            vflex="3" apply="org.zkoss.bind.BindComposer"  
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageOutboundVM')">
+        <borderlayout>
+            <center>
+                <listbox id="list_residu" 
+                         mold="paging" width="100%" vflex="true" autopaging="true"  
+                         multiple="false"
+                         checkmark="false"
+                         emptyMessage="Tidak ada data"
+                         model="@load(vm.listOutboundItem)">   
+                    <custom-attributes org.zkoss.zul.nativebar="true"/>  
+                
+                    <listhead sizable="true" visible="true" >
+                        <listheader width="30px" />
+                        <listheader sort="auto(namaItem)" label="MANIFEST"/>
+                        <listheader sort="auto(namaItem)" label="NAMA LIMBAH/RESIDU"/>
+                        <listheader sort="auto(jmlKemasan)" label="BANYAK" />
+                        <listheader sort="auto(jmlBerat)" label="BERAT" />
+                    </listhead>
+                    
+                    
+                
+                    <template name="model" var="s">
+                        <listitem sclass="mainList">
+                            <listcell />
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.penerimaan ne null ? s.penerimaan.manifest.kodeManifest : s.residu.residuId)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.namaItem)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))"/>
+                                <label if="${s.jmlKemasan2 ne 0}" value="@load(' + '.concat(s.jmlKemasan2).concat(' ').concat(s.satuanKemasan2))"/>
+                                <label if="${s.jmlKemasan3 ne 0}" value="@load(' + '.concat(s.jmlKemasan3).concat(' ').concat(s.satuanKemasan3))"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(''.concat(s.jmlBerat).concat(' ').concat(s.satuanBerat))"/>
+                            </listcell>
+                        </listitem>
+                    </template>
+                
+                
+                    <listfoot>
+                        <listfooter span="9" valign="middle">
+                            <div style="float:left;">
+                                
+                               
+                            </div>
+                            <div style="float:right;">
+                                
+                            </div>
+                        </listfooter>
+                    </listfoot>	
+                     
+                </listbox>
+                
+            </center>
+        </borderlayout>
+    </window>
+    
+    
+
+</zk>
+

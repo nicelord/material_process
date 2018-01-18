@@ -1,0 +1,122 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        text-transform:uppercase;
+        
+        }
+     
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        
+        
+        }
+        
+       
+    </style>
+    
+    <window id="pop_store" 
+            style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
+            position="center,top" 
+            mode="modal" 
+            width="700px" 
+            vflex="1" 
+            title="LIST ITEM" 
+            border="normal" 
+            closable="true" 
+            apply="org.zkoss.bind.BindComposer" 
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PopStoreVM')">
+        
+        <vlayout>
+            <hlayout>
+                
+                <div class="input-group" hflex="4">
+                    <span class="input-group-addon">
+                        Nomor Store : 
+                    </span>
+                    <combobox model="@load(vm.listKodeStore)" 
+                              hflex="3"
+                              height="100%"
+                              value="@save(vm.kodeStore)" 
+                              style="width:100%;height:100%" 
+                              class="input-primary">
+                        <template name="model">
+                            <comboitem label="@load(each.kodeStore)"/>
+                        </template>
+                    </combobox>
+                </div>  
+                <div class="input-group" hflex="4">
+                    <span class="input-group-addon" >
+                        Total berat.
+                    </span>
+                    <longbox sclass="form-control input-primary" placeholder="Banyak" value="@save(vm.jmlBerat)"/>
+                </div>
+                <combobox readonly="true" 
+                          constraint="no empty" 
+                          style="width:100%;height:100%"
+                          hflex="2" 
+                          value="@save(vm.satuanBerat)">
+                    <attribute name="onCreate">
+                        self.setSelectedIndex(0);
+                    </attribute>
+                    <comboitem label="KG"/>
+                    <comboitem label="Liter"/>
+                    <comboitem label="Ton"/>
+                </combobox>
+            
+            </hlayout>
+        </vlayout>
+        
+        <separator />
+        
+        <listbox id="list_penerimaan" mold="paging" width="100%" vflex="true" 
+                 pageSize="5"
+                 emptyMessage="Tidak ada data"
+                 model="@load(vm.listStore)">     
+            
+            <custom-attributes org.zkoss.zul.nativebar="true"/>     
+                        
+            <listhead sizable="true" visible="true" >
+                <listheader label="MANIFEST" />
+                <listheader sort="auto(namaItem)" label="NAMA ITEM" />
+                <listheader sort="auto(satuanKemasan)" label="KEMASAN" />
+                <listheader sort="auto(jmlKemasan)" label="BANYAK" />
+                <listheader />
+            </listhead>
+                
+            <template name="model" var="s">
+                <listitem sclass="mainList">
+                    <listcell label="@load(s.outboundItem.penerimaan ne null ? s.outboundItem.penerimaan.manifest.kodeManifest : s.outboundItem.residu.residuId)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(s.outboundItem.namaItem)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(s.satuanKemasan)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell>
+                        <combobox hflex="3"
+                                  height="100%"
+                                  readonly="true" 
+                                  class="input-primary"
+                                  value="@bind(s.jmlKemasan)"
+                                  onAfterRender="self.setSelectedIndex(self.getItemCount()-1)"
+                                  model="@load(s.listBanyak)">
+                            
+                            <template name="model">
+                                <comboitem label="@load(each)"/>
+                            </template>
+                        
+                        </combobox>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <button hflex="3" iconSclass="glyphicon glyphicon-hand-up" onClick="@command('pilihItem', store=s)" sclass="btn-xs btn-success" label="PILIH"/>
+                    </listcell>
+                </listitem>
+            </template>	
+        </listbox>
+        <separator bar="true"/>
+        <div class="btn-group" style="float:right;">
+            <button onClick="pop_store.detach()">BATAL</button>
+        </div>
+    </window>
+
+</zk>

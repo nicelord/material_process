@@ -1,0 +1,226 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+    </style>
+
+
+    <window id="buat_residu"  
+            style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;" 
+            mode="modal" width="30%" vflex="1" 
+            title="BUAT RESIDU" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.enseval.ttss.vm.PopBuatResiduKeluarVM')" closable="true">
+        <vbox align="center">
+            <grid oddRowSclass="none">
+                <rows>
+                    <row>
+                        <vlayout>
+                            
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
+                                    Gudang Penghasil :
+                                </span>
+                                <textbox readonly="true" class="form-control input-primary" value="@load(vm.residu.gudangPenghasil)"/>
+                            </div> 
+                                    
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
+                                    Tanggal Keluar Gudang :
+                                </span>
+                                <datebox cols="12" 
+                                         format="dd-MM-yyyy"
+                                         readonly="true"
+                                         style="height:30px;"
+                                         hflex="3"
+                                         buttonVisible="false"
+                                         value="@load(vm.residu.tglBuat)"/>
+                            </div> 
+                            
+                            <separator />
+                            
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon" >
+                                    Nama Residu : 
+                                </span>
+                                <combobox model="@load(vm.listNamaResidu)" 
+                                          onChange="@command('recountKemasan1')"
+                                          hflex="3"
+                                          readonly="true"
+                                          height="100%"
+                                          value="@bind(vm.residu.namaResidu)" 
+                                          style="width:100%;height:100%" 
+                                          class="input-primary">
+                                    <template name="model">
+                                        <comboitem label="@load(each.namaResidu)"/>
+                                    </template>
+                                </combobox>
+                            </div>
+                            <hlayout width="100%">
+                                
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Satuan 1 :
+                                    </span>
+                                    <combobox readonly="true"
+                                              onChange="@command('recountBanyakByKemasan1')"
+                                              hflex="3"
+                                              style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              model="@load(vm.groupedTotal)" 
+                                              selectedItem="@bind(vm.residu.satuanKemasan)"
+                                              value="@bind(vm.residu.satuanKemasan)">
+                                        <template name="model">
+                                            <comboitem label="@load(each.satuan)"/>
+                                        </template>
+                                    </combobox>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Banyak :
+                                    </span>
+                                    <combobox readonly="true"
+                                              hflex="3"
+                                              style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              model="@load(vm.listBanyak1)" 
+                                              value="@bind(vm.residu.jmlKemasan)">
+                                        <template name="model">
+                                            <comboitem label="@load(each)"/>
+                                        </template>
+                                    </combobox>
+                                </div>
+                                
+                                <!--<spinner value="@bind(s.jmlKemasan)" hflex="3" vflex="3" height="100%" class="input-primary" constraint="@load('no empty, min 1 max '.concat(s.jmlKemasan).concat(': no empty, minimal : 1, maksimal : '.concat(s.jmlKemasan)))"/>-->
+                            </hlayout>
+                            
+                            <hlayout width="100%">
+                                
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Satuan 2 :
+                                    </span>
+                                    <combobox readonly="true"
+                                              onChange="@command('recountBanyakByKemasan2')"
+                                              hflex="3"
+                                              style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              model="@load(vm.groupedTotal)" 
+                                              selectedItem="@bind(vm.residu.satuanKemasan2)"
+                                              value="@bind(vm.residu.satuanKemasan2)">
+                                        <template name="model">
+                                            <comboitem label="@load(each.satuan)"/>
+                                        </template>
+                                    </combobox>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Banyak :
+                                    </span>
+                                    <combobox readonly="true"
+                                              hflex="3"
+                                              style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              model="@load(vm.listBanyak2)" 
+                                              value="@bind(vm.residu.jmlKemasan2)">
+                                        <template name="model">
+                                            <comboitem label="@load(each)"/>
+                                        </template>
+                                    </combobox>
+                                </div>
+                            </hlayout>
+                            
+                            <hlayout width="100%">
+                                
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Satuan 2 :
+                                    </span>
+                                    <combobox readonly="true"
+                                              onChange="@command('recountBanyakByKemasan3')"
+                                              hflex="3"
+                                              style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              model="@load(vm.groupedTotal)" 
+                                              selectedItem="@bind(vm.residu.satuanKemasan3)"
+                                              value="@bind(vm.residu.satuanKemasan3)">
+                                        <template name="model">
+                                            <comboitem label="@load(each.satuan)"/>
+                                        </template>
+                                    </combobox>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Banyak :
+                                    </span>
+                                    <combobox readonly="true"
+                                              hflex="3"
+                                              style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              model="@load(vm.listBanyak3)" 
+                                              value="@bind(vm.residu.jmlKemasan3)">
+                                        <template name="model">
+                                            <comboitem label="@load(each)"/>
+                                        </template>
+                                    </combobox>
+                                </div>
+                            </hlayout>
+                            
+                            <hlayout>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Total berat :
+                                    </span>
+                                    <longbox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.residu.jmlBerat)"/>
+                                </div>
+                                <combobox readonly="true" 
+                                          hflex="3"
+                                          style="width:100%;height:100%"
+                                          constraint="no empty"  
+                                          value="@save(vm.residu.satuanBerat)">
+                                    <attribute name="onCreate">
+                                        self.setSelectedIndex(1);
+                                    </attribute>
+                                    <comboitem label="Liter"/>
+                                    <comboitem label="KG"/>
+                                    <comboitem label="Ton"/>
+                                </combobox>
+                            </hlayout>
+                            
+                            <separator/>     
+                        </vlayout>
+                    </row> 
+                    
+                                         
+                </rows>
+                <foot>
+                    <footer span="2" align="left">
+                        <div class="btn-group" style="float:right;">
+                            <button 
+                                disabled="@load(vm.residu.namaResidu eq '')"
+                                onClick="@command('simpanResidu')" 
+                                sclass="btn-success" 
+                                iconSclass="glyphicon glyphicon-floppy-disk" 
+                                label="SIMPAN">
+                            </button>
+                            <button onClick="buat_residu.detach()">TUTUP</button>
+                        </div>
+                    </footer>
+                </foot>
+            </grid>
+        </vbox>
+    </window>
+</zk>

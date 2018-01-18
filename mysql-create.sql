@@ -89,15 +89,18 @@ create table outbound_item (
   id                        bigint auto_increment not null,
   residu_id                 bigint,
   penerimaan_id             bigint,
-  nama_item                 varchar(255),
-  jml_kemasan               bigint,
-  satuan_kemasan            varchar(255),
-  penerimaan_kemasan_ke     integer,
-  nomor_store               integer,
-  nomor_kontainer           integer,
   tgl_buat                  datetime,
   tgl_kirim                 datetime,
   user_login_id             bigint,
+  nama_item                 varchar(255),
+  satuan_kemasan            varchar(255),
+  jml_kemasan               bigint,
+  satuan_kemasan2           varchar(255),
+  jml_kemasan2              bigint,
+  satuan_kemasan3           varchar(255),
+  jml_kemasan3              bigint,
+  satuan_berat              varchar(255),
+  jml_berat                 bigint,
   constraint uq_outbound_item_residu_id unique (residu_id),
   constraint uq_outbound_item_penerimaan_id unique (penerimaan_id),
   constraint pk_outbound_item primary key (id))
@@ -171,6 +174,7 @@ create table residu (
   jml_kemasan3              bigint,
   satuan_berat              varchar(255),
   jml_berat                 bigint,
+  tipe                      varchar(255),
   constraint pk_residu primary key (id))
 ;
 
@@ -192,6 +196,18 @@ create table setting (
   nama_setting              varchar(255),
   nilai_setting             varchar(255),
   constraint pk_setting primary key (id))
+;
+
+create table store (
+  id                        bigint auto_increment not null,
+  outbound_item_id          bigint,
+  kode_store                varchar(255),
+  satuan_kemasan            varchar(255),
+  jml_kemasan               bigint,
+  satuan_berat              varchar(255),
+  jml_berat                 bigint,
+  kemasan_ke                integer,
+  constraint pk_store primary key (id))
 ;
 
 create table user (
@@ -251,6 +267,8 @@ alter table sertifikat add constraint fk_sertifikat_userLogin_20 foreign key (us
 create index ix_sertifikat_userLogin_20 on sertifikat (user_login_id);
 alter table sertifikat add constraint fk_sertifikat_customer_21 foreign key (customer_id) references customer (id) on delete restrict on update restrict;
 create index ix_sertifikat_customer_21 on sertifikat (customer_id);
+alter table store add constraint fk_store_outboundItem_22 foreign key (outbound_item_id) references outbound_item (id) on delete restrict on update restrict;
+create index ix_store_outboundItem_22 on store (outbound_item_id);
 
 
 

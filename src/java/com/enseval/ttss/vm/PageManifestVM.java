@@ -6,11 +6,14 @@ import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.Sertifikat;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
@@ -23,10 +26,14 @@ import org.zkoss.zk.ui.Executions;
 public class PageManifestVM {
 
     List<Manifest> listManifest = new ArrayList<>();
+    List<Manifest> listManifest2 = new ArrayList<>();
     List<Manifest> selectedManifests = new ArrayList<>();
     Manifest selectedManifest;
     boolean showWin = false;
     User userLogin;
+
+    String filterKode = "", filterPenghasil = "", filterKodeJenis = "", filterNamaTeknik = "";
+    Date tsAwal, tsAkhir;
 
     @AfterCompose
     public void initSetup() {
@@ -37,8 +44,33 @@ public class PageManifestVM {
         } else {
             this.listManifest = Ebean.find(Manifest.class).orderBy("id desc").findList();
         }
+        this.listManifest2 = this.listManifest;
     }
-    
+
+    @Command
+    @NotifyChange({"*"})
+    public void saring() {
+
+        if (tsAwal != null && tsAkhir != null) {
+
+//            LocalDate localDateTimeAwal = this.tsAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//            LocalDate localDateTimeAkhir = this.tsAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//            this.listResidu = listResidu2.stream().filter(l -> (l.getTglBuat().after(Date.from(localDateTimeAwal.atStartOfDay(ZoneId.systemDefault()).toInstant())) && l.getTglBuat().before(Date.from(localDateTimeAkhir.atStartOfDay(ZoneId.systemDefault()).toInstant())))
+//                    && l.getResiduId().toLowerCase().contains(this.filterId.toLowerCase())
+//                    && l.getGudangPenghasil().toLowerCase().contains(this.filterGudang.toLowerCase())
+//                    && l.getNamaResidu().toLowerCase().contains(this.filterNama.toLowerCase()))
+//                    .collect(Collectors.toList());
+        } else {
+            this.listManifest = this.listManifest2.stream().filter(l
+                    -> l.getKodeManifest().toLowerCase().contains(this.filterKode.toLowerCase())
+                    && l.getCustomerPenghasil().getNama().toLowerCase().contains(this.filterPenghasil.toLowerCase())
+                    && l.getJenisLimbah().getKodeJenis().toLowerCase().contains(this.filterKodeJenis.toLowerCase())
+                    && l.getNamaTeknikLimbah().toLowerCase().contains(this.filterNamaTeknik.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+
+    }
+
     @Command
     public void showSertifikat(@BindingParam("sertifikat") Sertifikat s) {
         Map m = new HashMap();
@@ -115,7 +147,7 @@ public class PageManifestVM {
     public void inputManifest() {
         Executions.createComponents("pop_input_manifest.zul", (Component) null, null);
     }
-    
+
     @Command
     public void revisiManifest(@BindingParam("manifest") Manifest manifest) {
         Map m = new HashMap();
@@ -161,6 +193,54 @@ public class PageManifestVM {
 
     public void setUserLogin(User userLogin) {
         this.userLogin = userLogin;
+    }
+
+    public String getFilterKode() {
+        return filterKode;
+    }
+
+    public void setFilterKode(String filterKode) {
+        this.filterKode = filterKode;
+    }
+
+    public String getFilterPenghasil() {
+        return filterPenghasil;
+    }
+
+    public void setFilterPenghasil(String filterPenghasil) {
+        this.filterPenghasil = filterPenghasil;
+    }
+
+    public String getFilterKodeJenis() {
+        return filterKodeJenis;
+    }
+
+    public void setFilterKodeJenis(String filterKodeJenis) {
+        this.filterKodeJenis = filterKodeJenis;
+    }
+
+    public String getFilterNamaTeknik() {
+        return filterNamaTeknik;
+    }
+
+    public void setFilterNamaTeknik(String filterNamaTeknik) {
+        this.filterNamaTeknik = filterNamaTeknik;
+    }
+
+    public Date getTsAwal() {
+        return tsAwal;
+    }
+
+    public void setTsAwal(Date tsAwal) {
+        this.tsAwal = tsAwal;
+    }
+
+    public Date getTsAkhir() {
+        return tsAkhir;
+    }
+
+    public void setTsAkhir(Date tsAkhir) {
+        this.tsAkhir = tsAkhir;
     }
 
 }

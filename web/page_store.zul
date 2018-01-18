@@ -1,0 +1,135 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>
+
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+        
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        cursor: not-allowed;
+        background-color: #f5f5f5;
+        }
+        
+        .input-group-addon > span {
+        font-weight : 500;
+        }
+        
+        .panel-body{
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        }
+        
+    </style>
+
+    <window id="page_internal" 
+            title="STORE GUDANG EXTERNAL" 
+            vflex="3" apply="org.zkoss.bind.BindComposer"  
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageStoreVM')">
+        <borderlayout>
+            <center>
+                <listbox id="list_residu" 
+                         mold="paging" width="100%" vflex="true" autopaging="true"  
+                         multiple="false"
+                         checkmark="false"
+                         emptyMessage="Tidak ada data"
+                         model="@load(vm.listStore)">   
+                    <custom-attributes org.zkoss.zul.nativebar="true"/>  
+                    
+                    <auxhead>
+                        <auxheader colspan="9">
+                            <button 
+                                vflex="3" 
+                                sclass="btn-success btn-xs" 
+                                iconSclass="glyphicon glyphicon-file" 
+                                label="TAMBAHKAN ITEM" onClick="@command('showPopStore')" />
+                        </auxheader>
+                    </auxhead>
+                
+                    <listhead sizable="true" visible="true" >
+                        <listheader width="30px" />
+                        <listheader sort="auto(kodeStore)" label="NO. STORE"/>
+                        <listheader sort="auto(namaItem)" label="NAMA LIMBAH/RESIDU"/>
+                        <listheader sort="auto(jmlKemasan)" label="TOTAL KEMASAN"/>
+                        <listheader sort="auto(satuanKemasan)" label="SATUAN KEMASAN"/>
+                        <listheader sort="auto(jmlBerat)" label="TOTAL BERAT"/>
+                        <listheader sort="auto(satuanBerat)" label="SATUAN BERAT"/>
+                        <listheader label="NO. MANIFEST"/>
+                        <listheader label="" width="50px"/>
+                        
+                    </listhead>
+                    
+                    
+                
+                    <template name="model" var="s">
+                        <listitem sclass="mainList">
+                            <listcell />
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.kodeStore)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.outboundItem.namaItem)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.jmlKemasan)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.satuanKemasan)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.jmlBerat)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.satuanBerat)"/>
+                            </listcell>
+                            
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.outboundItem.penerimaan ne null ? s.outboundItem.penerimaan.manifest.kodeManifest : s.outboundItem.residu.residuId)"/>
+                            </listcell>
+                            
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <button vflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash" label="" 
+                                            onClick="@command('deleteStore',store=s)" />
+                            </listcell>
+                            
+                        </listitem>
+                    </template>
+                
+                
+                    <listfoot>
+                        <listfooter span="9" valign="middle">
+                            <div style="float:left;">
+                                
+                               
+                            </div>
+                            <div style="float:right;">
+                                
+                            </div>
+                        </listfooter>
+                    </listfoot>	
+                     
+                </listbox>
+                
+            </center>
+        </borderlayout>
+    </window>
+    
+    
+
+</zk>
+

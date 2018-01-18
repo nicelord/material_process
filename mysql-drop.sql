@@ -26,6 +26,8 @@ drop table sertifikat;
 
 drop table setting;
 
+drop table store;
+
 drop table user;
 
 SET FOREIGN_KEY_CHECKS=1;

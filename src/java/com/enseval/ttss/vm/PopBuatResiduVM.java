@@ -46,6 +46,7 @@ public class PopBuatResiduVM {
         residu.setUserLogin(this.userLogin);
         residu.setTglBuat(new Date());
         residu.setGudangPenghasil(this.userLogin.getAkses());
+        this.residu.setTipe("hasil");
         
         this.listNamaResidu = Ebean.find(Residu.class).select("namaResidu").setDistinct(true).findList();
         

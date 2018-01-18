@@ -10,7 +10,6 @@ import com.enseval.ttss.model.Residu;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,7 +27,7 @@ import org.zkoss.zk.ui.Executions;
  *
  * @author asus
  */
-public class PageResiduVM {
+public class PageResiduKeluarVM {
 
     List<Residu> listResidu = new ArrayList<>();
     List<Residu> listResidu2 = new ArrayList<>();
@@ -44,14 +43,14 @@ public class PageResiduVM {
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "hasil").where().eq("gudangPenghasil", this.userLogin.getAkses()).orderBy("id desc").findList();
+        this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "keluar").where().eq("gudangPenghasil", this.userLogin.getAkses()).orderBy("id desc").findList();
         this.listResidu2 = this.listResidu;
         countingKemasan();
     }
 
     @Command
     public void buatResidu() {
-        Executions.createComponents("pop_buat_residu.zul", (Component) null, null);
+        Executions.createComponents("pop_buat_residu_keluar.zul", (Component) null, null);
 
     }
 
@@ -93,7 +92,7 @@ public class PageResiduVM {
     @GlobalCommand
     @NotifyChange({"*"})
     public void refresh() {
-        this.listResidu = Ebean.find(Residu.class).where().eq("gudangPenghasil", this.userLogin.getAkses()).orderBy("id desc").findList();
+        this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "keluar").where().eq("gudangPenghasil", this.userLogin.getAkses()).orderBy("id desc").findList();
         countingKemasan();
     }
 
