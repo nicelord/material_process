@@ -37,45 +37,44 @@
         
     </style>
 
-    <window id="page_internal" 
-            title="KOLOM GUDANG EXTERNAL" 
+    <window title="PENGIRIMAN" 
             vflex="3" apply="org.zkoss.bind.BindComposer"  
-            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageStoreVM')">
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PagePengirimanVM')">
         <borderlayout>
             <center>
-                <listbox id="list_residu" 
+                <listbox id="list_pengiriman" 
                          mold="paging" width="100%" vflex="true" autopaging="true"  
-                         multiple="@load(vm.select)"
-                         checkmark="@load(vm.select)"
-                         selectedItems="@bind(vm.listSelectedStore)"
+                         multiple="false"
+                         checkmark="false"
                          emptyMessage="Tidak ada data"
-                         model="@load(vm.listStore)">   
+                         model="@load(vm.listPengiriman)">   
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
                     
-                    <auxhead>
-                        <auxheader colspan="10">
+<!--                    <auxhead>
+                        <auxheader colspan="11">
                             <button 
                                 vflex="3" 
                                 sclass="btn-success btn-xs" 
                                 iconSclass="glyphicon glyphicon-file" 
-                                label="TAMBAHKAN ITEM" onClick="@command('showPopStore')" />
+                                label="BUAT PENGIRIMAN BARU" onClick="@command('showPopBuatPengiriman')" />
                                 
-                            <checkbox label="mode select" onCheck="@command('modeSelect')" />
                             
                         </auxheader>
-                    </auxhead>
+                    </auxhead>-->
                 
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
-                        <listheader sort="auto(kodeStore)" label="NO. KOLOM"/>
-                        <listheader sort="auto(namaItem)" label="NAMA LIMBAH/RESIDU"/>
-                        <listheader sort="auto(jmlKemasan)" label="TOTAL KEMASAN"/>
-                        <listheader sort="auto(satuanKemasan)" label="SATUAN KEMASAN"/>
-                        <listheader sort="auto(jmlBerat)" label="TOTAL BERAT"/>
-                        <listheader sort="auto(satuanBerat)" label="SATUAN BERAT"/>
-                        <listheader label="NO. MANIFEST"/>
-                        <listheader label="ID PENGIRIMAN"/>
-                        <listheader label="" width="50px"/>
+                        <listheader sort="auto(id)" label="ID" width="80px" />
+                        
+                        <listheader sort="auto(perusahaanTujuan)" label="TUJUAN"/>
+                        <listheader sort="auto(perusahaanPengangkut)" label="PENGANGKUT"/>
+                        <listheader sort="auto(nomorKolom)" label="KOLOM"/>
+                        <listheader sort="auto(nomorContainer)" label="KONTAINER"/>
+                        <listheader label="TOTAL KEMASAN"/>
+                        <listheader label="TOTAL BERAT"/>
+                        <listheader sort="auto(nomorPengiriman)" label="NO. PENGIRIMAN"/>
+                        <listheader sort="auto(tglKirim)" label="TGL KIRIM"/>
+                        <listheader label="" width="80px"/>
                         
                     </listhead>
                     
@@ -85,35 +84,41 @@
                         <listitem sclass="mainList">
                             <listcell />
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.kodeStore)"/>
-                            </listcell>
-                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.outboundItem.namaItem)"/>
-                            </listcell>
-                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.jmlKemasan)"/>
-                            </listcell>
-                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.satuanKemasan)"/>
-                            </listcell>
-                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.jmlBerat)"/>
-                            </listcell>
-                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.satuanBerat)"/>
+                                <label value="@load(s.id)"/>
                             </listcell>
                             
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.outboundItem.penerimaan ne null ? s.outboundItem.penerimaan.manifest.kodeManifest : s.outboundItem.residu.residuId)"/>
+                                <label value="@load(s.perusahaanTujuan)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.perusahaanPengangkut)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.nomorKolom)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.nomorContainer)"/>
                             </listcell>
                             
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.pengiriman.id)"/>
+                                <label value="@load(s.hitungTotalKemasan())"/>
                             </listcell>
                             
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <button vflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash" label="" 
-                                        onClick="@command('deleteStore',store=s)" />
+                                <label value="@load(s.hitungTotalBerat())"/>
+                            </listcell>
+                            
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.nomorPengiriman)"/>
+                            </listcell>
+                            
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.tglKirim) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                            </listcell>
+                            
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <button vflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="DETAIL" 
+                                        onClick="@command('showDetailPengiriman',pengiriman=s)" />
                             </listcell>
                             
                         </listitem>
@@ -121,15 +126,8 @@
                 
                 
                     <listfoot>
-                        <listfooter span="10" valign="middle">
-                            <div style="float:left;">
-                                <image id="" src="img/arrow_ltr.png" width=""  height=""/>
-                                <button 
-                                    disabled="@load(vm.listSelectedStore.isEmpty())"
-                                    onClick="@command('showPopListPengiriman')" 
-                                    hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-inbox" 
-                                    label="PINDAHKAN KE PENGIRIMAN"/>
-                            </div>
+                        <listfooter span="11" valign="middle">
+                            Total
                         </listfooter>
                     </listfoot>	
                      

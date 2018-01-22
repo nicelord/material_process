@@ -43,6 +43,7 @@ public class PagePenerimaanVM {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
         this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty()).collect(Collectors.toList()).size();
+        this.jmlPendingInvoice = listPenerimaan.stream().filter(l -> l.getListInvoiceItem().isEmpty()).collect(Collectors.toList()).size();
         this.listPenerimaan2 = this.listPenerimaan;
     }
 
@@ -51,7 +52,17 @@ public class PagePenerimaanVM {
     public void doFilterPending() {
         if (filterPendingInvoice.equals("semua")) {
             this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
+        } else {
+            this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getListInvoiceItem().isEmpty()).collect(Collectors.toList());
         }
+    }
+
+    @Command
+    @NotifyChange({"listPenerimaan"})
+    public void editPenerimaan(@BindingParam("penerimaan") Penerimaan p) {
+        Map m = new HashMap();
+        m.put("penerimaan", p);
+        Executions.createComponents("pop_edit_penerimaan.zul", (Component) null, m);
     }
 
     @Command
@@ -98,13 +109,8 @@ public class PagePenerimaanVM {
 
         this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty()).collect(Collectors.toList()).size();
 
-        if (filterPendingInvoice.equals("semua") || filterStatusProses.equals("semua")) {
-            this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
-        } else {
-            if (this.userLogin.getAkses().equals("PENERIMA")) {
-                this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty()).collect(Collectors.toList());
-            }
-        }
+        this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
+        this.listPenerimaan2 = this.listPenerimaan;
 
     }
 

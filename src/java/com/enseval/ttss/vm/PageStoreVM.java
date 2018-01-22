@@ -7,6 +7,7 @@ package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.OutboundItem;
+import com.enseval.ttss.model.Pengiriman;
 import com.enseval.ttss.model.Residu;
 import com.enseval.ttss.model.Store;
 import com.enseval.ttss.model.User;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,6 +39,10 @@ public class PageStoreVM {
     User userLogin;
     List<Store> listStore;
     
+    boolean select = false;
+    List<Store> listSelectedStore = new ArrayList<>();
+    
+    
 
     @AfterCompose
     public void initSetup() {
@@ -45,6 +51,21 @@ public class PageStoreVM {
      
     }
     
+    @Command
+    @NotifyChange({"select"})
+    public void modeSelect(){
+        this.select = !this.select;
+    }
+    
+    @Command
+    @NotifyChange({"listStore"})
+    public void addToPengiriman(){
+        Pengiriman p = new Pengiriman();
+        for (Store store : listStore) {
+            p.getListStore().add(store);
+        }
+        Ebean.save(p);
+    }
     
     @Command
     @NotifyChange({"listStore"})
@@ -64,6 +85,13 @@ public class PageStoreVM {
     public void showPopStore(){
         Executions.createComponents("pop_store.zul", (Component) null, null);
     }
+    
+    @Command
+    public void showPopListPengiriman(){
+        Map m = new HashMap();
+        m.put("listStore", this.listSelectedStore);
+        Executions.createComponents("pop_list_pengiriman.zul", (Component) null, m);
+    }
 
     public User getUserLogin() {
         return userLogin;
@@ -79,6 +107,22 @@ public class PageStoreVM {
 
     public void setListStore(List<Store> listStore) {
         this.listStore = listStore;
+    }
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
+    }
+
+    public List<Store> getListSelectedStore() {
+        return listSelectedStore;
+    }
+
+    public void setListSelectedStore(List<Store> listSelectedStore) {
+        this.listSelectedStore = listSelectedStore;
     }
 
     

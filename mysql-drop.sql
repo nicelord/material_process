@@ -18,6 +18,8 @@ drop table penanda_tangan;
 
 drop table penerimaan;
 
+drop table pengiriman;
+
 drop table prosess_limbah;
 
 drop table residu;

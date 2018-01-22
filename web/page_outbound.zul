@@ -57,6 +57,8 @@
                         <listheader sort="auto(namaItem)" label="NAMA LIMBAH/RESIDU"/>
                         <listheader sort="auto(jmlKemasan)" label="BANYAK" />
                         <listheader sort="auto(jmlBerat)" label="BERAT" />
+                        <listheader label="STATUS PENGIRIMAN" />
+                        <listheader label="" width="160px"/>
                     </listhead>
                     
                     
@@ -78,12 +80,29 @@
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(''.concat(s.jmlBerat).concat(' ').concat(s.satuanBerat))"/>
                             </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label 
+                                    if="${s.cekStatusPengiriman() eq 'belum ada item dikirim'}"
+                                    sclass="label label-danger" value="@load(s.cekStatusPengiriman())"/>
+                                <label
+                                    if="${s.cekStatusPengiriman() eq 'sebagian terkirim'}"
+                                    sclass="label label-warning" value="@load(s.cekStatusPengiriman())"/>
+                                <label
+                                    if="${s.cekStatusPengiriman() eq 'semua terkirim'}"
+                                    sclass="label label-success" value="@load(s.cekStatusPengiriman())"/>
+                            </listcell>
+                            
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <button vflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="LIST PENGIRIMAN" 
+                                        onClick="@command('showListPengiriman',outbound=s)" />
+                            </listcell>
+                            
                         </listitem>
                     </template>
                 
                 
                     <listfoot>
-                        <listfooter span="9" valign="middle">
+                        <listfooter span="6" valign="middle">
                             <div style="float:left;">
                                 
                                

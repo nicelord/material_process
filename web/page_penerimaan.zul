@@ -53,14 +53,14 @@
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
                 
                     <auxhead>
-                        <auxheader colspan="@load(vm.userLogin.akses.equals('AKUNTING')?'10':'12')">
+                        <auxheader colspan="@load(vm.userLogin.akses.equals('AKUNTING')?'10':'10')">
                             <hlayout>
-<!--                                <radiogroup 
+                                <radiogroup 
                                     if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                     selectedItem="@bind(vm.filterPendingInvoice)" onCheck="@command('doFilterPending')">
                                     <radio label="SEMUA" value="semua"/>
                                     <radio label="@bind('PENDING INVOICE '.concat(vm.jmlPendingInvoice))" value="pending"/>
-                                </radiogroup>-->
+                                </radiogroup>
                                 <radiogroup 
                                     if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                     selectedItem="@bind(vm.filterStatusProses)" onCheck="@command('doFilterStatusProses')">
@@ -71,13 +71,13 @@
                         </auxheader>
                     </auxhead>
                     
-                    <auxhead
+<!--                    <auxhead
                         if="${sessionScope.userCredential.getRoles()!='AKUNTING'}">
-                        <auxheader colspan="8" label="DATA PENERIMAAN"/>
+                        <auxheader colspan="6" label="DATA PENERIMAAN"/>
                         <auxheader colspan="4"
                                    if="${sessionScope.userCredential.getRoles()!='AKUNTING'}" 
                                    label="STATUS PROSES LIMBAH"/>
-                    </auxhead>
+                    </auxhead>-->
                 
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
@@ -97,14 +97,14 @@
                             sort="" 
                             width="150px"
                             label="STATUS PROSES"/>
-                        <listheader 
+<!--                        <listheader 
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                             sort="" 
                             label="TGL DITERIMA"/>
                         <listheader 
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                             sort="" 
-                            label="USER PENERIMA"/>
+                            label="USER PENERIMA"/>-->
                         <listheader 
                             if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                             label="MANIFEST"/>
@@ -163,14 +163,14 @@
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                             
                         </auxheader>
-                        <auxheader 
+<!--                        <auxheader 
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                             
                         </auxheader>
                         <auxheader 
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                             
-                        </auxheader>
+                        </auxheader>-->
                         <auxheader 
                             if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                             
@@ -224,7 +224,7 @@
                                 <label sclass="@load(s.prosessLimbahs.isEmpty()?'label label-warning':'label label-success')" value="@load(s.prosessLimbahs.isEmpty()?'belum proses':s.prosessLimbahs.get(s.prosessLimbahs.size()-1).gudangTujuan)"/>
                             </listcell>
                             
-                            <listcell 
+<!--                            <listcell 
                                 if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
                                 
@@ -238,10 +238,14 @@
                                 if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.prosessLimbahs.isEmpty()?'':s.prosessLimbahs.get(s.prosessLimbahs.size()-1).userPenerima.nama)"/>
-                            </listcell>
+                            </listcell>-->
                             
                             <listcell>
                                 <hlayout>
+                                    <button vflex="3" hflex="3" sclass="btn-warning btn-xs" iconSclass="glyphicon glyphicon-edit" label="@load(sessionScope.userCredential.getRoles() eq 'AKUNTING'?'LIHAT MANIFEST':'')" 
+                                            disabled="@load(s.prosessLimbahs.isEmpty() ne 'true' and s.prosessLimbahs.get(0).gudangPengirim eq 'PENERIMAAN')"
+                                            if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                                            onClick="@command('editPenerimaan',penerimaan=s)" />
                                     <button vflex="3" hflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-file" label="@load(sessionScope.userCredential.getRoles() eq 'AKUNTING'?'LIHAT MANIFEST':'')" 
                                             onClick="@command('showManifest',manifest=s.manifest)" />
                                     <button vflex="3" hflex="3" sclass="btn-info btn-xs" iconSclass="glyphicon glyphicon-print" label="" 

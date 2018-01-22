@@ -96,14 +96,14 @@
                             <listcell label="RESIDU HASIL"/>
                         </listitem>
                         
-                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+<!--                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')||
                                         sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                            
                                   onClick="@command('changePage', page='page_residu_keluar.zul')">
                             <listcell iconSclass="glyphicon glyphicon-list-alt"/>
                             <listcell label="RESIDU KELUAR"/>
-                        </listitem>
+                        </listitem>-->
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles().startsWith('PENERIMA')||
@@ -120,7 +120,16 @@
                            
                                   onClick="@command('changePage', page='page_store.zul')">
                             <listcell iconSclass="glyphicon glyphicon-list-alt"/>
-                            <listcell label="STORE"/>
+                            <listcell label="KOLOM"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles().startsWith('PENERIMA')||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                           
+                                  onClick="@command('changePage', page='page_pengiriman.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="PENGIRIMAN"/>
                         </listitem>
                         
                             

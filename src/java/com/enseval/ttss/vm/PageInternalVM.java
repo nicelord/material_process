@@ -46,6 +46,20 @@ public class PageInternalVM {
             Ebean.update(prosessLimbah);
         }
     }
+    
+    @Command
+    @NotifyChange({"listProsesLimbah"})
+    public void reject(@BindingParam("prosesLimbah") ProsessLimbah prosessLimbah) {
+        prosessLimbah.setPenerimaan(null);
+        prosessLimbah.setGudangTujuan(null);
+        Ebean.update(prosessLimbah);
+        
+        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+            this.listProsesLimbah = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", userLogin.getAkses()).orderBy("id desc").findList();
+        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+            this.listProsesLimbah = Ebean.find(ProsessLimbah.class).orderBy("id desc").findList();
+        }
+    }
 
     @Command
     @NotifyChange({"listProsesLimbah"})

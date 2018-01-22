@@ -5,12 +5,14 @@
  */
 package com.enseval.ttss.model;
 
+import com.avaje.ebean.Ebean;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -25,10 +27,6 @@ public class OutboundItem implements Serializable {
 
     @OneToMany(mappedBy = "outboundItem")
     private List<Store> stores;
-
-
-
-  
 
     @Id
     @GeneratedValue
@@ -48,7 +46,7 @@ public class OutboundItem implements Serializable {
 
     @ManyToOne
     User userLogin;
-    
+
     String namaItem = "";
 
     String satuanKemasan = "Drum Logam";
@@ -62,6 +60,28 @@ public class OutboundItem implements Serializable {
 
     String satuanBerat = "KG";
     Long jmlBerat = 0L;
+
+    public String cekStatusPengiriman() {
+
+        Long totalTerkirim = this.getStores().stream().filter(p -> p.getPengiriman() != null && p.getPengiriman().getTglKirim() != null).mapToLong(m -> m.getJmlKemasan()).sum();
+
+        Long totalKemasan = this.getJmlKemasan() + this.getJmlKemasan2() + this.getJmlKemasan3();
+        
+        if(totalTerkirim == 0){
+            return "belum ada item dikirim";
+        }
+        
+        if(totalKemasan-totalTerkirim > 0){
+            return "sebagian terkirim";
+        }
+        
+        if(totalKemasan-totalTerkirim == 0){
+            return "semua terkirim";
+        }
+        
+        return "";
+        
+    }
 
     public Long getId() {
         return id;
@@ -110,7 +130,6 @@ public class OutboundItem implements Serializable {
     public void setUserLogin(User userLogin) {
         this.userLogin = userLogin;
     }
-
 
     public String getSatuanKemasan() {
         return satuanKemasan;
@@ -191,6 +210,5 @@ public class OutboundItem implements Serializable {
     public void setStores(List<Store> stores) {
         this.stores = stores;
     }
-
 
 }

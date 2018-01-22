@@ -128,6 +128,11 @@
                                         label="TERIMA" 
                                         onClick="@command('terimaLimbah',prosesLimbah=s)"
                                         disabled="@load(s.tglTerima ne null)"/>
+                                    <button 
+                                        vflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-remove" 
+                                        label="" 
+                                        onClick="@command('reject',prosesLimbah=s)"
+                                        disabled="@load(s.tglTerima ne null)"/>
                                     <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" 
                                             label="PROSES"
                                             onClick="@command('prosesLimbah',prosesLimbah=s)"

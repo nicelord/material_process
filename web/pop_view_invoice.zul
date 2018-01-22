@@ -199,13 +199,13 @@
                     <listcell label="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell>
                         <div class="input-group" hflex="3">
-                            <span class="input-group-addon">Rp.</span>
+                            <span class="input-group-addon"><label value="@load(vm.invoice.currency)"/></span>
                             <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" constraint="no empty,no negative" value="@load(s.hargaSatuan)"/>
                         </div>
                     </listcell>
                     <listcell>
                         <div class="input-group" hflex="3">
-                            <span class="input-group-addon">Rp.</span>
+                            <span class="input-group-addon"><label value="@load(vm.invoice.currency)"/></span>
                             <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" value="@load(s.hargaSatuan*s.jmlKemasan)"/>
                         </div>
                     </listcell>
@@ -232,7 +232,7 @@
                 </listfooter>
                 <listfooter span="2" valign="middle">
                     <div class="input-group" hflex="3">
-                        <span class="input-group-addon">Rp.</span>
+                        <span class="input-group-addon"><label value="@load(vm.invoice.currency)"/></span>
                         <longbox readonly="true" 
                                  value="@load(vm.invoice.getTotalNilai())"
                                  class="form-control input-primary" 

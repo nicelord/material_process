@@ -70,6 +70,23 @@ public class PopBuatInvoiceVM {
         this.listNmrKendaraan = Ebean.find(Invoice.class).select("nmrKendaraan").setDistinct(true).findList();
         Selectors.wireComponents(view, (Object) this, false);
     }
+    
+    @Command
+    @NotifyChange({"invoice"})
+    public void currencyIDR(){
+        this.invoice.setCurrency("IDR");
+    }
+    @Command
+    @NotifyChange({"invoice"})
+    public void currencySGD(){
+        this.invoice.setCurrency("SGD");
+    }
+    @Command
+    @NotifyChange({"invoice"})
+    public void currencyUSD(){
+        this.invoice.setCurrency("USD");
+    }
+    
 
     @Command
     public void showCustomer() {
@@ -262,5 +279,7 @@ public class PopBuatInvoiceVM {
     public void setListNmrKendaraan(List<Invoice> listNmrKendaraan) {
         this.listNmrKendaraan = listNmrKendaraan;
     }
+
+  
 
 }

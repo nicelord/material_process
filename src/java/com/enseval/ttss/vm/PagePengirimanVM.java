@@ -9,6 +9,7 @@ import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.OutboundItem;
 import com.enseval.ttss.model.Pengiriman;
 import com.enseval.ttss.model.Residu;
+import com.enseval.ttss.model.Store;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
 import java.time.LocalDate;
@@ -32,23 +33,34 @@ import org.zkoss.zk.ui.Executions;
  *
  * @author asus
  */
-public class PageOutboundVM {
+public class PagePengirimanVM {
 
+    
     User userLogin;
-    List<OutboundItem> listOutboundItem;
+    List<Pengiriman> listPengiriman;
+    
+    
+    
 
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        this.listOutboundItem = Ebean.find(OutboundItem.class).orderBy("id desc").findList();
-
+        this.listPengiriman = Ebean.find(Pengiriman.class).orderBy("id desc").findList();
+     
     }
-
+    
+    
     @Command
-    public void showListPengiriman(@BindingParam("outbound") OutboundItem outboundItem) {
+    public void showDetailPengiriman(@BindingParam("pengiriman") Pengiriman p){
         Map m = new HashMap();
-        m.put("outboundItem", outboundItem);
-        Executions.createComponents("pop_list_pengiriman_by_outbound.zul", (Component) null, m);
+        m.put("pengiriman", p);
+        Executions.createComponents("pop_detail_pengiriman.zul", (Component) null, m);
+    }
+    
+    @GlobalCommand
+    @NotifyChange({"*"})
+    public void refresh(){
+        
     }
 
     public User getUserLogin() {
@@ -59,12 +71,16 @@ public class PageOutboundVM {
         this.userLogin = userLogin;
     }
 
-    public List<OutboundItem> getListOutboundItem() {
-        return listOutboundItem;
+    public List<Pengiriman> getListPengiriman() {
+        return listPengiriman;
     }
 
-    public void setListOutboundItem(List<OutboundItem> listOutboundItem) {
-        this.listOutboundItem = listOutboundItem;
+    public void setListPengiriman(List<Pengiriman> listPengiriman) {
+        this.listPengiriman = listPengiriman;
     }
+    
+    
+
+    
 
 }

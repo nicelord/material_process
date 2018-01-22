@@ -57,6 +57,8 @@ public class Invoice implements Serializable {
     String nomorSpkWo = "";
 
     String keterangan = "";
+    
+    String Currency = "IDR";
 
     public Long getTotalNilai() {
         Long total = listInvoiceItem.stream().mapToLong((InvoiceItem item) -> item.getHargaSatuan()*item.getJmlKemasan()).sum();
@@ -205,6 +207,14 @@ public class Invoice implements Serializable {
 
     public void setListInvoiceItem(List<InvoiceItem> listInvoiceItem) {
         this.listInvoiceItem = listInvoiceItem;
+    }
+
+    public String getCurrency() {
+        return Currency;
+    }
+
+    public void setCurrency(String Currency) {
+        this.Currency = Currency;
     }
 
 }

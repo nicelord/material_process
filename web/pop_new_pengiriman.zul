@@ -1,0 +1,76 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+    </style>
+
+
+    <window id="pop_new_pengiriman"  
+            style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;" 
+            mode="modal" width="30%" vflex="1" 
+            title="BUAT PENGIRIMAN BARU" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.enseval.ttss.vm.PopNewPengirimanVM')" closable="true">
+        <vbox align="center">
+            <grid oddRowSclass="none">
+                <rows>
+                    <row>
+                        <vlayout>
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
+                                    Perusahaan Tujuan :
+                                </span>
+                                <textbox class="form-control input-primary" value="@save(vm.pengiriman.perusahaanTujuan)"/>
+                            </div>
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
+                                    Perusahaan Pengankut :
+                                </span>
+                                <textbox class="form-control input-primary" value="@save(vm.pengiriman.perusahaanPengangkut)"/>
+                            </div>
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        Nomor Kolom :
+                                    </span>
+                                    <textbox class="form-control input-primary" value="@save(vm.pengiriman.nomorKolom)"/>
+                                </div>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        Nomor Kontainer :
+                                    </span>
+                                    <textbox class="form-control input-primary" value="@save(vm.pengiriman.nomorContainer)"/>
+                                </div>
+                            </hlayout>                            
+                            <separator/>     
+                        </vlayout>
+                    </row> 
+                    
+                                         
+                </rows>
+                <foot>
+                    <footer span="2" align="left">
+                        <div class="btn-group" style="float:right;">
+                            <button onClick="@command('savePengiriman')" sclass="btn-success" iconSclass="glyphicon glyphicon-ok" label="OK">
+                            </button>
+                            <button onClick="pop_new_pengiriman.detach()">TUTUP</button>
+                        </div>
+                    </footer>
+                </foot>
+            </grid>
+        </vbox>
+    </window>
+</zk>

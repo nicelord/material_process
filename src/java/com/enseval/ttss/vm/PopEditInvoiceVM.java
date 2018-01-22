@@ -55,6 +55,7 @@ public class PopEditInvoiceVM {
     List<Invoice> listTerm = new ArrayList<>();
     List<Invoice> listGatePass = new ArrayList<>();
     List<Invoice> listNmrKendaraan = new ArrayList<>();
+    
 
     @AfterCompose
     public void initSetup(@ContextParam(ContextType.VIEW) final Component view,
@@ -70,6 +71,22 @@ public class PopEditInvoiceVM {
         this.listNmrKendaraan = Ebean.find(Invoice.class).select("nmrKendaraan").setDistinct(true).findList();
         Selectors.wireComponents(view, (Object) this, false);
         doCount();
+    }
+    
+    @Command
+    @NotifyChange({"invoice"})
+    public void currencyIDR(){
+        this.invoice.setCurrency("IDR");
+    }
+    @Command
+    @NotifyChange({"invoice"})
+    public void currencySGD(){
+        this.invoice.setCurrency("SGD");
+    }
+    @Command
+    @NotifyChange({"invoice"})
+    public void currencyUSD(){
+        this.invoice.setCurrency("USD");
     }
 
     @Command
@@ -270,5 +287,7 @@ public class PopEditInvoiceVM {
     public void setListNmrKendaraan(List<Invoice> listNmrKendaraan) {
         this.listNmrKendaraan = listNmrKendaraan;
     }
+
+
 
 }

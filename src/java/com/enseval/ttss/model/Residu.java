@@ -37,6 +37,9 @@ public class Residu implements Serializable {
 
     @Temporal(TemporalType.DATE)
     Date tglBuat;
+    
+    @Temporal(TemporalType.DATE)
+    Date tglKirim;
 
     String gudangPenghasil;
 
@@ -193,6 +196,14 @@ public class Residu implements Serializable {
 
     public void setTipe(String tipe) {
         this.tipe = tipe;
+    }
+
+    public Date getTglKirim() {
+        return tglKirim;
+    }
+
+    public void setTglKirim(Date tglKirim) {
+        this.tglKirim = tglKirim;
     }
 
 }

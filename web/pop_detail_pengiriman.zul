@@ -1,0 +1,181 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        .z-datebox-input{
+        height:100%;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+    </style>
+
+
+    <window 
+        id="pop_detail_pengiriman"  
+        style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
+        position="center,top"  
+        mode="modal" 
+        width="60%" vflex="1" 
+        title="DETAIL PENGIRIMAN" 
+        border="normal" 
+        apply="org.zkoss.bind.BindComposer" 
+        viewModel="@id('vm') @init('com.enseval.ttss.vm.PopDetailPengirimanVM')" 
+        closable="true">
+        <vlayout>
+            <div class="input-group" hflex="3">
+                <span class="input-group-addon">
+                    Perusahaan Tujuan :
+                </span>
+                <textbox class="form-control input-primary" value="@bind(vm.pengiriman.perusahaanTujuan)"/>
+            </div>
+            <div class="input-group" hflex="3">
+                <span class="input-group-addon">
+                    Perusahaan Pengankut :
+                </span>
+                <textbox class="form-control input-primary" value="@bind(vm.pengiriman.perusahaanPengangkut)"/>
+            </div>
+            <hlayout width="100%">
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Nomor Kolom :
+                    </span>
+                    <textbox class="form-control input-primary" value="@bind(vm.pengiriman.nomorKolom)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Nomor Kontainer :
+                    </span>
+                    <textbox class="form-control input-primary" value="@bind(vm.pengiriman.nomorContainer)"/>
+                </div>
+            </hlayout>                            
+            
+            <separator spacing="20px" bar="true"/>
+            
+            <hlayout width="100%">
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Nomor Pengiriman :
+                    </span>
+                    <textbox class="form-control input-primary" value="@bind(vm.pengiriman.nomorPengiriman)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Tanggal Pengiriman :
+                    </span>
+                    <datebox cols="12" 
+                             format="dd-MM-yyyy"
+                             readonly="true"
+                             style="height:30px;"
+                             hflex="3"
+                             buttonVisible="true"
+                             value="@load(vm.pengiriman.tglKirim)"/>
+                </div>
+            </hlayout>                            
+            
+        </vlayout>
+        <separator spacing="20px" bar="true"/>
+        <listbox id="list_store" 
+                 mold="paging" width="100%" vflex="true"
+                 pageSize="10" 
+                 emptyMessage="Tidak ada data"
+                 model="@load(vm.pengiriman.listStore)">   
+            <custom-attributes org.zkoss.zul.nativebar="true"/>  
+            
+                
+            <listhead sizable="true" visible="true" >
+                <listheader width="30px" />
+                <listheader sort="auto(kodeStore)" label="NO. KOLOM"/>
+                <listheader sort="auto(namaItem)" label="NAMA LIMBAH/RESIDU"/>
+                <listheader sort="auto(jmlKemasan)" label="TOTAL KEMASAN"/>
+                <listheader sort="auto(satuanKemasan)" label="SATUAN KEMASAN"/>
+                <listheader sort="auto(jmlBerat)" label="TOTAL BERAT"/>
+                <listheader sort="auto(satuanBerat)" label="SATUAN BERAT"/>
+                <listheader label="NO. MANIFEST"/>
+                <listheader label="" width="50px"/>
+                        
+            </listhead>
+                    
+                    
+                
+            <template name="model" var="s">
+                <listitem sclass="mainList">
+                    <listcell />
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(s.kodeStore)"/>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(s.outboundItem.namaItem)"/>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(s.jmlKemasan)"/>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(s.satuanKemasan)"/>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(s.jmlBerat)"/>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(s.satuanBerat)"/>
+                    </listcell>
+                            
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(s.outboundItem.penerimaan ne null ? s.outboundItem.penerimaan.manifest.kodeManifest : s.outboundItem.residu.residuId)"/>
+                    </listcell>
+                            
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <button vflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-remove" label="" 
+                                onClick="@command('removeStore',store=s)" />
+                    </listcell>
+                            
+                </listitem>
+            </template>
+            
+            <listfoot>
+                <listfooter span="2">
+                   
+                    <button 
+                        onClick="@command('cetakPengiriman')" 
+                        hflex="3" sclass="btn-info" iconSclass="glyphicon glyphicon-print" 
+                        label="CETAK"/>
+
+                </listfooter>
+                <listfooter>
+                    
+                </listfooter>
+                <listfooter span="2">
+                    <label value="@load(vm.pengiriman.hitungTotalKemasan())"/>
+                </listfooter>
+                <listfooter span="2">
+                    <label value="@load(vm.pengiriman.hitungTotalBerat())"/>
+                </listfooter>
+                <listfooter span="2">
+                    
+                </listfooter>
+                
+            </listfoot>	
+                     
+        </listbox>
+        
+        
+        <separator spacing="20px" bar="true"/>
+        <div class="btn-group" style="float:right;">
+            <button onClick="@command('simpanPengiriman')" sclass="btn-success" iconSclass="glyphicon glyphicon-floppy-disk" label="OK">
+            </button>
+        </div>
+    </window>
+</zk>

@@ -23,6 +23,9 @@ import javax.persistence.Transient;
 @Entity
 public class Store implements Serializable {
 
+    @ManyToOne
+    private Pengiriman pengiriman;
+
     @Id
     @GeneratedValue
     private Long id;
@@ -116,6 +119,14 @@ public class Store implements Serializable {
 
     public void setListBanyak(List<Integer> listBanyak) {
         this.listBanyak = listBanyak;
+    }
+
+    public Pengiriman getPengiriman() {
+        return pengiriman;
+    }
+
+    public void setPengiriman(Pengiriman pengiriman) {
+        this.pengiriman = pengiriman;
     }
 
 }

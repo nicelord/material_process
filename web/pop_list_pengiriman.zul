@@ -1,0 +1,98 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        text-transform:uppercase;
+        
+        }
+     
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        
+        
+        }
+        
+       
+    </style>
+    
+    <window id="pop_list_pengiriman" 
+            style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
+            position="center,top" 
+            mode="modal" 
+            width="700px" 
+            title="LIST PENGIRIMAN PENDING" 
+            border="normal" 
+            closable="true" 
+            apply="org.zkoss.bind.BindComposer" 
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PopListPengirimanVM')">
+        
+       
+        
+        <listbox id="list_pengiriman" 
+                 mold="paging" width="100%" vflex="true" 
+                 multiple="false"
+                 checkmark="false"
+                 emptyMessage="Tidak ada data"
+                 model="@load(vm.listPengiriman)">   
+            <custom-attributes org.zkoss.zul.nativebar="true"/>  
+                
+            
+             <auxhead>
+            <auxheader colspan="6">
+                <button 
+                    vflex="3" 
+                    sclass="btn-success btn-xs" 
+                    iconSclass="glyphicon glyphicon-file" 
+                    label="BUAT PENGIRIMAN BARU" onClick="@command('showPopBuatPengiriman')" />    
+            </auxheader>
+        </auxhead>
+        
+        
+            <listhead sizable="true" visible="true" >
+                <listheader width="30px" />
+                <listheader sort="auto(id)" label="ID" width="100px" />
+                <listheader sort="auto(perusahaanTujuan)" label="TUJUAN"/>
+                <listheader sort="auto(nomorKolom)" label="KOLOM"/>
+                <listheader sort="auto(nomorContainer)" label="KONTAINER"/>
+                <listheader label="" width="50px"/>
+                        
+            </listhead>
+                    
+                    
+                
+            <template name="model" var="s">
+                <listitem sclass="mainList">
+                    <listcell />
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(s.id)"/>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(s.perusahaanTujuan)"/>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(s.nomorKolom)"/>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(s.nomorContainer)"/>
+                    </listcell>
+                            
+                            
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <button vflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-hand" label="PILIH" 
+                                onClick="@command('pilihPengiriman',pengiriman=s)" />
+                    </listcell>
+                            
+                </listitem>
+            </template>
+                     
+        </listbox>
+        <separator bar="true"/>
+        <div class="btn-group" style="float:right;">
+            <button onClick="pop_list_pengiriman.detach()">BATAL</button>
+        </div>
+    </window>
+
+</zk>

@@ -27,6 +27,7 @@ create table invoice (
   nomor_do                  varchar(255),
   nomor_spk_wo              varchar(255),
   keterangan                varchar(255),
+  currency                  varchar(255),
   constraint uq_invoice_nomor_invoice unique (nomor_invoice),
   constraint pk_invoice primary key (id))
 ;
@@ -136,6 +137,16 @@ create table penerimaan (
   constraint pk_penerimaan primary key (id))
 ;
 
+create table pengiriman (
+  id                        bigint auto_increment not null,
+  perusahaan_tujuan         varchar(255),
+  nomor_pengiriman          varchar(255),
+  tgl_kirim                 datetime,
+  nomor_container           varchar(255),
+  nomor_kolom               varchar(255),
+  constraint pk_pengiriman primary key (id))
+;
+
 create table prosess_limbah (
   id                        bigint auto_increment not null,
   penerimaan_id             bigint,
@@ -164,6 +175,7 @@ create table residu (
   residu_id                 varchar(255),
   user_login_id             bigint,
   tgl_buat                  datetime,
+  tgl_kirim                 datetime,
   gudang_penghasil          varchar(255),
   nama_residu               varchar(255),
   satuan_kemasan            varchar(255),
@@ -200,6 +212,7 @@ create table setting (
 
 create table store (
   id                        bigint auto_increment not null,
+  pengiriman_id             bigint,
   outbound_item_id          bigint,
   kode_store                varchar(255),
   satuan_kemasan            varchar(255),
@@ -267,8 +280,10 @@ alter table sertifikat add constraint fk_sertifikat_userLogin_20 foreign key (us
 create index ix_sertifikat_userLogin_20 on sertifikat (user_login_id);
 alter table sertifikat add constraint fk_sertifikat_customer_21 foreign key (customer_id) references customer (id) on delete restrict on update restrict;
 create index ix_sertifikat_customer_21 on sertifikat (customer_id);
-alter table store add constraint fk_store_outboundItem_22 foreign key (outbound_item_id) references outbound_item (id) on delete restrict on update restrict;
-create index ix_store_outboundItem_22 on store (outbound_item_id);
+alter table store add constraint fk_store_pengiriman_22 foreign key (pengiriman_id) references pengiriman (id) on delete restrict on update restrict;
+create index ix_store_pengiriman_22 on store (pengiriman_id);
+alter table store add constraint fk_store_outboundItem_23 foreign key (outbound_item_id) references outbound_item (id) on delete restrict on update restrict;
+create index ix_store_outboundItem_23 on store (outbound_item_id);
 
 
 

@@ -229,6 +229,15 @@
                     </popup>
                 </auxheader>
                 <auxheader colspan="5">
+                    <div style="float:right;">
+                        Currency :
+                    
+                        <div class="btn-group">
+                            <button sclass="@load(vm.invoice.currency eq 'IDR' ? 'btn-info':'')" onClick="@command('currencyIDR')">IDR</button>
+                            <button sclass="@load(vm.invoice.currency eq 'SGD' ? 'btn-info':'')" onClick="@command('currencySGD')">SGD</button>
+                            <button sclass="@load(vm.invoice.currency eq 'USD' ? 'btn-info':'')" onClick="@command('currencyUSD')">USD</button>
+                        </div>
+                    </div>
                 </auxheader>
             </auxhead>
             
@@ -258,14 +267,14 @@
                     <listcell label="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell>
                         <div class="input-group" hflex="3">
-                            <span class="input-group-addon">Rp.</span>
+                            <span class="input-group-addon"><label value="@load(vm.invoice.currency)"/></span>
                             <longbox class="form-control input-primary" maxlength="20" format=",###.#" constraint="no empty,no negative" value="@bind(s.hargaSatuan)" onBlur="@command('doCount')"/>
                             <!--<span class="input-group-addon">,00</span>-->
                         </div>
                     </listcell>
                     <listcell>
                         <div class="input-group" hflex="3">
-                            <span class="input-group-addon">Rp.</span>
+                            <span class="input-group-addon"><label value="@load(vm.invoice.currency)"/></span>
                             <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" value="@bind(s.hargaSatuan*s.jmlKemasan)"/>
                             <!--<span class="input-group-addon">,00</span>-->
                         </div>
@@ -299,7 +308,7 @@
                 </listfooter>
                 <listfooter span="2" valign="middle">
                     <div class="input-group" hflex="3">
-                        <span class="input-group-addon">Rp.</span>
+                        <span class="input-group-addon"><label value="@load(vm.invoice.currency)"/></span>
                         <longbox readonly="true" 
                                  value="@bind(vm.totalHarga)"
                                  class="form-control input-primary" 
