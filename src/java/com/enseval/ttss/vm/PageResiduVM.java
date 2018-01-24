@@ -6,6 +6,7 @@
 package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
+import com.enseval.ttss.model.OutboundItem;
 import com.enseval.ttss.model.Residu;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.zkoss.bind.annotation.AfterCompose;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -44,7 +46,12 @@ public class PageResiduVM {
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "hasil").where().eq("gudangPenghasil", this.userLogin.getAkses()).orderBy("id desc").findList();
+        if(userLogin.getAkses().equals("ADMINISTRATOR") || userLogin.getAkses().equals("REPORTING")){
+            this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "hasil").findList();
+        }else{
+            this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "hasil").where().eq("gudangPenghasil", this.userLogin.getAkses()).orderBy("id desc").findList();
+        }
+        
         this.listResidu2 = this.listResidu;
         countingKemasan();
     }
@@ -53,6 +60,26 @@ public class PageResiduVM {
     public void buatResidu() {
         Executions.createComponents("pop_buat_residu.zul", (Component) null, null);
 
+    }
+
+    @Command
+    @NotifyChange({"listResidu"})
+    public void kirimExternal(@BindingParam("residu") Residu residu) {
+        OutboundItem out = new OutboundItem();
+        out.setResidu(residu);
+        out.setNamaItem(residu.getNamaResidu());
+        out.setSatuanKemasan(residu.getSatuanKemasan());
+        out.setSatuanKemasan2(residu.getSatuanKemasan2());
+        out.setSatuanKemasan3(residu.getSatuanKemasan3());
+        out.setJmlKemasan(residu.getJmlKemasan());
+        out.setJmlKemasan2(residu.getJmlKemasan2());
+        out.setJmlKemasan3(residu.getJmlKemasan3());
+        out.setSatuanBerat(residu.getSatuanBerat());
+        out.setJmlBerat(residu.getJmlBerat());
+        out.setTglBuat(new Date());
+        Ebean.save(out);
+        this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "hasil").where().eq("gudangPenghasil", this.userLogin.getAkses()).orderBy("id desc").findList();
+        this.listResidu2 = this.listResidu;
     }
 
     @Command

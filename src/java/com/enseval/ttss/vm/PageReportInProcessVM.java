@@ -20,7 +20,7 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 
-public class PageInternalVM {
+public class PageReportInProcessVM {
 
     User userLogin;
 
@@ -30,11 +30,12 @@ public class PageInternalVM {
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
-            this.listProsesLimbah = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", userLogin.getAkses()).orderBy("id desc").findList();
+            this.listProsesLimbah = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", userLogin.getAkses()).orderBy("id desc").where().isNotNull("tglProses").findList();
         } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .ne("gudangTujuan", "EXTERNAL")
+                    .eq("penerimaan.inReporting", true)
+                    .isNotNull("tglProses")
                     .orderBy("id desc").findList();
         }
 
@@ -48,27 +49,6 @@ public class PageInternalVM {
             prosessLimbah.setTglTerima(new Date());
             Ebean.update(prosessLimbah);
         }
-    }
-    
-    @Command
-    @NotifyChange({"listProsesLimbah"})
-    public void reject(@BindingParam("prosesLimbah") ProsessLimbah prosessLimbah) {
-        prosessLimbah.setPenerimaan(null);
-        prosessLimbah.setGudangTujuan(null);
-        Ebean.update(prosessLimbah);
-        
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
-            this.listProsesLimbah = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", userLogin.getAkses()).orderBy("id desc").findList();
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
-            this.listProsesLimbah = Ebean.find(ProsessLimbah.class).orderBy("id desc").findList();
-        }
-    }
-
-    @Command
-    @NotifyChange({"listProsesLimbah"})
-    public void prosesLimbah(@BindingParam("prosesLimbah") ProsessLimbah prosessLimbah) {
-        prosessLimbah.setTglProses(new Date());
-        Ebean.update(prosessLimbah);
     }
 
     public User getUserLogin() {

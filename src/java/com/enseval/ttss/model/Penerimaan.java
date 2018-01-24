@@ -44,6 +44,8 @@ public class Penerimaan implements Serializable {
 
     @OneToOne(mappedBy = "penerimaan")
     private Manifest manifest;
+    
+    boolean inReporting = true;
 
     @Id
     @GeneratedValue
@@ -285,5 +287,21 @@ public class Penerimaan implements Serializable {
     public void setListInvoiceItem(List<InvoiceItem> listInvoiceItem) {
         this.listInvoiceItem = listInvoiceItem;
     } 
+
+    public OutboundItem getOutboundItem() {
+        return outboundItem;
+    }
+
+    public void setOutboundItem(OutboundItem outboundItem) {
+        this.outboundItem = outboundItem;
+    }
+
+    public boolean isInReporting() {
+        return inReporting;
+    }
+
+    public void setInReporting(boolean inReporting) {
+        this.inReporting = inReporting;
+    }
 
 }

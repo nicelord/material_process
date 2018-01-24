@@ -74,7 +74,7 @@
                         <listheader label="TOTAL BERAT"/>
                         <listheader sort="auto(nomorPengiriman)" label="NO. PENGIRIMAN"/>
                         <listheader sort="auto(tglKirim)" label="TGL KIRIM"/>
-                        <listheader label="" width="80px"/>
+                        <listheader label="" width="110px"/>
                         
                     </listhead>
                     
@@ -117,8 +117,10 @@
                             </listcell>
                             
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <button vflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="DETAIL" 
+                                <button sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="DETAIL" 
                                         onClick="@command('showDetailPengiriman',pengiriman=s)" />
+                                <button sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash" label="" 
+                                        onClick="@command('deletePengiriman',pengiriman=s)" />
                             </listcell>
                             
                         </listitem>

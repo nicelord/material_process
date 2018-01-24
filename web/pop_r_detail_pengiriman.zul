@@ -30,36 +30,36 @@
         position="center,top"  
         mode="modal" 
         width="60%" vflex="1" 
-        title="DETAIL PENGIRIMAN" 
+        title="REPORT DETAIL PENGIRIMAN" 
         border="normal" 
         apply="org.zkoss.bind.BindComposer" 
-        viewModel="@id('vm') @init('com.enseval.ttss.vm.PopDetailPengirimanVM')" 
+        viewModel="@id('vm') @init('com.enseval.ttss.vm.PopReportDetailPengirimanVM')" 
         closable="true">
         <vlayout>
             <div class="input-group" hflex="3">
                 <span class="input-group-addon">
                     Perusahaan Tujuan :
                 </span>
-                <textbox class="form-control input-primary" value="@bind(vm.pengiriman.perusahaanTujuan)"/>
+                <textbox readonly="true" class="form-control input-primary" value="@bind(vm.pengiriman.perusahaanTujuan)"/>
             </div>
             <div class="input-group" hflex="3">
                 <span class="input-group-addon">
                     Perusahaan Pengankut :
                 </span>
-                <textbox class="form-control input-primary" value="@bind(vm.pengiriman.perusahaanPengangkut)"/>
+                <textbox readonly="true" class="form-control input-primary" value="@bind(vm.pengiriman.perusahaanPengangkut)"/>
             </div>
             <hlayout width="100%">
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Nomor Kolom :
                     </span>
-                    <textbox class="form-control input-primary" value="@bind(vm.pengiriman.nomorKolom)"/>
+                    <textbox readonly="true" class="form-control input-primary" value="@bind(vm.pengiriman.nomorKolom)"/>
                 </div>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Nomor Kontainer :
                     </span>
-                    <textbox class="form-control input-primary" value="@bind(vm.pengiriman.nomorContainer)"/>
+                    <textbox readonly="true" class="form-control input-primary" value="@bind(vm.pengiriman.nomorContainer)"/>
                 </div>
             </hlayout>                            
             
@@ -70,7 +70,7 @@
                     <span class="input-group-addon">
                         Nomor Pengiriman :
                     </span>
-                    <textbox class="form-control input-primary" value="@bind(vm.pengiriman.nomorPengiriman)"/>
+                    <textbox readonly="true" class="form-control input-primary" value="@bind(vm.pengiriman.nomorPengiriman)"/>
                 </div>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
@@ -112,9 +112,7 @@
                             <listheader sort="auto(jmlBerat)" label="TOTAL BERAT"/>
                             <listheader sort="auto(satuanBerat)" label="SATUAN BERAT"/>
                             <listheader label="NO. MANIFEST"/>
-                            <listheader 
-                                if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
-                                label="" width="50px" />
+                            <listheader label="" width="50px" />
                         
                         </listhead>
                     
@@ -146,7 +144,7 @@
                                     <label value="@load(s.outboundItem.penerimaan ne null ? s.outboundItem.penerimaan.manifest.kodeManifest : s.outboundItem.residu.residuId)"/>
                                 </listcell>
                             
-                                <listcell style="text-overflow: ellipsis; white-space: nowrap;" if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                     <button vflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-remove" label="" 
                                             onClick="@command('removeStore',store=s)" />
                                 </listcell>

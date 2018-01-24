@@ -20,7 +20,7 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 
-public class PageInternalVM {
+public class PageReportInternalVM {
 
     User userLogin;
 
@@ -35,6 +35,7 @@ public class PageInternalVM {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
                     .ne("gudangTujuan", "EXTERNAL")
+                    .eq("penerimaan.inReporting", true)
                     .orderBy("id desc").findList();
         }
 

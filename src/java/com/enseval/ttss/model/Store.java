@@ -44,6 +44,8 @@ public class Store implements Serializable {
     
     int kemasanKe;
     
+    boolean inReporting = true;
+    
     @Transient
     List<Integer> listBanyak = new ArrayList<>();
 
@@ -127,6 +129,14 @@ public class Store implements Serializable {
 
     public void setPengiriman(Pengiriman pengiriman) {
         this.pengiriman = pengiriman;
+    }
+
+    public boolean isInReporting() {
+        return inReporting;
+    }
+
+    public void setInReporting(boolean inReporting) {
+        this.inReporting = inReporting;
     }
 
 }

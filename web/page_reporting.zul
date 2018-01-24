@@ -1,0 +1,213 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>
+
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+        
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        cursor: not-allowed;
+        background-color: #f5f5f5;
+        }
+        
+        .input-group-addon > span {
+        font-weight : 500;
+        }
+        
+        .panel-body{
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        }
+        
+    </style>
+
+    <window id="page_internal" 
+            title="REPORT LIMBAH PROSES VS RESIDU HASIL" 
+            vflex="3" apply="org.zkoss.bind.BindComposer"  
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageReportingVM')">
+        <hlayout>
+            <div class="input-group" width="200px">
+                <span class="input-group-addon">
+                    Dari Tanggal :
+                </span>
+                <datebox format="dd-MM-yyyy"
+                         readonly="true"
+                         style="height:30px;"
+                         value="@bind(vm.tglAwal)"
+                         buttonVisible="true"/>
+            </div> 
+            <div class="input-group" width="200px">
+                <span class="input-group-addon">
+                    Sampai Tanggal :
+                </span>
+                <datebox format="dd-MM-yyyy"
+                         readonly="true"
+                         style="height:30px;"
+                         value="@bind(vm.tglAkhir)"
+                         buttonVisible="true"/>
+            </div> 
+            
+            <div class="input-group" hflex="3">
+                <span class="input-group-addon" >
+                    Gudang :
+                </span>
+                <combobox readonly="true" 
+                          hflex="5"
+                          style="width=100%;height:100%"
+                          value="@bind(vm.filterGudang)">
+                    <comboitem label="ALL"/>
+                    <comboitem label="GUDANG 1"/>
+                    <comboitem label="GUDANG 2"/>
+                    <comboitem label="GUDANG 3"/>
+                    <comboitem label="GUDANG 4"/>
+                    <comboitem label="GUDANG 5"/>
+                </combobox>
+            </div>
+                                
+            <button hflex="2" iconSclass="glyphicon glyphicon-refresh" sclass="btn-info" onClick="@command('generateReport')" label="GENERATE"/>
+            <space hflex="3"/>
+            <button hflex="2" iconSclass="glyphicon glyphicon-briefcase" sclass="btn-warning" onClick="@command('generateReport')" label="ARCHIVE"/>
+            
+        </hlayout>
+        <separator/>
+        <borderlayout>
+            <center>
+                <hbox width="100%" height="100%">
+                    <listbox id="reporting" 
+                             mold="paging" width="100%" vflex="true" autopaging="true"  
+                             multiple="false"
+                             checkmark="false"
+                             emptyMessage="Tidak ada data"
+                             model="@load(vm.listTempReport)">   
+                        <custom-attributes org.zkoss.zul.nativebar="true"/>  
+                
+                        <listhead sizable="true" visible="true" >
+                            <listheader width="30px" />
+                            <listheader sort="auto(tanggal)" label="TANGGAL" width="80px" />
+                            <listheader sort="auto(gudangProses)" label="GUDANG PROSES" width="100px" />
+                            <listheader sort="auto(namaLimbah)" label="LIMBAH" />
+                            <listheader sort="auto(jmlKemasan)" label="BANYAK" />
+                            <listheader sort="auto(jmlBerat)" label="BERAT" />
+                        </listhead>
+                
+                        <template name="model" var="s">
+                            <listitem sclass="mainList">
+                                <listcell />
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                    <label value="@load(s.tanggal) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                                </listcell>
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                    <label value="@load(s.namaGudang)"/>
+                                </listcell>
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                    <label value="@load(s.namaLimbah)"/>
+                                </listcell>
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                    <label value="@load(s.jmlKemasan)"/>
+                                </listcell>
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                    <!--<label value="@load(s.gudangPenghasil)"/>-->
+                                </listcell>
+                            
+                            </listitem>
+                        </template>
+                
+                
+                        <listfoot>
+                            <listfooter span="9" valign="middle">
+                                <div style="float:left;">
+                                
+                                
+                                </div>
+                                <div style="float:right;">
+                                
+                                </div>
+                            </listfooter>
+                        </listfoot>	
+                     
+                    </listbox>
+                    
+                    <!-- SPLITTER -->
+                    
+                    <splitter id="s2"/>
+                    
+                    <listbox id="reporting2" 
+                             mold="paging" width="100%" vflex="true" autopaging="true"  
+                             multiple="false"
+                             checkmark="false"
+                             emptyMessage="Tidak ada data"
+                             model="@load(vm.listTempReport2)">   
+                        <custom-attributes org.zkoss.zul.nativebar="true"/>  
+                
+                        <listhead sizable="true" visible="true" >
+                            <listheader width="30px" />
+                            <listheader sort="auto(tanggal)" label="TANGGAL" width="80px" />
+                            <listheader sort="auto(gudangProses)" label="GUDANG PENGHASIL" width="100px" />
+                            <listheader sort="auto(namaLimbah)" label="LIMBAH" />
+                            <listheader sort="auto(jmlKemasan)" label="BANYAK" />
+                            <listheader sort="auto(jmlBerat)" label="BERAT" />
+                        </listhead>
+                
+                        <template name="model" var="s">
+                            <listitem sclass="mainList">
+                                <listcell />
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                    <label value="@load(s.tanggal) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                                </listcell>
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                    <label value="@load(s.namaGudang)"/>
+                                </listcell>
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                    <label value="@load(s.namaLimbah)"/>
+                                </listcell>
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                    <label value="@load(s.jmlKemasan)"/>
+                                </listcell>
+                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                    <!--<label value="@load(s.gudangPenghasil)"/>-->
+                                </listcell>
+                            
+                            </listitem>
+                        </template>
+                
+                
+                        <listfoot>
+                            <listfooter span="9" valign="middle">
+                                <div style="float:left;">
+                                
+                                
+                                </div>
+                                <div style="float:right;">
+                                
+                                </div>
+                            </listfooter>
+                        </listfoot>	
+                     
+                    </listbox>
+                </hbox>
+                
+                
+            </center>
+        </borderlayout>
+    </window>
+    
+    
+
+</zk>
+

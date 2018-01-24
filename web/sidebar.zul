@@ -32,6 +32,7 @@
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles()=='PENERIMA'||
                                         sessionScope.userCredential.getRoles()=='AKUNTING'||
+                                        sessionScope.userCredential.getRoles()=='REPORTING'||
                                         sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                            
                                   onClick="@command('changePage', page='page_penerimaan.zul')">
@@ -60,6 +61,7 @@
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')||
                                         sessionScope.userCredential.getRoles()=='SORTIR'||
+                                        sessionScope.userCredential.getRoles()=='REPORTING'||
                                         sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                            
                                   onClick="@command('changePage', page='page_internal.zul')">
@@ -70,6 +72,7 @@
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')||
                                         sessionScope.userCredential.getRoles()=='SORTIR'||
+                                        sessionScope.userCredential.getRoles()=='REPORTING'||
                                         sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                            
                                   onClick="@command('changePage', page='page_in_process.zul')">
@@ -77,7 +80,7 @@
                             <listcell label="LIMBAH DI PROSES"/>
                         </listitem>
                         
-                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+<!--                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')||
                                         sessionScope.userCredential.getRoles()=='SORTIR'||
                                         sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
@@ -85,16 +88,19 @@
                                   onClick="@command('changePage', page='page_in_process_by_limbah.zul')">
                             <listcell iconSclass="glyphicon glyphicon-chevron-right"/>
                             <listcell label="BY LIMBAH + KEMASAN"/>
-                        </listitem>
+                        </listitem>-->
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')||
+                                        sessionScope.userCredential.getRoles()=='REPORTING' ||
                                         sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                            
                                   onClick="@command('changePage', page='page_residu.zul')">
                             <listcell iconSclass="glyphicon glyphicon-list-alt"/>
                             <listcell label="RESIDU HASIL"/>
                         </listitem>
+                        
+                        
                         
 <!--                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')||
@@ -106,7 +112,8 @@
                         </listitem>-->
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
-                                  if="${sessionScope.userCredential.getRoles().startsWith('PENERIMA')||
+                                  if="${sessionScope.userCredential.getRoles()=='PENERIMA'||
+                                        sessionScope.userCredential.getRoles()=='REPORTING'||
                                         sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                            
                                   onClick="@command('changePage', page='page_outbound.zul')">
@@ -115,7 +122,7 @@
                         </listitem>
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
-                                  if="${sessionScope.userCredential.getRoles().startsWith('PENERIMA')||
+                                  if="${sessionScope.userCredential.getRoles()=='PENERIMA'||
                                         sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                            
                                   onClick="@command('changePage', page='page_store.zul')">
@@ -132,6 +139,60 @@
                             <listcell label="PENGIRIMAN"/>
                         </listitem>
                         
+<!--                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles().startsWith('REPORTING')||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                           
+                                  onClick="@command('changePage', page='page_reporting.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="INTERNAL VS RESIDU"/>
+                        </listitem>-->
+                        
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='REPORTING'||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                           
+                                  onClick="@command('changePage', page='page_r_penerimaan.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="REPORT PENERIMAAN"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='REPORTING'||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                           
+                                  onClick="@command('changePage', page='page_r_internal.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="REPORT LIMBAH MASUK"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='REPORTING'||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                           
+                                  onClick="@command('changePage', page='page_r_in_process.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="REPORT LIMBAH DI PROSES"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='REPORTING'||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                           
+                                  onClick="@command('changePage', page='page_r_outbound.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="REPORT EXTERNAL"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='REPORTING'||
+                                        sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                           
+                                  onClick="@command('changePage', page='page_rekap_penerimaan_limbah.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="REKAP PENERIMAAN LIMBAH"/>
+                        </listitem>
                             
                     </listbox>                    
                 </tabpanel>

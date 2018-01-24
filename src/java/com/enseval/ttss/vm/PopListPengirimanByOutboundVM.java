@@ -57,25 +57,30 @@ public class PopListPengirimanByOutboundVM {
 
     List<Pengiriman> listPengiriman = new ArrayList<>();
 
+    boolean isReporting = false;
+
     @AfterCompose
-    public void initSetup(@ContextParam(ContextType.VIEW) final Component view, @ExecutionArgParam("outboundItem") OutboundItem outboundItem) {
-        
+    public void initSetup(@ContextParam(ContextType.VIEW) final Component view,
+            @ExecutionArgParam("outboundItem") OutboundItem outboundItem,
+            @ExecutionArgParam("isReporting") boolean isReporting) {
+
+        this.isReporting = isReporting;
+
         this.listPengiriman = Ebean.find(Pengiriman.class).where().in("listStore", outboundItem.getStores()).findList();
-        
-//        for (Store store : outboundItem.getStores()) {
-//            if(!listPengiriman.contains(store.getPengiriman())){
-//                listPengiriman.add(store.getPengiriman());
-//            }
-//        }
+
         Selectors.wireComponents(view, (Object) this, false);
 
     }
-    
+
     @Command
-    public void showDetailPengiriman(@BindingParam("pengiriman") Pengiriman p){
+    public void showDetailPengiriman(@BindingParam("pengiriman") Pengiriman p) {
         Map m = new HashMap();
         m.put("pengiriman", p);
-        Executions.createComponents("pop_detail_pengiriman.zul", (Component) null, m);
+        if(isReporting){
+            Executions.createComponents("pop_r_detail_pengiriman.zul", (Component) null, m);
+        }else{
+            Executions.createComponents("pop_detail_pengiriman.zul", (Component) null, m);
+        }
     }
 
     public Window getWinPopListPengirimanByOutboundItem() {
@@ -92,6 +97,14 @@ public class PopListPengirimanByOutboundVM {
 
     public void setListPengiriman(List<Pengiriman> listPengiriman) {
         this.listPengiriman = listPengiriman;
+    }
+
+    public boolean isIsReporting() {
+        return isReporting;
+    }
+
+    public void setIsReporting(boolean isReporting) {
+        this.isReporting = isReporting;
     }
     
     

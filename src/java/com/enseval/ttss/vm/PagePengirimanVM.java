@@ -7,6 +7,7 @@ package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.OutboundItem;
+import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.Pengiriman;
 import com.enseval.ttss.model.Residu;
 import com.enseval.ttss.model.Store;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -28,6 +30,8 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zul.Messagebox;
 
 /**
  *
@@ -49,6 +53,20 @@ public class PagePengirimanVM {
      
     }
     
+    @Command
+    @NotifyChange({"listPengiriman"})
+    public void deletePengiriman(@BindingParam("pengiriman") Pengiriman p){
+        Messagebox.show("Data pengiriman akan dihapus. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
+            if (t.getName().equals("onOK")) {
+                for (Store store : p.getListStore()) {
+                    store.setPengiriman(null);
+                    Ebean.update(store);
+                }
+                Ebean.delete(p);
+                BindUtils.postGlobalCommand(null, null, "refresh", null);
+            }
+        });
+    }
     
     @Command
     public void showDetailPengiriman(@BindingParam("pengiriman") Pengiriman p){
@@ -60,7 +78,7 @@ public class PagePengirimanVM {
     @GlobalCommand
     @NotifyChange({"*"})
     public void refresh(){
-        
+        this.listPengiriman = Ebean.find(Pengiriman.class).orderBy("id desc").findList();
     }
 
     public User getUserLogin() {

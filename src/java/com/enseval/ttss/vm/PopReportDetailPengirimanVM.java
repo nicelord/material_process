@@ -34,7 +34,7 @@ import org.zkoss.zul.Window;
  *
  * @author asus
  */
-public class PopDetailPengirimanVM {
+public class PopReportDetailPengirimanVM {
 
     @Wire("#pop_detail_pengiriman")
     Window win;
@@ -46,14 +46,16 @@ public class PopDetailPengirimanVM {
     @AfterCompose
     public void initSetup(@ContextParam(ContextType.VIEW) final Component view, @ExecutionArgParam("pengiriman") Pengiriman p) {
         this.pengiriman = p;
+        this.pengiriman.setListStore(p.getListStore().stream().filter(sp -> sp.isInReporting() == true).collect(Collectors.toList()));
         groupByOutbound();
         Selectors.wireComponents(view, (Object) this, false);
     }
 
     public void groupByOutbound() {
         this.listOutboundItem = new ArrayList<>();
-        
-        Map<OutboundItem, Map<Integer, List<Store>>> counting = this.pengiriman.getListStore().stream().collect(
+
+        Map<OutboundItem, Map<Integer, List<Store>>> counting = this.pengiriman.getListStore().stream()
+                .filter(p -> p.isInReporting() == true).collect(
                 Collectors.groupingBy(Store::getOutboundItem,
                         Collectors.groupingBy(Store::getKemasanKe)));
 
@@ -105,7 +107,7 @@ public class PopDetailPengirimanVM {
 
     @Command
     public void simpanPengiriman() {
-        Ebean.update(this.pengiriman);
+//        Ebean.update(this.pengiriman);
         BindUtils.postGlobalCommand(null, null, "refresh", null);
         this.win.detach();
     }
@@ -113,7 +115,7 @@ public class PopDetailPengirimanVM {
     @Command
     @NotifyChange({"pengiriman", "listOutboundItem"})
     public void removeStore(@BindingParam("store") Store store) {
-        store.setPengiriman(null);
+        store.setInReporting(false);
         Ebean.update(store);
         this.pengiriman.getListStore().remove(store);
         groupByOutbound();

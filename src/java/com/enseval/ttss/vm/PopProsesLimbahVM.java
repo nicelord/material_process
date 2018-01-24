@@ -77,6 +77,8 @@ public class PopProsesLimbahVM {
             out.setSatuanBerat(this.penerimaan.getSatuanBerat());
             out.setJmlBerat(this.penerimaan.getJmlBerat());
             
+            out.setTglBuat(new Date());
+            
             out.setNamaItem(this.penerimaan.getManifest().getNamaTeknikLimbah());
             Ebean.save(out);
         } 

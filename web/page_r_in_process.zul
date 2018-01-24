@@ -40,7 +40,7 @@
     <window id="page_internal" 
             title="LIMBAH SEDANG DALAM PROSES" 
             vflex="3" apply="org.zkoss.bind.BindComposer"  
-            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageInProcessVM')">
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageReportInProcessVM')">
         <borderlayout>
             <center>
                 <listbox id="list_invoice" 

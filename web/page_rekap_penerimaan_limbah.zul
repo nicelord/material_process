@@ -1,0 +1,128 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>
+
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+        
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        cursor: not-allowed;
+        background-color: #f5f5f5;
+        }
+        
+        .input-group-addon > span {
+        font-weight : 500;
+        }
+        
+        .panel-body{
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        }
+        
+    </style>
+
+    <window id="page_internal" 
+            title="REPORT LIMBAH PROSES VS RESIDU HASIL" 
+            vflex="3" apply="org.zkoss.bind.BindComposer"  
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageRekapPenerimaanLimbahVM')">
+        <borderlayout>
+            <center>
+                
+                <listbox id="rekap_total_limbah" 
+                         mold="paging" width="100%" vflex="3" autopaging="true"  
+                         multiple="false"
+                         checkmark="false"
+                         emptyMessage="Tidak ada data"
+                         model="@load(vm.listTotalLimbah)">   
+                    <custom-attributes org.zkoss.zul.nativebar="true"/>  
+                
+                    <auxhead>
+                        <auxheader colspan="3">
+                            <hlayout>
+                                <div class="input-group" width="200px">
+                                    <span class="input-group-addon">
+                                        Dari Tanggal :
+                                    </span>
+                                    <datebox format="dd-MM-yyyy"
+                                             readonly="true"
+                                             style="height:30px;"
+                                             value="@bind(vm.tglAwal)"
+                                             buttonVisible="true"/>
+                                </div> 
+                                <div class="input-group" width="200px">
+                                    <span class="input-group-addon">
+                                        Sampai Tanggal :
+                                    </span>
+                                    <datebox format="dd-MM-yyyy"
+                                             readonly="true"
+                                             style="height:30px;"
+                                             value="@bind(vm.tglAkhir)"
+                                             buttonVisible="true"/>
+                                </div> 
+                                
+                                <button hflex="2" iconSclass="glyphicon glyphicon-refresh" sclass="btn-info" onClick="@command('generateReport')" label="GENERATE"/>
+                                <space hflex="5"/>
+                            </hlayout>
+                        </auxheader>
+                    </auxhead>
+                    <listhead sizable="true" visible="true" >
+                        <listheader sort="auto(namaLimbah)" label="LIMBAH" />
+                        <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                        <listheader sort="auto(jmlBerat)" label="BERAT" />
+                    </listhead>
+                
+                    <template name="model" var="s">
+                        <listitem sclass="mainList">
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.namaLimbah)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.kodeLimbah)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.jmlBerat)"/>
+                            </listcell>                         
+                        </listitem>
+                    </template>
+                
+                
+                    <listfoot>
+                        <listfooter valign="middle">
+                            
+                        </listfooter>
+                        <listfooter valign="middle">
+                            
+                        </listfooter>
+                        <listfooter valign="middle">
+                            <div style="float:left;">
+                                Total Berat : <label value="@load(vm.totalBerat)" style="font-weight:bold;color:blue"/>
+                            </div>
+                        </listfooter>
+                        
+                    </listfoot>	
+                     
+                </listbox>
+            </center>
+        </borderlayout>
+    </window>
+    
+    
+
+</zk>
+

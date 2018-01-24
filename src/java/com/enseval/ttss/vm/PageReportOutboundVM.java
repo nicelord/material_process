@@ -32,7 +32,7 @@ import org.zkoss.zk.ui.Executions;
  *
  * @author asus
  */
-public class PageOutboundVM {
+public class PageReportOutboundVM {
 
     User userLogin;
     List<OutboundItem> listOutboundItem;
@@ -40,7 +40,10 @@ public class PageOutboundVM {
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        this.listOutboundItem = Ebean.find(OutboundItem.class).orderBy("id desc").findList();
+        this.listOutboundItem = Ebean.find(OutboundItem.class)
+                .where()
+                .eq("penerimaan.inReporting", true)
+                .orderBy("id desc").findList();
 
     }
 
@@ -48,7 +51,7 @@ public class PageOutboundVM {
     public void showListPengiriman(@BindingParam("outbound") OutboundItem outboundItem) {
         Map m = new HashMap();
         m.put("outboundItem", outboundItem);
-        m.put("isReporting", false);
+        m.put("isReporting", true);
         Executions.createComponents("pop_list_pengiriman_by_outbound.zul", (Component) null, m);
     }
 

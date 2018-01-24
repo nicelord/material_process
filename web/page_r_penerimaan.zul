@@ -40,7 +40,7 @@
     <window id="page_penerimaan" 
             title="PENERIMAAN" 
             vflex="3" apply="org.zkoss.bind.BindComposer"  
-            viewModel="@id('vm') @init('com.enseval.ttss.vm.PagePenerimaanVM')">
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageReportPenerimaanVM')">
         <borderlayout>
             <center>
                 <listbox id="list_invoice" 
@@ -243,6 +243,9 @@
                                             disabled="@load(s.prosessLimbahs.isEmpty() ne 'true' and s.prosessLimbahs.get(0).gudangPengirim eq 'PENERIMAAN')"
                                             onClick="@command('showPopProses',penerimaan=s)"
                                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                    <button vflex="3" hflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-remove" label="HAPUS" 
+                                            onClick="@command('hapusReporting',penerimaan=s)"
+                                            if="${sessionScope.userCredential.getRoles()=='REPORTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                                 </hlayout>
                        
                             </listcell>

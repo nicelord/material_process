@@ -51,8 +51,8 @@
                          model="@load(vm.listResidu)">   
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
                 
-                    <auxhead>
-                        <auxheader colspan="8">
+                    <auxhead if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')}">
+                        <auxheader colspan="9">
                             <button 
                                 vflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="INPUT RESIDU" onClick="@command('buatResidu')" />
                         </auxheader>
@@ -66,7 +66,10 @@
                         <listheader sort="auto(jmlKemasan)" label="BANYAK" />
                         <listheader sort="auto(jmlBerat)" label="BERAT" />
                         <listheader sort="auto(tglBuat)" label="TGL DIHASILKAN"/>
-                        <listheader label="KIRIM"/>
+                        <listheader label="TGL KIRIM EXTERNAL"/>
+                        <listheader 
+                            if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')}"
+                            label=""/>
                     </listhead>
                     
                     <auxhead>
@@ -112,6 +115,9 @@
                         <auxheader>
                             
                         </auxheader>
+                        <auxheader if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')}">
+                            
+                        </auxheader>
                       
                     </auxhead>
                 
@@ -137,8 +143,21 @@
                                 <label value="@load(s.tglBuat) @converter('formatedDate', format='dd-MM-yyyy')"/>
                             </listcell>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label 
+                                    if="${s.outboundItem ne null}"
+                                    sclass="label label-success"
+                                    value="@load(s.outboundItem.tglBuat) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                                <label 
+                                    if="${s.outboundItem eq null}"
+                                    sclass="label label-danger"
+                                    value="belum dikirim"/>
+                            </listcell>
+                            <listcell 
+                                if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')}"
+                                style="text-overflow: ellipsis; white-space: nowrap;">
                                 <button vflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-share-alt" label="KIRM EXTERNAL" 
-                                            disabled="@load(s.tglKirim ne null)"
+                                            disabled="@load(s.outboundItem ne null)"
+                                            
                                             onClick="@command('kirimExternal',residu=s)"/>
                             </listcell>
                         </listitem>
@@ -146,7 +165,7 @@
                 
                 
                     <listfoot>
-                        <listfooter span="8" valign="middle">
+                        <listfooter span="@load(vm.userLogin.akses.startsWith('GUDANG')?'9':'8')" valign="middle">
                             <div style="float:left;">
                                 
                                 Total Kemasan : <label value="@load(vm.totalKemasan)"/>
