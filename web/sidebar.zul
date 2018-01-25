@@ -191,7 +191,7 @@
                            
                                   onClick="@command('changePage', page='page_rekap_penerimaan_limbah.zul')">
                             <listcell iconSclass="glyphicon glyphicon-list-alt"/>
-                            <listcell label="REKAP PENERIMAAN LIMBAH"/>
+                            <listcell label="REKAP EXTERNAL PROSES"/>
                         </listitem>
                             
                     </listbox>                    

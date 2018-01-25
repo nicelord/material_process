@@ -77,7 +77,6 @@
                                 </div> 
                                 
                                 <button hflex="2" iconSclass="glyphicon glyphicon-refresh" sclass="btn-info" onClick="@command('generateReport')" label="GENERATE"/>
-                                <space hflex="5"/>
                             </hlayout>
                         </auxheader>
                     </auxhead>
@@ -111,7 +110,7 @@
                         </listfooter>
                         <listfooter valign="middle">
                             <div style="float:left;">
-                                Total Berat : <label value="@load(vm.totalBerat)" style="font-weight:bold;color:blue"/>
+                                Total Penerimaan : <label value="@load(vm.totalBerat)" style="font-weight:bold;color:blue"/>
                             </div>
                         </listfooter>
                         
@@ -119,6 +118,63 @@
                      
                 </listbox>
             </center>
+             <east title="DETAIL PROSES LIMBAH" size="45%" splittable="true" collapsible="true">
+                <div vflex="3" hflex="3">
+                <vbox align="center" hflex="3" vflex="3">
+                    <grid hflex="3" vflex="3">
+                        <columns>
+                            <column align="left" width="40%"/>
+                            <column/>
+                        </columns>
+                        <rows>
+                                                              
+                            <row>
+                                GUDANG 1
+                                <label value="@load(vm.totalGudang1)"/>
+                            </row>
+                            <row>
+                                GUDANG 2
+                                <label value="@load(vm.totalGudang2)"/>
+                            </row> 
+                            <row>
+                                GUDANG 3
+                                <label value="@load(vm.totalGudang3)"/>
+                            </row> 
+                                    
+                            <row>
+                                GUDANG 4
+                                <label value="@load(vm.totalGudang4)"/>
+                            </row>
+                            <row>
+                                GUDANG 5
+                                <label value="@load(vm.totalGudang5)"/>
+                            </row>
+                            <row>
+                                SUDAH DIKIRIM
+                                <label value="@load(vm.totalDikirim)"/>
+                            </row> 
+                            <row>
+                                PENDING PENGIRIMAN
+                                <label value="@load(vm.totalPendingKirim)"/>
+                            </row>
+                            <row>
+                                PENDING PROSES
+                                <label value="@load(vm.totalPendingProses)"/>
+                            </row>
+                        </rows>
+                        <foot>
+                            <footer span="2">
+                                <hlayout>
+                                    Total Detail Proses : <label value="@load(vm.totalDetail)" style="font-weight:bold;color:red"/>
+                                </hlayout>
+                            </footer>
+                        </foot>
+                    </grid>
+                </vbox>
+                      
+            </div>
+            
+            </east>
         </borderlayout>
     </window>
     

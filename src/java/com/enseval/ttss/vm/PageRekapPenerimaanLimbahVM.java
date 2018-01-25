@@ -11,6 +11,7 @@ import com.enseval.ttss.model.OutboundItem;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.ProsessLimbah;
 import com.enseval.ttss.model.Residu;
+import com.enseval.ttss.model.Store;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
 import java.time.Instant;
@@ -47,8 +48,18 @@ public class PageRekapPenerimaanLimbahVM {
     List<Penerimaan> listPenerimaan;
 
     List<TotalLimbah> listTotalLimbah = new ArrayList<>();
-    
+
     Long totalBerat = 0L;
+    Long totalGudang1 = 0L;
+    Long totalGudang2 = 0L;
+    Long totalGudang3 = 0L;
+    Long totalGudang4 = 0L;
+    Long totalGudang5 = 0L;
+    Long totalDikirim = 0L;
+    Long totalPendingKirim = 0L;
+    Long totalPendingProses = 0L;
+    
+    Long totalDetail = 0L;
 
     @AfterCompose
     public void initSetup() {
@@ -91,8 +102,70 @@ public class PageRekapPenerimaanLimbahVM {
             }
 
         }
-        
+
         this.totalBerat = this.listTotalLimbah.stream().mapToLong(m -> m.getJmlBerat()).sum();
+        this.totalGudang1 = Ebean.find(ProsessLimbah.class)
+                .where()
+                .eq("gudangTujuan", "GUDANG 1")
+                .between("tglTerima",
+                        Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                        Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                .findList()
+                .stream().mapToLong(m -> m.getJmlBerat()).sum();
+        this.totalGudang2 = Ebean.find(ProsessLimbah.class)
+                .where()
+                .eq("gudangTujuan", "GUDANG 2")
+                .between("tglTerima",
+                        Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                        Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                .findList()
+                .stream().mapToLong(m -> m.getJmlBerat()).sum();
+        this.totalGudang3 = Ebean.find(ProsessLimbah.class)
+                .where()
+                .eq("gudangTujuan", "GUDANG 3")
+                .between("tglTerima",
+                        Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                        Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                .findList()
+                .stream().mapToLong(m -> m.getJmlBerat()).sum();
+        this.totalGudang4 = Ebean.find(ProsessLimbah.class)
+                .where()
+                .eq("gudangTujuan", "GUDANG 4")
+                .between("tglTerima",
+                        Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                        Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                .findList()
+                .stream().mapToLong(m -> m.getJmlBerat()).sum();
+        this.totalGudang5 = Ebean.find(ProsessLimbah.class)
+                .where()
+                .eq("gudangTujuan", "GUDANG 5")
+                .between("tglTerima",
+                        Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                        Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                .findList()
+                .stream().mapToLong(m -> m.getJmlBerat()).sum();
+        this.totalDikirim = Ebean.find(Store.class)
+                .where()
+                .eq("inReporting", true)
+                .isNotNull("outboundItem.penerimaan")
+                .between("pengiriman.tglKirim",
+                        Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                        Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                .findList()
+                .stream().mapToLong(m -> m.getJmlBerat()).sum();
+
+        this.totalPendingKirim = Ebean.find(OutboundItem.class)
+                .where()
+                .isNotNull("penerimaan")
+                .between("tglBuat",
+                        Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                        Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                .findList()
+                .stream().mapToLong(m -> m.getJmlBerat()).sum() - this.totalDikirim;
+        
+        this.totalPendingProses = this.totalBerat - (this.totalGudang1 + this.totalGudang2 + this.totalGudang3 + this.totalGudang4 + this.totalGudang5 + this.totalDikirim + this.totalPendingKirim);
+        
+        this.totalDetail = this.totalPendingProses + this.totalGudang1 + this.totalGudang2 + this.totalGudang3 + this.totalGudang4 + this.totalGudang5 + this.totalDikirim + this.totalPendingKirim;
 
     }
 
@@ -103,8 +176,6 @@ public class PageRekapPenerimaanLimbahVM {
     public void setTotalBerat(Long totalBerat) {
         this.totalBerat = totalBerat;
     }
-
- 
 
     public User getUserLogin() {
         return userLogin;
@@ -184,6 +255,80 @@ public class PageRekapPenerimaanLimbahVM {
 
     public void setListTotalLimbah(List<TotalLimbah> listTotalLimbah) {
         this.listTotalLimbah = listTotalLimbah;
+    }
+
+    public Long getTotalGudang1() {
+        return totalGudang1;
+    }
+
+    public void setTotalGudang1(Long totalGudang1) {
+        this.totalGudang1 = totalGudang1;
+    }
+
+    public Long getTotalGudang2() {
+        return totalGudang2;
+    }
+
+    public void setTotalGudang2(Long totalGudang2) {
+        this.totalGudang2 = totalGudang2;
+    }
+
+    public Long getTotalGudang3() {
+        return totalGudang3;
+    }
+
+    public void setTotalGudang3(Long totalGudang3) {
+        this.totalGudang3 = totalGudang3;
+    }
+
+    public Long getTotalGudang4() {
+        return totalGudang4;
+    }
+
+    public void setTotalGudang4(Long totalGudang4) {
+        this.totalGudang4 = totalGudang4;
+    }
+
+    public Long getTotalGudang5() {
+        return totalGudang5;
+    }
+
+    public void setTotalGudang5(Long totalGudang5) {
+        this.totalGudang5 = totalGudang5;
+    }
+
+    public Long getTotalDikirim() {
+        return totalDikirim;
+    }
+
+    public void setTotalDikirim(Long totalDikirim) {
+        this.totalDikirim = totalDikirim;
+    }
+
+    public Long getTotalPendingKirim() {
+        return totalPendingKirim;
+    }
+
+    public void setTotalPendingKirim(Long totalPendingKirim) {
+        this.totalPendingKirim = totalPendingKirim;
+    }
+
+    public Long getTotalPendingProses() {
+        return totalPendingProses;
+    }
+
+    public void setTotalPendingProses(Long totalPendingProses) {
+        this.totalPendingProses = totalPendingProses;
+    }
+
+  
+
+    public Long getTotalDetail() {
+        return totalDetail;
+    }
+
+    public void setTotalDetail(Long totalDetail) {
+        this.totalDetail = totalDetail;
     }
 
 }
