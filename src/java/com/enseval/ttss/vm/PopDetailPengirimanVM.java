@@ -13,10 +13,36 @@ import com.enseval.ttss.model.ProsessLimbah;
 import com.enseval.ttss.model.Store;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
+import com.enseval.ttss.util.Util;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.activation.MimetypesFileTypeMap;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
@@ -26,8 +52,10 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Window;
 
 /**
@@ -52,7 +80,7 @@ public class PopDetailPengirimanVM {
 
     public void groupByOutbound() {
         this.listOutboundItem = new ArrayList<>();
-        
+
         Map<OutboundItem, Map<Integer, List<Store>>> counting = this.pengiriman.getListStore().stream().collect(
                 Collectors.groupingBy(Store::getOutboundItem,
                         Collectors.groupingBy(Store::getKemasanKe)));
@@ -117,6 +145,68 @@ public class PopDetailPengirimanVM {
         Ebean.update(store);
         this.pengiriman.getListStore().remove(store);
         groupByOutbound();
+    }
+
+    @Command
+    public void cetakPengiriman() {
+
+        File filenya = new File(Util.setting("pdf_path") + "pengiriman.pdf");
+        filenya.delete();
+
+        try {
+            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/pengiriman.pdf.jasper");
+            JRDataSource datasource = new JRBeanCollectionDataSource(this.listOutboundItem);
+            JRDataSource beanColDataSource = new JRBeanCollectionDataSource(this.listOutboundItem);
+
+            Map map = new HashMap();
+            map.put("REPORT_DATA_SOURCE", datasource);
+            map.put("OUTBOUND", beanColDataSource);
+            map.put("TUJUAN", this.pengiriman.getPerusahaanTujuan());
+            map.put("NOMOR", this.pengiriman.getNomorPengiriman());
+            map.put("PENGANGKUT", this.pengiriman.getPerusahaanPengangkut());
+            map.put("TGL_KIRIM", this.pengiriman.getTglKirim());
+            map.put("KOLOM", this.pengiriman.getNomorKolom());
+            map.put("KONTAINER", this.pengiriman.getNomorContainer());
+            map.put("TOTAL_KEMASAN", this.pengiriman.hitungTotalKemasan());
+            map.put("TOTAL_BERAT", this.pengiriman.hitungTotalBerat());
+
+            JasperPrint report = JasperFillManager.fillReport(streamReport, map);
+            OutputStream outputStream = new FileOutputStream(filenya);
+
+            JRExporter exporter = new JRPdfExporter();
+            exporter.setExporterInput(new SimpleExporterInput(report));
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+            SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
+            configuration.setMetadataAuthor("Reza Elborneo");  //why not set some config as we like
+            exporter.setConfiguration(configuration);
+            exporter.exportReport();
+            streamReport.close();
+            outputStream.close();
+
+//            final JRXlsExporter exporterXLS = new JRXlsExporter();
+//            exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, (Object) report);
+//            exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, (Object) outputStream);
+//            exporterXLS.setParameter(JRXlsExporterParameter.IS_COLLAPSE_ROW_SPAN, Boolean.TRUE);
+//            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, (Object) Boolean.FALSE);
+//            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_DETECT_CELL_TYPE, (Object) Boolean.TRUE);
+//            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, (Object) Boolean.FALSE);
+//            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, (Object) Boolean.TRUE);
+//            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_COLUMNS, (Object) Boolean.TRUE);
+//            exporterXLS.exportReport();
+//            streamReport.close();
+//            outputStream.close();
+
+            FileInputStream inputStream = new FileInputStream(filenya);
+            Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
+
+            filenya.delete();
+
+        } catch (JRException | FileNotFoundException ex4) {
+            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex4);
+        } catch (IOException ex2) {
+            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex2);
+        }
+
     }
 
     public Pengiriman getPengiriman() {

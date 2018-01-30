@@ -103,6 +103,7 @@ public class PopBuatInvoiceVM {
         }
         Map m = new HashMap();
         m.put("invoice", this.invoice);
+        m.put("isEdit", false);
         Executions.createComponents("pop_invoice_item_disposal.zul", null, m);
     }
 

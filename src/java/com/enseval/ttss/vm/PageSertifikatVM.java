@@ -6,6 +6,14 @@ import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.Sertifikat;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
+import com.enseval.ttss.util.Util;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -13,7 +21,21 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.activation.MimetypesFileTypeMap;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
@@ -24,6 +46,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Messagebox;
 
 public class PageSertifikatVM {
@@ -118,6 +141,52 @@ public class PageSertifikatVM {
                 BindUtils.postGlobalCommand(null, null, "refresh", null);
             }
         });
+    }
+
+    @Command
+    public void cetakSertifikat() {
+        File filenya = new File(Util.setting("pdf_path") + "sertifikat.pdf");
+        filenya.delete();
+
+        try {
+            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/sertifikat.pdf.jasper");
+            JRDataSource datasource = new JRBeanCollectionDataSource(this.selectedSertifikat.getListPenerimaan());
+            JRDataSource beanColDataSource = new JRBeanCollectionDataSource(this.selectedSertifikat.getListPenerimaan());
+
+            Map map = new HashMap();
+            map.put("REPORT_DATA_SOURCE", datasource);
+            map.put("PENERIMAAN", beanColDataSource);
+            map.put("NOMOR", this.selectedSertifikat.getNomorSertifikat());
+            map.put("NAMA_CUSTOMER", this.selectedSertifikat.getCustomer().getNama());
+            map.put("ALAMAT_CUSTOMER", this.selectedSertifikat.getCustomer().getAlamat());
+            map.put("DESC", this.selectedSertifikat.getDescription());
+            map.put("TGL_BUAT", this.selectedSertifikat.getTglSertifkat());
+            map.put("TTD", this.selectedSertifikat.getPenandaTangan());
+            map.put("JABATAN", this.selectedSertifikat.getJabatanPenandaTangan());
+            
+            JasperPrint report = JasperFillManager.fillReport(streamReport, map);
+            OutputStream outputStream = new FileOutputStream(filenya);
+
+            JRExporter exporter = new JRPdfExporter();
+            exporter.setExporterInput(new SimpleExporterInput(report));
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+            SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
+            configuration.setMetadataAuthor("Reza Elborneo");  //why not set some config as we like
+            exporter.setConfiguration(configuration);
+            exporter.exportReport();
+            streamReport.close();
+            outputStream.close();
+
+            FileInputStream inputStream = new FileInputStream(filenya);
+            Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
+
+            filenya.delete();
+
+        } catch (JRException | FileNotFoundException ex4) {
+            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex4);
+        } catch (IOException ex2) {
+            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex2);
+        }
     }
 
     public List<Sertifikat> getListSertifikat() {

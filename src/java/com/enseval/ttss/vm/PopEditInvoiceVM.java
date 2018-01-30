@@ -104,6 +104,7 @@ public class PopEditInvoiceVM {
         }
         Map m = new HashMap();
         m.put("invoice", this.invoice);
+        m.put("isEdit", true);
         Executions.createComponents("pop_invoice_item_disposal.zul", null, m);
     }
 

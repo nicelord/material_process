@@ -257,7 +257,7 @@
                                     <hlayout>
                                         <button onClick="@command('revisiSertifikat')" hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-edit" label="REVISI" 
                                                 disabled="@load(vm.selectedSertifikat eq null)"/>
-                                        <button onClick="@command('downloadDoc')" hflex="3" sclass="btn-info" iconSclass="glyphicon glyphicon-print" label="CETAK" 
+                                        <button onClick="@command('cetakSertifikat')" hflex="3" sclass="btn-info" iconSclass="glyphicon glyphicon-print" label="CETAK" 
                                                 disabled="@load(vm.selectedSertifikat eq null)"/>
                                         <button onClick="@command('hapusSertifikat')" hflex="3" sclass="btn-danger" iconSclass="glyphicon glyphicon-trash" label="HAPUS" 
                                                 disabled="@load(vm.selectedSertifikat eq null)"/>

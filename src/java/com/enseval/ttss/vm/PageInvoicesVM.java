@@ -134,11 +134,9 @@ public class PageInvoicesVM {
 
         Long net = totalHarga - (totalHarga / 100) * invoice2.getTax();
 
-        System.out.println("///////////////////////////////// "+invoice2.getListInvoiceItem().size());
         
         int size = invoice2.getListInvoiceItem().size();
         int kurang = 13 - size;
-        System.out.println("///////////////////////////////// "+kurang);
         if (kurang > 0) {
             for (int i = 0; i <= kurang; i++) {
                 InvoiceItem ii = new InvoiceItem();
