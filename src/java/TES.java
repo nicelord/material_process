@@ -2,7 +2,9 @@
 import org.avaje.agentloader.*;
 import com.avaje.ebean.*;
 import com.enseval.ttss.model.*;
+import com.enseval.ttss.util.Util;
 import com.enseval.ttss.vm.ReportDailyProses;
+import java.io.File;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -126,18 +128,21 @@ public class TES {
     }
 
     public void runtest() {
-        List<Penerimaan> listPenerimaan = Ebean.find(Penerimaan.class)
-                .where()
-                .eq("inReporting", true)
-                .eq("isDiterima", true)
-                .orderBy("id desc").findList();
-
-        Map<String, Map<String, Long>> grup = listPenerimaan.stream().collect(
-                Collectors.groupingBy(p -> p.getManifest().getNamaTeknikLimbah(),
-                        Collectors.groupingBy(p -> p.getManifest().getJenisLimbah().getKodeJenis(),
-                                Collectors.summingLong(Penerimaan::getJmlBerat))));
-
-        System.out.println(grup);
+        File filenya = new File(Util.setting("pdf_path") + "invoice.pdf");
+        System.out.println(filenya.delete());
+        
+//        List<Penerimaan> listPenerimaan = Ebean.find(Penerimaan.class)
+//                .where()
+//                .eq("inReporting", true)
+//                .eq("isDiterima", true)
+//                .orderBy("id desc").findList();
+//
+//        Map<String, Map<String, Long>> grup = listPenerimaan.stream().collect(
+//                Collectors.groupingBy(p -> p.getManifest().getNamaTeknikLimbah(),
+//                        Collectors.groupingBy(p -> p.getManifest().getJenisLimbah().getKodeJenis(),
+//                                Collectors.summingLong(Penerimaan::getJmlBerat))));
+//
+//        System.out.println(grup);
 
 //        List<ReportDailyProses> listReport = new ArrayList<>();
 //

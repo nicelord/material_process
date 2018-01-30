@@ -124,46 +124,59 @@ public class PageInvoicesVM {
 
     @Command
     public void cetakInvoice(@BindingParam("invoice") Invoice invoice) {
-        
+
+        Invoice invoice2 = invoice;
+
         Long totalHarga = 0L;
-        for (InvoiceItem item : invoice.getListInvoiceItem()) {
+        for (InvoiceItem item : invoice2.getListInvoiceItem()) {
             totalHarga += item.getHargaSatuan() * item.getJmlKemasan();
         }
+
+        Long net = totalHarga - (totalHarga / 100) * invoice2.getTax();
+
+        System.out.println("///////////////////////////////// "+invoice2.getListInvoiceItem().size());
         
-        Long net = totalHarga-(totalHarga / 100) * invoice.getTax();
-        
+        int size = invoice2.getListInvoiceItem().size();
+        int kurang = 13 - size;
+        System.out.println("///////////////////////////////// "+kurang);
+        if (kurang > 0) {
+            for (int i = 0; i <= kurang; i++) {
+                InvoiceItem ii = new InvoiceItem();
+                invoice2.getListInvoiceItem().add(ii);
+            }
+        }
+
         File filenya = new File(Util.setting("pdf_path") + "invoice.pdf");
+        filenya.delete();
+
         try {
             InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/invoice.pdf.jasper");
-            JRDataSource datasource = new JRBeanCollectionDataSource(invoice.getListInvoiceItem());
-            JRDataSource beanColDataSource = new JRBeanCollectionDataSource(invoice.getListInvoiceItem());
-            
-   
+            JRDataSource datasource = new JRBeanCollectionDataSource(invoice2.getListInvoiceItem());
+            JRDataSource beanColDataSource = new JRBeanCollectionDataSource(invoice2.getListInvoiceItem());
+
             Map map = new HashMap();
             map.put("REPORT_DATA_SOURCE", datasource);
             map.put("INVOICE_ITEM", beanColDataSource);
-            map.put("NAMA_CUSTOMER", invoice.getCustomer().getNama());
-            map.put("ALAMAT_CUSTOMER", invoice.getCustomer().getAlamat());
-            map.put("TELP_CUSTOMER", invoice.getCustomer().getNomorKontak());
-            map.put("FAX_CUSTOMER", invoice.getCustomer().getFax());
-            map.put("CC", invoice.getCcPerson());
-            map.put("DEPT", invoice.getCcDept());
+            map.put("NAMA_CUSTOMER", invoice2.getCustomer().getNama());
+            map.put("ALAMAT_CUSTOMER", invoice2.getCustomer().getAlamat());
+            map.put("TELP_CUSTOMER", invoice2.getCustomer().getNomorKontak());
+            map.put("FAX_CUSTOMER", invoice2.getCustomer().getFax());
+            map.put("CC", invoice2.getCcPerson());
+            map.put("DEPT", invoice2.getCcDept());
             map.put("TOTAL", totalHarga);
             map.put("NET", net);
-            map.put("TAX", invoice.getTax());
-            final JasperPrint report = JasperFillManager.fillReport(streamReport, map);
-            final OutputStream outputStream = new FileOutputStream(filenya);
-            
-            //        final JRXlsExporter exporterXLS = new JRXlsExporter();
-            //       JRPdfExporter exporterPDF = new JRPdfExporter();
-            //        exporterPDF.setParameter(JRExporterParameter.JASPER_PRINT, report);
-            //        exporterPDF.setParameter(JRExporterParameter.OUTPUT_STREAM, outputStream);
-//            exporterPDF.setParameter(JRXlsExporterParameter.IS_COLLAPSE_ROW_SPAN, Boolean.TRUE);
-//            exporterPDF.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
-//            exporterPDF.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
-//            exporterPDF.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
-//            exporterPDF.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
-//            exporterPDF.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_COLUMNS, Boolean.TRUE);
+            map.put("TAX", invoice2.getTax());
+            map.put("NO_INVOICE", invoice2.getNomorInvoice());
+            map.put("NPWP", Util.setting("npwp"));
+            map.put("TGL", invoice2.getTglInvoice());
+            map.put("TERM", invoice2.getTerm());
+            map.put("PO", invoice2.getNomorPo());
+            map.put("DO", invoice2.getNomorDo());
+            map.put("CUR", invoice2.getCurrency());
+            map.put("TGL_ANGKUT", invoice2.getTglAngkut());
+            map.put("PLAT", invoice2.getNmrKendaraan());
+            JasperPrint report = JasperFillManager.fillReport(streamReport, map);
+            OutputStream outputStream = new FileOutputStream(filenya);
 
             JRExporter exporter = new JRPdfExporter();
             exporter.setExporterInput(new SimpleExporterInput(report));
@@ -172,25 +185,21 @@ public class PageInvoicesVM {
             configuration.setMetadataAuthor("Reza Elborneo");  //why not set some config as we like
             exporter.setConfiguration(configuration);
             exporter.exportReport();
-
-            //      exporterPDF.exportReport();
             streamReport.close();
             outputStream.close();
+
+            FileInputStream inputStream = new FileInputStream(filenya);
+            Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
+            
+            filenya.delete();
+
         } catch (JRException | FileNotFoundException ex4) {
             Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex4);
         } catch (IOException ex2) {
             Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex2);
         }
-        FileInputStream inputStream = null;
-        try {
-            if (filenya.exists()) {
-                inputStream = new FileInputStream(filenya);
-                Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        filenya.delete();
+        BindUtils.postGlobalCommand(null, null, "refresh", null);
+
     }
 
     public List<Invoice> getListInvoice() {
