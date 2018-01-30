@@ -92,6 +92,7 @@
                              format="dd-MM-yyyy"
                              style="height:32px;"
                              hflex="3"
+                             readonly="true"
                              value="@bind(vm.invoice.tglAngkut)"/>
                 </div>  
                 <div class="input-group" hflex="3">

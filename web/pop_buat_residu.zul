@@ -46,8 +46,8 @@
                                          readonly="true"
                                          style="height:30px;"
                                          hflex="3"
-                                         buttonVisible="false"
-                                         value="@load(vm.residu.tglBuat)"/>
+                                         buttonVisible="true"
+                                         value="@bind(vm.residu.tglBuat)"/>
                             </div> 
                             
                             <separator />

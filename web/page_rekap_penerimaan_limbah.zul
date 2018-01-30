@@ -110,7 +110,7 @@
                         </listfooter>
                         <listfooter valign="middle">
                             <div style="float:left;">
-                                Total Penerimaan : <label value="@load(vm.totalBerat)" style="font-weight:bold;color:blue"/>
+                                 <label value="Total Penerimaan : " style="font-weight:bold"/> <label value="@load(vm.totalBerat)" style="font-weight:bold;color:blue"/>
                             </div>
                         </listfooter>
                         
@@ -118,8 +118,403 @@
                      
                 </listbox>
             </center>
-             <east title="DETAIL PROSES LIMBAH" size="45%" splittable="true" collapsible="true">
-                <div vflex="3" hflex="3">
+             <east title="DETAIL PROSES LIMBAH" size="50%" splittable="true" collapsible="true">
+                 <div vflex="3" hflex="3">
+                    <vbox align="center" hflex="3" vflex="3">
+                        <grid hflex="3" vflex="3" oddRowSclass="none">
+                            <custom-attributes org.zkoss.zul.nativebar="true"/> 
+                            <rows>                                                            
+                                <row>
+                                    <listbox mold="paging" width="100%" vflex="3" pageSize="5" 
+                                             multiple="false"
+                                             checkmark="false"
+                                             emptyMessage="Tidak ada data"
+                                             model="@load(vm.listTotalGudang1)">   
+                                        <custom-attributes org.zkoss.zul.nativebar="true"/>  
+
+
+                                        <listhead sizable="true" visible="true" >
+                                            <listheader sort="auto(namaLimbah)" label="LIMBAH" />
+                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(jmlBerat)" label="BERAT" />
+                                        </listhead>
+
+                                        <template name="model" var="s">
+                                            <listitem sclass="mainList">
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.namaLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.kodeLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.jmlBerat)"/>
+                                                </listcell>                         
+                                            </listitem>
+                                        </template>
+
+
+                                        <listfoot>
+                                            <listfooter valign="middle">
+
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <label value="Total Gudang 1 :" style="font-weight:bold;"/> 
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <div style="float:left;">
+                                                    <label value="@load(vm.totalGudang1)" style="font-weight:bold;color:blue"/>
+                                                </div>
+                                            </listfooter>
+
+                                        </listfoot>	
+                                    </listbox>
+                                </row>
+                                
+                                <row>
+                                    <listbox mold="paging" width="100%" vflex="3" pageSize="5" 
+                                             multiple="false"
+                                             checkmark="false"
+                                             emptyMessage="Tidak ada data"
+                                             model="@load(vm.listTotalGudang2)">   
+                                        <custom-attributes org.zkoss.zul.nativebar="true"/>  
+
+
+                                        <listhead sizable="true" visible="true" >
+                                            <listheader sort="auto(namaLimbah)" label="LIMBAH" />
+                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(jmlBerat)" label="BERAT" />
+                                        </listhead>
+
+                                        <template name="model" var="s">
+                                            <listitem sclass="mainList">
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.namaLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.kodeLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.jmlBerat)"/>
+                                                </listcell>                         
+                                            </listitem>
+                                        </template>
+
+
+                                        <listfoot>
+                                            <listfooter valign="middle">
+
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <label value="Total Gudang 2 :" style="font-weight:bold;"/> 
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <div style="float:left;">
+                                                    <label value="@load(vm.totalGudang2)" style="font-weight:bold;color:blue"/>
+                                                </div>
+                                            </listfooter>
+
+                                        </listfoot>	
+                                    </listbox>
+                                </row>
+                                
+                                <row>
+                                    <listbox mold="paging" width="100%" vflex="3" pageSize="5" 
+                                             multiple="false"
+                                             checkmark="false"
+                                             emptyMessage="Tidak ada data"
+                                             model="@load(vm.listTotalGudang3)">   
+                                        <custom-attributes org.zkoss.zul.nativebar="true"/>  
+
+
+                                        <listhead sizable="true" visible="true" >
+                                            <listheader sort="auto(namaLimbah)" label="LIMBAH" />
+                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(jmlBerat)" label="BERAT" />
+                                        </listhead>
+
+                                        <template name="model" var="s">
+                                            <listitem sclass="mainList">
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.namaLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.kodeLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.jmlBerat)"/>
+                                                </listcell>                         
+                                            </listitem>
+                                        </template>
+
+
+                                        <listfoot>
+                                            <listfooter valign="middle">
+
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <label value="Total Gudang 3 :" style="font-weight:bold;"/> 
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <div style="float:left;">
+                                                    <label value="@load(vm.totalGudang3)" style="font-weight:bold;color:blue"/>
+                                                </div>
+                                            </listfooter>
+
+                                        </listfoot>	
+                                    </listbox>
+                                </row>
+                                
+                                <row>
+                                    <listbox mold="paging" width="100%" vflex="3" pageSize="5" 
+                                             multiple="false"
+                                             checkmark="false"
+                                             emptyMessage="Tidak ada data"
+                                             model="@load(vm.listTotalGudang4)">   
+                                        <custom-attributes org.zkoss.zul.nativebar="true"/>  
+
+
+                                        <listhead sizable="true" visible="true" >
+                                            <listheader sort="auto(namaLimbah)" label="LIMBAH" />
+                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(jmlBerat)" label="BERAT" />
+                                        </listhead>
+
+                                        <template name="model" var="s">
+                                            <listitem sclass="mainList">
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.namaLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.kodeLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.jmlBerat)"/>
+                                                </listcell>                         
+                                            </listitem>
+                                        </template>
+
+
+                                        <listfoot>
+                                            <listfooter valign="middle">
+
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <label value="Total Gudang 4 :" style="font-weight:bold;"/> 
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <div style="float:left;">
+                                                    <label value="@load(vm.totalGudang4)" style="font-weight:bold;color:blue"/>
+                                                </div>
+                                            </listfooter>
+
+                                        </listfoot>	
+                                    </listbox>
+                                </row>
+                                
+                                <row>
+                                    <listbox mold="paging" width="100%" vflex="3" pageSize="5" 
+                                             multiple="false"
+                                             checkmark="false"
+                                             emptyMessage="Tidak ada data"
+                                             model="@load(vm.listTotalGudang5)">   
+                                        <custom-attributes org.zkoss.zul.nativebar="true"/>  
+
+
+                                        <listhead sizable="true" visible="true" >
+                                            <listheader sort="auto(namaLimbah)" label="LIMBAH" />
+                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(jmlBerat)" label="BERAT" />
+                                        </listhead>
+
+                                        <template name="model" var="s">
+                                            <listitem sclass="mainList">
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.namaLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.kodeLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.jmlBerat)"/>
+                                                </listcell>                         
+                                            </listitem>
+                                        </template>
+
+
+                                        <listfoot>
+                                            <listfooter valign="middle">
+
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <label value="Total Gudang 5 :" style="font-weight:bold;"/> 
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <div style="float:left;">
+                                                    <label value="@load(vm.totalGudang5)" style="font-weight:bold;color:blue"/>
+                                                </div>
+                                            </listfooter>
+
+                                        </listfoot>	
+                                    </listbox>
+                                </row>
+                                
+                                <row>
+                                    <listbox mold="paging" width="100%" vflex="3" pageSize="5" 
+                                             multiple="false"
+                                             checkmark="false"
+                                             emptyMessage="Tidak ada data"
+                                             model="@load(vm.listTotalDikirim)">   
+                                        <custom-attributes org.zkoss.zul.nativebar="true"/>  
+
+
+                                        <listhead sizable="true" visible="true" >
+                                            <listheader sort="auto(namaLimbah)" label="LIMBAH" />
+                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(jmlBerat)" label="BERAT" />
+                                        </listhead>
+
+                                        <template name="model" var="s">
+                                            <listitem sclass="mainList">
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.namaLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.kodeLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.jmlBerat)"/>
+                                                </listcell>                         
+                                            </listitem>
+                                        </template>
+
+
+                                        <listfoot>
+                                            <listfooter valign="middle">
+
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <label value="Total Dikirim :" style="font-weight:bold;"/> 
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <div style="float:left;">
+                                                    <label value="@load(vm.totalDikirim)" style="font-weight:bold;color:blue"/>
+                                                </div>
+                                            </listfooter>
+
+                                        </listfoot>	
+                                    </listbox>
+                                </row>
+                                
+                                <row>
+                                    <listbox mold="paging" width="100%" vflex="3" pageSize="5" 
+                                             multiple="false"
+                                             checkmark="false"
+                                             emptyMessage="Tidak ada data"
+                                             model="@load(vm.listTotalPendingKirim)">   
+                                        <custom-attributes org.zkoss.zul.nativebar="true"/>  
+
+
+                                        <listhead sizable="true" visible="true" >
+                                            <listheader sort="auto(namaLimbah)" label="LIMBAH" />
+                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(jmlBerat)" label="BERAT" />
+                                        </listhead>
+
+                                        <template name="model" var="s">
+                                            <listitem sclass="mainList">
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.namaLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.kodeLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.jmlBerat)"/>
+                                                </listcell>                         
+                                            </listitem>
+                                        </template>
+
+
+                                        <listfoot>
+                                            <listfooter valign="middle">
+
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <label value="Total Belum Dikirim :" style="font-weight:bold;"/> 
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <div style="float:left;">
+                                                    <label value="@load(vm.totalPendingKirim)" style="font-weight:bold;color:blue"/>
+                                                </div>
+                                            </listfooter>
+
+                                        </listfoot>	
+                                    </listbox>
+                                </row>
+                                
+                                <row>
+                                    <listbox mold="paging" width="100%" vflex="3" pageSize="5" 
+                                             multiple="false"
+                                             checkmark="false"
+                                             emptyMessage="Tidak ada data"
+                                             model="@load(vm.listTotalDiPengumpulan)">   
+                                        <custom-attributes org.zkoss.zul.nativebar="true"/>  
+
+
+                                        <listhead sizable="true" visible="true" >
+                                            <listheader sort="auto(namaLimbah)" label="LIMBAH" />
+                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(jmlBerat)" label="BERAT" />
+                                        </listhead>
+
+                                        <template name="model" var="s">
+                                            <listitem sclass="mainList">
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.namaLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.kodeLimbah)"/>
+                                                </listcell>
+                                                <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                                    <label value="@load(s.jmlBerat)"/>
+                                                </listcell>                         
+                                            </listitem>
+                                        </template>
+
+
+                                        <listfoot>
+                                            <listfooter valign="middle">
+
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <label value="Total Belum Diproses :" style="font-weight:bold;"/> 
+                                            </listfooter>
+                                            <listfooter valign="middle">
+                                                <div style="float:left;">
+                                                    <label value="@load(vm.totalPendingProses)" style="font-weight:bold;color:blue"/>
+                                                </div>
+                                            </listfooter>
+
+                                        </listfoot>	
+                                    </listbox>
+                                </row>
+                                
+                            </rows>
+                            <foot>
+                                <footer>
+                                    <hlayout>
+                                        Total Detail Proses : <label value="@load(vm.totalDetail)" style="font-weight:bold;color:red"/>
+                                    </hlayout>
+                                </footer>
+                            </foot>
+                        </grid>
+                    </vbox>
+                      
+                </div>
+                 
+                 
+<!--                <div vflex="3" hflex="3">
                 <vbox align="center" hflex="3" vflex="3">
                     <grid hflex="3" vflex="3">
                         <columns>
@@ -172,7 +567,7 @@
                     </grid>
                 </vbox>
                       
-            </div>
+                </div>-->
             
             </east>
         </borderlayout>

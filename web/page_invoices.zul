@@ -81,7 +81,7 @@
                                     <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-edit"
                                             onClick="@command('showEditInvoice', invoice=s)" />
                                     <button vflex="3" hflex="3" sclass="btn-info btn-xs" iconSclass="glyphicon glyphicon-print"
-                                            onClick="@command('')" />
+                                            onClick="@command('cetakInvoice', invoice=s)" />
                                     <button vflex="3" hflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash"
                                             onClick="@command('hapusInvoice', invoice=s)" />
                                 </hlayout>

@@ -45,8 +45,6 @@ public class PageRekapPenerimaanLimbahVM {
     Date tglAwal = Date.from(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).minusWeeks(1).toInstant());
     Date tglAkhir = Date.from(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now())));
 
-    List<Penerimaan> listPenerimaan;
-
     List<TotalLimbah> listTotalLimbah = new ArrayList<>();
 
     Long totalBerat = 0L;
@@ -58,14 +56,30 @@ public class PageRekapPenerimaanLimbahVM {
     Long totalDikirim = 0L;
     Long totalPendingKirim = 0L;
     Long totalPendingProses = 0L;
-    
+
+    List<TotalLimbah> listTotalGudang1 = new ArrayList<>();
+    List<TotalLimbah> listTotalGudang2 = new ArrayList<>();
+    List<TotalLimbah> listTotalGudang3 = new ArrayList<>();
+    List<TotalLimbah> listTotalGudang4 = new ArrayList<>();
+    List<TotalLimbah> listTotalGudang5 = new ArrayList<>();
+    List<TotalLimbah> listTotalDikirim = new ArrayList<>();
+    List<TotalLimbah> listTotalPendingKirim = new ArrayList<>();
+
+    List<TotalLimbah> listTotalDiPengumpulan = new ArrayList<>();
+
     Long totalDetail = 0L;
 
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
 
-        this.listPenerimaan = Ebean.find(Penerimaan.class)
+    }
+
+    @Command
+    @NotifyChange({"*"})
+    public void generateReport() {
+        this.listTotalLimbah = new ArrayList<>();
+        List<Penerimaan> listPenerimaan = Ebean.find(Penerimaan.class)
                 .where()
                 .eq("inReporting", true)
                 .eq("isDiterima", true)
@@ -73,12 +87,6 @@ public class PageRekapPenerimaanLimbahVM {
                         Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                         Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                 .orderBy("id desc").findList();
-    }
-
-    @Command
-    @NotifyChange({"*"})
-    public void generateReport() {
-        this.listTotalLimbah = new ArrayList<>();
 
         Map<String, Map<String, Long>> grup = listPenerimaan.stream().collect(
                 Collectors.groupingBy(p -> p.getManifest().getNamaTeknikLimbah(),
@@ -104,68 +112,210 @@ public class PageRekapPenerimaanLimbahVM {
         }
 
         this.totalBerat = this.listTotalLimbah.stream().mapToLong(m -> m.getJmlBerat()).sum();
-        this.totalGudang1 = Ebean.find(ProsessLimbah.class)
-                .where()
-                .eq("gudangTujuan", "GUDANG 1")
-                .between("tglTerima",
-                        Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                        Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
-                .findList()
-                .stream().mapToLong(m -> m.getJmlBerat()).sum();
-        this.totalGudang2 = Ebean.find(ProsessLimbah.class)
-                .where()
-                .eq("gudangTujuan", "GUDANG 2")
-                .between("tglTerima",
-                        Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                        Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
-                .findList()
-                .stream().mapToLong(m -> m.getJmlBerat()).sum();
-        this.totalGudang3 = Ebean.find(ProsessLimbah.class)
-                .where()
-                .eq("gudangTujuan", "GUDANG 3")
-                .between("tglTerima",
-                        Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                        Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
-                .findList()
-                .stream().mapToLong(m -> m.getJmlBerat()).sum();
-        this.totalGudang4 = Ebean.find(ProsessLimbah.class)
-                .where()
-                .eq("gudangTujuan", "GUDANG 4")
-                .between("tglTerima",
-                        Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                        Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
-                .findList()
-                .stream().mapToLong(m -> m.getJmlBerat()).sum();
-        this.totalGudang5 = Ebean.find(ProsessLimbah.class)
-                .where()
-                .eq("gudangTujuan", "GUDANG 5")
-                .between("tglTerima",
-                        Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                        Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
-                .findList()
-                .stream().mapToLong(m -> m.getJmlBerat()).sum();
-        this.totalDikirim = Ebean.find(Store.class)
+
+        countProsesLimbahByGudang("GUDANG 1");
+        countProsesLimbahByGudang("GUDANG 2");
+        countProsesLimbahByGudang("GUDANG 3");
+        countProsesLimbahByGudang("GUDANG 4");
+        countProsesLimbahByGudang("GUDANG 5");
+
+        this.listTotalDikirim = new ArrayList<>();
+
+        List<Store> listStoreTerikirim = Ebean.find(Store.class)
                 .where()
                 .eq("inReporting", true)
                 .isNotNull("outboundItem.penerimaan")
                 .between("pengiriman.tglKirim",
                         Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                         Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
-                .findList()
-                .stream().mapToLong(m -> m.getJmlBerat()).sum();
+                .findList();
 
-        this.totalPendingKirim = Ebean.find(OutboundItem.class)
+        Map<String, Map<String, Long>> grupStoreTerkirim = listStoreTerikirim.stream().collect(
+                Collectors.groupingBy(p -> p.getOutboundItem().getPenerimaan().getManifest().getNamaTeknikLimbah(),
+                        Collectors.groupingBy(p -> p.getOutboundItem().getPenerimaan().getManifest().getJenisLimbah().getKodeJenis(),
+                                Collectors.summingLong(Store::getJmlBerat))));
+
+        for (Map.Entry<String, Map<String, Long>> entry : grupStoreTerkirim.entrySet()) {
+
+            String key = entry.getKey();
+            Map<String, Long> value = entry.getValue();
+
+            for (Map.Entry<String, Long> entry1 : value.entrySet()) {
+                String key1 = entry1.getKey();
+                Long value1 = entry1.getValue();
+                TotalLimbah t = new TotalLimbah();
+                t.setNamaLimbah(key);
+                t.setKodeLimbah(key1);
+                t.setJmlBerat(value1);
+                this.listTotalDikirim.add(t);
+            }
+
+        }
+
+        this.totalDikirim = listTotalDikirim.stream().mapToLong(m -> m.getJmlBerat()).sum();
+
+        this.listTotalPendingKirim = new ArrayList<>();
+
+        List<OutboundItem> listTotalPending = Ebean.find(OutboundItem.class)
                 .where()
                 .isNotNull("penerimaan")
                 .between("tglBuat",
                         Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                         Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
-                .findList()
-                .stream().mapToLong(m -> m.getJmlBerat()).sum() - this.totalDikirim;
+                .findList();
+
+        Map<String, Map<String, Long>> grupPendingKirim = listTotalPending.stream().collect(
+                Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getNamaTeknikLimbah(),
+                        Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getJenisLimbah().getKodeJenis(),
+                                Collectors.summingLong(OutboundItem::getJmlBerat))));
+
+        for (Map.Entry<String, Map<String, Long>> entry : grupPendingKirim.entrySet()) {
+
+            String key = entry.getKey();
+
+            Map<String, Long> value = entry.getValue();
+
+            for (Map.Entry<String, Long> entry1 : value.entrySet()) {
+
+                String key1 = entry1.getKey();
+                Long value1 = entry1.getValue();
+
+                Long sisa = listTotalDikirim.stream().filter(p -> p.getNamaLimbah().equals(key) && p.getKodeLimbah().equals(key1)).mapToLong(m -> m.getJmlBerat()).sum();
+
+                if (value1 - sisa > 0) {
+                    TotalLimbah t = new TotalLimbah();
+                    t.setNamaLimbah(key);
+                    t.setKodeLimbah(key1);
+
+                    t.setJmlBerat(value1 - sisa);
+                    this.listTotalPendingKirim.add(t);
+                }
+
+            }
+
+        }
+
+        this.totalPendingKirim = listTotalPendingKirim.stream().mapToLong(m -> m.getJmlBerat()).sum();
+
         
-        this.totalPendingProses = this.totalBerat - (this.totalGudang1 + this.totalGudang2 + this.totalGudang3 + this.totalGudang4 + this.totalGudang5 + this.totalDikirim + this.totalPendingKirim);
+        this.listTotalDiPengumpulan = new ArrayList<>();
+        Map<String, Map<String, Long>> grupTotalPendingProses = listPenerimaan.stream().filter(p -> p.getProsessLimbahs().isEmpty()).collect(
+                Collectors.groupingBy(p -> p.getManifest().getNamaTeknikLimbah(),
+                        Collectors.groupingBy(p -> p.getManifest().getJenisLimbah().getKodeJenis(),
+                                Collectors.summingLong(Penerimaan::getJmlBerat))));
         
+        for (Map.Entry<String, Map<String, Long>> entry : grupTotalPendingProses.entrySet()) {
+
+            String key = entry.getKey();
+            Map<String, Long> value = entry.getValue();
+
+            for (Map.Entry<String, Long> entry1 : value.entrySet()) {
+                String key1 = entry1.getKey();
+                Long value1 = entry1.getValue();
+                TotalLimbah t = new TotalLimbah();
+                t.setNamaLimbah(key);
+                t.setKodeLimbah(key1);
+                t.setJmlBerat(value1);
+                this.listTotalDiPengumpulan.add(t);
+
+            }
+
+        }
+
+        this.totalPendingProses = this.listTotalDiPengumpulan.stream().mapToLong(m -> m.getJmlBerat()).sum();
+        
+        
+
         this.totalDetail = this.totalPendingProses + this.totalGudang1 + this.totalGudang2 + this.totalGudang3 + this.totalGudang4 + this.totalGudang5 + this.totalDikirim + this.totalPendingKirim;
+
+    }
+
+    public void countProsesLimbahByGudang(String gudang) {
+
+        if (gudang.equals("GUDANG 1")) {
+            this.listTotalGudang1 = new ArrayList<>();
+        }
+
+        if (gudang.equals("GUDANG 2")) {
+            this.listTotalGudang2 = new ArrayList<>();
+        }
+        if (gudang.equals("GUDANG 3")) {
+            this.listTotalGudang3 = new ArrayList<>();
+        }
+        if (gudang.equals("GUDANG 4")) {
+            this.listTotalGudang4 = new ArrayList<>();
+        }
+        if (gudang.equals("GUDANG 5")) {
+            this.listTotalGudang5 = new ArrayList<>();
+        }
+
+        List<ProsessLimbah> listProsesGudang = Ebean.find(ProsessLimbah.class)
+                .where()
+                .eq("gudangTujuan", gudang)
+                .between("tglTerima",
+                        Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                        Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                .findList();
+
+        Map<String, Map<String, Long>> grupProsesGudang1 = listProsesGudang.stream().collect(
+                Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getNamaTeknikLimbah(),
+                        Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getJenisLimbah().getKodeJenis(),
+                                Collectors.summingLong(ProsessLimbah::getJmlBerat))));
+
+        for (Map.Entry<String, Map<String, Long>> entry : grupProsesGudang1.entrySet()) {
+
+            String key = entry.getKey();
+            Map<String, Long> value = entry.getValue();
+
+            for (Map.Entry<String, Long> entry1 : value.entrySet()) {
+                String key1 = entry1.getKey();
+                Long value1 = entry1.getValue();
+                TotalLimbah t = new TotalLimbah();
+                t.setNamaLimbah(key);
+                t.setKodeLimbah(key1);
+                t.setJmlBerat(value1);
+
+                if (gudang.equals("GUDANG 1")) {
+                    this.listTotalGudang1.add(t);
+                }
+
+                if (gudang.equals("GUDANG 2")) {
+                    this.listTotalGudang2.add(t);
+                }
+
+                if (gudang.equals("GUDANG 3")) {
+                    this.listTotalGudang3.add(t);
+                }
+                if (gudang.equals("GUDANG 4")) {
+                    this.listTotalGudang4.add(t);
+                }
+                if (gudang.equals("GUDANG 5")) {
+                    this.listTotalGudang5.add(t);
+                }
+
+            }
+
+        }
+
+        if (gudang.equals("GUDANG 1")) {
+            this.totalGudang1 = this.listTotalGudang1.stream().mapToLong(m -> m.getJmlBerat()).sum();
+        }
+
+        if (gudang.equals("GUDANG 2")) {
+            this.totalGudang2 = this.listTotalGudang2.stream().mapToLong(m -> m.getJmlBerat()).sum();
+        }
+
+        if (gudang.equals("GUDANG 3")) {
+            this.totalGudang3 = this.listTotalGudang3.stream().mapToLong(m -> m.getJmlBerat()).sum();
+        }
+
+        if (gudang.equals("GUDANG 4")) {
+            this.totalGudang4 = this.listTotalGudang4.stream().mapToLong(m -> m.getJmlBerat()).sum();
+        }
+
+        if (gudang.equals("GUDANG 5")) {
+            this.totalGudang5 = this.listTotalGudang5.stream().mapToLong(m -> m.getJmlBerat()).sum();
+        }
 
     }
 
@@ -241,14 +391,6 @@ public class PageRekapPenerimaanLimbahVM {
 
     }
 
-    public List<Penerimaan> getListPenerimaan() {
-        return listPenerimaan;
-    }
-
-    public void setListPenerimaan(List<Penerimaan> listPenerimaan) {
-        this.listPenerimaan = listPenerimaan;
-    }
-
     public List<TotalLimbah> getListTotalLimbah() {
         return listTotalLimbah;
     }
@@ -321,7 +463,13 @@ public class PageRekapPenerimaanLimbahVM {
         this.totalPendingProses = totalPendingProses;
     }
 
-  
+    public List<TotalLimbah> getListTotalGudang1() {
+        return listTotalGudang1;
+    }
+
+    public void setListTotalGudang1(List<TotalLimbah> listTotalGudang1) {
+        this.listTotalGudang1 = listTotalGudang1;
+    }
 
     public Long getTotalDetail() {
         return totalDetail;
@@ -329,6 +477,62 @@ public class PageRekapPenerimaanLimbahVM {
 
     public void setTotalDetail(Long totalDetail) {
         this.totalDetail = totalDetail;
+    }
+
+    public List<TotalLimbah> getListTotalGudang2() {
+        return listTotalGudang2;
+    }
+
+    public void setListTotalGudang2(List<TotalLimbah> listTotalGudang2) {
+        this.listTotalGudang2 = listTotalGudang2;
+    }
+
+    public List<TotalLimbah> getListTotalGudang3() {
+        return listTotalGudang3;
+    }
+
+    public void setListTotalGudang3(List<TotalLimbah> listTotalGudang3) {
+        this.listTotalGudang3 = listTotalGudang3;
+    }
+
+    public List<TotalLimbah> getListTotalGudang4() {
+        return listTotalGudang4;
+    }
+
+    public void setListTotalGudang4(List<TotalLimbah> listTotalGudang4) {
+        this.listTotalGudang4 = listTotalGudang4;
+    }
+
+    public List<TotalLimbah> getListTotalGudang5() {
+        return listTotalGudang5;
+    }
+
+    public void setListTotalGudang5(List<TotalLimbah> listTotalGudang5) {
+        this.listTotalGudang5 = listTotalGudang5;
+    }
+
+    public List<TotalLimbah> getListTotalDikirim() {
+        return listTotalDikirim;
+    }
+
+    public void setListTotalDikirim(List<TotalLimbah> listTotalDikirim) {
+        this.listTotalDikirim = listTotalDikirim;
+    }
+
+    public List<TotalLimbah> getListTotalPendingKirim() {
+        return listTotalPendingKirim;
+    }
+
+    public void setListTotalPendingKirim(List<TotalLimbah> listTotalPendingKirim) {
+        this.listTotalPendingKirim = listTotalPendingKirim;
+    }
+
+    public List<TotalLimbah> getListTotalDiPengumpulan() {
+        return listTotalDiPengumpulan;
+    }
+
+    public void setListTotalDiPengumpulan(List<TotalLimbah> listTotalDiPengumpulan) {
+        this.listTotalDiPengumpulan = listTotalDiPengumpulan;
     }
 
 }

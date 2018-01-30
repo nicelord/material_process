@@ -177,17 +177,22 @@ public class PopInvoiceItemDisposalVM {
         for (InvoiceItem invoiceItem : tempInvoiceItem) {
 
 //            invoiceItem.setJmlKemasan(invoiceItem.getJmlKemasan()-sumOfCurrent);
-            for (InvoiceItem item : this.invoice.getListInvoiceItem()) {
-                if (item.getJenisItem().equals("disposal cost")
-                        && item.getPenerimaan().getManifest().getKodeManifest().equals(invoiceItem.getPenerimaan().getManifest().getKodeManifest())
-                        && item.getKemasanKe() == invoiceItem.getKemasanKe()) {
-//                    System.out.println(invoiceItem.getPenerimaan().getManifest().getKodeManifest() + " " + invoiceItem.getKemasanKe() + " " + invoiceItem.getJmlKemasan() + " " + invoiceItem.getSatuanKemasan());
-//                    System.out.println(item.getJmlKemasan());
-                    if(invoiceItem.getJmlKemasan() - item.getJmlKemasan() > 0){
-                        invoiceItem.setJmlKemasan(invoiceItem.getJmlKemasan() - item.getJmlKemasan());
-                    }
-                }
-            }
+            Long inList = this.invoice.getListInvoiceItem().stream().filter(p -> p.getJenisItem().equals("disposal cost") && p.getPenerimaan().getManifest().getKodeManifest().equals(invoiceItem.getPenerimaan().getManifest().getKodeManifest()) && p.getKemasanKe() == invoiceItem.getKemasanKe()).mapToLong(m -> m.getJmlKemasan()).sum();
+
+//            for (InvoiceItem item : this.invoice.getListInvoiceItem()) {
+//                if (item.getJenisItem().equals("disposal cost")
+//                        && item.getPenerimaan().getManifest().getKodeManifest().equals(invoiceItem.getPenerimaan().getManifest().getKodeManifest())
+//                        && item.getKemasanKe() == invoiceItem.getKemasanKe()) {
+////                    System.out.println(invoiceItem.getPenerimaan().getManifest().getKodeManifest() + " " + invoiceItem.getKemasanKe() + " " + invoiceItem.getJmlKemasan() + " " + invoiceItem.getSatuanKemasan());
+////                    System.out.println(item.getJmlKemasan());
+//                    
+//                    if (invoiceItem.getJmlKemasan() - item.getJmlKemasan() > 0) {
+//                        invoiceItem.setJmlKemasan(invoiceItem.getJmlKemasan() - item.getJmlKemasan());
+//                    }
+//                }
+//            }
+
+            invoiceItem.setJmlKemasan(invoiceItem.getJmlKemasan() - inList);
 
 //            System.out.println(invoiceItem.getPenerimaan().getManifest().getKodeManifest() + " " + invoiceItem.getKemasanKe() + " " + invoiceItem.getJmlKemasan() + " " + invoiceItem.getSatuanKemasan());
             if (invoiceItem.getJmlKemasan() > 0) {
