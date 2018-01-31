@@ -168,12 +168,17 @@
                         <listfooter span="@load(vm.userLogin.akses.startsWith('GUDANG')?'9':'8')" valign="middle">
                             <div style="float:left;">
                                 
+                                <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 
+                                        sclass="btn-primary"
+                                        if="${sessionScope.userCredential.getRoles()=='REPORTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                </button>
+                                
+                                
+                            </div>
+                            <div style="float:right;">
                                 Total Kemasan : <label value="@load(vm.totalKemasan)"/>
                                 <space />
                                 Total Berat : <label value="@load(vm.totalBerat)"/>
-                            </div>
-                            <div style="float:right;">
-                                
                             </div>
                         </listfooter>
                     </listfoot>	

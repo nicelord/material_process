@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -60,6 +61,15 @@ public class OutboundItem implements Serializable {
 
     String satuanBerat = "KG";
     Long jmlBerat = 0L;
+    
+    @Transient
+    String statusPengiriman;
+
+    public OutboundItem() {
+        this.statusPengiriman = cekStatusPengiriman();
+    }
+    
+    
 
     public String cekStatusPengiriman() {
 
@@ -209,6 +219,14 @@ public class OutboundItem implements Serializable {
 
     public void setStores(List<Store> stores) {
         this.stores = stores;
+    }
+
+    public String getStatusPengiriman() {
+        return statusPengiriman;
+    }
+
+    public void setStatusPengiriman(String statusPengiriman) {
+        this.statusPengiriman = statusPengiriman;
     }
 
 }

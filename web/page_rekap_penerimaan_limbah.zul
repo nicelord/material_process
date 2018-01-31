@@ -38,7 +38,7 @@
     </style>
 
     <window id="page_internal" 
-            title="REPORT LIMBAH PROSES VS RESIDU HASIL" 
+            title="REPORT PENERIMAAN LIMBAH VS PROSES EXTERNAL" 
             vflex="3" apply="org.zkoss.bind.BindComposer"  
             viewModel="@id('vm') @init('com.enseval.ttss.vm.PageRekapPenerimaanLimbahVM')">
         <borderlayout>
@@ -103,7 +103,10 @@
                 
                     <listfoot>
                         <listfooter valign="middle">
-                            
+                             <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 
+                                        sclass="btn-primary"
+                                        if="${sessionScope.userCredential.getRoles()=='REPORTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                </button>
                         </listfooter>
                         <listfooter valign="middle">
                             

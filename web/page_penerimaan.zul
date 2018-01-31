@@ -238,6 +238,7 @@
                                                     sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                             onClick="@command('showManifest',manifest=s.manifest)" />
                                     <button vflex="3" hflex="3" sclass="btn-info btn-xs" iconSclass="glyphicon glyphicon-print" label="" 
+                                            onClick="@command('cetakPenerimaan',penerimaan=s)"
                                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                                     <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" label="" 
                                             disabled="@load(s.prosessLimbahs.isEmpty() ne 'true' and s.prosessLimbahs.get(0).gudangPengirim eq 'PENERIMAAN')"
@@ -252,19 +253,20 @@
                     </template>
                 
                 
-<!--                    <listfoot>
+                    <listfoot>
                         <listfooter span="9" valign="middle">
                             <div style="float:left;">
                                 
-                                <button onClick="@command('showFormInvoice')" iconSclass="glyphicon glyphicon-list-alt" label="BUAT INVOICE" 
-                                        if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 
+                                        sclass="btn-primary"
+                                        if="${sessionScope.userCredential.getRoles()=='REPORTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                                 </button>
                             </div>
                             <div style="float:right;">
                                 
                             </div>
                         </listfooter>
-                    </listfoot>	-->
+                    </listfoot>	
                      
                 </listbox>
                 

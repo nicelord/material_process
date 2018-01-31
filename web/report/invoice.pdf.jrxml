@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" pageWidth="534" pageHeight="732" columnWidth="524" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="7dafb8d3-fcf1-47c3-aee8-9b45e3b6027d">
 	<property name="ireport.zoom" value="1.8181818181818183"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="62"/>
+	<property name="ireport.y" value="638"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -100,6 +100,8 @@
 		<field name="penerimaan.manifest.namaTeknikLimbah" class="java.lang.String"/>
 		<field name="hargaSatuan" class="java.lang.Long"/>
 		<field name="satuanKemasan" class="java.lang.String"/>
+		<field name="transportDetail" class="java.lang.String"/>
+		<field name="jenisItem" class="java.lang.String"/>
 	</subDataset>
 	<subDataset name="dataset1" uuid="721948f1-2470-46c5-b0da-f4b5001f9632"/>
 	<parameter name="INVOICE_ITEM" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
@@ -224,7 +226,7 @@
 									<font fontName="Tahoma" size="9"/>
 									<paragraph leftIndent="2" rightIndent="2"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{penerimaan.manifest.namaTeknikLimbah}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{jenisItem}.equals("transportation")?$F{transportDetail}:$F{penerimaan.manifest.namaTeknikLimbah}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -607,7 +609,7 @@ BANK MANDIRI  IDR A/C : 109-000424-5684]]></text>
 Email : dacb@gjgroups.com]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="372" y="476" width="48" height="20" uuid="3af25f7a-431e-49bd-ba9f-aa57486539b3"/>
+				<reportElement x="359" y="476" width="48" height="20" uuid="3af25f7a-431e-49bd-ba9f-aa57486539b3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 					<paragraph rightIndent="5"/>
@@ -615,7 +617,7 @@ Email : dacb@gjgroups.com]]></text>
 				<text><![CDATA[Tax :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="372" y="496" width="48" height="20" uuid="78cd50fb-b5bf-4a63-b601-65cc0f88e6e2"/>
+				<reportElement x="359" y="496" width="48" height="20" uuid="78cd50fb-b5bf-4a63-b601-65cc0f88e6e2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="true"/>
 					<paragraph rightIndent="5"/>
@@ -623,14 +625,14 @@ Email : dacb@gjgroups.com]]></text>
 				<text><![CDATA[NETTO :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="420" y="476" width="19" height="20" uuid="05d3e42a-e072-4ffa-addf-46052930e459"/>
+				<reportElement x="407" y="476" width="19" height="20" uuid="05d3e42a-e072-4ffa-addf-46052930e459"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{TAX}+"%"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="443" y="496" width="78" height="20" uuid="fa6c3e14-1bc9-4f69-b896-d2477e038f5d"/>
+				<reportElement x="426" y="496" width="95" height="20" uuid="fa6c3e14-1bc9-4f69-b896-d2477e038f5d"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="true"/>
 					<paragraph rightIndent="2"/>
@@ -638,14 +640,14 @@ Email : dacb@gjgroups.com]]></text>
 				<textFieldExpression><![CDATA[$P{NET}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="420" y="496" width="19" height="20" uuid="57cd3821-09a7-44e8-b62b-0e071dd51bb0"/>
+				<reportElement x="407" y="496" width="19" height="20" uuid="57cd3821-09a7-44e8-b62b-0e071dd51bb0"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CUR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="443" y="476" width="78" height="20" uuid="bc17b334-c5cf-4d49-a990-71b7614975db"/>
+				<reportElement mode="Transparent" x="426" y="476" width="95" height="20" uuid="bc17b334-c5cf-4d49-a990-71b7614975db"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 					<paragraph rightIndent="2"/>
@@ -653,10 +655,10 @@ Email : dacb@gjgroups.com]]></text>
 				<textFieldExpression><![CDATA["-" + ($P{TOTAL}/100) * $P{TAX}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="443" y="476" width="78" height="20" uuid="1252b9bc-62af-4a63-93bf-61ad838084e0"/>
+				<reportElement mode="Transparent" x="426" y="476" width="95" height="20" uuid="1252b9bc-62af-4a63-93bf-61ad838084e0"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="443" y="496" width="78" height="20" uuid="15e0520b-6016-4b16-9356-d1d00fb36826"/>
+				<reportElement mode="Transparent" x="426" y="496" width="95" height="20" uuid="15e0520b-6016-4b16-9356-d1d00fb36826"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="214" y="481" width="129" height="35" uuid="201c3826-d32f-4f7c-af8e-b9af443b58e9"/>

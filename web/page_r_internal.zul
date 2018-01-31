@@ -68,7 +68,7 @@
                                     if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
                                     sessionScope.userCredential.getRoles()=='REPORTING'}"/>
                         <listheader sort="auto(userPenerima.nama)" label="USER PENERIMA"
-                                        if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
+                                    if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
                                     sessionScope.userCredential.getRoles()=='REPORTING'}"/>
                         <listheader sort="auto(tglTerima)" label="TGL TERIMA"/>
                         <listheader sort="auto(tglTerima)" label="TGL PROSES"/>
@@ -94,7 +94,7 @@
                                 <label value="@load(s.namaLimbah)"/>
                             </listcell>
                         
-                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))"/>
                                 <label if="${s.jmlKemasan2 ne 0}" value="@load(' + '.concat(s.jmlKemasan2).concat(' ').concat(s.satuanKemasan2))"/>
                                 <label if="${s.jmlKemasan3 ne 0}" value="@load(' + '.concat(s.jmlKemasan3).concat(' ').concat(s.satuanKemasan3))"/>
@@ -149,17 +149,18 @@
                 
                 
                     <listfoot>
-<!--                        <listfooter span="9" valign="middle">
+                        <listfooter span="9" valign="middle">
                             <div style="float:left;">
                                 
-                                <button onClick="@command('showFormInvoice')" iconSclass="glyphicon glyphicon-download-alt" label="CETAK INVOICE" 
-                                        if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 
+                                        sclass="btn-primary"
+                                        if="${sessionScope.userCredential.getRoles()=='REPORTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                                 </button>
                             </div>
                             <div style="float:right;">
                                 
                             </div>
-                        </listfooter>-->
+                        </listfooter>
                     </listfoot>	
                      
                 </listbox>

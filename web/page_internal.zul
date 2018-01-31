@@ -149,17 +149,18 @@
                 
                 
                     <listfoot>
-<!--                        <listfooter span="9" valign="middle">
+                        <listfooter span="9" valign="middle">
                             <div style="float:left;">
                                 
-                                <button onClick="@command('showFormInvoice')" iconSclass="glyphicon glyphicon-download-alt" label="CETAK INVOICE" 
-                                        if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 
+                                        sclass="btn-primary"
+                                        if="${sessionScope.userCredential.getRoles()=='REPORTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                                 </button>
                             </div>
                             <div style="float:right;">
                                 
                             </div>
-                        </listfooter>-->
+                        </listfooter>
                     </listfoot>	
                      
                 </listbox>
