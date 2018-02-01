@@ -80,7 +80,7 @@ public class PageReportPenerimaanVM {
         if (filterPendingInvoice.equals("semua")) {
             this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
         } else {
-            this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getListInvoiceItem().isEmpty()).collect(Collectors.toList());
+            this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getListInvoiceItem().isEmpty() && l.isInReporting() == true).collect(Collectors.toList());
         }
     }
 
@@ -118,11 +118,11 @@ public class PageReportPenerimaanVM {
     public void doFilterStatusProses() {
         if (this.filterStatusProses.equals("semua")) {
             this.listPenerimaan = Ebean.find(Penerimaan.class)
-                        .where()
-                        .eq("inReporting", true)
-                        .eq("isDiterima", true).orderBy("id desc").findList();
+                    .where()
+                    .eq("inReporting", true)
+                    .eq("isDiterima", true).orderBy("id desc").findList();
         } else {
-            this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty()).collect(Collectors.toList());
+            this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty() && l.isInReporting() == true).collect(Collectors.toList());
         }
     }
 
@@ -154,9 +154,9 @@ public class PageReportPenerimaanVM {
         this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty()).collect(Collectors.toList()).size();
 
         this.listPenerimaan = Ebean.find(Penerimaan.class)
-                        .where()
-                        .eq("inReporting", true)
-                        .eq("isDiterima", true).orderBy("id desc").findList();
+                .where()
+                .eq("inReporting", true)
+                .eq("isDiterima", true).orderBy("id desc").findList();
         this.listPenerimaan2 = this.listPenerimaan;
 
     }
@@ -173,14 +173,16 @@ public class PageReportPenerimaanVM {
                     && l.getManifest().getKodeManifest().toLowerCase().contains(this.filterKodeManifest.toLowerCase())
                     && l.getManifest().getCustomerPenghasil().getNama().toLowerCase().contains(this.filterCustomer.toLowerCase())
                     && l.getManifest().getJenisLimbah().getKodeJenis().toLowerCase().contains(this.filterKodeJenis.toLowerCase())
-                    && l.getManifest().getNamaTeknikLimbah().toLowerCase().contains(this.filterNamaTeknik.toLowerCase()))
+                    && l.getManifest().getNamaTeknikLimbah().toLowerCase().contains(this.filterNamaTeknik.toLowerCase())
+                    && l.isInReporting() == true)
                     .collect(Collectors.toList());
         } else {
             this.listPenerimaan = this.listPenerimaan2.stream().filter(l
                     -> l.getManifest().getKodeManifest().toLowerCase().contains(this.filterKodeManifest.toLowerCase())
                     && l.getManifest().getCustomerPenghasil().getNama().toLowerCase().contains(this.filterCustomer.toLowerCase())
                     && l.getManifest().getJenisLimbah().getKodeJenis().toLowerCase().contains(this.filterKodeJenis.toLowerCase())
-                    && l.getManifest().getNamaTeknikLimbah().toLowerCase().contains(this.filterNamaTeknik.toLowerCase()))
+                    && l.getManifest().getNamaTeknikLimbah().toLowerCase().contains(this.filterNamaTeknik.toLowerCase())
+                    && l.isInReporting() == true)
                     .collect(Collectors.toList());
         }
 
@@ -191,14 +193,14 @@ public class PageReportPenerimaanVM {
     public void resetSaringTgl() {
         this.tglTerimaAwal = null;
         this.tglTerimaAkhir = null;
-        this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
+        this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).eq("inReporting", true).orderBy("id desc").findList();
         this.listPenerimaan2 = this.listPenerimaan;
     }
-    
+
     @Command
-    public void exportExcel(){
+    public void exportExcel() {
         File filenya = new File(Util.setting("pdf_path") + "penerimaan.xls");
-   
+
         try {
             InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/penerimaan.xls.jasper");
             JRDataSource datasource = new JRBeanCollectionDataSource(this.listPenerimaan);
@@ -207,7 +209,6 @@ public class PageReportPenerimaanVM {
             Map map = new HashMap();
             map.put("REPORT_DATA_SOURCE", datasource);
             map.put("PENERIMAAN", beanColDataSource);
-
 
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);
             OutputStream outputStream = new FileOutputStream(filenya);

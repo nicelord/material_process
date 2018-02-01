@@ -80,6 +80,34 @@
                     </listhead>
                     
                     
+                    <auxhead>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterKolom)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterLimbah)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterSatuanKemasan)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader>
+                       </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterManifest)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterPengiriman)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                       </auxheader>
+                    </auxhead>
+                    
                 
                     <template name="model" var="s">
                         <listitem sclass="mainList">

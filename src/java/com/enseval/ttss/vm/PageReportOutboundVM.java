@@ -6,6 +6,7 @@
 package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
 import com.enseval.ttss.model.OutboundItem;
 import com.enseval.ttss.model.Pengiriman;
 import com.enseval.ttss.model.Residu;
@@ -57,6 +58,8 @@ public class PageReportOutboundVM {
 
     User userLogin;
     List<OutboundItem> listOutboundItem;
+    
+    String filterManifest = "", filterLimbah = "", filterStatus = "";
 
     @AfterCompose
     public void initSetup() {
@@ -74,6 +77,17 @@ public class PageReportOutboundVM {
         m.put("outboundItem", outboundItem);
         m.put("isReporting", true);
         Executions.createComponents("pop_list_pengiriman_by_outbound.zul", (Component) null, m);
+    }
+    
+    @Command
+    @NotifyChange({"*"})
+    public void saring() {
+        this.listOutboundItem = Ebean.find(OutboundItem.class)
+                .where()
+                .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                .contains("namaItem", filterLimbah)
+                .eq("penerimaan.inReporting", true)
+                .orderBy("id desc").findList();
     }
     
     @Command
@@ -142,6 +156,30 @@ public class PageReportOutboundVM {
 
     public void setListOutboundItem(List<OutboundItem> listOutboundItem) {
         this.listOutboundItem = listOutboundItem;
+    }
+
+    public String getFilterManifest() {
+        return filterManifest;
+    }
+
+    public void setFilterManifest(String filterManifest) {
+        this.filterManifest = filterManifest;
+    }
+
+    public String getFilterLimbah() {
+        return filterLimbah;
+    }
+
+    public void setFilterLimbah(String filterLimbah) {
+        this.filterLimbah = filterLimbah;
+    }
+
+    public String getFilterStatus() {
+        return filterStatus;
+    }
+
+    public void setFilterStatus(String filterStatus) {
+        this.filterStatus = filterStatus;
     }
 
 }

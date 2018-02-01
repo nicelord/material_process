@@ -49,18 +49,6 @@
                          emptyMessage="Tidak ada data"
                          model="@load(vm.listPengiriman)">   
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
-                    
-<!--                    <auxhead>
-                        <auxheader colspan="11">
-                            <button 
-                                vflex="3" 
-                                sclass="btn-success btn-xs" 
-                                iconSclass="glyphicon glyphicon-file" 
-                                label="BUAT PENGIRIMAN BARU" onClick="@command('showPopBuatPengiriman')" />
-                                
-                            
-                        </auxheader>
-                    </auxhead>-->
                 
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
@@ -78,7 +66,55 @@
                         
                     </listhead>
                     
-                    
+                    <auxhead>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterId)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterTujuan)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterPengangkut)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterKolom)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterKontainer)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterPengiriman)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <button popup="popupTimeChooser" iconSclass="glyphicon glyphicon-filter" label="FILTER" onClick="" sclass="btn-info btn-xs" hflex="3" />
+                          
+                            <popup id="popupTimeChooser" width="200px" style="word-wrap">
+                                <vlayout>
+                                    <label value="Dari :" />
+                                    <datebox id="startDate" value="@bind(vm.tglAwal)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <label value="Sampai :" />
+                                    <datebox id="endDate" value="@bind(vm.tglAkhir)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <div class="btn-group" hflex="3">
+                                        <button label="TAMPILKAN" onClick="@command('saring')" sclass="btn-info btn-xs" hflex="3" />
+                                        <button label="RESET" onClick="@command('resetSaringTgl')" sclass="btn-default btn-xs" hflex="3" >
+                                            <attribute name="onClick">
+                                                startDate.setText("");
+                                                endDate.setText("");
+                                            </attribute>
+                                        </button>
+                                    </div>
+                                </vlayout>
+                            </popup>
+                        </auxheader>
+                        <auxheader>
+                        </auxheader>
+                    </auxhead>
                 
                     <template name="model" var="s">
                         <listitem sclass="mainList">

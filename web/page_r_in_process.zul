@@ -70,6 +70,71 @@
                                     sessionScope.userCredential.getRoles()=='REPORTING'}"/>
                         <listheader sort="auto(tglTerima)" label="TGL PROSES"/>
                     </listhead>
+                    
+                    <auxhead>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterManifest)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <button popup="popupTimeChooser" iconSclass="glyphicon glyphicon-filter" label="FILTER" onClick="" sclass="btn-info btn-xs" hflex="3" />
+                          
+                            <popup id="popupTimeChooser" width="200px" style="word-wrap">
+                                <vlayout>
+                                    <label value="Dari :" />
+                                    <datebox id="startDate" value="@bind(vm.tglTerimaAwal)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <label value="Sampai :" />
+                                    <datebox id="endDate" value="@bind(vm.tglTerimaAkhir)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <div class="btn-group" hflex="3">
+                                        <button label="TAMPILKAN" onClick="@command('saringTglTerima')" sclass="btn-info btn-xs" hflex="3" />
+                                        <button label="RESET" onClick="@command('saring')" sclass="btn-default btn-xs" hflex="3" >
+                                            <attribute name="onClick">
+                                                startDate.setText("");
+                                                endDate.setText("");
+                                            </attribute>
+                                        </button>
+                                    </div>
+                                </vlayout>
+                            </popup>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterNamaLimbah)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
+                                    sessionScope.userCredential.getRoles()=='REPORTING'}">
+                            <textbox instant="true" value="@bind(vm.filterGudangTujuan)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
+                                    sessionScope.userCredential.getRoles()=='REPORTING'}">
+                            <textbox instant="true" value="@bind(vm.filterUserPenerima)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <button popup="popupTimeChooser2" iconSclass="glyphicon glyphicon-filter" label="FILTER" onClick="" sclass="btn-info btn-xs" hflex="3" />
+                          
+                            <popup id="popupTimeChooser2" width="200px" style="word-wrap">
+                                <vlayout>
+                                    <label value="Dari :" />
+                                    <datebox id="startDate2" value="@bind(vm.tglProsesAwal)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <label value="Sampai :" />
+                                    <datebox id="endDate2" value="@bind(vm.tglProsesAkhir)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <div class="btn-group" hflex="3">
+                                        <button label="TAMPILKAN" onClick="@command('saringTglProses')" sclass="btn-info btn-xs" hflex="3" />
+                                        <button label="RESET" onClick="@command('saring')" sclass="btn-default btn-xs" hflex="3" >
+                                            <attribute name="onClick">
+                                                startDate2.setText("");
+                                                endDate2.setText("");
+                                            </attribute>
+                                        </button>
+                                    </div>
+                                </vlayout>
+                            </popup>
+                        </auxheader>
+                    </auxhead>
                 
                     <template name="model" var="s">
                         <listitem sclass="mainList">

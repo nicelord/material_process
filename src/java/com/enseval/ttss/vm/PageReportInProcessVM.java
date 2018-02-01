@@ -1,6 +1,7 @@
 package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
 import com.enseval.ttss.model.Manifest;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.ProsessLimbah;
@@ -14,6 +15,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -46,6 +49,9 @@ public class PageReportInProcessVM {
     User userLogin;
 
     List<ProsessLimbah> listProsesLimbah = new ArrayList<>();
+    
+    String filterManifest = "", filterNamaLimbah = "", filterGudangTujuan = "", filterUserPenerima = "";
+    Date tglTerimaAwal, tglTerimaAkhir, tglProsesAwal, tglProsesAkhir;
 
     @AfterCompose
     public void initSetup() {
@@ -69,6 +75,110 @@ public class PageReportInProcessVM {
             prosessLimbah.setUserPenerima(userLogin);
             prosessLimbah.setTglTerima(new Date());
             Ebean.update(prosessLimbah);
+        }
+    }
+    
+    @Command
+    @NotifyChange({"*"})
+    public void saring() {
+
+        this.tglTerimaAwal = null;
+        this.tglTerimaAkhir = null;
+        this.tglProsesAwal = null;
+        this.tglProsesAkhir = null;
+
+        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+            this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
+                    .where()
+                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .contains("namaLimbah", filterNamaLimbah)
+                    .eq("gudangTujuan", userLogin.getAkses())
+                    .isNotNull("tglProses")
+                    .eq("penerimaan.inReporting", true)
+                    .orderBy("id desc").findList();
+
+        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+            this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
+                    .where()
+                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .contains("namaLimbah", filterNamaLimbah)
+                    .contains("gudangTujuan", filterGudangTujuan)
+                    .or(Expr.contains("userPenerima.nama", filterUserPenerima), Expr.isNull("userPenerima.nama"))
+                    .ne("gudangTujuan", "EXTERNAL")
+                    .isNotNull("tglProses")
+                    .eq("penerimaan.inReporting", true)
+                    .orderBy("id desc").findList();
+        }
+
+    }
+    
+    @Command
+    @NotifyChange({"*"})
+    public void saringTglTerima() {
+        this.tglProsesAwal = null;
+        this.tglProsesAkhir = null;
+
+        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+
+            this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
+                    .where()
+                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .contains("namaLimbah", filterNamaLimbah)
+                    .eq("gudangTujuan", userLogin.getAkses())
+                    .eq("penerimaan.inReporting", true)
+                    .between("tglTerima",
+                            Date.from(this.tglTerimaAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                            Date.from(this.tglTerimaAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                    .orderBy("id desc").findList();
+
+        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+            this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
+                    .where()
+                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .contains("namaLimbah", filterNamaLimbah)
+                    .contains("gudangTujuan", filterGudangTujuan)
+                    .or(Expr.contains("userPenerima.nama", filterUserPenerima), Expr.isNull("userPenerima.nama"))
+                    .ne("gudangTujuan", "EXTERNAL")
+                    .eq("penerimaan.inReporting", true)
+                    .between("tglTerima",
+                            Date.from(this.tglTerimaAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                            Date.from(this.tglTerimaAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                    .orderBy("id desc").findList();
+        }
+    }
+
+    @Command
+    @NotifyChange({"*"})
+    public void saringTglProses() {
+        this.tglTerimaAwal = null;
+        this.tglTerimaAkhir = null;
+
+        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+
+            this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
+                    .where()
+                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .contains("namaLimbah", filterNamaLimbah)
+                    .eq("gudangTujuan", userLogin.getAkses())
+                    .eq("penerimaan.inReporting", true)
+                    .between("tglProses",
+                            Date.from(this.tglProsesAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                            Date.from(this.tglProsesAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                    .orderBy("id desc").findList();
+
+        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+            this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
+                    .where()
+                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .contains("namaLimbah", filterNamaLimbah)
+                    .contains("gudangTujuan", filterGudangTujuan)
+                    .or(Expr.contains("userPenerima.nama", filterUserPenerima), Expr.isNull("userPenerima.nama"))
+                    .ne("gudangTujuan", "EXTERNAL")
+                    .eq("penerimaan.inReporting", true)
+                    .between("tglProses",
+                            Date.from(this.tglProsesAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                            Date.from(this.tglProsesAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                    .orderBy("id desc").findList();
         }
     }
     
@@ -138,6 +248,70 @@ public class PageReportInProcessVM {
 
     public void setListProsesLimbah(List<ProsessLimbah> listProsesLimbah) {
         this.listProsesLimbah = listProsesLimbah;
+    }
+
+    public String getFilterManifest() {
+        return filterManifest;
+    }
+
+    public void setFilterManifest(String filterManifest) {
+        this.filterManifest = filterManifest;
+    }
+
+    public String getFilterNamaLimbah() {
+        return filterNamaLimbah;
+    }
+
+    public void setFilterNamaLimbah(String filterNamaLimbah) {
+        this.filterNamaLimbah = filterNamaLimbah;
+    }
+
+    public String getFilterGudangTujuan() {
+        return filterGudangTujuan;
+    }
+
+    public void setFilterGudangTujuan(String filterGudangTujuan) {
+        this.filterGudangTujuan = filterGudangTujuan;
+    }
+
+    public String getFilterUserPenerima() {
+        return filterUserPenerima;
+    }
+
+    public void setFilterUserPenerima(String filterUserPenerima) {
+        this.filterUserPenerima = filterUserPenerima;
+    }
+
+    public Date getTglTerimaAwal() {
+        return tglTerimaAwal;
+    }
+
+    public void setTglTerimaAwal(Date tglTerimaAwal) {
+        this.tglTerimaAwal = tglTerimaAwal;
+    }
+
+    public Date getTglTerimaAkhir() {
+        return tglTerimaAkhir;
+    }
+
+    public void setTglTerimaAkhir(Date tglTerimaAkhir) {
+        this.tglTerimaAkhir = tglTerimaAkhir;
+    }
+
+    public Date getTglProsesAwal() {
+        return tglProsesAwal;
+    }
+
+    public void setTglProsesAwal(Date tglProsesAwal) {
+        this.tglProsesAwal = tglProsesAwal;
+    }
+
+    public Date getTglProsesAkhir() {
+        return tglProsesAkhir;
+    }
+
+    public void setTglProsesAkhir(Date tglProsesAkhir) {
+        this.tglProsesAkhir = tglProsesAkhir;
     }
 
 }

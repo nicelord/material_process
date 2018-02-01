@@ -6,6 +6,7 @@
 package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
+import com.enseval.ttss.model.Invoice;
 import com.enseval.ttss.model.OutboundItem;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.Pengiriman;
@@ -13,6 +14,7 @@ import com.enseval.ttss.model.Residu;
 import com.enseval.ttss.model.Store;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -43,7 +45,8 @@ public class PagePengirimanVM {
     User userLogin;
     List<Pengiriman> listPengiriman;
     
-    
+    String filterId = "", filterTujuan = "", filterPengangkut = "", filterKolom = "", filterKontainer = "", filterPengiriman = "";
+    Date tglAwal, tglAkhir;
     
 
     @AfterCompose
@@ -66,6 +69,46 @@ public class PagePengirimanVM {
                 BindUtils.postGlobalCommand(null, null, "refresh", null);
             }
         });
+    }
+    
+    
+    @Command
+    @NotifyChange({"*"})
+    public void saring() {
+
+        if (this.tglAwal != null && this.tglAkhir != null) {
+            this.listPengiriman = Ebean.find(Pengiriman.class)
+                    .where()
+                    .contains("id", filterId)
+                    .contains("perusahaanTujuan", this.filterTujuan)
+                    .contains("perusahaanPengangkut", this.filterPengangkut)
+                    .contains("nomorKolom", this.filterKolom)
+                    .contains("nomorContainer", this.filterKontainer)
+                    .contains("nomorPengiriman", this.filterPengiriman)
+                    .between("tglKirim",
+                            Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                            Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                    .orderBy("id desc").findList();
+        } else {
+            this.listPengiriman = Ebean.find(Pengiriman.class)
+                    .where()
+                    .contains("id", filterId)
+                    .contains("perusahaanTujuan", this.filterTujuan)
+                    .contains("perusahaanPengangkut", this.filterPengangkut)
+                    .contains("nomorKolom", this.filterKolom)
+                    .contains("nomorContainer", this.filterKontainer)
+                    .contains("nomorPengiriman", this.filterPengiriman)
+                    .orderBy("id desc").findList();
+        }
+
+    }
+
+    @Command
+    @NotifyChange({"*"})
+    public void resetSaringTgl() {
+        this.tglAwal = null;
+        this.tglAkhir = null;
+        this.listPengiriman = Ebean.find(Pengiriman.class).orderBy("id desc").findList();
     }
     
     @Command
@@ -95,6 +138,70 @@ public class PagePengirimanVM {
 
     public void setListPengiriman(List<Pengiriman> listPengiriman) {
         this.listPengiriman = listPengiriman;
+    }
+
+    public String getFilterId() {
+        return filterId;
+    }
+
+    public void setFilterId(String filterId) {
+        this.filterId = filterId;
+    }
+
+    public String getFilterTujuan() {
+        return filterTujuan;
+    }
+
+    public void setFilterTujuan(String filterTujuan) {
+        this.filterTujuan = filterTujuan;
+    }
+
+    public String getFilterPengangkut() {
+        return filterPengangkut;
+    }
+
+    public void setFilterPengangkut(String filterPengangkut) {
+        this.filterPengangkut = filterPengangkut;
+    }
+
+    public String getFilterKolom() {
+        return filterKolom;
+    }
+
+    public void setFilterKolom(String filterKolom) {
+        this.filterKolom = filterKolom;
+    }
+
+    public String getFilterKontainer() {
+        return filterKontainer;
+    }
+
+    public void setFilterKontainer(String filterKontainer) {
+        this.filterKontainer = filterKontainer;
+    }
+
+    public String getFilterPengiriman() {
+        return filterPengiriman;
+    }
+
+    public void setFilterPengiriman(String filterPengiriman) {
+        this.filterPengiriman = filterPengiriman;
+    }
+
+    public Date getTglAwal() {
+        return tglAwal;
+    }
+
+    public void setTglAwal(Date tglAwal) {
+        this.tglAwal = tglAwal;
+    }
+
+    public Date getTglAkhir() {
+        return tglAkhir;
+    }
+
+    public void setTglAkhir(Date tglAkhir) {
+        this.tglAkhir = tglAkhir;
     }
     
     
