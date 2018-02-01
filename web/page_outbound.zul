@@ -61,7 +61,36 @@
                         <listheader label="" width="160px"/>
                     </listhead>
                     
-                    
+                    <auxhead>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterManifest)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterLimbah)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader>
+                            <button vflex="3" hflex="3" 
+                                        popup="popupjenisitem"
+                                        sclass="btn-info btn-xs" iconSclass="glyphicon glyphicon-filter" 
+                                        label="FILTER" />
+                            <popup id="popupjenisitem" width="200px" style="word-wrap">
+                                <vlayout>
+                                    <button label="belum ada item dikirim" onClick="@command('filterStatus', s='belum ada item dikirim')" sclass="btn-danger btn-xs" hflex="3" />
+                                    <button label="sebagian terkirim" onClick="@command('filterStatus', s='sebagian terkirim')" sclass="btn-warning btn-xs" hflex="3" />
+                                    <button label="semua terkirim" onClick="@command('filterStatus', s='semua terkirim')" sclass="btn-success btn-xs" hflex="3" />
+                                    <button label="ALL" onClick="@command('filterStatus', s='all')" sclass="btn-xs" hflex="3" />
+                                </vlayout>
+                            </popup>
+                        </auxheader>
+                        <auxheader>
+                        </auxheader>
+                    </auxhead>
                 
                     <template name="model" var="s">
                         <listitem sclass="mainList">

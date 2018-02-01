@@ -357,6 +357,27 @@ public class PageRekapPenerimaanLimbahVM {
             
             JRDataSource dsgud1 = new JRBeanCollectionDataSource(this.listTotalGudang1);
             map.put("GUDANG1", dsgud1);
+            
+            JRDataSource dsgud2 = new JRBeanCollectionDataSource(this.listTotalGudang2);
+            map.put("GUDANG2", dsgud2);
+            
+            JRDataSource dsgud3 = new JRBeanCollectionDataSource(this.listTotalGudang3);
+            map.put("GUDANG3", dsgud3);
+            
+            JRDataSource dsgud4 = new JRBeanCollectionDataSource(this.listTotalGudang4);
+            map.put("GUDANG4", dsgud4);
+            
+            JRDataSource dsgud5 = new JRBeanCollectionDataSource(this.listTotalGudang5);
+            map.put("GUDANG5", dsgud5);
+
+            JRDataSource dskirim = new JRBeanCollectionDataSource(this.listTotalDikirim);
+            map.put("DIKIRIM", dskirim);
+            
+            JRDataSource dsPendingKirim = new JRBeanCollectionDataSource(this.listTotalPendingKirim);
+            map.put("PENDING_KIRIM", dsPendingKirim);
+            
+            JRDataSource dsPendingProses = new JRBeanCollectionDataSource(this.listTotalDiPengumpulan);
+            map.put("PENDING_PROSES", dsPendingProses);
 
 
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);

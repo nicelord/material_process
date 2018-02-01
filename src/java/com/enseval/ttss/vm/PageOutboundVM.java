@@ -6,6 +6,8 @@
 package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+import com.enseval.ttss.model.Invoice;
 import com.enseval.ttss.model.OutboundItem;
 import com.enseval.ttss.model.Pengiriman;
 import com.enseval.ttss.model.Residu;
@@ -19,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -58,6 +61,8 @@ public class PageOutboundVM {
     User userLogin;
     List<OutboundItem> listOutboundItem;
 
+    String filterManifest = "", filterLimbah = "", filterStatus = "";
+
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
@@ -72,11 +77,33 @@ public class PageOutboundVM {
         m.put("isReporting", false);
         Executions.createComponents("pop_list_pengiriman_by_outbound.zul", (Component) null, m);
     }
-    
+
     @Command
-    public void exportExcel(){
+    @NotifyChange({"*"})
+    public void saring() {
+        this.listOutboundItem = Ebean.find(OutboundItem.class)
+                .where()
+                .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                .contains("namaItem", filterLimbah)
+                .orderBy("id desc").findList();
+    }
+
+    @Command
+    @NotifyChange({"*"})
+    public void filterStatus(@BindingParam("s") String s) {
+        if (s.equals("all")) {
+            this.listOutboundItem = Ebean.find(OutboundItem.class).orderBy("id desc").findList();
+        } else {
+            this.listOutboundItem = Ebean.find(OutboundItem.class).orderBy("id desc").findList().stream().filter(p -> p.cekStatusPengiriman().equals(s)).collect(Collectors.toList());
+
+        }
+
+    }
+
+    @Command
+    public void exportExcel() {
         File filenya = new File(Util.setting("pdf_path") + "external.xls");
-   
+
         try {
             InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/external.xls.jasper");
             JRDataSource datasource = new JRBeanCollectionDataSource(this.listOutboundItem);
@@ -85,7 +112,6 @@ public class PageOutboundVM {
             Map map = new HashMap();
             map.put("REPORT_DATA_SOURCE", datasource);
             map.put("OUTBOUND", beanColDataSource);
-
 
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);
             OutputStream outputStream = new FileOutputStream(filenya);
@@ -139,6 +165,30 @@ public class PageOutboundVM {
 
     public void setListOutboundItem(List<OutboundItem> listOutboundItem) {
         this.listOutboundItem = listOutboundItem;
+    }
+
+    public String getFilterManifest() {
+        return filterManifest;
+    }
+
+    public void setFilterManifest(String filterManifest) {
+        this.filterManifest = filterManifest;
+    }
+
+    public String getFilterLimbah() {
+        return filterLimbah;
+    }
+
+    public void setFilterLimbah(String filterLimbah) {
+        this.filterLimbah = filterLimbah;
+    }
+
+    public String getFilterStatus() {
+        return filterStatus;
+    }
+
+    public void setFilterStatus(String filterStatus) {
+        this.filterStatus = filterStatus;
     }
 
 }

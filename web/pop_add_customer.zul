@@ -35,32 +35,32 @@
                 <span class="input-group-addon">
                     Nama Perusahaan :
                 </span>
-                <textbox constraint="no empty" class="form-control input-primary" value="@save(vm.customer.nama)"/>
+                <textbox constraint="no empty" class="form-control input-primary" value="@bind(vm.customer.nama)"/>
             </div>
             <div class="input-group" hflex="3">
                 <span class="input-group-addon">
                     Alamat :
                 </span>
-                <textbox constraint="no empty" class="form-control input-primary" value="@save(vm.customer.alamat)"/>
+                <textbox constraint="no empty" class="form-control input-primary" value="@bind(vm.customer.alamat)"/>
             </div>
             <hlayout>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Telp :
                     </span>
-                    <textbox constraint="no empty" class="form-control input-primary" value="@save(vm.customer.nomorKontak)"/>
+                    <textbox constraint="no empty" class="form-control input-primary" value="@bind(vm.customer.nomorKontak)"/>
                 </div>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Fax :
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.customer.fax)"/>
+                    <textbox class="form-control input-primary" value="@bind(vm.customer.fax)"/>
                 </div>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Email :
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.customer.email)"/>
+                    <textbox class="form-control input-primary" value="@bind(vm.customer.email)"/>
                 </div>
             </hlayout> 
             <hlayout>
@@ -68,13 +68,13 @@
                     <span class="input-group-addon">
                         NPWP :
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.customer.npwp)"/>
+                    <textbox class="form-control input-primary" value="@bind(vm.customer.npwp)"/>
                 </div>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Nama Kontak :
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.customer.namaKontak)"/>
+                    <textbox class="form-control input-primary" value="@bind(vm.customer.namaKontak)"/>
                 </div>
             </hlayout>    
             <separator bar="true"/>

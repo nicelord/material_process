@@ -18,6 +18,8 @@ import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,6 +58,9 @@ public class PageInvoicesVM {
     Invoice selectedInvoice;
     User userLogin;
 
+    String filterNo = "", filterCust = "";
+    Date tglAwal, tglAkhir;
+
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
@@ -65,6 +70,37 @@ public class PageInvoicesVM {
     @Command
     public void showWinBuatInvoice() {
         Executions.createComponents("pop_buat_invoice.zul", (Component) null, null);
+    }
+
+    @Command
+    @NotifyChange({"*"})
+    public void saring() {
+
+        if (this.tglAwal != null && this.tglAkhir != null) {
+            this.listInvoice = Ebean.find(Invoice.class)
+                    .where()
+                    .contains("nomorInvoice", filterNo)
+                    .contains("customer.nama", filterCust)
+                    .between("tglInvoice",
+                            Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                            Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                    .orderBy("id desc").findList();
+        } else {
+            this.listInvoice = Ebean.find(Invoice.class)
+                    .where()
+                    .contains("nomorInvoice", filterNo)
+                    .contains("customer.nama", filterCust)
+                    .orderBy("id desc").findList();
+        }
+
+    }
+
+    @Command
+    @NotifyChange({"*"})
+    public void resetSaringTgl() {
+        this.tglAwal = null;
+        this.tglAkhir = null;
+        this.listInvoice = Ebean.find(Invoice.class).orderBy("id desc").findList();
     }
 
     @Command
@@ -134,7 +170,6 @@ public class PageInvoicesVM {
 
         Long net = totalHarga - (totalHarga / 100) * invoice2.getTax();
 
-        
         int size = invoice2.getListInvoiceItem().size();
         int kurang = 13 - size;
         if (kurang > 0) {
@@ -188,7 +223,7 @@ public class PageInvoicesVM {
 
             FileInputStream inputStream = new FileInputStream(filenya);
             Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
-            
+
             filenya.delete();
 
         } catch (JRException | FileNotFoundException ex4) {
@@ -222,6 +257,38 @@ public class PageInvoicesVM {
 
     public void setUserLogin(User userLogin) {
         this.userLogin = userLogin;
+    }
+
+    public String getFilterNo() {
+        return filterNo;
+    }
+
+    public void setFilterNo(String filterNo) {
+        this.filterNo = filterNo;
+    }
+
+    public String getFilterCust() {
+        return filterCust;
+    }
+
+    public void setFilterCust(String filterCust) {
+        this.filterCust = filterCust;
+    }
+
+    public Date getTglAwal() {
+        return tglAwal;
+    }
+
+    public void setTglAwal(Date tglAwal) {
+        this.tglAwal = tglAwal;
+    }
+
+    public Date getTglAkhir() {
+        return tglAkhir;
+    }
+
+    public void setTglAkhir(Date tglAkhir) {
+        this.tglAkhir = tglAkhir;
     }
 
 }

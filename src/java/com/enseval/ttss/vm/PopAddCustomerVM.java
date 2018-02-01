@@ -39,8 +39,12 @@ public class PopAddCustomerVM {
     
     
     @AfterCompose
-    public void initSetup(@ContextParam(ContextType.VIEW) Component view) {
-        this.customer = new Customer();
+    public void initSetup(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("customer") Customer c) {
+        if(c != null){
+            this.customer = c;
+        }else{
+            this.customer = new Customer();
+        }
         Selectors.wireComponents(view, this, false);
     }
     

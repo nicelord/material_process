@@ -155,10 +155,10 @@
                         <listfoot>
                             <listfooter span="2">
                    
-                                <button 
+<!--                                <button 
                                     onClick="@command('cetakPengiriman')" 
                                     hflex="3" sclass="btn-info" iconSclass="glyphicon glyphicon-print" 
-                                    label="CETAK"/>
+                                    label="CETAK"/>-->
 
                             </listfooter>
                             <listfooter>

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.AfterCompose;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
@@ -75,6 +76,13 @@ public class PopCustomerVM {
     @Command
     public void showTambahCustomer(){
         Executions.createComponents("pop_add_customer.zul", (Component) null, null);
+    }
+    
+    @Command
+    public void editCustomer(@BindingParam("customer") Customer c){
+        Map m = new HashMap();
+        m.put("customer", c);
+        Executions.createComponents("pop_add_customer.zul", (Component) null, m);
     }
     
     @GlobalCommand

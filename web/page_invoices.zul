@@ -56,6 +56,8 @@
                             <button vflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="BUAT INVOICE" onClick="@command('showFormInvoice')" />
                         </auxheader>
                     </auxhead>
+                    
+                    
                 
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
@@ -65,6 +67,43 @@
                         <listheader label="TOTAL NILAI" />
                         <listheader width="150px"/>
                     </listhead>
+                    
+                    <auxhead>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterNo)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterCust)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <button popup="popupTimeChooser" iconSclass="glyphicon glyphicon-filter" label="FILTER" onClick="" sclass="btn-info btn-xs" hflex="3" />
+                          
+                            <popup id="popupTimeChooser" width="200px" style="word-wrap">
+                                <vlayout>
+                                    <label value="Dari :" />
+                                    <datebox id="startDate" value="@bind(vm.tglAwal)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <label value="Sampai :" />
+                                    <datebox id="endDate" value="@bind(vm.tglAkhir)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <div class="btn-group" hflex="3">
+                                        <button label="TAMPILKAN" onClick="@command('saring')" sclass="btn-info btn-xs" hflex="3" />
+                                        <button label="RESET" onClick="@command('resetSaringTgl')" sclass="btn-default btn-xs" hflex="3" >
+                                            <attribute name="onClick">
+                                                startDate.setText("");
+                                                endDate.setText("");
+                                            </attribute>
+                                        </button>
+                                    </div>
+                                </vlayout>
+                            </popup>
+                        </auxheader>
+                        <auxheader>
+                            <!--<textbox instant="true" value="@bind(vm.filterNilai)" hflex="3" onChange="@command('saring')"/>-->
+                        </auxheader>
+                        <auxheader>
+                        </auxheader>
+                    </auxhead>
                 
                     <template name="model" var="s">
                         <listitem sclass="mainList" onClick="@command('showDetail', invoice=s)">
