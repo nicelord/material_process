@@ -1,0 +1,75 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        text-transform:uppercase;
+        
+        }
+     
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        
+        
+        }
+        
+       
+    </style>
+
+        <window title="MASTER DATA CUSTOMER" 
+            vflex="3" apply="org.zkoss.bind.BindComposer"  
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageMasterCustomerVM')">
+        
+            <listbox id="listCust" mold="paging" width="100%" vflex="true" 
+                     autopaging="true" 
+                     emptyMessage="Tidak ada data"
+                     model="@load(vm.listCustomers)">        
+                                             
+                <auxhead>
+                    <auxheader colspan="8">
+                        <hlayout >
+                            <textbox id="txtCari" hflex="7" value="" sclass="form-control input-primary" placeholder="cari nama"/>
+                            <button id="btnCustID" hflex="1" iconSclass="glyphicon glyphicon-search" sclass="btn-primary" onClick="@command('cari')"/>
+                            <button  hflex="2" iconSclass="glyphicon glyphicon-plus" sclass="btn-success" onClick="@command('showTambahCustomer')" label="TAMBAH"/>
+                        </hlayout>
+                    </auxheader>
+                </auxhead>
+                        
+                <listhead sizable="true" visible="true" >
+                    <listheader sort="auto(id)" label="ID" width="50px" />
+                    <listheader sort="auto(nama)" label="NAMA" width="200px" />
+                    <listheader sort="auto(alamat)" label="ALAMAT" />
+                    <listheader sort="auto(nomorKontak)" label="TELP" />
+                    <listheader sort="auto(namKontak)" label="NAMA KONTAK" />
+                    <listheader sort="auto(email)" label="EMAIL" />
+                    <listheader sort="auto(fax)" label="FAX" />
+                    <listheader/>
+                </listhead>
+                        
+                
+                <template name="model" var="s">
+                    <listitem sclass="mainList">
+                        <listcell label="@load(s.id)"/>
+                        <listcell label="@load(s.nama)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                        <listcell label="@load(s.alamat)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                        <listcell label="@load(s.nomorKontak)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                        <listcell label="@load(s.namaKontak)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                        <listcell label="@load(s.email)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                        <listcell label="@load(s.fax)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                        <listcell>
+                            <button hflex="3" sclass="btn-warning btn-xs" iconSclass="glyphicon glyphicon-edit" label="" 
+                                            if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                                            onClick="@command('editCustomer',customer=s)" />
+                            <button hflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash" label="" 
+                                            if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
+                                            onClick="@command('hapus',customer=s)" />
+                        </listcell>
+                    </listitem>
+                </template>
+                    	
+            </listbox>
+       
+        </window>
+</zk>

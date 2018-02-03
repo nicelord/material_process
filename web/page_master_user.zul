@@ -1,0 +1,106 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>
+
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+        
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        cursor: not-allowed;
+        background-color: #f5f5f5;
+        }
+        
+        .input-group-addon > span {
+        font-weight : 500;
+        }
+        
+        .panel-body{
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        }
+        
+        .z-datebox-input{
+        height:100%;
+        }
+        
+    </style>
+
+    <window id="win_invoice" 
+            title="MASTER DATA USER" 
+            vflex="3" apply="org.zkoss.bind.BindComposer"  
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageMasterUserVM')">
+        <borderlayout>
+            <center>
+                <listbox mold="paging" width="100%" vflex="true" autopaging="true" 
+                         checkmark="false" 
+                         multiple="false" 
+                         emptyMessage="Tidak ada data"
+                         model="@load(vm.listUsers)">   
+                    <custom-attributes org.zkoss.zul.nativebar="true"/>  
+                
+                    <auxhead>
+                        <auxheader colspan="4">
+                            <button vflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="USER BARU" onClick="@command('showFormUser')" />
+                        </auxheader>
+                    </auxhead>
+                    
+                    
+                
+                    <listhead sizable="true" visible="true" >
+                        <listheader label="NAMA" />
+                        <listheader label="USERNAME" />
+                        <listheader label="AKSES" />
+                        <listheader/>
+                    </listhead>
+                    
+                    <auxhead>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterNama)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterUsername)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterAkses)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader></auxheader>
+                    </auxhead>
+                
+                    <template name="model" var="s">
+                        <listitem sclass="mainList">
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.nama)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.username)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.akses)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <hlayout>
+                                    <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-edit"
+                                            onClick="@command('showFormUser', user=s)" />
+                                    <button vflex="3" hflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash"
+                                            onClick="@command('hapusUser', user=s)" />
+                                </hlayout>
+                            </listcell>
+                        </listitem>
+                    </template>                     
+                </listbox>
+                
+            </center>
+        </borderlayout>  
+    </window>  
+</zk>
+

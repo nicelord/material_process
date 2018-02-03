@@ -11,6 +11,7 @@ public class User implements Serializable{
     @GeneratedValue
     private Long id;
     String nama;
+    @Column(unique = true, nullable = false)
     String username;
     String password;
     String akses;

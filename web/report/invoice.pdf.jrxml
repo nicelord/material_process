@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" pageWidth="534" pageHeight="732" columnWidth="524" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="7dafb8d3-fcf1-47c3-aee8-9b45e3b6027d">
 	<property name="ireport.zoom" value="1.8181818181818183"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="638"/>
+	<property name="ireport.y" value="830"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -123,6 +123,8 @@
 	<parameter name="TERM" class="java.lang.String"/>
 	<parameter name="CUR" class="java.lang.String"/>
 	<parameter name="TGL_ANGKUT" class="java.util.Date"/>
+	<parameter name="TTD" class="java.lang.String"/>
+	<parameter name="JBT" class="java.lang.String"/>
 	<pageHeader>
 		<band height="86">
 			<image>
@@ -668,20 +670,20 @@ Email : dacb@gjgroups.com]]></text>
 				<text><![CDATA[FOR & BEHALF OF
 PT. DESA AIR CARGO BATAM]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="214" y="562" width="129" height="12" uuid="e4a7b839-460d-4630-970d-7029f7ecb2fc"/>
-				<textElement verticalAlignment="Middle">
+			<textField>
+				<reportElement x="214" y="562" width="129" height="12" uuid="08c6da99-a8e0-45b9-bdba-38d7416c759a"/>
+				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Tahoma" size="9" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[MAWARTI]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="214" y="574" width="129" height="12" uuid="403f340d-2a12-40e4-a719-e3d849786016"/>
-				<textElement verticalAlignment="Middle">
+				<textFieldExpression><![CDATA[$P{TTD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="214" y="574" width="129" height="12" uuid="1fb09c1c-6bd6-4e7c-871f-78d3bb61e116"/>
+				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Tahoma" size="9" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[ACCOUNTING]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{JBT}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

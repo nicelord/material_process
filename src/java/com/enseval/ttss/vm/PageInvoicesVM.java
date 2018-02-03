@@ -208,6 +208,8 @@ public class PageInvoicesVM {
             map.put("CUR", invoice2.getCurrency());
             map.put("TGL_ANGKUT", invoice2.getTglAngkut());
             map.put("PLAT", invoice2.getNmrKendaraan());
+            map.put("TTD", Util.setting("invoice_ttd_person"));
+            map.put("JBT", Util.setting("invoice_ttd_jabatan"));
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);
             OutputStream outputStream = new FileOutputStream(filenya);
 

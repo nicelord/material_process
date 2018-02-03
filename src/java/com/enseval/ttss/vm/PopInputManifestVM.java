@@ -13,6 +13,8 @@ import com.enseval.ttss.model.PenandaTangan;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
+import com.enseval.ttss.util.MailNotif;
+import com.enseval.ttss.util.Util;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,10 +53,13 @@ public class PopInputManifestVM {
     List<Manifest> listPenandaTangan = new ArrayList<>();
     List<Manifest> listJabatanPenandaTangan = new ArrayList<>();
 
+    boolean isEdit = false;
+
     @AfterCompose
     public void initSetup(@ContextParam(ContextType.VIEW) final Component view, @ExecutionArgParam("manifest") Manifest manifest) {
         if (manifest != null) {
             this.manifest = manifest;
+            isEdit = true;
         } else {
             this.manifest = new Manifest();
             this.manifest.setKodeManifest("JL ");
@@ -108,7 +113,7 @@ public class PopInputManifestVM {
         try {
 
             if (this.manifest.getPenerimaan() != null) {
-                
+
                 this.manifest.getPenerimaan().setJmlKemasan(this.manifest.getJmlKemasan());
                 this.manifest.getPenerimaan().setJmlKemasan2(this.manifest.getJmlKemasan2());
                 this.manifest.getPenerimaan().setJmlKemasan3(this.manifest.getJmlKemasan3());
@@ -147,8 +152,47 @@ public class PopInputManifestVM {
                 Ebean.save(this.manifest);
             }
 
+            if (Util.setting("gmail_account").isEmpty() && Util.setting("gmail_password").isEmpty()
+                    || Util.setting("gmail_account") != null && Util.setting("gmail_password") != null) {
+
+               
+                if (isEdit) {
+                    if (Util.setting("mail_notif_update_manifest_active").equals("true")) {
+                        final Manifest m = this.manifest;
+                        Thread t = new Thread(new Runnable() {
+                            Manifest manifest = m;
+
+                            @Override
+                            public void run() {
+                                MailNotif mf = new MailNotif();
+                                mf.emailUpdateManifest(this.manifest);
+                            }
+                        });
+                        t.start();
+
+                    }
+
+                } else {
+                    if (Util.setting("mail_notif_new_manifest_active").equals("true")) {
+                        final Manifest m = this.manifest;
+                        Thread t = new Thread(new Runnable() {
+                            Manifest manifest = m;
+
+                            @Override
+                            public void run() {
+                                MailNotif mf = new MailNotif();
+                                mf.emailNewManifest(this.manifest);
+                            }
+                        });
+                        t.start();
+
+                    }
+                }
+            }
+
             BindUtils.postGlobalCommand((String) null, (String) null, "refresh", (Map) null);
             this.winInputManifest.detach();
+
         } catch (Exception e) {
             Messagebox.show(e.getMessage(), "Error", Messagebox.OK, Messagebox.ERROR);
         }
@@ -216,6 +260,14 @@ public class PopInputManifestVM {
 
     public void setListJabatanPenandaTangan(List<Manifest> listJabatanPenandaTangan) {
         this.listJabatanPenandaTangan = listJabatanPenandaTangan;
+    }
+
+    public boolean isIsEdit() {
+        return isEdit;
+    }
+
+    public void setIsEdit(boolean isEdit) {
+        this.isEdit = isEdit;
     }
 
 }

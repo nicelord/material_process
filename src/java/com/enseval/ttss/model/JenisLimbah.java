@@ -6,6 +6,7 @@
 package com.enseval.ttss.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ public class JenisLimbah implements Serializable {
 
     @Id @GeneratedValue
     private Long id;
-    
+    @Column(unique = true, nullable = false)
     String kodeJenis;
     String keterangan;
 

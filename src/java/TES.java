@@ -20,12 +20,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.mail.Authenticator;
 import javax.persistence.Tuple;
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
+import org.apache.commons.mail.SimpleEmail;
 
 public class TES {
 
     public static void main(final String[] args) {
-        AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent", "debug=1");
+//        AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent", "debug=1");
 //
         TES t = new TES();
         t.runtest();
@@ -127,10 +133,56 @@ public class TES {
 //        }
     }
 
-    public void runtest() {
-        File filenya = new File(Util.setting("pdf_path") + "invoice.pdf");
-        System.out.println(filenya.delete());
-        
+    public void runtest(){
+
+        try {
+            String msg = "<html>"
+                + "<head>"
+                + "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />"
+                + "<title>Untitled Document</title>"
+                + "<style type=\"text/css\">"
+                + "p {"
+                + "font-family: \"Courier New\", Courier, monospace;"
+                + "font-size: 12px;"
+                + "}"
+                + "</style>"
+                + "</head>"
+                + "<p>Yth, </p>"
+                + "<p>Berikut kami informasikan customer/outlet baru ditambahkan dalam daftar giro tolak;</p> "
+                + "<br/>"
+                + "<p><pre>"
+                + "<pre>"
+                + "</p>"
+                + "<br/>"
+                + "<br/>"
+                + "<br/>"
+                + "<p>Outlet akan di hold sementara oleh bagian Data Proses, selama di hold outlet tidak bisa melakukan order</p>"
+                + "<br/>"
+                + "<br/>"
+                + "<p><i>Note : "
+                + "<br>"
+                + "Info giro  <br/>"
+                + "Ini adalah email otomatis, mohon tidak membalas email ini !</i></p>"
+                + "</html>";
+            
+            
+            HtmlEmail mail = new HtmlEmail();
+            mail.setHostName("smtp.gmail.com");
+            mail.setSmtpPort(587);
+            mail.setSSLOnConnect(true);
+            mail.setAuthenticator((Authenticator) new DefaultAuthenticator(Util.setting("gmail_account"), Util.setting("gmail_password")));
+            mail.setFrom(Util.setting("gmail_account"));
+            mail.setSubject("TestMail");
+            mail.setMsg("This is a test mail ... :-)");
+            mail.addTo("reja.mail@gmail.com");
+            mail.setSubject("NEW MANIFEST");
+            mail.setHtmlMsg(msg);
+            mail.send();
+        } catch (EmailException emailException) {
+            emailException.printStackTrace();
+        }
+//        File filenya = new File(Util.setting("pdf_path") + "invoice.pdf");
+//        System.out.println(filenya.delete());
 //        List<Penerimaan> listPenerimaan = Ebean.find(Penerimaan.class)
 //                .where()
 //                .eq("inReporting", true)
@@ -143,7 +195,6 @@ public class TES {
 //                                Collectors.summingLong(Penerimaan::getJmlBerat))));
 //
 //        System.out.println(grup);
-
 //        List<ReportDailyProses> listReport = new ArrayList<>();
 //
 //        List<ProsessLimbah> listProsessLimbah = Ebean.find(ProsessLimbah.class)

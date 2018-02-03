@@ -8,7 +8,7 @@ package com.enseval.ttss.vm;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 import com.enseval.ttss.model.Customer;
-import com.enseval.ttss.model.JenisLimbah;
+import com.enseval.ttss.model.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,52 +31,51 @@ import org.zkoss.zul.Window;
  *
  * @author asus
  */
-public class PopAddJenisLimbahVM {
+public class PopUserVM {
 
-    @Wire("#pop_add_jenis_limbah")
-    Window winPopJenisLimbah;
+    @Wire("#pop_user")
+    Window win;
 
-    JenisLimbah jenisLimbah;
-
+    User user;
+    
+    
     @AfterCompose
-    public void initSetup(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("jenislimbah") JenisLimbah j) {
-
-        if (j != null) {
-            this.jenisLimbah = j;
-        } else {
-            this.jenisLimbah = new JenisLimbah();
+    public void initSetup(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("user") User u) {
+        if(u != null){
+            this.user = u;
+        }else{
+            this.user = new User();
         }
-
         Selectors.wireComponents(view, this, false);
     }
-
+    
     @Command
-    public void simpanJenisLimbah() {
+    public void simpanUser(){
         try {
-            Ebean.save(this.jenisLimbah);
+            Ebean.save(this.user);
             BindUtils.postGlobalCommand(null, null, "refresh", null);
-            this.winPopJenisLimbah.detach();
+            this.win.detach();
         } catch (Exception e) {
             Messagebox.show(e.getMessage(), "Error", Messagebox.OK, Messagebox.ERROR);
         }
     }
+
+    public Window getWin() {
+        return win;
+    }
+
+    public void setWin(Window win) {
+        this.win = win;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
     
-    
-
-    public Window getWinPopJenisLimbah() {
-        return winPopJenisLimbah;
-    }
-
-    public void setWinPopJenisLimbah(Window winPopJenisLimbah) {
-        this.winPopJenisLimbah = winPopJenisLimbah;
-    }
-
-    public JenisLimbah getJenisLimbah() {
-        return jenisLimbah;
-    }
-
-    public void setJenisLimbah(JenisLimbah jenisLimbah) {
-        this.jenisLimbah = jenisLimbah;
-    }
-
 }

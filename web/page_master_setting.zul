@@ -1,0 +1,69 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        text-transform:uppercase;
+        
+        }
+     
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        
+        
+        }
+        
+       
+    </style>
+
+    <window title="KONFIGURASI" 
+            vflex="3" apply="org.zkoss.bind.BindComposer"  
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageMasterSettingVM')">
+        
+        <listbox id="listCust" mold="paging" width="100%" vflex="true" 
+                     
+                 autopaging="true" 
+                 emptyMessage="Tidak ada data"
+                 model="@load(vm.listSetting)">        
+                                             
+            <auxhead>
+                <auxheader colspan="3">
+                    <button iconSclass="glyphicon glyphicon-plus" sclass="btn-success" onClick="@command('showTambahSetting')" label="TAMBAH"/>
+                </auxheader>
+            </auxhead>
+                        
+            <listhead sizable="true" visible="true" >
+                <listheader sort="auto(namaSetting)" label="NAMA SETTING"/>
+                <listheader sort="auto(nilaiSetting)" label="NILAI SETTING" />
+                <listheader width="100px" />
+            </listhead>
+                        
+            <auxhead>
+                <auxheader>
+                    <textbox instant="true" value="@bind(vm.filterNamaSetting)" hflex="3" onChange="@command('saring')"/>
+                </auxheader>
+                <auxheader>
+                    <textbox instant="true" value="@bind(vm.filterNilaiSetting)" hflex="3" onChange="@command('saring')"/>
+                </auxheader>
+                <auxheader></auxheader>
+            </auxhead>
+                
+            <template name="model" var="s">
+                <listitem sclass="mainList">
+                    <listcell label="@load(s.namaSetting)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(s.nilaiSetting)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell>
+                        <button hflex="3" sclass="btn-warning btn-xs" iconSclass="glyphicon glyphicon-edit" label="" 
+                                onClick="@command('showEditSetting',setting=s)" />
+                        <button hflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash" label="" 
+                                onClick="@command('hapus',setting=s)" />
+                    </listcell>
+                </listitem>
+            </template>	
+        </listbox>
+       
+    </window>
+
+</zk>
