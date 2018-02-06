@@ -45,13 +45,13 @@ public class Residu implements Serializable {
 
     String namaResidu = "";
 
-    String satuanKemasan = "Drum Logam";
+    String satuanKemasan = "Drum";
     Long jmlKemasan = 0L;
 
-    String satuanKemasan2 = "Tin";
+    String satuanKemasan2 = "";
     Long jmlKemasan2 = 0L;
 
-    String satuanKemasan3 = "Tin";
+    String satuanKemasan3 = "";
     Long jmlKemasan3 = 0L;
 
     String satuanBerat = "KG";

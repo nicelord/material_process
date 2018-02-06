@@ -79,15 +79,21 @@
                         </vlayout>
                     </row> 
                     <row>
-                        Jenis limbah 
+                        Jenis dan Kode Limbah 
                         <hlayout width="100%" >
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
+                                    Jenis / Fisik 
+                                </span>
+                                <textbox sclass="form-control input-primary" hflex="3" readonly="true" value="@load(vm.manifest.jenisFisik)"/>
+                            </div>
                             <div class="input-group" hflex="3">
                                 <span class="input-group-addon" >
                                     Kode.
                                 </span>
                                 <textbox sclass="form-control input-primary" hflex="3" placeholder="Kode Jenis" readonly="true" value="@load(vm.manifest.jenisLimbah.kodeJenis)"/>
                             </div>
-                            <div class="input-group" hflex="7">
+                            <div class="input-group" hflex="5">
                                 <span class="input-group-addon" >
                                     Ket.
                                 </span>

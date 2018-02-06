@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sertifikat" pageWidth="534" pageHeight="732" columnWidth="506" leftMargin="14" rightMargin="14" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="7dafb8d3-fcf1-47c3-aee8-9b45e3b6027d">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sertifikat" pageWidth="595" pageHeight="836" columnWidth="567" leftMargin="14" rightMargin="14" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="7dafb8d3-fcf1-47c3-aee8-9b45e3b6027d">
 	<property name="ireport.zoom" value="1.4615378250000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="370"/>
+	<property name="ireport.y" value="339"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -94,21 +94,28 @@
 			<pen lineWidth="1.0" lineColor="#000000"/>
 		</box>
 	</style>
-	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+	<style name="table 4_TH">
 		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 4_CH" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
 			<topPen lineWidth="0.5"/>
-			<bottomPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.5"/>
+			<bottomPen lineWidth="0.5"/>
+			<rightPen lineWidth="0.5"/>
+		</box>
+	</style>
+	<style name="table 4_CH">
+		<pen lineWidth="0.5"/>
+		<box>
+			<topPen lineWidth="0.5"/>
+			<leftPen lineWidth="0.5"/>
+			<bottomPen lineWidth="0.5"/>
+			<rightPen lineWidth="0.5"/>
+		</box>
+	</style>
+	<style name="table 4_TD">
+		<box>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.5"/>
+			<rightPen lineWidth="0.5"/>
 		</box>
 	</style>
 	<subDataset name="Table Dataset 1" uuid="554c7c61-94a8-4a08-8932-5a12ff522e47">
@@ -144,7 +151,7 @@
 	<summary>
 		<band height="596">
 			<staticText>
-				<reportElement x="0" y="18" width="506" height="44" uuid="f708eb7c-a52d-49e5-bfb0-ce745b661772"/>
+				<reportElement x="0" y="18" width="567" height="44" uuid="f708eb7c-a52d-49e5-bfb0-ce745b661772"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="18" isBold="true"/>
 				</textElement>
@@ -152,34 +159,25 @@
 Hazardous Waste Management]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="62" width="506" height="23" uuid="83e9df6c-15a9-4e2a-82ce-e90aa46e5cc7"/>
+				<reportElement x="0" y="62" width="567" height="23" uuid="83e9df6c-15a9-4e2a-82ce-e90aa46e5cc7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="18" isBold="true" isUnderline="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["No. " + $P{NOMOR}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement key="table 4" style="table 4" x="0" y="216" width="506" height="50" uuid="19d158b3-d393-4bdc-b191-9a35a84200a2"/>
+				<reportElement key="table 4" style="table 4" x="0" y="216" width="567" height="50" uuid="19d158b3-d393-4bdc-b191-9a35a84200a2"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Table Dataset 1" uuid="1b8f4009-b244-4ce2-96af-b4d84f90106b">
 						<datasetParameter name="REPORT_DATA_SOURCE">
 							<datasetParameterExpression><![CDATA[$P{PENERIMAAN}]]></datasetParameterExpression>
 						</datasetParameter>
 					</datasetRun>
-					<jr:columnGroup width="507" uuid="0462dad0-930a-4394-bb73-346e87af486f">
-						<jr:tableFooter height="0" rowSpan="1">
-							<box>
-								<pen lineColor="#FFFFFF"/>
-								<topPen lineColor="#FFFFFF"/>
-								<leftPen lineColor="#FFFFFF"/>
-								<bottomPen lineColor="#FFFFFF"/>
-								<rightPen lineColor="#FFFFFF"/>
-							</box>
-						</jr:tableFooter>
-						<jr:column width="78" uuid="96d3ba1b-304b-41dd-8720-6a7d75ad284b">
+					<jr:columnGroup width="566" uuid="0462dad0-930a-4394-bb73-346e87af486f">
+						<jr:column width="101" uuid="96d3ba1b-304b-41dd-8720-6a7d75ad284b">
 							<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="78" height="30" uuid="7cb1c6d3-acbe-4877-ab2d-085d13387c1a"/>
+									<reportElement x="0" y="0" width="101" height="30" uuid="7cb1c6d3-acbe-4877-ab2d-085d13387c1a"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma"/>
 									</textElement>
@@ -187,8 +185,11 @@ Hazardous Waste Management]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.0"/>
+								</box>
 								<textField pattern="MMM dd, yyyy">
-									<reportElement x="0" y="0" width="78" height="20" uuid="4581b905-f168-49e5-aedc-fedc8712f425"/>
+									<reportElement x="0" y="0" width="101" height="20" uuid="4581b905-f168-49e5-aedc-fedc8712f425"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma"/>
 									</textElement>
@@ -196,10 +197,10 @@ Hazardous Waste Management]]></text>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="130" uuid="f2a80190-b6ee-4082-b051-eae45f1160fc">
+						<jr:column width="154" uuid="f2a80190-b6ee-4082-b051-eae45f1160fc">
 							<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="130" height="30" uuid="a7f3eb05-1a68-47f9-9167-a1fd98a7365c"/>
+									<reportElement x="0" y="0" width="154" height="30" uuid="a7f3eb05-1a68-47f9-9167-a1fd98a7365c"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma"/>
 									</textElement>
@@ -208,7 +209,7 @@ Hazardous Waste Management]]></text>
 							</jr:columnHeader>
 							<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
 								<textField>
-									<reportElement x="0" y="0" width="130" height="20" uuid="42c2bcc9-b298-4ab3-8358-55da84797607"/>
+									<reportElement x="0" y="0" width="154" height="20" uuid="42c2bcc9-b298-4ab3-8358-55da84797607"/>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Tahoma"/>
 										<paragraph leftIndent="4" rightIndent="2"/>
@@ -217,10 +218,10 @@ Hazardous Waste Management]]></text>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="105" uuid="392414b7-034e-4b38-9ffe-862f29b8c07c">
+						<jr:column width="117" uuid="392414b7-034e-4b38-9ffe-862f29b8c07c">
 							<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="105" height="30" uuid="07fbee3c-ab13-423c-9fc9-121573140575"/>
+									<reportElement x="0" y="0" width="117" height="30" uuid="07fbee3c-ab13-423c-9fc9-121573140575"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma"/>
 									</textElement>
@@ -229,7 +230,7 @@ Hazardous Waste Management]]></text>
 							</jr:columnHeader>
 							<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
 								<textField>
-									<reportElement x="0" y="0" width="105" height="20" uuid="5a299730-9432-4f88-a2bd-efeafd52d64e"/>
+									<reportElement x="0" y="0" width="117" height="20" uuid="5a299730-9432-4f88-a2bd-efeafd52d64e"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma"/>
 									</textElement>
@@ -240,7 +241,7 @@ Hazardous Waste Management]]></text>
 						<jr:column width="194" uuid="154ad223-d49b-4512-8ba7-57289316dbf5">
 							<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="193" height="30" uuid="baa5e992-a269-421a-a4f5-2b73a872d083"/>
+									<reportElement x="0" y="0" width="194" height="30" uuid="baa5e992-a269-421a-a4f5-2b73a872d083"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma"/>
 									</textElement>
@@ -249,7 +250,7 @@ Hazardous Waste Management]]></text>
 							</jr:columnHeader>
 							<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
 								<textField>
-									<reportElement x="0" y="0" width="193" height="20" uuid="c728ab94-e62b-4a9e-a7eb-52bc4f48b7a1"/>
+									<reportElement x="0" y="0" width="194" height="20" uuid="c728ab94-e62b-4a9e-a7eb-52bc4f48b7a1"/>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Tahoma"/>
 										<paragraph leftIndent="4" rightIndent="2"/>
@@ -322,35 +323,35 @@ Hazardous Waste Management]]></text>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="155" y="102" width="351" height="20" uuid="aae93852-af96-4efa-976e-927ce53b5429"/>
+				<reportElement x="155" y="102" width="412" height="20" uuid="aae93852-af96-4efa-976e-927ce53b5429"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{NAMA_CUSTOMER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="155" y="122" width="351" height="42" uuid="e787609c-6128-4912-be7e-61a4bc0acf70"/>
+				<reportElement x="155" y="122" width="268" height="42" uuid="e787609c-6128-4912-be7e-61a4bc0acf70"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{ALAMAT_CUSTOMER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="155" y="164" width="351" height="20" uuid="5e779435-ade0-44db-8b6c-84abc48f0ff0"/>
+				<reportElement x="155" y="164" width="412" height="20" uuid="5e779435-ade0-44db-8b6c-84abc48f0ff0"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PT. DESA AIR CARGO BATAM]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="155" y="184" width="351" height="20" uuid="e1a5026b-5b17-403e-bad0-aa8be3b2778f"/>
+				<reportElement x="155" y="184" width="412" height="20" uuid="e1a5026b-5b17-403e-bad0-aa8be3b2778f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{DESC}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="266" width="507" height="52" uuid="adae0bc3-a3b2-45d1-bd4e-ef10691f3602"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="266" width="568" height="52" uuid="adae0bc3-a3b2-45d1-bd4e-ef10691f3602"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
@@ -373,16 +374,16 @@ Hazardous Waste Management]]></text>
 				<textFieldExpression><![CDATA[$P{TGL_BUAT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement positionType="FixRelativeToBottom" x="0" y="397" width="129" height="17" uuid="b0d6ff0a-36c6-4228-a032-31bfd37fb401"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement positionType="FixRelativeToBottom" x="0" y="397" width="155" height="17" uuid="b0d6ff0a-36c6-4228-a032-31bfd37fb401"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12" isBold="true" isUnderline="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{TTD}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement positionType="FixRelativeToBottom" x="0" y="413" width="129" height="17" uuid="9d5d7c58-4e0c-48be-a886-0ed63145eace"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
+				<reportElement positionType="FixRelativeToBottom" x="0" y="413" width="155" height="17" uuid="9d5d7c58-4e0c-48be-a886-0ed63145eace"/>
+				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="12" isBold="false"/>
 					<paragraph leftIndent="3"/>
 				</textElement>

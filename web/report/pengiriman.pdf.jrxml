@@ -114,6 +114,10 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{KONTAINER}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="4" y="35" width="484" height="77" uuid="babc6ace-8b49-43e0-a38e-b50a506c4688"/>
+				<imageExpression><![CDATA["D:\\NetBeansProjects\\material_process_monitoring\\web\\report\\header_pengiriman.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<pageFooter>
@@ -291,27 +295,14 @@
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="45" uuid="48ccbe87-0e77-43e6-8994-7307a8fc4150">
+					<jr:column width="126" uuid="854986df-8a98-4501-a76b-88532302a855">
 						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="45" height="30" uuid="6cdb1bb3-748a-42ab-9139-eb8949ea2c58"/>
+								<reportElement x="0" y="0" width="126" height="30" uuid="afd74437-3273-4975-b0c9-2470f60960a5"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
-								<text><![CDATA[STORE]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:columnFooter style="table_CH" height="29" rowSpan="1"/>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1"/>
-					</jr:column>
-					<jr:column width="81" uuid="854986df-8a98-4501-a76b-88532302a855">
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="81" height="30" uuid="afd74437-3273-4975-b0c9-2470f60960a5"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma"/>
-								</textElement>
-								<text><![CDATA[NO. CONTAINER]]></text>
+								<text><![CDATA[KETERANGAN]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="table_CH" height="29" rowSpan="1"/>

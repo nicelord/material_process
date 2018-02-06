@@ -41,13 +41,13 @@ public class Manifest implements Serializable {
     String karakteristikLimbah = "";
     String namaTeknikLimbah;
     
-    String satuanKemasan = "Drum Logam";
+    String satuanKemasan = "Drum";
     Long jmlKemasan = 0L;
     
-    String satuanKemasan2 = "Tin";
+    String satuanKemasan2 = "";
     Long jmlKemasan2 = 0L;
     
-    String satuanKemasan3 = "Tin";
+    String satuanKemasan3 = "";
     Long jmlKemasan3 = 0L;
     
     
@@ -71,6 +71,8 @@ public class Manifest implements Serializable {
     String penandaTangan = "";
     String jabatanPenandaTangan = "";
     String namaDriver = "";
+    
+    String jenisFisik = "";
 
     public JenisLimbah getJenisLimbah() {
         return jenisLimbah;
@@ -291,4 +293,14 @@ public class Manifest implements Serializable {
     public void setJmlKemasan3(Long jmlKemasan3) {
         this.jmlKemasan3 = jmlKemasan3;
     }   
+
+    public String getJenisFisik() {
+        return jenisFisik;
+    }
+
+    public void setJenisFisik(String jenisFisik) {
+        this.jenisFisik = jenisFisik;
+    }
+    
+    
 }

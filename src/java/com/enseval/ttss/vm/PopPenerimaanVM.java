@@ -13,6 +13,8 @@ import com.enseval.ttss.model.PenandaTangan;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
+import com.enseval.ttss.util.MailNotif;
+import com.enseval.ttss.util.Util;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,7 +49,7 @@ public class PopPenerimaanVM {
     Manifest manifest;
     User userLogin;
     List<PenandaTangan> listPenandaTangan = new ArrayList<>();
-    
+
     List<Manifest> listDriver = new ArrayList<>();
     List<Manifest> listNomorKendaraan = new ArrayList<>();
 
@@ -60,18 +62,55 @@ public class PopPenerimaanVM {
         this.listNomorKendaraan = Ebean.find(Manifest.class).select("nomorKendaraan").setDistinct(true).findList();
         Selectors.wireComponents(view, (Object) this, false);
     }
-    
+
     @Command
-    public void konfirmasiPenerimaan(){
+    public void konfirmasiPenerimaan() {
         this.manifest.getPenerimaan().setUserPenerima(userLogin);
         this.manifest.getPenerimaan().setTglPenerimaan(new Date());
         this.manifest.getPenerimaan().setStatusPenerimaan("diterima");
         this.manifest.getPenerimaan().setIsDiterima(true);
         Ebean.update(this.manifest.getPenerimaan());
         Ebean.update(this.manifest);
+
+        if (Util.setting("gmail_account").isEmpty() && Util.setting("gmail_password").isEmpty()
+                || Util.setting("gmail_account") != null && Util.setting("gmail_password") != null) {
+
+            if (Util.setting("mail_notif_penerimaan_active").equals("true")) {
+                final Manifest m = this.manifest;
+                
+                Thread t = new Thread(new Runnable() {
+                    Manifest manifest = m;
+
+                    @Override
+                    public void run() {
+                        MailNotif mf = new MailNotif();
+                        mf.emailKonfirmasiPenerimaan(this.manifest);
+                    }
+                });
+                t.start();
+
+            }
+
+        } else {
+            if (Util.setting("mail_notif_new_manifest_active").equals("true")) {
+                final Manifest m = this.manifest;
+                Thread t = new Thread(new Runnable() {
+                    Manifest manifest = m;
+
+                    @Override
+                    public void run() {
+                        MailNotif mf = new MailNotif();
+                        mf.emailNewManifest(this.manifest);
+                    }
+                });
+                t.start();
+
+            }
+        }
+
         BindUtils.postGlobalCommand(null, null, "refresh", null);
         this.winPenerimaanLimbah.detach();
-        
+
     }
 
     public Window getWinPenerimaanLimbah() {
@@ -129,7 +168,5 @@ public class PopPenerimaanVM {
     public void setListNomorKendaraan(List<Manifest> listNomorKendaraan) {
         this.listNomorKendaraan = listNomorKendaraan;
     }
-
-    
 
 }

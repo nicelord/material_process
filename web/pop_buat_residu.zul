@@ -82,27 +82,15 @@
                                         <attribute name="onCreate">
                                             self.setSelectedIndex(0);
                                         </attribute>
-                                        <comboitem label="Drum Logam"/>
                                         <comboitem label="Pallet"/>
+                                        <comboitem label="Drum"/>
+                                        <comboitem label="Bag"/>
+                                        <comboitem label="Jerigen"/>
                                         <comboitem label="Pcs"/>
-                                        <comboitem label="Tin"/>
                                         <comboitem label="Box"/>
-                                        <comboitem label="R.O Container"/>
-                                        <comboitem label="Kemasan Karton atau plastik"/>
-                                        <comboitem label="Drum Plastik"/>
-                                        <comboitem label="Karung Kain, plastik, kertas"/>
-                                        <comboitem label="Silinder"/>
-                                        <comboitem label="Tangki"/>
-                                        <comboitem label="Gerbong Barang"/>
-                                        <comboitem label="Wheel Bin"/>
-                                        <comboitem label="Jumbo Bag"/>
-                                        <comboitem label="IBC Tank"/>
-                                        <comboitem label="Wadah Hopper"/>
-                                        <comboitem label="Box Besi"/>
-                                        <comboitem label="Tanpa Kemasan"/>
-                                        <comboitem label="Drum kayu"/>
-                                        <comboitem label="Jerycan"/>
-                                        <comboitem label="Multibox/IBC Box"/>
+                                        <comboitem label="Can"/>
+                                        <comboitem label="Bottle"/>
+                                        <comboitem label="Totes"/>
                                     </combobox>
                                 </div>
                             </hlayout>
@@ -122,27 +110,15 @@
                                         <attribute name="onCreate">
                                             self.setSelectedIndex(3);
                                         </attribute>
-                                        <comboitem label="Drum Logam"/>
                                         <comboitem label="Pallet"/>
+                                        <comboitem label="Drum"/>
+                                        <comboitem label="Bag"/>
+                                        <comboitem label="Jerigen"/>
                                         <comboitem label="Pcs"/>
-                                        <comboitem label="Tin"/>
                                         <comboitem label="Box"/>
-                                        <comboitem label="R.O Container"/>
-                                        <comboitem label="Kemasan Karton atau plastik"/>
-                                        <comboitem label="Drum Plastik"/>
-                                        <comboitem label="Karung Kain, plastik, kertas"/>
-                                        <comboitem label="Silinder"/>
-                                        <comboitem label="Tangki"/>
-                                        <comboitem label="Gerbong Barang"/>
-                                        <comboitem label="Wheel Bin"/>
-                                        <comboitem label="Jumbo Bag"/>
-                                        <comboitem label="IBC Tank"/>
-                                        <comboitem label="Wadah Hopper"/>
-                                        <comboitem label="Box Besi"/>
-                                        <comboitem label="Tanpa Kemasan"/>
-                                        <comboitem label="Drum kayu"/>
-                                        <comboitem label="Jerycan"/>
-                                        <comboitem label="Multibox/IBC Box"/>
+                                        <comboitem label="Can"/>
+                                        <comboitem label="Bottle"/>
+                                        <comboitem label="Totes"/>
                                     </combobox>
                                 </div>
                             </hlayout>
@@ -162,27 +138,15 @@
                                         <attribute name="onCreate">
                                             self.setSelectedIndex(3);
                                         </attribute>
-                                        <comboitem label="Drum Logam"/>
                                         <comboitem label="Pallet"/>
+                                        <comboitem label="Drum"/>
+                                        <comboitem label="Bag"/>
+                                        <comboitem label="Jerigen"/>
                                         <comboitem label="Pcs"/>
-                                        <comboitem label="Tin"/>
                                         <comboitem label="Box"/>
-                                        <comboitem label="R.O Container"/>
-                                        <comboitem label="Kemasan Karton atau plastik"/>
-                                        <comboitem label="Drum Plastik"/>
-                                        <comboitem label="Karung Kain, plastik, kertas"/>
-                                        <comboitem label="Silinder"/>
-                                        <comboitem label="Tangki"/>
-                                        <comboitem label="Gerbong Barang"/>
-                                        <comboitem label="Wheel Bin"/>
-                                        <comboitem label="Jumbo Bag"/>
-                                        <comboitem label="IBC Tank"/>
-                                        <comboitem label="Wadah Hopper"/>
-                                        <comboitem label="Box Besi"/>
-                                        <comboitem label="Tanpa Kemasan"/>
-                                        <comboitem label="Drum kayu"/>
-                                        <comboitem label="Jerycan"/>
-                                        <comboitem label="Multibox/IBC Box"/>
+                                        <comboitem label="Can"/>
+                                        <comboitem label="Bottle"/>
+                                        <comboitem label="Totes"/>
                                     </combobox>
                                 </div>
                             </hlayout>
@@ -203,7 +167,6 @@
                                     </attribute>
                                     <comboitem label="Liter"/>
                                     <comboitem label="KG"/>
-                                    <comboitem label="Ton"/>
                                 </combobox>
                             </hlayout>
                             

@@ -100,6 +100,8 @@ public class PageRekapPenerimaanLimbahVM {
     @Command
     @NotifyChange({"*"})
     public void generateReport() {
+        //TOTAL ALL LIMBAH
+
         this.listTotalLimbah = new ArrayList<>();
         List<Penerimaan> listPenerimaan = Ebean.find(Penerimaan.class)
                 .where()
@@ -112,7 +114,7 @@ public class PageRekapPenerimaanLimbahVM {
 
         Map<String, Map<String, Long>> grup = listPenerimaan.stream().collect(
                 Collectors.groupingBy(p -> p.getManifest().getNamaTeknikLimbah(),
-                        Collectors.groupingBy(p -> p.getManifest().getJenisLimbah().getKodeJenis(),
+                        Collectors.groupingBy(p -> p.getManifest().getJenisFisik(),
                                 Collectors.summingLong(Penerimaan::getJmlBerat))));
 
         for (Map.Entry<String, Map<String, Long>> entry : grup.entrySet()) {
@@ -135,12 +137,18 @@ public class PageRekapPenerimaanLimbahVM {
 
         this.totalBerat = this.listTotalLimbah.stream().mapToLong(m -> m.getJmlBerat()).sum();
 
+        //TOTAL GUDANG 1
         countProsesLimbahByGudang("GUDANG 1");
+        //TOTAL GUDANG 2
         countProsesLimbahByGudang("GUDANG 2");
+        //TOTAL GUDANG 3
         countProsesLimbahByGudang("GUDANG 3");
+        //TOTAL GUDANG 4
         countProsesLimbahByGudang("GUDANG 4");
+        //TOTAL GUDANG 5
         countProsesLimbahByGudang("GUDANG 5");
 
+        //TOTAL DISIKIRIM
         this.listTotalDikirim = new ArrayList<>();
 
         List<Store> listStoreTerikirim = Ebean.find(Store.class)
@@ -152,30 +160,26 @@ public class PageRekapPenerimaanLimbahVM {
                         Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                 .findList();
 
-        Map<String, Map<String, Long>> grupStoreTerkirim = listStoreTerikirim.stream().collect(
-                Collectors.groupingBy(p -> p.getOutboundItem().getPenerimaan().getManifest().getNamaTeknikLimbah(),
-                        Collectors.groupingBy(p -> p.getOutboundItem().getPenerimaan().getManifest().getJenisLimbah().getKodeJenis(),
-                                Collectors.summingLong(Store::getJmlBerat))));
+        Map<String, Long> grupStoreTerkirim = listStoreTerikirim.stream().collect(
+                Collectors.groupingBy(p -> p.getOutboundItem().getPenerimaan().getManifest().getJenisFisik(),
+                        Collectors.summingLong(Store::getJmlBerat)));
 
-        for (Map.Entry<String, Map<String, Long>> entry : grupStoreTerkirim.entrySet()) {
+        for (Map.Entry<String, Long> entry : grupStoreTerkirim.entrySet()) {
 
             String key = entry.getKey();
-            Map<String, Long> value = entry.getValue();
+            Long value = entry.getValue();
 
-            for (Map.Entry<String, Long> entry1 : value.entrySet()) {
-                String key1 = entry1.getKey();
-                Long value1 = entry1.getValue();
-                TotalLimbah t = new TotalLimbah();
-                t.setNamaLimbah(key);
-                t.setKodeLimbah(key1);
-                t.setJmlBerat(value1);
-                this.listTotalDikirim.add(t);
-            }
+            TotalLimbah t = new TotalLimbah();
+            t.setNamaLimbah("");
+            t.setKodeLimbah(key);
+            t.setJmlBerat(value);
+            this.listTotalDikirim.add(t);
 
         }
 
         this.totalDikirim = listTotalDikirim.stream().mapToLong(m -> m.getJmlBerat()).sum();
 
+        //TOTAL PENDING KIRIM
         this.listTotalPendingKirim = new ArrayList<>();
 
         List<OutboundItem> listTotalPending = Ebean.find(OutboundItem.class)
@@ -186,67 +190,49 @@ public class PageRekapPenerimaanLimbahVM {
                         Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                 .findList();
 
-        Map<String, Map<String, Long>> grupPendingKirim = listTotalPending.stream().collect(
-                Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getNamaTeknikLimbah(),
-                        Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getJenisLimbah().getKodeJenis(),
-                                Collectors.summingLong(OutboundItem::getJmlBerat))));
+        Map<String, Long> grupPendingKirim = listTotalPending.stream().collect(
+                Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getJenisFisik(),
+                        Collectors.summingLong(OutboundItem::getJmlBerat)));
 
-        for (Map.Entry<String, Map<String, Long>> entry : grupPendingKirim.entrySet()) {
+        for (Map.Entry<String, Long> entry : grupPendingKirim.entrySet()) {
 
             String key = entry.getKey();
+            Long value = entry.getValue();
 
-            Map<String, Long> value = entry.getValue();
+            Long sisa = listTotalDikirim.stream().filter(p -> p.getKodeLimbah().equals(key)).mapToLong(m -> m.getJmlBerat()).sum();
 
-            for (Map.Entry<String, Long> entry1 : value.entrySet()) {
-
-                String key1 = entry1.getKey();
-                Long value1 = entry1.getValue();
-
-                Long sisa = listTotalDikirim.stream().filter(p -> p.getNamaLimbah().equals(key) && p.getKodeLimbah().equals(key1)).mapToLong(m -> m.getJmlBerat()).sum();
-
-                if (value1 - sisa > 0) {
-                    TotalLimbah t = new TotalLimbah();
-                    t.setNamaLimbah(key);
-                    t.setKodeLimbah(key1);
-
-                    t.setJmlBerat(value1 - sisa);
-                    this.listTotalPendingKirim.add(t);
-                }
-
+            if (value - sisa > 0) {
+                TotalLimbah t = new TotalLimbah();
+                t.setNamaLimbah("");
+                t.setKodeLimbah(key);
+                t.setJmlBerat(value - sisa);
+                this.listTotalPendingKirim.add(t);
             }
-
         }
 
         this.totalPendingKirim = listTotalPendingKirim.stream().mapToLong(m -> m.getJmlBerat()).sum();
 
-        
+        //TOTAL SISA DI PENGUMPULAN
         this.listTotalDiPengumpulan = new ArrayList<>();
-        Map<String, Map<String, Long>> grupTotalPendingProses = listPenerimaan.stream().filter(p -> p.getProsessLimbahs().isEmpty()).collect(
-                Collectors.groupingBy(p -> p.getManifest().getNamaTeknikLimbah(),
-                        Collectors.groupingBy(p -> p.getManifest().getJenisLimbah().getKodeJenis(),
-                                Collectors.summingLong(Penerimaan::getJmlBerat))));
-        
-        for (Map.Entry<String, Map<String, Long>> entry : grupTotalPendingProses.entrySet()) {
+        Map<String, Long> grupTotalPendingProses = listPenerimaan.stream().filter(p -> p.getProsessLimbahs().isEmpty()).collect(
+               
+                        Collectors.groupingBy(p -> p.getManifest().getJenisFisik(),
+                                Collectors.summingLong(Penerimaan::getJmlBerat)));
+
+        for (Map.Entry<String, Long> entry : grupTotalPendingProses.entrySet()) {
 
             String key = entry.getKey();
-            Map<String, Long> value = entry.getValue();
-
-            for (Map.Entry<String, Long> entry1 : value.entrySet()) {
-                String key1 = entry1.getKey();
-                Long value1 = entry1.getValue();
-                TotalLimbah t = new TotalLimbah();
-                t.setNamaLimbah(key);
-                t.setKodeLimbah(key1);
-                t.setJmlBerat(value1);
+            Long value = entry.getValue();
+            
+            TotalLimbah t = new TotalLimbah();
+                t.setNamaLimbah("");
+                t.setKodeLimbah(key);
+                t.setJmlBerat(value);
                 this.listTotalDiPengumpulan.add(t);
-
-            }
 
         }
 
         this.totalPendingProses = this.listTotalDiPengumpulan.stream().mapToLong(m -> m.getJmlBerat()).sum();
-        
-        
 
         this.totalDetail = this.totalPendingProses + this.totalGudang1 + this.totalGudang2 + this.totalGudang3 + this.totalGudang4 + this.totalGudang5 + this.totalDikirim + this.totalPendingKirim;
 
@@ -279,44 +265,43 @@ public class PageRekapPenerimaanLimbahVM {
                         Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                 .findList();
 
-        Map<String, Map<String, Long>> grupProsesGudang1 = listProsesGudang.stream().collect(
-                Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getNamaTeknikLimbah(),
-                        Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getJenisLimbah().getKodeJenis(),
-                                Collectors.summingLong(ProsessLimbah::getJmlBerat))));
+        Map<String, Long> grupProsesGudang1 = listProsesGudang.stream().collect(
+                Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getJenisFisik(),
+                        Collectors.summingLong(ProsessLimbah::getJmlBerat)));
 
-        for (Map.Entry<String, Map<String, Long>> entry : grupProsesGudang1.entrySet()) {
+        for (Map.Entry<String, Long> entry : grupProsesGudang1.entrySet()) {
 
             String key = entry.getKey();
-            Map<String, Long> value = entry.getValue();
+            Long value = entry.getValue();
 
-            for (Map.Entry<String, Long> entry1 : value.entrySet()) {
-                String key1 = entry1.getKey();
-                Long value1 = entry1.getValue();
-                TotalLimbah t = new TotalLimbah();
-                t.setNamaLimbah(key);
-                t.setKodeLimbah(key1);
-                t.setJmlBerat(value1);
+            TotalLimbah t = new TotalLimbah();
+            t.setNamaLimbah("");
+            t.setKodeLimbah(key);
+            t.setJmlBerat(value);
 
-                if (gudang.equals("GUDANG 1")) {
-                    this.listTotalGudang1.add(t);
-                }
-
-                if (gudang.equals("GUDANG 2")) {
-                    this.listTotalGudang2.add(t);
-                }
-
-                if (gudang.equals("GUDANG 3")) {
-                    this.listTotalGudang3.add(t);
-                }
-                if (gudang.equals("GUDANG 4")) {
-                    this.listTotalGudang4.add(t);
-                }
-                if (gudang.equals("GUDANG 5")) {
-                    this.listTotalGudang5.add(t);
-                }
-
+            if (gudang.equals("GUDANG 1")) {
+                this.listTotalGudang1.add(t);
             }
 
+            if (gudang.equals("GUDANG 2")) {
+                this.listTotalGudang2.add(t);
+            }
+
+            if (gudang.equals("GUDANG 3")) {
+                this.listTotalGudang3.add(t);
+            }
+            if (gudang.equals("GUDANG 4")) {
+                this.listTotalGudang4.add(t);
+            }
+            if (gudang.equals("GUDANG 5")) {
+                this.listTotalGudang5.add(t);
+            }
+
+//            for (Map.Entry<String, Long> entry1 : value.entrySet()) {
+//                String key1 = entry1.getKey();
+//                Long value1 = entry1.getValue();
+//                
+//            }
         }
 
         if (gudang.equals("GUDANG 1")) {
@@ -340,45 +325,43 @@ public class PageRekapPenerimaanLimbahVM {
         }
 
     }
-    
-    
+
     @Command
-    public void exportExcel(){
-        File filenya = new File(Util.setting("pdf_path") + "rekap_penerimaan_external.xls");        
-   
+    public void exportExcel() {
+        File filenya = new File(Util.setting("pdf_path") + "rekap_penerimaan_external.xls");
+
         try {
-            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/rekap_penerimaan_external.xls.jasper");
+            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/rekap_penerimaan_external.xls2.jasper");
             JRDataSource datasource = new JRBeanCollectionDataSource(this.listTotalLimbah);
             JRDataSource beanColDataSource = new JRBeanCollectionDataSource(this.listTotalLimbah);
 
             Map map = new HashMap();
             map.put("REPORT_DATA_SOURCE", datasource);
             map.put("TOTAL_LIMBAH", beanColDataSource);
-            
+
             JRDataSource dsgud1 = new JRBeanCollectionDataSource(this.listTotalGudang1);
             map.put("GUDANG1", dsgud1);
-            
+
             JRDataSource dsgud2 = new JRBeanCollectionDataSource(this.listTotalGudang2);
             map.put("GUDANG2", dsgud2);
-            
+
             JRDataSource dsgud3 = new JRBeanCollectionDataSource(this.listTotalGudang3);
             map.put("GUDANG3", dsgud3);
-            
+
             JRDataSource dsgud4 = new JRBeanCollectionDataSource(this.listTotalGudang4);
             map.put("GUDANG4", dsgud4);
-            
+
             JRDataSource dsgud5 = new JRBeanCollectionDataSource(this.listTotalGudang5);
             map.put("GUDANG5", dsgud5);
 
             JRDataSource dskirim = new JRBeanCollectionDataSource(this.listTotalDikirim);
             map.put("DIKIRIM", dskirim);
-            
+
             JRDataSource dsPendingKirim = new JRBeanCollectionDataSource(this.listTotalPendingKirim);
             map.put("PENDING_KIRIM", dsPendingKirim);
-            
+
             JRDataSource dsPendingProses = new JRBeanCollectionDataSource(this.listTotalDiPengumpulan);
             map.put("PENDING_PROSES", dsPendingProses);
-
 
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);
             OutputStream outputStream = new FileOutputStream(filenya);

@@ -52,6 +52,7 @@ public class PopInputManifestVM {
     List<Manifest> listNomorKendaraan = new ArrayList<>();
     List<Manifest> listPenandaTangan = new ArrayList<>();
     List<Manifest> listJabatanPenandaTangan = new ArrayList<>();
+    List<Manifest> listJenisFisik = new ArrayList<>();
 
     boolean isEdit = false;
 
@@ -70,6 +71,7 @@ public class PopInputManifestVM {
         this.listNomorKendaraan = Ebean.find(Manifest.class).select("nomorKendaraan").setDistinct(true).findList();
         this.listPenandaTangan = Ebean.find(Manifest.class).select("penandaTangan").setDistinct(true).findList();
         this.listJabatanPenandaTangan = Ebean.find(Manifest.class).select("jabatanPenandaTangan").setDistinct(true).findList();
+        this.listJenisFisik = Ebean.find(Manifest.class).select("jenisFisik").setDistinct(true).findList();
 
         Selectors.wireComponents(view, (Object) this, false);
     }
@@ -268,6 +270,14 @@ public class PopInputManifestVM {
 
     public void setIsEdit(boolean isEdit) {
         this.isEdit = isEdit;
+    }
+
+    public List<Manifest> getListJenisFisik() {
+        return listJenisFisik;
+    }
+
+    public void setListJenisFisik(List<Manifest> listJenisFisik) {
+        this.listJenisFisik = listJenisFisik;
     }
 
 }

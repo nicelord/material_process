@@ -67,8 +67,10 @@ public class MailNotif {
             mail.setSSLOnConnect(true);
             mail.setAuthenticator((Authenticator) new DefaultAuthenticator(Util.setting("gmail_account"), Util.setting("gmail_password")));
             mail.setFrom(Util.setting("gmail_account"));
-
-            mail.addTo(Util.setting("mail_notif_new_manifest_recipient"));
+            
+             for (String s : Util.setting("mail_notif_new_manifest_recipient").split(",")) {
+                mail.addTo(s.trim());
+            }
 
             mail.setSubject("[DACB_NOTIF] MANIFEST BARU DITAMBAHKAN " + m.getKodeManifest());
             mail.setHtmlMsg(msg);
@@ -125,9 +127,81 @@ public class MailNotif {
             mail.setAuthenticator((Authenticator) new DefaultAuthenticator(Util.setting("gmail_account"), Util.setting("gmail_password")));
             mail.setFrom(Util.setting("gmail_account"));
 
-            mail.addTo(Util.setting("mail_notif_update_manifest_recipient"));
+            for (String s : Util.setting("mail_notif_update_manifest_recipient").split(",")) {
+                mail.addTo(s.trim());
+            }
 
             mail.setSubject("[DACB_NOTIF] MANIFEST " + m.getKodeManifest() + " DIUPDATE");
+            mail.setHtmlMsg(msg);
+            mail.send();
+        } catch (EmailException ex) {
+            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void emailKonfirmasiPenerimaan(Manifest m) {
+
+        String msg = "<html>"
+                + "<head>"
+                + "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />"
+                + "<title>Untitled Document</title>"
+                + "<style type=\"text/css\">"
+                + "p {"
+                + "font-family: \"Courier New\", Courier, monospace;"
+                + "font-size: 14px;"
+                + "}"
+                + "</style>"
+                + "</head>"
+                + "<p>Dear user, </p>"
+                + "<p>Berikut di informasikan manifest dibawah ini baru saja diupdate di sistem;</p> "
+                + "<br/>"
+                + "<pre>"
+                + "<br/>"
+                + "Kode Manifest    : " + m.getKodeManifest() + "<br/>"
+                + "Nama Customer    : " + m.getCustomerPenghasil().getNama() + "<br/>"
+                + "Nama Limbah      : " + m.getNamaTeknikLimbah() + "<br/>"
+                + "Kemasan 1        : " + m.getJmlKemasan() + " " + m.getSatuanKemasan() + " <br/>"
+                + "Kemasan 2        : " + m.getJmlKemasan2() + " " + m.getSatuanKemasan2() + " <br/>"
+                + "Kemasan 3        : " + m.getJmlKemasan3() + " " + m.getSatuanKemasan3() + " <br/>"
+                + "Berat            : " + m.getJmlBerat() + " " + m.getSatuanBerat() + " <br/>"
+                + "</pre>"
+                + "<br/>"
+                + "<br/>"
+                + "DETAIL PENERIMAAN  :"
+                + "<br/>"
+                + "<pre>"
+                + "User Penerima    : " + m.getPenerimaan().getUserPenerima().getNama() + "<br/>"
+                + "Tgl Penerimaan   : " + m.getPenerimaan().getTglPenerimaan() + "<br/>"
+                + "<br/>"
+                + "Kemasan 1        : " + m.getPenerimaan().getJmlKemasan() + " " + m.getPenerimaan().getSatuanKemasan() + " <br/>"
+                + "Kemasan 2        : " + m.getPenerimaan().getJmlKemasan2() + " " + m.getPenerimaan().getSatuanKemasan2() + " <br/>"
+                + "Kemasan 3        : " + m.getPenerimaan().getJmlKemasan3() + " " + m.getPenerimaan().getSatuanKemasan3() + " <br/>"
+                + "Berat            : " + m.getPenerimaan().getJmlBerat() + " " + m.getPenerimaan().getSatuanBerat() + " <br/>"
+                + "Tgl Angkut       : " + m.getTglAngkut() + " <br/>"
+                + "</pre>"
+                + "<br/>"
+                + "<p></p>"
+                + "<br/>"
+                + "<br/>"
+                + "<p><i>Note : "
+                + "<br>"
+                + "Ini adalah email otomatis, mohon tidak membalas email ini !</i></p>"
+                + "</html>";
+
+        try {
+            HtmlEmail mail = new HtmlEmail();
+            mail.setHostName("smtp.gmail.com");
+            mail.setSmtpPort(587);
+            mail.setSSLOnConnect(true);
+            mail.setAuthenticator((Authenticator) new DefaultAuthenticator(Util.setting("gmail_account"), Util.setting("gmail_password")));
+            mail.setFrom(Util.setting("gmail_account"));
+
+            for (String s : Util.setting("mail_notif_penerimaan_recipient").split(",")) {
+                mail.addTo(s.trim());
+            }
+
+            mail.setSubject("[DACB_NOTIF] MANIFEST " + m.getKodeManifest() + " DITERIMA");
             mail.setHtmlMsg(msg);
             mail.send();
         } catch (EmailException ex) {

@@ -328,6 +328,12 @@
                                                 <hlayout width="100%">
                                                     <div class="input-group" hflex="3">
                                                         <span class="input-group-addon">
+                                                            Jenis.
+                                                        </span>
+                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.jenisFisik)"/>
+                                                    </div>
+                                                    <div class="input-group" hflex="3">
+                                                        <span class="input-group-addon">
                                                             Kode Limbah.
                                                         </span>
                                                         <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.jenisLimbah.kodeJenis)"/>

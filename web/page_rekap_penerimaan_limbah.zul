@@ -82,7 +82,7 @@
                     </auxhead>
                     <listhead sizable="true" visible="true" >
                         <listheader sort="auto(namaLimbah)" label="LIMBAH" />
-                        <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                        <listheader sort="auto(kodeLimbah)" label="JENIS" />
                         <listheader sort="auto(jmlBerat)" label="BERAT" />
                     </listhead>
                 
@@ -138,7 +138,7 @@
 
                                         <listhead sizable="true" visible="true" >
                                             <listheader sort="auto(namaLimbah)" label="LIMBAH" />
-                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(kodeLimbah)" label="JENIS" />
                                             <listheader sort="auto(jmlBerat)" label="BERAT" />
                                         </listhead>
 
@@ -185,7 +185,7 @@
 
                                         <listhead sizable="true" visible="true" >
                                             <listheader sort="auto(namaLimbah)" label="LIMBAH" />
-                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(kodeLimbah)" label="JENIS" />
                                             <listheader sort="auto(jmlBerat)" label="BERAT" />
                                         </listhead>
 
@@ -232,7 +232,7 @@
 
                                         <listhead sizable="true" visible="true" >
                                             <listheader sort="auto(namaLimbah)" label="LIMBAH" />
-                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(kodeLimbah)" label="JENIS" />
                                             <listheader sort="auto(jmlBerat)" label="BERAT" />
                                         </listhead>
 
@@ -279,7 +279,7 @@
 
                                         <listhead sizable="true" visible="true" >
                                             <listheader sort="auto(namaLimbah)" label="LIMBAH" />
-                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(kodeLimbah)" label="JENIS" />
                                             <listheader sort="auto(jmlBerat)" label="BERAT" />
                                         </listhead>
 
@@ -326,7 +326,7 @@
 
                                         <listhead sizable="true" visible="true" >
                                             <listheader sort="auto(namaLimbah)" label="LIMBAH" />
-                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(kodeLimbah)" label="JENIS" />
                                             <listheader sort="auto(jmlBerat)" label="BERAT" />
                                         </listhead>
 
@@ -373,7 +373,7 @@
 
                                         <listhead sizable="true" visible="true" >
                                             <listheader sort="auto(namaLimbah)" label="LIMBAH" />
-                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(kodeLimbah)" label="JENIS" />
                                             <listheader sort="auto(jmlBerat)" label="BERAT" />
                                         </listhead>
 
@@ -420,7 +420,7 @@
 
                                         <listhead sizable="true" visible="true" >
                                             <listheader sort="auto(namaLimbah)" label="LIMBAH" />
-                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(kodeLimbah)" label="JENIS" />
                                             <listheader sort="auto(jmlBerat)" label="BERAT" />
                                         </listhead>
 
@@ -467,7 +467,7 @@
 
                                         <listhead sizable="true" visible="true" >
                                             <listheader sort="auto(namaLimbah)" label="LIMBAH" />
-                                            <listheader sort="auto(kodeLimbah)" label="KODE JENIS" />
+                                            <listheader sort="auto(kodeLimbah)" label="JENIS" />
                                             <listheader sort="auto(jmlBerat)" label="BERAT" />
                                         </listhead>
 
