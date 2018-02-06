@@ -47,6 +47,14 @@
                         </listitem>
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='AKUNTING'}"
+                           
+                                  onClick="@command('changePage', page='page_invoices2.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="INVOICES 2"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles()=='ADMIN'}"
                            
                                   onClick="@command('changePage', page='page_sertifikat.zul')">

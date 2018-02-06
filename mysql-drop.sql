@@ -6,7 +6,11 @@ drop table invoice;
 
 drop table invoice_penerimaan;
 
+drop table invoice2;
+
 drop table invoice_item;
+
+drop table invoice_item2;
 
 drop table jenis_limbah;
 

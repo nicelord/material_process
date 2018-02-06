@@ -61,7 +61,15 @@
                                 label="TAMBAHKAN ITEM" onClick="@command('showPopStore')" />
                                 
                             <checkbox label="mode select" onCheck="@command('modeSelect')" />
-                            
+                            <space bar="true" style="vertical-align: middle; line-height: 20px;"/>
+                            TAMPILKAN BERDASARKAN STATUS PENGIRIMAN : 
+                            <radiogroup
+                                selectedItem="@bind(vm.filterStatusPengiriman)" onCheck="@command('doFilterStatusPengiriman')">
+                                <radio label="BELUM DIKIRIM" value="belum"/>
+                                <radio label="SUDAH DIKIRIM" value="sudah"/>
+                                <radio label="SEMUA" value="semua"/>
+                            </radiogroup>
+
                         </auxheader>
                     </auxhead>
                 
@@ -97,7 +105,7 @@
                         <auxheader>
                         </auxheader>
                         <auxheader>
-                       </auxheader>
+                        </auxheader>
                         <auxheader>
                             <textbox instant="true" value="@bind(vm.filterManifest)" hflex="3" onChange="@command('saring')"/>
                         </auxheader>
@@ -105,7 +113,7 @@
                             <textbox instant="true" value="@bind(vm.filterPengiriman)" hflex="3" onChange="@command('saring')"/>
                         </auxheader>
                         <auxheader>
-                       </auxheader>
+                        </auxheader>
                     </auxhead>
                     
                 

@@ -208,6 +208,15 @@ public class PopDetailPengirimanVM {
         }
 
     }
+    
+    @Command
+    public int getIndexPengirimanByStore(Store s, Pengiriman p){
+        List<Pengiriman> lp = Ebean.find(Pengiriman.class).where().in("listStore", s.getOutboundItem().getStores()).findList();
+        if(lp.size()>1){
+            return lp.indexOf(p)+1;
+        }
+        return 0;
+    }
 
     public Pengiriman getPengiriman() {
         return pengiriman;

@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import org.zkoss.bind.annotation.Command;
 
 /**
  *
@@ -68,8 +69,6 @@ public class OutboundItem implements Serializable {
     public OutboundItem() {
         this.statusPengiriman = cekStatusPengiriman();
     }
-    
-    
 
     public String cekStatusPengiriman() {
 

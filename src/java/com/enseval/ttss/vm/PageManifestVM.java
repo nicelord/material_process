@@ -45,7 +45,9 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zul.Filedownload;
+import org.zkoss.zul.Messagebox;
 
 public class PageManifestVM {
 
@@ -178,10 +180,32 @@ public class PageManifestVM {
         m.put("manifest", manifest);
         Executions.createComponents("pop_revisi_manifest.zul", (Component) null, m);
     }
-    
-    
+
     @Command
-    public void cetakManifest(){
+    public void deleteManifest() {
+        if (this.selectedManifest.getPenerimaan().getStatusPenerimaan().equals("diterima")) {
+            Messagebox.show("LIMBAH MANIFEST YANG SUDAH DITERIMA TIDAK BISA DI HAPUS!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        Messagebox.show("Data manifest akan dihapus. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
+            if (t.getName().equals("onOK")) {
+                try {
+                    
+                    Ebean.delete(this.selectedManifest);
+                    Ebean.delete(this.selectedManifest.getPenerimaan());
+                    this.selectedManifest = null;
+                    BindUtils.postGlobalCommand(null, null, "refresh", null);
+                } catch (Exception e) {
+                    Messagebox.show(e.getLocalizedMessage(), "Error", Messagebox.OK, Messagebox.ERROR);
+                }
+            }
+        });
+
+    }
+
+    @Command
+    public void cetakManifest() {
         File filenya = new File(Util.setting("pdf_path") + "manifest.pdf");
         filenya.delete();
 
@@ -189,8 +213,6 @@ public class PageManifestVM {
             InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/manifest.pdf.jasper");
 //            JRDataSource datasource = new JRBeanCollectionDataSource(this.selectedSertifikat.getListPenerimaan());
 //            JRDataSource beanColDataSource = new JRBeanCollectionDataSource(this.selectedSertifikat.getListPenerimaan());
-
-
 
             Map map = new HashMap();
             map.put("manifest", this.selectedManifest);
@@ -204,7 +226,7 @@ public class PageManifestVM {
 //            map.put("TTD", this.selectedSertifikat.getPenandaTangan());
 //            map.put("JABATAN", this.selectedSertifikat.getJabatanPenandaTangan());
 //            
-            JasperPrint report = JasperFillManager.fillReport(streamReport, map,new JREmptyDataSource(1));
+            JasperPrint report = JasperFillManager.fillReport(streamReport, map, new JREmptyDataSource(1));
             OutputStream outputStream = new FileOutputStream(filenya);
 
             JRExporter exporter = new JRPdfExporter();

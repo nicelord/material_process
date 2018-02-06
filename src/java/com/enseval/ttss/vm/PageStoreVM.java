@@ -43,12 +43,13 @@ public class PageStoreVM {
 
     boolean select = false;
     List<Store> listSelectedStore = new ArrayList<>();
-    String filterKolom = "", filterLimbah = "", filterSatuanKemasan = "", filterManifest = "", filterPengiriman = "";
+    String filterKolom = "", filterLimbah = "", filterSatuanKemasan = "", filterManifest = "", filterPengiriman = "", filterStatusPengiriman = "belum";
 
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        this.listStore = Ebean.find(Store.class).orderBy("id desc").findList();
+        //this.listStore = Ebean.find(Store.class).orderBy("id desc").findList();
+        doFilterStatusPengiriman();
 
     }
 
@@ -78,7 +79,7 @@ public class PageStoreVM {
     @GlobalCommand
     @NotifyChange({"*"})
     public void refresh() {
-        this.listStore = Ebean.find(Store.class).orderBy("id desc").findList();
+        doFilterStatusPengiriman();
     }
 
     @Command
@@ -105,6 +106,25 @@ public class PageStoreVM {
                 .or(Expr.contains("outboundItem.penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("outboundItem.residu.residuId", filterManifest))
                 .contains("pengiriman.id", this.filterPengiriman)
                 .orderBy("id desc").findList();
+
+    }
+
+    @Command
+    @NotifyChange({"*"})
+    public void doFilterStatusPengiriman() {
+        if (filterStatusPengiriman.equals("belum")) {
+            this.listStore = Ebean.find(Store.class)
+                    .where()
+                    .isNull("pengiriman.tglKirim")
+                    .orderBy("id desc").findList();
+        } else if (filterStatusPengiriman.equals("sudah")) {
+            this.listStore = Ebean.find(Store.class)
+                    .where()
+                    .isNotNull("pengiriman.tglKirim")
+                    .orderBy("id desc").findList();
+        } else {
+            this.listStore = Ebean.find(Store.class).orderBy("id desc").findList();
+        }
 
     }
 
@@ -178,6 +198,14 @@ public class PageStoreVM {
 
     public void setFilterPengiriman(String filterPengiriman) {
         this.filterPengiriman = filterPengiriman;
+    }
+
+    public String getFilterStatusPengiriman() {
+        return filterStatusPengiriman;
+    }
+
+    public void setFilterStatusPengiriman(String filterStatusPengiriman) {
+        this.filterStatusPengiriman = filterStatusPengiriman;
     }
 
 }

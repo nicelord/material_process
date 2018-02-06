@@ -144,6 +144,10 @@
                             
                                 <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                     <label value="@load(s.outboundItem.penerimaan ne null ? s.outboundItem.penerimaan.manifest.kodeManifest : s.outboundItem.residu.residuId)"/>
+                                    <label 
+                                        if="${s.getIndexPengirimanByStore()>0}"
+                                        value="@load(' ('.concat(s.getIndexPengirimanByStore()).concat(')'))"/>
+                                    
                                 </listcell>
                             
                                 <listcell style="text-overflow: ellipsis; white-space: nowrap;" if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">

@@ -1,66 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="manifest.pdf" language="groovy" pageWidth="555" pageHeight="895" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="faf5b0c4-d17e-4017-84e5-cb317c3696e9">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="manifest.pdf" language="groovy" pageWidth="595" pageHeight="935" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="faf5b0c4-d17e-4017-84e5-cb317c3696e9">
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="manifest" class="java.lang.Object"/>
 	<detail>
-		<band height="802">
+		<band height="935">
+			<image>
+				<reportElement mode="Transparent" x="0" y="0" width="595" height="935" uuid="7a9d681e-648e-4759-9250-aba6b1be195c"/>
+				<imageExpression><![CDATA["D:\\NetBeansProjects\\material_process_monitoring\\web\\report\\template_manifest.jpg"]]></imageExpression>
+			</image>
 			<textField>
-				<reportElement x="20" y="77" width="100" height="20" uuid="4b9f9ad9-b9a9-46d6-b5b5-9b30e4715b4b"/>
+				<reportElement x="20" y="67" width="120" height="24" uuid="4b9f9ad9-b9a9-46d6-b5b5-9b30e4715b4b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getKodeManifest()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="152" width="513" height="20" uuid="b0b080a2-8421-4f4d-b9e8-6a8708c23dae"/>
+				<reportElement x="29" y="150" width="266" height="14" uuid="b0b080a2-8421-4f4d-b9e8-6a8708c23dae"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerPenghasil().getNama()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="172" width="513" height="20" uuid="a9974acb-dd4d-48bd-be29-be6ea880c323"/>
+				<reportElement x="29" y="164" width="266" height="13" uuid="a9974acb-dd4d-48bd-be29-be6ea880c323"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerPenghasil().getAlamat()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="192" width="513" height="20" uuid="8428220e-d311-478f-a080-c88eac725c02"/>
+				<reportElement x="69" y="179" width="108" height="14" uuid="8428220e-d311-478f-a080-c88eac725c02"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerPenghasil().getNomorKontak()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="212" width="513" height="20" uuid="d3a92aa6-b95f-4ee0-8644-6953b2e82d32"/>
+				<reportElement x="189" y="179" width="106" height="14" uuid="d3a92aa6-b95f-4ee0-8644-6953b2e82d32"/>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerPenghasil().getFax()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="232" width="513" height="20" uuid="3dd47abf-0345-4a85-b600-40d00e712c5f"/>
+				<reportElement x="29" y="221" width="81" height="13" uuid="3dd47abf-0345-4a85-b600-40d00e712c5f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getJenisFisik()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="252" width="513" height="20" uuid="e74e1667-05d4-4d79-b374-95191716675e"/>
+				<reportElement x="129" y="221" width="136" height="13" uuid="e74e1667-05d4-4d79-b374-95191716675e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getNamaTeknikLimbah()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="272" width="513" height="20" uuid="946e128e-c29e-4646-b096-196e44dfd5c4"/>
+				<reportElement x="278" y="221" width="112" height="13" uuid="946e128e-c29e-4646-b096-196e44dfd5c4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getKarakteristikLimbah()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="292" width="513" height="20" uuid="a2295543-4284-4fbd-9546-2dbc20bd3fe8"/>
+				<reportElement x="401" y="221" width="106" height="13" uuid="a2295543-4284-4fbd-9546-2dbc20bd3fe8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getJenisLimbah().getKodeJenis()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="390" width="513" height="20" uuid="e180bf4c-938e-498c-838d-0623b0bdd9de"/>
+				<reportElement x="199" y="341" width="191" height="15" uuid="e180bf4c-938e-498c-838d-0623b0bdd9de"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerTujuan().getNama()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="410" width="513" height="20" uuid="2a52da76-d620-424f-a3e6-f1b9502f199a"/>
+				<reportElement x="250" y="324" width="178" height="14" uuid="2a52da76-d620-424f-a3e6-f1b9502f199a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerTujuan().getNomorKontak()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="312" width="513" height="20" uuid="3254ead2-f21d-4d9b-a99a-5217da378532"/>
+				<reportElement x="20" y="256" width="120" height="13" uuid="3254ead2-f21d-4d9b-a99a-5217da378532"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getSatuanKemasan() + " "+$P{manifest}.getSatuanKemasan2() + " "+$P{manifest}.getSatuanKemasan3()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="332" width="513" height="20" uuid="0f354654-dd7e-48b7-8b2a-3b0d6c1228a8"/>
+				<reportElement x="163" y="256" width="102" height="13" uuid="0f354654-dd7e-48b7-8b2a-3b0d6c1228a8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getJmlBerat() + " "+$P{manifest}.getSatuanBerat()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="352" width="513" height="20" uuid="89f88b28-361f-4284-8ccb-a94e2a1cbf8c"/>
+				<reportElement x="307" y="256" width="133" height="13" uuid="89f88b28-361f-4284-8ccb-a94e2a1cbf8c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getJmlKemasan()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="177" y="179" width="12" height="14" uuid="f39f34b3-368a-4d39-bfd8-4275498566f5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="156" y="483" width="139" height="10" uuid="b5dab8f6-8ffb-49d7-a2e4-b0e008427683"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerTujuan().getNama()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="500" width="125" height="10" uuid="590a4cf6-4880-430d-8595-7e04773153a1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerTujuan().getNomorKontak()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="510" width="125" height="10" uuid="6f2cbef8-24aa-4991-bed7-d8e61f0e12ae"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerTujuan().getFax()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="536" width="120" height="14" uuid="2bce1062-f6b8-4d3e-a3e9-8e220a000dcb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$P{manifest}.getNamaDriver()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="457" y="526" width="120" height="14" uuid="45eaca92-1301-4600-8832-6d1addedfbea"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{manifest}.getTglAngkut()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="29" y="755" width="249" height="15" uuid="ce8f17d4-2a0f-4f6b-a5fb-c572c62b8ff6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerTujuan().getNama()]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

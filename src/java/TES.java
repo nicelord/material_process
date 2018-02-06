@@ -31,82 +31,82 @@ import org.apache.commons.mail.SimpleEmail;
 public class TES {
 
     public static void main(final String[] args) {
-//        AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent", "debug=1");
+        AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent", "debug=1");
 //
         TES t = new TES();
         t.runtest();
-//        User u = new User();
-//        u.setUsername("admin");
-//        u.setPassword("admin");
-//        u.setAkses("ADMINISTRATOR");
-//        u.setNama("Reza");
-//        Ebean.save(u);
-//        
-//        u = new User();
-//        u.setUsername("ak");
-//        u.setPassword("ak");
-//        u.setAkses("AKUNTING");
-//        u.setNama("ak");
-//        Ebean.save(u);
-//        
-//        u = new User();
-//        u.setUsername("ad");
-//        u.setPassword("ad");
-//        u.setAkses("ADMIN");
-//        u.setNama("ad");
-//        Ebean.save(u);
-//        
-//        u = new User();
-//        u.setUsername("p");
-//        u.setPassword("p");
-//        u.setAkses("PENERIMA");
-//        u.setNama("p");
-//        Ebean.save(u);
-//        
-//        u = new User();
-//        u.setUsername("g1");
-//        u.setPassword("g1");
-//        u.setAkses("GUDANG 1");
-//        u.setNama("g1");
-//        Ebean.save(u);
-//        
-//        Customer c = new Customer();
-//        c.setNama("PT. PHILIPS INDUSTRIES BATAM");
-//        c.setAlamat("Jl. Ahmad Yani PIE B1 Lot. 1-6, B2A Lot. 12-17, Muka Kuning - Batam");
-//        c.setNomorKontak("123123");
-//        c.setEmail("asdasd@adsad.com");
-//        c.setFax("123123");
-//        c.setNpwp("123-123-123");
-//        Ebean.save(c);
-//        
-//        c = new Customer();
-//        c.setNama("PT. PANASONIC INDUSTRIAL DEVICES BATAM");
-//        c.setAlamat("Jl. Ahmad Yani PIE B1 Lot. 1-6, B2A Lot. 12-17, Muka Kuning - Batam");
-//        c.setNomorKontak("123123");
-//        c.setEmail("asdasd@adsad.com");
-//        c.setFax("123123");
-//        c.setNpwp("123-123-123");
-//        Ebean.save(c);
-//        
-//        c = new Customer();
-//        c.setNama("PT. DESA AIR CARGO BATAM");
-//        c.setAlamat("Jl. Ahmad Yani PIE B1 Lot. 1-6, B2A Lot. 12-17, Muka Kuning - Batam");
-//        c.setNomorKontak("123123");
-//        c.setEmail("asdasd@adsad.com");
-//        c.setFax("123123");
-//        c.setNpwp("123-123-123");
-//        Ebean.save(c);
-//
-//        
-//        JenisLimbah j = new JenisLimbah();
-//        j.setKodeJenis("B1111");
-//        j.setKeterangan("TEST1");
-//        Ebean.save(j);
-//        
-//        j = new JenisLimbah();
-//        j.setKodeJenis("B2222");
-//        j.setKeterangan("TEST2");
-//        Ebean.save(j);
+        User u = new User();
+        u.setUsername("admin");
+        u.setPassword("admin");
+        u.setAkses("ADMINISTRATOR");
+        u.setNama("Reza");
+        Ebean.save(u);
+        
+        u = new User();
+        u.setUsername("ak");
+        u.setPassword("ak");
+        u.setAkses("AKUNTING");
+        u.setNama("ak");
+        Ebean.save(u);
+        
+        u = new User();
+        u.setUsername("ad");
+        u.setPassword("ad");
+        u.setAkses("ADMIN");
+        u.setNama("ad");
+        Ebean.save(u);
+        
+        u = new User();
+        u.setUsername("p");
+        u.setPassword("p");
+        u.setAkses("PENERIMA");
+        u.setNama("p");
+        Ebean.save(u);
+        
+        u = new User();
+        u.setUsername("g1");
+        u.setPassword("g1");
+        u.setAkses("GUDANG 1");
+        u.setNama("g1");
+        Ebean.save(u);
+        
+        Customer c = new Customer();
+        c.setNama("PT. PHILIPS INDUSTRIES BATAM");
+        c.setAlamat("Jl. Ahmad Yani PIE B1 Lot. 1-6, B2A Lot. 12-17, Muka Kuning - Batam");
+        c.setNomorKontak("123123");
+        c.setEmail("asdasd@adsad.com");
+        c.setFax("123123");
+        c.setNpwp("123-123-123");
+        Ebean.save(c);
+        
+        c = new Customer();
+        c.setNama("PT. PANASONIC INDUSTRIAL DEVICES BATAM");
+        c.setAlamat("Jl. Ahmad Yani PIE B1 Lot. 1-6, B2A Lot. 12-17, Muka Kuning - Batam");
+        c.setNomorKontak("123123");
+        c.setEmail("asdasd@adsad.com");
+        c.setFax("123123");
+        c.setNpwp("123-123-123");
+        Ebean.save(c);
+        
+        c = new Customer();
+        c.setNama("PT. DESA AIR CARGO BATAM");
+        c.setAlamat("Jl. Ahmad Yani PIE B1 Lot. 1-6, B2A Lot. 12-17, Muka Kuning - Batam");
+        c.setNomorKontak("123123");
+        c.setEmail("asdasd@adsad.com");
+        c.setFax("123123");
+        c.setNpwp("123-123-123");
+        Ebean.save(c);
+
+        
+        JenisLimbah j = new JenisLimbah();
+        j.setKodeJenis("B1111");
+        j.setKeterangan("TEST1");
+        Ebean.save(j);
+        
+        j = new JenisLimbah();
+        j.setKodeJenis("B2222");
+        j.setKeterangan("TEST2");
+        Ebean.save(j);
 
 //        List<ProsessLimbah> l = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", "GUDANG 1").orderBy("id desc").where().isNotNull("tglProses").findList();
 //        Map<String, Map<String, Long>> counting = l.stream().collect(
@@ -135,52 +135,52 @@ public class TES {
 
     public void runtest(){
 
-        try {
-            String msg = "<html>"
-                + "<head>"
-                + "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />"
-                + "<title>Untitled Document</title>"
-                + "<style type=\"text/css\">"
-                + "p {"
-                + "font-family: \"Courier New\", Courier, monospace;"
-                + "font-size: 12px;"
-                + "}"
-                + "</style>"
-                + "</head>"
-                + "<p>Yth, </p>"
-                + "<p>Berikut kami informasikan customer/outlet baru ditambahkan dalam daftar giro tolak;</p> "
-                + "<br/>"
-                + "<p><pre>"
-                + "<pre>"
-                + "</p>"
-                + "<br/>"
-                + "<br/>"
-                + "<br/>"
-                + "<p>Outlet akan di hold sementara oleh bagian Data Proses, selama di hold outlet tidak bisa melakukan order</p>"
-                + "<br/>"
-                + "<br/>"
-                + "<p><i>Note : "
-                + "<br>"
-                + "Info giro  <br/>"
-                + "Ini adalah email otomatis, mohon tidak membalas email ini !</i></p>"
-                + "</html>";
-            
-            
-            HtmlEmail mail = new HtmlEmail();
-            mail.setHostName("smtp.gmail.com");
-            mail.setSmtpPort(587);
-            mail.setSSLOnConnect(true);
-            mail.setAuthenticator((Authenticator) new DefaultAuthenticator(Util.setting("gmail_account"), Util.setting("gmail_password")));
-            mail.setFrom(Util.setting("gmail_account"));
-            mail.setSubject("TestMail");
-            mail.setMsg("This is a test mail ... :-)");
-            mail.addTo("reja.mail@gmail.com");
-            mail.setSubject("NEW MANIFEST");
-            mail.setHtmlMsg(msg);
-            mail.send();
-        } catch (EmailException emailException) {
-            emailException.printStackTrace();
-        }
+//        try {
+//            String msg = "<html>"
+//                + "<head>"
+//                + "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />"
+//                + "<title>Untitled Document</title>"
+//                + "<style type=\"text/css\">"
+//                + "p {"
+//                + "font-family: \"Courier New\", Courier, monospace;"
+//                + "font-size: 12px;"
+//                + "}"
+//                + "</style>"
+//                + "</head>"
+//                + "<p>Yth, </p>"
+//                + "<p>Berikut kami informasikan customer/outlet baru ditambahkan dalam daftar giro tolak;</p> "
+//                + "<br/>"
+//                + "<p><pre>"
+//                + "<pre>"
+//                + "</p>"
+//                + "<br/>"
+//                + "<br/>"
+//                + "<br/>"
+//                + "<p>Outlet akan di hold sementara oleh bagian Data Proses, selama di hold outlet tidak bisa melakukan order</p>"
+//                + "<br/>"
+//                + "<br/>"
+//                + "<p><i>Note : "
+//                + "<br>"
+//                + "Info giro  <br/>"
+//                + "Ini adalah email otomatis, mohon tidak membalas email ini !</i></p>"
+//                + "</html>";
+//            
+//            
+//            HtmlEmail mail = new HtmlEmail();
+//            mail.setHostName("smtp.gmail.com");
+//            mail.setSmtpPort(587);
+//            mail.setSSLOnConnect(true);
+//            mail.setAuthenticator((Authenticator) new DefaultAuthenticator(Util.setting("gmail_account"), Util.setting("gmail_password")));
+//            mail.setFrom(Util.setting("gmail_account"));
+//            mail.setSubject("TestMail");
+//            mail.setMsg("This is a test mail ... :-)");
+//            mail.addTo("reja.mail@gmail.com");
+//            mail.setSubject("NEW MANIFEST");
+//            mail.setHtmlMsg(msg);
+//            mail.send();
+//        } catch (EmailException emailException) {
+//            emailException.printStackTrace();
+//        }
 //        File filenya = new File(Util.setting("pdf_path") + "invoice.pdf");
 //        System.out.println(filenya.delete());
 //        List<Penerimaan> listPenerimaan = Ebean.find(Penerimaan.class)

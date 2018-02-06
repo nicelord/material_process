@@ -45,8 +45,8 @@
         <borderlayout>
             <center>
                 <listbox id="list_manifest" mold="paging" width="100%" vflex="true" autopaging="true" 
-                         checkmark="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR' || sessionScope.userCredential.getRoles()=='ADMIN'}" 
-                         multiple="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR' || sessionScope.userCredential.getRoles()=='ADMIN'}" 
+                         checkmark="false" 
+                         multiple="false" 
                          selectedItems="@bind(vm.selectedManifests)"
                          emptyMessage="Tidak ada data"
                          model="@load(vm.listManifest)">   
@@ -193,7 +193,7 @@
                         <listfooter span="6" valign="middle">
                             <div style="float:left;">
                                 
-                                Total item :
+                                Total item : <label value="@load(vm.listManifest.size())"/>
                             </div>
                             <div style="float:right;">
                                 
@@ -210,48 +210,6 @@
                         <grid hflex="3" vflex="3" oddRowSclass="none">
                             <custom-attributes org.zkoss.zul.nativebar="true"/> 
                             <rows>   
-<!--                                <row if="${sessionScope.userCredential.getRoles()!='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
-                                    <panel title="Approval akunting" sclass="panel-success">
-                                        <panelchildren >
-                                            <vlayout>
-                                                <hlayout width="100%">
-                                                    <div class="input-group" hflex="3">
-                                                        <span class="input-group-addon">
-                                                            Status.
-                                                        </span>
-                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.statusApproval)"/>
-                                                    </div> 
-                                    
-                                                    <div class="input-group" hflex="3">
-                                                        <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-calendar"></span> 
-                                                        </span>
-                                                        <datebox cols="12" 
-                                                                format="dd-MM-yyyy"
-                                                                readonly="true"
-                                                                style="height:32px;"
-                                                                hflex="3"
-                                                                buttonVisible="false"
-                                                                value="@load(vm.selectedManifest.tglApprove)"/>
-                                                    </div> 
-                                                    <div class="input-group" hflex="3">
-                                                        <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-user"></span> 
-                                                        </span>
-                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.userAkunting.nama)"/>
-                                                    </div> 
-                                                </hlayout>
-                                                <div class="input-group" hflex="3">
-                                                    <span class="input-group-addon">
-                                                        Note Akunting.
-                                                    </span>
-                                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.ketApprovalAkunting)"/>
-                                                </div>                                     
-                                            </vlayout>
-                                        </panelchildren>
-                                    </panel>
-                                    
-                                </row>-->
                                                          
                                 <row>
                                     <panel title="Data manifest" sclass="panel-primary">
@@ -535,7 +493,10 @@
                                         <button onClick="@command('revisiManifest', manifest=vm.selectedManifest)" hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-edit" label="REVISI" 
                                                 disabled="@load(vm.selectedManifest eq null)"
                                                 if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
-                                        <button onClick="@command('cetakManifest')" hflex="3" sclass="" iconSclass="glyphicon glyphicon-print" label="CETAK DOKUMEN MANIFEST" 
+                                        <button onClick="@command('cetakManifest')" hflex="3" sclass="" iconSclass="glyphicon glyphicon-print" label="CETAK" 
+                                                disabled="@load(vm.selectedManifest eq null)"
+                                                if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                        <button onClick="@command('deleteManifest')" hflex="3" sclass="btn-danger" iconSclass="glyphicon glyphicon-trash" label="HAPUS" 
                                                 disabled="@load(vm.selectedManifest eq null)"
                                                 if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                                         <button onClick="@command('showWinPenerimaan')" hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-saved" label="TERIMA LIMBAH" 

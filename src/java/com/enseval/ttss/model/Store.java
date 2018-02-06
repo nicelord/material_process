@@ -5,6 +5,7 @@
  */
 package com.enseval.ttss.model;
 
+import com.avaje.ebean.Ebean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+import org.zkoss.bind.annotation.Command;
 
 /**
  *
@@ -48,6 +50,15 @@ public class Store implements Serializable {
     
     @Transient
     List<Integer> listBanyak = new ArrayList<>();
+    
+    @Command
+    public int getIndexPengirimanByStore(){
+        List<Pengiriman> lp = Ebean.find(Pengiriman.class).where().in("listStore", this.getOutboundItem().getStores()).findList();
+        if(lp.size()>1){
+            return lp.indexOf(this.getPengiriman())+1;
+        }
+        return 0;
+    }
 
     public Long getId() {
         return id;

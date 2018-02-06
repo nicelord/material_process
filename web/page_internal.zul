@@ -43,7 +43,7 @@
             viewModel="@id('vm') @init('com.enseval.ttss.vm.PageInternalVM')">
         <borderlayout>
             <center>
-                <listbox id="list_invoice" 
+                <listbox id="list_limbah" 
                          mold="paging" width="100%" vflex="true" autopaging="true"  
                          multiple="true"
                          checkmark="true"
@@ -248,8 +248,7 @@
                             <div style="float:left;">
                                 
                                 <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 
-                                        sclass="btn-primary"
-                                        if="${sessionScope.userCredential.getRoles()=='REPORTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                        sclass="btn-primary">
                                 </button>
                             </div>
                             <div style="float:right;">
