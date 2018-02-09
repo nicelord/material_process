@@ -72,23 +72,44 @@
         <separator />
         
         <listbox id="list_penerimaan" mold="paging" width="100%" vflex="true" 
-                 pageSize="5"
+                 pageSize="10"
                  emptyMessage="Tidak ada data"
                  model="@load(vm.listStore)">     
             
             <custom-attributes org.zkoss.zul.nativebar="true"/>     
                         
             <listhead sizable="true" visible="true" >
-                <listheader label="MANIFEST" />
+                <listheader label="KODE" />
+                <listheader label="PERUSAHAAN" />
                 <listheader sort="auto(namaItem)" label="NAMA ITEM" />
                 <listheader sort="auto(satuanKemasan)" label="KEMASAN" />
                 <listheader sort="auto(jmlKemasan)" label="BANYAK" />
                 <listheader />
             </listhead>
+            
+            <auxhead>
+                <auxheader>
+                    <textbox instant="true" value="@bind(vm.filterKode)" hflex="3" onChange="@command('saring')"/>
+                </auxheader>
+                <auxheader>
+                    <textbox instant="true" value="@bind(vm.filterPerusahaan)" hflex="3" onChange="@command('saring')"/>
+                </auxheader>
+                <auxheader>
+                    <textbox instant="true" value="@bind(vm.filterItem)" hflex="3" onChange="@command('saring')"/>
+                </auxheader>
+                <auxheader>
+                    <textbox instant="true" value="@bind(vm.filterSatuan)" hflex="3" onChange="@command('saring')"/>
+                </auxheader>
+                <auxheader>
+                </auxheader>
+                <auxheader>
+                </auxheader>
+            </auxhead>
                 
             <template name="model" var="s">
                 <listitem sclass="mainList">
                     <listcell label="@load(s.outboundItem.penerimaan ne null ? s.outboundItem.penerimaan.manifest.kodeManifest : s.outboundItem.residu.residuId)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(s.outboundItem.penerimaan ne null ? s.outboundItem.penerimaan.manifest.customerPenghasil.nama : s.outboundItem.residu.namaPerusahaan)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell label="@load(s.outboundItem.namaItem)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell label="@load(s.satuanKemasan)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell>

@@ -44,23 +44,21 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Filedownload;
 
-public class PageInProcessVM {
+public class PageLimbahKeluarSortirVM {
 
     User userLogin;
 
     List<ProsessLimbah> listProsesLimbah = new ArrayList<>();
 
     String filterManifest = "", filterNamaLimbah = "", filterGudangTujuan = "", filterUserPenerima = "";
-    Date tglTerimaAwal, tglTerimaAkhir, tglProsesAwal, tglProsesAkhir;
+    Date tglTerimaAwal, tglTerimaAkhir, tglKirimAwal, tglKirimAkhir;
 
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
-            this.listProsesLimbah = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", userLogin.getAkses()).orderBy("id desc").where().isNotNull("tglProses").findList();
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
-            this.listProsesLimbah = Ebean.find(ProsessLimbah.class).where().isNotNull("tglProses").orderBy("id desc").findList();
-        }
+        this.listProsesLimbah = Ebean.find(ProsessLimbah.class).where()
+                .eq("gudangPengirim", "SORTIR")
+                .orderBy("id desc").where().isNotNull("tglProses").findList();
 
     }
 
@@ -88,52 +86,29 @@ public class PageInProcessVM {
 
         this.tglTerimaAwal = null;
         this.tglTerimaAkhir = null;
-        this.tglProsesAwal = null;
-        this.tglProsesAkhir = null;
+        this.tglKirimAwal = null;
+        this.tglKirimAkhir = null;
 
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
-            this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
-                    .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
-                    .contains("namaLimbah", filterNamaLimbah)
-                    .eq("gudangTujuan", userLogin.getAkses())
-                    .isNotNull("tglProses")
-                    .orderBy("id desc").findList();
-
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
-            this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
-                    .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
-                    .contains("namaLimbah", filterNamaLimbah)
-                    .contains("gudangTujuan", filterGudangTujuan)
-                    .or(Expr.contains("userPenerima.nama", filterUserPenerima), Expr.isNull("userPenerima.nama"))
-                    .ne("gudangTujuan", "EXTERNAL")
-                    .isNotNull("tglProses")
-                    .orderBy("id desc").findList();
-        }
+        this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
+                .where()
+                .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                .contains("namaLimbah", filterNamaLimbah)
+                .contains("gudangTujuan", filterGudangTujuan)
+                .or(Expr.contains("userPenerima.nama", filterUserPenerima), Expr.isNull("userPenerima.nama"))
+                .ne("gudangTujuan", "EXTERNAL")
+                .isNotNull("tglProses")
+                .eq("gudangPengirim", "SORTIR")
+                .orderBy("id desc").findList();
 
     }
 
     @Command
     @NotifyChange({"*"})
     public void saringTglTerima() {
-        this.tglProsesAwal = null;
-        this.tglProsesAkhir = null;
+        this.tglKirimAwal = null;
+        this.tglKirimAkhir = null;
 
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
-
-            this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
-                    .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
-                    .contains("namaLimbah", filterNamaLimbah)
-                    .eq("gudangTujuan", userLogin.getAkses())
-                    .between("tglTerima",
-                            Date.from(this.tglTerimaAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                            Date.from(this.tglTerimaAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
-                    .orderBy("id desc").findList();
-
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
-            this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
+        this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
                     .contains("penerimaan.manifest.kodeManifest", filterManifest)
                     .contains("namaLimbah", filterNamaLimbah)
@@ -143,41 +118,28 @@ public class PageInProcessVM {
                     .between("tglTerima",
                             Date.from(this.tglTerimaAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                             Date.from(this.tglTerimaAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                    .eq("gudangPengirim", "SORTIR")
                     .orderBy("id desc").findList();
-        }
     }
 
     @Command
     @NotifyChange({"*"})
-    public void saringTglProses() {
+    public void saringTglKirim() {
         this.tglTerimaAwal = null;
         this.tglTerimaAkhir = null;
 
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
-
-            this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
-                    .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
-                    .contains("namaLimbah", filterNamaLimbah)
-                    .eq("gudangTujuan", userLogin.getAkses())
-                    .between("tglProses",
-                            Date.from(this.tglProsesAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                            Date.from(this.tglProsesAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
-                    .orderBy("id desc").findList();
-
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
-            this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
+        this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
                     .contains("penerimaan.manifest.kodeManifest", filterManifest)
                     .contains("namaLimbah", filterNamaLimbah)
                     .contains("gudangTujuan", filterGudangTujuan)
                     .or(Expr.contains("userPenerima.nama", filterUserPenerima), Expr.isNull("userPenerima.nama"))
                     .ne("gudangTujuan", "EXTERNAL")
-                    .between("tglProses",
-                            Date.from(this.tglProsesAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                            Date.from(this.tglProsesAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                    .between("tglKirim",
+                            Date.from(this.tglKirimAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                            Date.from(this.tglKirimAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                    .eq("gudangPengirim", "SORTIR")        
                     .orderBy("id desc").findList();
-        }
     }
 
     @Command
@@ -295,20 +257,20 @@ public class PageInProcessVM {
         this.tglTerimaAkhir = tglTerimaAkhir;
     }
 
-    public Date getTglProsesAwal() {
-        return tglProsesAwal;
+    public Date getTglKirimAwal() {
+        return tglKirimAwal;
     }
 
-    public void setTglProsesAwal(Date tglProsesAwal) {
-        this.tglProsesAwal = tglProsesAwal;
+    public void setTglKirimAwal(Date tglKirimAwal) {
+        this.tglKirimAwal = tglKirimAwal;
     }
 
-    public Date getTglProsesAkhir() {
-        return tglProsesAkhir;
+    public Date getTglKirimAkhir() {
+        return tglKirimAkhir;
     }
 
-    public void setTglProsesAkhir(Date tglProsesAkhir) {
-        this.tglProsesAkhir = tglProsesAkhir;
+    public void setTglKirimAkhir(Date tglKirimAkhir) {
+        this.tglKirimAkhir = tglKirimAkhir;
     }
 
 }

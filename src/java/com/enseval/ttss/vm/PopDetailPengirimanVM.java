@@ -78,6 +78,7 @@ public class PopDetailPengirimanVM {
         Selectors.wireComponents(view, (Object) this, false);
     }
 
+
     public void groupByOutbound() {
         this.listOutboundItem = new ArrayList<>();
 
@@ -100,9 +101,9 @@ public class PopDetailPengirimanVM {
             for (Map.Entry<Integer, List<Store>> entry1 : value.entrySet()) {
                 Integer key1 = entry1.getKey();
                 List<Store> value1 = entry1.getValue();
-
+                
                 if (key1.equals(1)) {
-                    for (Store store : value1) {
+                    for (Store store : value1) {                        
                         out.setSatuanKemasan(store.getSatuanKemasan());
                         out.setJmlKemasan(out.getJmlKemasan() + store.getJmlKemasan());
                         out.setJmlBerat(out.getJmlBerat() + store.getJmlBerat());
@@ -195,7 +196,6 @@ public class PopDetailPengirimanVM {
 //            exporterXLS.exportReport();
 //            streamReport.close();
 //            outputStream.close();
-
             FileInputStream inputStream = new FileInputStream(filenya);
             Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
 
@@ -208,12 +208,12 @@ public class PopDetailPengirimanVM {
         }
 
     }
-    
+
     @Command
-    public int getIndexPengirimanByStore(Store s, Pengiriman p){
+    public int getIndexPengirimanByStore(Store s, Pengiriman p) {
         List<Pengiriman> lp = Ebean.find(Pengiriman.class).where().in("listStore", s.getOutboundItem().getStores()).findList();
-        if(lp.size()>1){
-            return lp.indexOf(p)+1;
+        if (lp.size() > 1) {
+            return lp.indexOf(p) + 1;
         }
         return 0;
     }

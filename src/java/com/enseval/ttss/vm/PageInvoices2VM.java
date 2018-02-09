@@ -181,11 +181,11 @@ public class PageInvoices2VM {
             }
         }
 
-        File filenya = new File(Util.setting("pdf_path") + "invoice.pdf");
+        File filenya = new File(Util.setting("pdf_path") + "invoice2.pdf");
         filenya.delete();
 
         try {
-            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/invoice.pdf.jasper");
+            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/invoice2.pdf.jasper");
             JRDataSource datasource = new JRBeanCollectionDataSource(invoicex.getListInvoiceItem2());
             JRDataSource beanColDataSource = new JRBeanCollectionDataSource(invoicex.getListInvoiceItem2());
 

@@ -50,6 +50,31 @@
                          emptyMessage="Tidak ada data"
                          model="@load(vm.listOutboundItem)">   
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
+                    
+                    <auxhead>
+                        <auxheader colspan="7">
+                            <hlayout>
+                                
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        FILTER INTERNAL / EXTERNAL : 
+                                    </span>
+                                    <combobox readonly="true" 
+                                              hflex="3"
+                                              style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              value="@bind(vm.filterIntExt)">
+                                        <comboitem label="SEMUA"/>
+                                        <comboitem label="INTERNAL"/>
+                                        <comboitem label="EXTERNAL"/>
+                                    </combobox>
+                                </div>
+
+                                <button vflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-filter" label="TAMPILKAN" onClick="@command('saring')" />
+                        
+                            </hlayout>
+                        </auxheader>
+                    </auxhead>
                 
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />

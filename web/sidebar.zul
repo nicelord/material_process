@@ -82,6 +82,14 @@
                             <listcell label="LIMBAH DI PROSES"/>
                         </listitem>
                         
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='SORTIR'}"
+                           
+                                  onClick="@command('changePage', page='page_limbah_keluar_sortir.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="LIMBAH KELUAR"/>
+                        </listitem>
+                        
 <!--                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')||
                                         sessionScope.userCredential.getRoles()=='SORTIR'||
@@ -118,7 +126,7 @@
                            
                                   onClick="@command('changePage', page='page_outbound.zul')">
                             <listcell iconSclass="glyphicon glyphicon-list-alt"/>
-                            <listcell label="EXTERNAL"/>
+                            <listcell label="TPS INTERNAL / EXTERNAL"/>
                         </listitem>
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
@@ -176,7 +184,7 @@
                            
                                   onClick="@command('changePage', page='page_r_outbound.zul')">
                             <listcell iconSclass="glyphicon glyphicon-list-alt"/>
-                            <listcell label="REPORT EXTERNAL"/>
+                            <listcell label="REPORT TPS INT/EXT"/>
                         </listitem>
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 

@@ -25,7 +25,7 @@
 
 
     <window 
-        id="pop_buat_invoice"  
+        id="pop_view_invoice"  
         style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
         position="center,top"  
         mode="modal" 
@@ -33,7 +33,7 @@
         title="FORM INVOICE" 
         border="normal" 
         apply="org.zkoss.bind.BindComposer" 
-        viewModel="@id('vm') @init('com.enseval.ttss.vm.PopBuatInvoice2VM')" 
+        viewModel="@id('vm') @init('com.enseval.ttss.vm.PopViewInvoice2VM')" 
         closable="true">
         <vlayout>
             <hlayout>
@@ -41,7 +41,7 @@
                     <span class="input-group-addon">
                         Nomor invoice.
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.invoice2.nomorInvoice)"/>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.invoice2.nomorInvoice)"/>
                 </div>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
@@ -53,7 +53,7 @@
                              style="height:32px;"
                              hflex="3"
                              buttonVisible="false"
-                             value="@bind(vm.invoice2.tglInvoice)"/>
+                             value="@load(vm.invoice2.tglInvoice)"/>
                 </div> 
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
@@ -67,22 +67,13 @@
                     <span class="input-group-addon">
                         Nmr Izin.
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.invoice2.sial)"/>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.invoice2.sial)"/>
                 </div>   
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Nmr. Kendaraan.
                     </span>
-                    <combobox model="@load(vm.listNmrKendaraan)" 
-                              hflex="3"
-                              height="100%"
-                              value="@save(vm.invoice2.nmrKendaraan)" 
-                              style="width:100%;height:100%" 
-                              class="input-primary">
-                        <template name="model">
-                            <comboitem label="@load(each.nmrKendaraan)"/>
-                        </template>
-                    </combobox>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.invoice2.nmrKendaraan)"/>
                 </div>   
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
@@ -93,22 +84,13 @@
                              style="height:32px;"
                              hflex="3"
                              readonly="true"
-                             value="@bind(vm.invoice2.tglAngkut)"/>
+                             value="@load(vm.invoice2.tglAngkut)"/>
                 </div>  
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Payment terms.
                     </span>
-                    <combobox model="@load(vm.listTerm)" 
-                              hflex="3"
-                              height="100%"
-                              value="@bind(vm.invoice2.term)" 
-                              style="width:100%;height:100%" 
-                              class="input-primary">
-                        <template name="model">
-                            <comboitem label="@load(each.term)"/>
-                        </template>
-                    </combobox>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.invoice2.term)"/>
                 </div>     
             </hlayout>
             <hlayout>
@@ -116,19 +98,19 @@
                     <span class="input-group-addon">
                         PO No.
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.invoice2.nomorPo)"/>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.invoice2.nomorPo)"/>
                 </div> 
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         DO No.
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.invoice2.nomorDo)"/>
+                    <textbox readonly="true" class="form-control input-primary" value="@bind(vm.invoice2.nomorDo)"/>
                 </div> 
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         SPK/WO
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.invoice2.nomorSpkWo)"/>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.invoice2.nomorSpkWo)"/>
                 </div> 
             </hlayout>
             <separator spacing="20px" bar="true"/>        
@@ -137,9 +119,6 @@
                     Tujuan penagihan.
                 </span>
                 <textbox sclass="form-control input-primary" hflex="3" placeholder="Nama Customer" readonly="true" value="@load(vm.invoice2.customer.nama)"/>
-                <span class="input-group-btn">
-                    <button iconSclass="glyphicon glyphicon-search" sclass="btn-primary"  width="50px" onClick="@command('showCustomer', isPengirim=true)"/>
-                </span>
             </div>
             <div class="input-group" hflex="3" width="100%">
                 <span class="input-group-addon">
@@ -178,31 +157,13 @@
                     <span class="input-group-addon">
                         Attn.
                     </span>
-                    <combobox model="@load(vm.listCcPerson)" 
-                              hflex="3"
-                              height="100%"
-                              value="@save(vm.invoice2.ccPerson)" 
-                              style="width:100%;height:100%" 
-                              class="input-primary">
-                        <template name="model">
-                            <comboitem label="@load(each.ccPerson)"/>
-                        </template>
-                    </combobox>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.invoice2.ccPerson)"/>
                 </div>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Cc Dept.
                     </span>
-                    <combobox model="@load(vm.listCcDept)" 
-                              hflex="3"
-                              height="100%"
-                              value="@save(vm.invoice2.ccDept)" 
-                              style="width:100%;height:100%" 
-                              class="input-primary">
-                        <template name="model">
-                            <comboitem label="@load(each.ccDept)"/>
-                        </template>
-                    </combobox>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.invoice2.ccDept)"/>
                 </div>
             
             </hlayout>
@@ -212,74 +173,34 @@
                      
                  pageSize="5"
                  emptyMessage="Tidak ada data"
-                 model="@load(vm.listInvoiceItem2)">        
-                                             
+                 model="@load(vm.invoice2.listInvoiceItem2)">        
             
-            <auxhead>
-                <auxheader colspan="1">
-                    <button vflex="3" hflex="3" 
-                            onClick="@command('addTransportItem')"
-                            sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-plus" 
-                            label="TAMBAH ITEM" />
-                </auxheader>
-                <auxheader colspan="5">
-                    <div style="float:right;">
-                        Currency :
-                    
-                        <div class="btn-group">
-                            <button sclass="@load(vm.invoice2.currency eq 'IDR' ? 'btn-info':'')" onClick="@command('currencyIDR')">IDR</button>
-                            <button sclass="@load(vm.invoice2.currency eq 'SGD' ? 'btn-info':'')" onClick="@command('currencySGD')">SGD</button>
-                            <button sclass="@load(vm.invoice2.currency eq 'USD' ? 'btn-info':'')" onClick="@command('currencyUSD')">USD</button>
-                        </div>
-                    </div>
-                </auxheader>
-            </auxhead>
-            
-                        
             <listhead sizable="true" visible="true" >
                 <listheader label="MANIFEST" />
                 <listheader label="ITEM" width="200px"/>
                 <listheader label="BANYAK" />
                 <listheader label="HARGA SATUAN" width="150px"/>
                 <listheader label="JML HARGA" width="150px"/>
-                <listheader label="HAPUS" width="50px"/>
             </listhead>
                 
             <template name="model" var="s">
                 <listitem sclass="mainList">
+                    <listcell label="@load(s.kodeManifest)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell 
-                        style="text-overflow: ellipsis; white-space: nowrap;">
-                        <textbox class="form-control input-primary" value="@bind(s.kodeManifest)"/>
-                    </listcell>
-                    <listcell 
-                        style="text-overflow: ellipsis; white-space: nowrap;">
-                        <textbox class="form-control input-primary" value="@bind(s.itemDetail)"/>
-                    </listcell>
-                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                        <hlayout>
-                        <textbox hflex="2" class="form-control input-primary" value="@bind(s.jmlKemasan)"/>
-                        <textbox hflex="5" class="form-control input-primary" value="@bind(s.satuanKemasan)"/>
-                        </hlayout>
-                    </listcell>
-                     <listcell>
+                        label="@load(s.itemDetail)"
+                        style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell>
                         <div class="input-group" hflex="3">
                             <span class="input-group-addon"><label value="@load(vm.invoice2.currency)"/></span>
-                            <longbox class="form-control input-primary" maxlength="20" format=",###.#" constraint="no empty,no negative" value="@bind(s.hargaSatuan)" onBlur="@command('doCount')"/>
-                            <!--<span class="input-group-addon">,00</span>-->
+                            <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" constraint="no empty,no negative" value="@load(s.hargaSatuan)"/>
                         </div>
                     </listcell>
                     <listcell>
                         <div class="input-group" hflex="3">
                             <span class="input-group-addon"><label value="@load(vm.invoice2.currency)"/></span>
-                            <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" value="@bind(s.hargaSatuan*s.jmlKemasan)"/>
-                            <!--<span class="input-group-addon">,00</span>-->
+                            <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" value="@load(s.hargaSatuan*s.jmlKemasan)"/>
                         </div>
-                    </listcell>
-                    <listcell>
-                        <button vflex="3" hflex="3" 
-                                sclass="btn-danger btn-xs"
-                                iconSclass="glyphicon glyphicon-remove"
-                                onClick="@command('hapusItem',item2=s)" />
                     </listcell>
                 </listitem>
             </template>
@@ -287,11 +208,11 @@
             
             
             <listfoot>
-                <listfooter span="3" valign="middle">
+                <listfooter span="4" valign="middle">
                     <div style="float:right">
                         <div class="input-group" width="150px">
                             <span class="input-group-addon">Tax</span>
-                            <intbox class="form-control input-primary" maxlength="3" value="@bind(vm.invoice2.tax)" onBlur="@command('doCount')"/>
+                            <intbox readonly="true" class="form-control input-primary" maxlength="3" value="@load(vm.invoice2.tax)"/>
                             <span class="input-group-addon">%</span>
                         </div>
                     </div>
@@ -306,7 +227,7 @@
                     <div class="input-group" hflex="3">
                         <span class="input-group-addon"><label value="@load(vm.invoice2.currency)"/></span>
                         <longbox readonly="true" 
-                                 value="@bind(vm.totalHarga)"
+                                 value="@load(vm.invoice2.getTotalNilai())"
                                  class="form-control input-primary" 
                                  maxlength="20" format=",###.#"/>
                         <span class="input-group-addon">,00</span>
@@ -320,14 +241,12 @@
                 <span class="input-group-addon">
                     Keterangan tambahan.
                 </span>
-                <textbox class="form-control input-primary" value="@save(vm.invoice2.keterangan)"/>
+                <textbox readonly="true" class="form-control input-primary" value="@bind(vm.invoice2.keterangan)"/>
             </div> 
         </hlayout>
         <separator spacing="20px" bar="true"/>
         <div class="btn-group" style="float:right;">
-            <button onClick="@command('simpanInvoice')" sclass="btn-success" iconSclass="glyphicon glyphicon-floppy-disk" label="OK">
-            </button>
-            <button onClick="pop_buat_invoice.detach()">BATAL</button>
+            <button onClick="pop_view_invoice.detach()">TUTUP</button>
         </div>
     </window>
 </zk>

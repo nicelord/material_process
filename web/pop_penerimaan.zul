@@ -46,22 +46,40 @@
                                              buttonVisible="false"
                                              value="@load(vm.manifest.tglBuat)"/>
                                 </div> 
+                                
+                                
                             </hlayout>
-                            <div class="input-group" hflex="3">
-                                <span class="input-group-addon" >
-                                    Driver.
-                                </span>
-                                <combobox model="@load(vm.listDriver)" 
-                                          hflex="3"
-                                          height="100%"
-                                          value="@bind(vm.manifest.namaDriver)" 
-                                          style="width:100%;height:100%" 
-                                          class="input-primary">
-                                    <template name="model">
-                                        <comboitem label="@load(each.namaDriver)"/>
-                                    </template>
-                                </combobox>
-                            </div>
+                            <hlayout>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        Tgl Terima
+                                    </span>
+                                    <datebox cols="12" 
+                                             format="dd-MM-yyyy"
+                                             readonly="true"
+                                             style="height:30px;"
+                                             hflex="3"
+                                             buttonVisible="true"
+                                             value="@bind(vm.manifest.penerimaan.tglPenerimaan)"/>
+                                </div> 
+                                
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Driver.
+                                    </span>
+                                    <combobox model="@load(vm.listDriver)" 
+                                              hflex="3"
+                                              height="100%"
+                                              value="@bind(vm.manifest.namaDriver)" 
+                                              style="width:100%;height:100%" 
+                                              class="input-primary">
+                                        <template name="model">
+                                            <comboitem label="@load(each.namaDriver)"/>
+                                        </template>
+                                    </combobox>
+                                </div>
+                            </hlayout>
+                            
                                 
                             <hlayout width="100%">
                                     

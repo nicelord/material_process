@@ -40,7 +40,7 @@
     <window id="page_internal" 
             title="LIMBAH SEDANG DALAM PROSES" 
             vflex="3" apply="org.zkoss.bind.BindComposer"  
-            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageInProcessVM')">
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PageLimbahKeluarSortirVM')">
         <borderlayout>
             <center>
                 <listbox id="list_invoice" 
@@ -58,17 +58,13 @@
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
                         <listheader sort="auto(penerimaan.manifest.kodeManifest)" label="NO. MANIFEST" />
-                        <listheader sort="auto(tglTerima)" label="TGL TERIMA" />
+                        <listheader sort="auto(tglTerima)" label="TGL KIRIM" />
                         <listheader sort="auto(namaLimbah)" label="NAMA LIMBAH" width="200px" />
                         <listheader sort="auto(jmlKemasan)" label="BANYAK" />
                         <listheader sort="auto(jmlBerat)" label="BERAT" />
-                        <listheader sort="auto(gudangTujuan)" label="GUDANG" 
-                                    if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
-                                    sessionScope.userCredential.getRoles()=='REPORTING'}"/>
-                        <listheader sort="auto(userPenerima.nama)" label="USER PENERIMA"
-                                        if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
-                                    sessionScope.userCredential.getRoles()=='REPORTING'}"/>
-                        <listheader sort="auto(tglProses)" label="TGL PROSES"/>
+                        <listheader sort="auto(gudangTujuan)" label="GUDANG TUJUAN" />
+                        <listheader sort="auto(userPenerima.nama)" label="USER PENERIMA"/>
+                        <listheader sort="auto(tglProses)" label="TGL TERIMA"/>
                     </listhead>
                     
                     <auxhead>
@@ -83,11 +79,11 @@
                             <popup id="popupTimeChooser" width="200px" style="word-wrap">
                                 <vlayout>
                                     <label value="Dari :" />
-                                    <datebox id="startDate" value="@bind(vm.tglTerimaAwal)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <datebox id="startDate" value="@bind(vm.tglKirimAwal)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
                                     <label value="Sampai :" />
-                                    <datebox id="endDate" value="@bind(vm.tglTerimaAkhir)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <datebox id="endDate" value="@bind(vm.tglKirimAkhir)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
                                     <div class="btn-group" hflex="3">
-                                        <button label="TAMPILKAN" onClick="@command('saringTglTerima')" sclass="btn-info btn-xs" hflex="3" />
+                                        <button label="TAMPILKAN" onClick="@command('saringTglKirim')" sclass="btn-info btn-xs" hflex="3" />
                                         <button label="RESET" onClick="@command('saring')" sclass="btn-default btn-xs" hflex="3" >
                                             <attribute name="onClick">
                                                 startDate.setText("");
@@ -105,12 +101,10 @@
                         </auxheader>
                         <auxheader>
                         </auxheader>
-                        <auxheader if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
-                                    sessionScope.userCredential.getRoles()=='REPORTING'}">
+                        <auxheader >
                             <textbox instant="true" value="@bind(vm.filterGudangTujuan)" hflex="3" onChange="@command('saring')"/>
                         </auxheader>
-                        <auxheader if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
-                                    sessionScope.userCredential.getRoles()=='REPORTING'}">
+                        <auxheader>
                             <textbox instant="true" value="@bind(vm.filterUserPenerima)" hflex="3" onChange="@command('saring')"/>
                         </auxheader>
                         <auxheader>
@@ -119,11 +113,11 @@
                             <popup id="popupTimeChooser2" width="200px" style="word-wrap">
                                 <vlayout>
                                     <label value="Dari :" />
-                                    <datebox id="startDate2" value="@bind(vm.tglProsesAwal)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <datebox id="startDate2" value="@bind(vm.tglTerimaAwal)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
                                     <label value="Sampai :" />
-                                    <datebox id="endDate2" value="@bind(vm.tglProsesAkhir)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <datebox id="endDate2" value="@bind(vm.tglTerimaAkhir)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
                                     <div class="btn-group" hflex="3">
-                                        <button label="TAMPILKAN" onClick="@command('saringTglProses')" sclass="btn-info btn-xs" hflex="3" />
+                                        <button label="TAMPILKAN" onClick="@command('saringTglTerima')" sclass="btn-info btn-xs" hflex="3" />
                                         <button label="RESET" onClick="@command('saring')" sclass="btn-default btn-xs" hflex="3" >
                                             <attribute name="onClick">
                                                 startDate2.setText("");
@@ -133,10 +127,6 @@
                                     </div>
                                 </vlayout>
                             </popup>
-                        </auxheader>
-                        <auxheader
-                            if="${sessionScope.userCredential.getRoles()=='SORTIR'}">
-                            
                         </auxheader>
                     </auxhead>
                 
@@ -161,38 +151,19 @@
                                 <label value="@load(''.concat(s.jmlBerat).concat(' ').concat(s.satuanBerat))"/>
                             </listcell>
                             
-                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" 
-                                      if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
-                                        sessionScope.userCredential.getRoles()=='REPORTING'}">
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" >
                                 <label value="@load(s.gudangTujuan)"/>
                             </listcell>
                             
-                            <listcell style="text-overflow: ellipsis; white-space: nowrap;"
-                                      if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
-                                        sessionScope.userCredential.getRoles()=='REPORTING'}">
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.userPenerima.nama)"/>
                             </listcell>
                             
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.tglProses) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                                <label value="@load(s.tglTerima) @converter('formatedDate', format='dd-MM-yyyy')"/>
                             </listcell>
                             
-                            <listcell
-                            if="${sessionScope.userCredential.getRoles()=='SORTIR'}">
-                                <button 
-                                    
-                                    vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" 
-                                            label="KIRIM HASIL SORTIR"
-                                            onClick="@command('showKirimSortir',prosesLimbah=s)"/>
-                            </listcell>
-                            
-<!--                            <listcell>
-                                <hlayout>
-                                   
-                                    
-                                </hlayout>
-                       
-                            </listcell>-->
+                         
                             
                         </listitem>
                     </template>

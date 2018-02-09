@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -29,10 +30,13 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
@@ -52,7 +56,7 @@ import org.zkoss.zul.Messagebox;
 public class PageManifestVM {
 
     List<Manifest> listManifest = new ArrayList<>();
-    List<Manifest> listManifest2 = new ArrayList<>();
+//    List<Manifest> listManifest2 = new ArrayList<>();
     List<Manifest> selectedManifests = new ArrayList<>();
     Manifest selectedManifest;
     boolean showWin = false;
@@ -70,7 +74,7 @@ public class PageManifestVM {
         } else {
             this.listManifest = Ebean.find(Manifest.class).orderBy("id desc").findList();
         }
-        this.listManifest2 = this.listManifest;
+//        this.listManifest2 = this.listManifest;
     }
 
     @Command
@@ -79,20 +83,57 @@ public class PageManifestVM {
 
         if (tsAwal != null && tsAkhir != null) {
 
-//            LocalDate localDateTimeAwal = this.tsAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//            LocalDate localDateTimeAkhir = this.tsAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//            this.listResidu = listResidu2.stream().filter(l -> (l.getTglBuat().after(Date.from(localDateTimeAwal.atStartOfDay(ZoneId.systemDefault()).toInstant())) && l.getTglBuat().before(Date.from(localDateTimeAkhir.atStartOfDay(ZoneId.systemDefault()).toInstant())))
-//                    && l.getResiduId().toLowerCase().contains(this.filterId.toLowerCase())
-//                    && l.getGudangPenghasil().toLowerCase().contains(this.filterGudang.toLowerCase())
-//                    && l.getNamaResidu().toLowerCase().contains(this.filterNama.toLowerCase()))
-//                    .collect(Collectors.toList());
+            if (userLogin.getAkses().equals("PENERIMA")) {
+                this.listManifest = Ebean.find(Manifest.class)
+                        .where()
+                        .contains("kodeManifest", this.filterKode)
+                        .contains("customerPenghasil.nama", this.filterPenghasil)
+                        .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
+                        .contains("namaTeknikLimbah", this.filterKodeJenis)
+                        .between("tglBuat",
+                                Date.from(this.tsAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                                Date.from(this.tsAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                        .eq("statusApproval", "approved")
+                        .orderBy("id desc").findList();
+            } else {
+                this.listManifest = Ebean.find(Manifest.class)
+                        .where()
+                        .contains("kodeManifest", this.filterKode)
+                        .contains("customerPenghasil.nama", this.filterPenghasil)
+                        .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
+                        .contains("namaTeknikLimbah", this.filterKodeJenis)
+                        .between("tglBuat",
+                                Date.from(this.tsAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                                Date.from(this.tsAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
+                        .orderBy("id desc").findList();
+            }
+
         } else {
-            this.listManifest = this.listManifest2.stream().filter(l
-                    -> l.getKodeManifest().toLowerCase().contains(this.filterKode.toLowerCase())
-                    && l.getCustomerPenghasil().getNama().toLowerCase().contains(this.filterPenghasil.toLowerCase())
-                    && l.getJenisLimbah().getKodeJenis().toLowerCase().contains(this.filterKodeJenis.toLowerCase())
-                    && l.getNamaTeknikLimbah().toLowerCase().contains(this.filterNamaTeknik.toLowerCase()))
-                    .collect(Collectors.toList());
+//            this.listManifest = this.listManifest2.stream().filter(l
+//                    -> l.getKodeManifest().toLowerCase().contains(this.filterKode.toLowerCase())
+//                    && l.getCustomerPenghasil().getNama().toLowerCase().contains(this.filterPenghasil.toLowerCase())
+//                    && l.getJenisLimbah().getKodeJenis().toLowerCase().contains(this.filterKodeJenis.toLowerCase())
+//                    && l.getNamaTeknikLimbah().toLowerCase().contains(this.filterNamaTeknik.toLowerCase()))
+//                    .collect(Collectors.toList());
+            if (userLogin.getAkses().equals("PENERIMA")) {
+                this.listManifest = Ebean.find(Manifest.class)
+                        .where()
+                        .contains("kodeManifest", this.filterKode)
+                        .contains("customerPenghasil.nama", this.filterPenghasil)
+                        .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
+                        .contains("namaTeknikLimbah", this.filterKodeJenis)
+                        .eq("statusApproval", "approved")
+                        .orderBy("id desc").findList();
+            } else {
+                this.listManifest = Ebean.find(Manifest.class)
+                        .where()
+                        .contains("kodeManifest", this.filterKode)
+                        .contains("customerPenghasil.nama", this.filterPenghasil)
+                        .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
+                        .contains("namaTeknikLimbah", this.filterKodeJenis)
+                        .orderBy("id desc").findList();
+            }
+
         }
 
     }
@@ -162,11 +203,7 @@ public class PageManifestVM {
     @GlobalCommand
     @NotifyChange({"listManifest"})
     public void refresh() {
-        if (userLogin.getAkses().equals("PENERIMA")) {
-            this.listManifest = Ebean.find(Manifest.class).where().eq("statusApproval", "approved").orderBy("id desc").findList();
-        } else {
-            this.listManifest = Ebean.find(Manifest.class).orderBy("id desc").findList();
-        }
+        saring();
     }
 
     @Command
@@ -191,7 +228,7 @@ public class PageManifestVM {
         Messagebox.show("Data manifest akan dihapus. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
             if (t.getName().equals("onOK")) {
                 try {
-                    
+
                     Ebean.delete(this.selectedManifest);
                     Ebean.delete(this.selectedManifest.getPenerimaan());
                     this.selectedManifest = null;
@@ -202,6 +239,15 @@ public class PageManifestVM {
             }
         });
 
+    }
+    
+    @Command
+    @NotifyChange({"listManifest"})
+    public void resetSaringTgl(){
+        this.tsAkhir = null;
+        this.tsAwal = null;
+        saring();
+        
     }
 
     @Command
@@ -236,6 +282,59 @@ public class PageManifestVM {
             configuration.setMetadataAuthor("Reza Elborneo");  //why not set some config as we like
             exporter.setConfiguration(configuration);
             exporter.exportReport();
+            streamReport.close();
+            outputStream.close();
+
+            FileInputStream inputStream = new FileInputStream(filenya);
+            Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
+
+            filenya.delete();
+
+        } catch (JRException | FileNotFoundException ex4) {
+            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex4);
+        } catch (IOException ex2) {
+            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex2);
+        }
+    }
+    
+    
+    @Command
+    public void exportExcel(){
+        File filenya = new File(Util.setting("pdf_path") + "manifests.xls");
+   
+        try {
+            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/manifests.xls.jasper");
+            JRDataSource datasource = new JRBeanCollectionDataSource(this.listManifest);
+//            JRDataSource beanColDataSource = new JRBeanCollectionDataSource(this.listManifest);
+
+            Map map = new HashMap();
+            map.put("MANIFESTS", datasource);
+//            map.put("PENERIMAAN", beanColDataSource);
+
+
+            JasperPrint report = JasperFillManager.fillReport(streamReport, map, new JREmptyDataSource(1));
+            OutputStream outputStream = new FileOutputStream(filenya);
+//
+//            JRExporter exporter = new JRPdfExporter();
+//            exporter.setExporterInput(new SimpleExporterInput(report));
+//            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+//            SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
+//            configuration.setMetadataAuthor("Reza Elborneo");  //why not set some config as we like
+//            exporter.setConfiguration(configuration);
+//            exporter.exportReport();
+//            streamReport.close();
+//            outputStream.close();
+
+            final JRXlsExporter exporterXLS = new JRXlsExporter();
+            exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, (Object) report);
+            exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, (Object) outputStream);
+            exporterXLS.setParameter(JRXlsExporterParameter.IS_COLLAPSE_ROW_SPAN, Boolean.TRUE);
+            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, (Object) Boolean.FALSE);
+            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_DETECT_CELL_TYPE, (Object) Boolean.TRUE);
+            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, (Object) Boolean.FALSE);
+            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, (Object) Boolean.TRUE);
+            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_COLUMNS, (Object) Boolean.TRUE);
+            exporterXLS.exportReport();
             streamReport.close();
             outputStream.close();
 

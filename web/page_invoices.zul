@@ -65,7 +65,7 @@
                         <listheader label="CUSTOMER" />
                         <listheader label="INVOICE DATE" />
                         <listheader label="TOTAL NILAI" />
-                        <listheader width="150px"/>
+                        <listheader width="200px"/>
                     </listhead>
                     
                     <auxhead>

@@ -58,6 +58,8 @@ public class Residu implements Serializable {
     Long jmlBerat = 0L;
 
     String tipe = "";
+    
+    String namaPerusahaan = "PT. DACB";
 
     public Long getId() {
         return id;
@@ -204,6 +206,14 @@ public class Residu implements Serializable {
 
     public void setTglKirim(Date tglKirim) {
         this.tglKirim = tglKirim;
+    }
+
+    public String getNamaPerusahaan() {
+        return namaPerusahaan;
+    }
+
+    public void setNamaPerusahaan(String namaPerusahaan) {
+        this.namaPerusahaan = namaPerusahaan;
     }
 
 }

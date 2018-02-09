@@ -75,6 +75,7 @@ public class PageRekapPenerimaanLimbahVM {
     Long totalGudang3 = 0L;
     Long totalGudang4 = 0L;
     Long totalGudang5 = 0L;
+    Long totalGudangSortir = 0L;
     Long totalDikirim = 0L;
     Long totalPendingKirim = 0L;
     Long totalPendingProses = 0L;
@@ -84,6 +85,7 @@ public class PageRekapPenerimaanLimbahVM {
     List<TotalLimbah> listTotalGudang3 = new ArrayList<>();
     List<TotalLimbah> listTotalGudang4 = new ArrayList<>();
     List<TotalLimbah> listTotalGudang5 = new ArrayList<>();
+    List<TotalLimbah> listTotalGudangSortir = new ArrayList<>();
     List<TotalLimbah> listTotalDikirim = new ArrayList<>();
     List<TotalLimbah> listTotalPendingKirim = new ArrayList<>();
 
@@ -147,6 +149,8 @@ public class PageRekapPenerimaanLimbahVM {
         countProsesLimbahByGudang("GUDANG 4");
         //TOTAL GUDANG 5
         countProsesLimbahByGudang("GUDANG 5");
+        //TOTAL GUDANG SORTIR
+        countProsesLimbahByGudang("SORTIR");
 
         //TOTAL DISIKIRIM
         this.listTotalDikirim = new ArrayList<>();
@@ -234,7 +238,7 @@ public class PageRekapPenerimaanLimbahVM {
 
         this.totalPendingProses = this.listTotalDiPengumpulan.stream().mapToLong(m -> m.getJmlBerat()).sum();
 
-        this.totalDetail = this.totalPendingProses + this.totalGudang1 + this.totalGudang2 + this.totalGudang3 + this.totalGudang4 + this.totalGudang5 + this.totalDikirim + this.totalPendingKirim;
+        this.totalDetail = this.totalPendingProses + this.totalGudang1 + this.totalGudang2 + this.totalGudang3 + this.totalGudang4 + this.totalGudang5 + this.totalGudangSortir + this.totalDikirim + this.totalPendingKirim;
 
     }
 
@@ -256,10 +260,14 @@ public class PageRekapPenerimaanLimbahVM {
         if (gudang.equals("GUDANG 5")) {
             this.listTotalGudang5 = new ArrayList<>();
         }
+        if (gudang.equals("SORTIR")) {
+            this.listTotalGudangSortir = new ArrayList<>();
+        }
 
         List<ProsessLimbah> listProsesGudang = Ebean.find(ProsessLimbah.class)
                 .where()
                 .eq("gudangTujuan", gudang)
+                .ne("gudangPengirim", "SORTIR")
                 .between("tglTerima",
                         Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                         Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
@@ -296,6 +304,9 @@ public class PageRekapPenerimaanLimbahVM {
             if (gudang.equals("GUDANG 5")) {
                 this.listTotalGudang5.add(t);
             }
+            if (gudang.equals("SORTIR")) {
+                this.listTotalGudangSortir.add(t);
+            }
 
 //            for (Map.Entry<String, Long> entry1 : value.entrySet()) {
 //                String key1 = entry1.getKey();
@@ -322,6 +333,9 @@ public class PageRekapPenerimaanLimbahVM {
 
         if (gudang.equals("GUDANG 5")) {
             this.totalGudang5 = this.listTotalGudang5.stream().mapToLong(m -> m.getJmlBerat()).sum();
+        }
+        if (gudang.equals("SORTIR")) {
+            this.totalGudangSortir = this.listTotalGudangSortir.stream().mapToLong(m -> m.getJmlBerat()).sum();
         }
 
     }
@@ -353,6 +367,9 @@ public class PageRekapPenerimaanLimbahVM {
 
             JRDataSource dsgud5 = new JRBeanCollectionDataSource(this.listTotalGudang5);
             map.put("GUDANG5", dsgud5);
+            
+            JRDataSource dsgudSortir = new JRBeanCollectionDataSource(this.listTotalGudangSortir);
+            map.put("SORTIR", dsgudSortir);
 
             JRDataSource dskirim = new JRBeanCollectionDataSource(this.listTotalDikirim);
             map.put("DIKIRIM", dskirim);
@@ -615,6 +632,22 @@ public class PageRekapPenerimaanLimbahVM {
 
     public void setListTotalDiPengumpulan(List<TotalLimbah> listTotalDiPengumpulan) {
         this.listTotalDiPengumpulan = listTotalDiPengumpulan;
+    }
+
+    public Long getTotalGudangSortir() {
+        return totalGudangSortir;
+    }
+
+    public void setTotalGudangSortir(Long totalGudangSortir) {
+        this.totalGudangSortir = totalGudangSortir;
+    }
+
+    public List<TotalLimbah> getListTotalGudangSortir() {
+        return listTotalGudangSortir;
+    }
+
+    public void setListTotalGudangSortir(List<TotalLimbah> listTotalGudangSortir) {
+        this.listTotalGudangSortir = listTotalGudangSortir;
     }
 
 }

@@ -58,16 +58,17 @@
                                 if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR' || sessionScope.userCredential.getRoles()=='ADMIN'}"
                                 vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="INPUT MANIFEST" onClick="@command('inputManifest')" />
                         </auxheader>
-                        <auxheader colspan="6"
+                        <auxheader colspan="7"
                             if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                         </auxheader>
-                        <auxheader colspan="5"
+                        <auxheader colspan="6"
                             if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='PENERIMA'}">
                         </auxheader>
                     </auxhead>
                 
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
+                        <listheader sort="auto(tglBuat)" label="TGL BUAT" width="80px" />
                         <listheader sort="auto(kodeManifest)" label="NOMOR" width="80px" />
                         <listheader sort="auto(customerPenghasil.nama)" label="PENGIRIM" width="200px"/>
                         <listheader sort="auto(jenisLimbah.kodeJenis)" label="KODE LIMBAH"/>
@@ -85,6 +86,27 @@
                     <auxhead>
                         <auxheader>
                             
+                        </auxheader>
+                        <auxheader>
+                            <button popup="popupTimeChooser" iconSclass="glyphicon glyphicon-filter" label="FILTER" onClick="" sclass="btn-info btn-xs" hflex="3" />
+                          
+                            <popup id="popupTimeChooser" width="200px" style="word-wrap">
+                                <vlayout>
+                                    <label value="Dari :" />
+                                    <datebox id="startDate" value="@bind(vm.tsAwal)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <label value="Sampai :" />
+                                    <datebox id="endDate" value="@bind(vm.tsAkhir)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <div class="btn-group" hflex="3">
+                                        <button label="TAMPILKAN" onClick="@command('saring')" sclass="btn-info btn-xs" hflex="3" />
+                                        <button label="RESET" onClick="@command('resetSaringTgl')" sclass="btn-default btn-xs" hflex="3" >
+                                            <attribute name="onClick">
+                                                startDate.setText("");
+                                                endDate.setText("");
+                                            </attribute>
+                                        </button>
+                                    </div>
+                                </vlayout>
+                            </popup>
                         </auxheader>
                         <auxheader>
                             <textbox instant="true" value="@bind(vm.filterKode)" hflex="3" onChange="@command('saring')"/>
@@ -115,6 +137,9 @@
                     <template name="model" var="s">
                         <listitem sclass="mainList" onClick="@command('showDetail', manifest=s)">
                             <listcell />
+                            <listcell>
+                                <label value="@load(s.tglBuat) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                            </listcell>
                             <listcell label="@load(s.kodeManifest)"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.customerPenghasil.nama)"/>
@@ -159,7 +184,7 @@
                                 if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
                                 
-<!--                                <label value="@load(s.penerimaan.statusPenerimaan)" />-->
+                                <!--                                <label value="@load(s.penerimaan.statusPenerimaan)" />-->
                                 <label 
                                     value="@load(s.penerimaan.statusPenerimaan)" 
                                     sclass="label label-warning" 
@@ -190,10 +215,12 @@
                 
                 
                     <listfoot>
-                        <listfooter span="6" valign="middle">
+                        <listfooter span="10" valign="middle">
                             <div style="float:left;">
                                 
-                                Total item : <label value="@load(vm.listManifest.size())"/>
+                                <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 
+                                        sclass="btn-primary">
+                                </button>
                             </div>
                             <div style="float:right;">
                                 

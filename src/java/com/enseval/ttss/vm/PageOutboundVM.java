@@ -61,7 +61,7 @@ public class PageOutboundVM {
     User userLogin;
     List<OutboundItem> listOutboundItem;
 
-    String filterManifest = "", filterLimbah = "", filterStatus = "";
+    String filterManifest = "", filterLimbah = "", filterStatus = "", filterIntExt = "SEMUA";
 
     @AfterCompose
     public void initSetup() {
@@ -81,11 +81,34 @@ public class PageOutboundVM {
     @Command
     @NotifyChange({"*"})
     public void saring() {
-        this.listOutboundItem = Ebean.find(OutboundItem.class)
-                .where()
-                .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
-                .contains("namaItem", filterLimbah)
-                .orderBy("id desc").findList();
+        switch (this.filterIntExt) {
+            case "SEMUA":
+                this.listOutboundItem = Ebean.find(OutboundItem.class)
+                        .where()
+                        .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                        .contains("namaItem", filterLimbah)
+                        .orderBy("id desc").findList();
+                break;
+            case "INTERNAL":
+                this.listOutboundItem = Ebean.find(OutboundItem.class)
+                        .where()
+                        .isNotNull("residu")
+                        .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                        .contains("namaItem", filterLimbah)
+                        .orderBy("id desc").findList();
+                break;
+            case "EXTERNAL":
+                this.listOutboundItem = Ebean.find(OutboundItem.class)
+                        .where()
+                        .isNotNull("penerimaan")
+                        .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                        .contains("namaItem", filterLimbah)
+                        .orderBy("id desc").findList();
+                break;
+            default:
+                break;
+        }
+
     }
 
     @Command
@@ -189,6 +212,14 @@ public class PageOutboundVM {
 
     public void setFilterStatus(String filterStatus) {
         this.filterStatus = filterStatus;
+    }
+
+    public String getFilterIntExt() {
+        return filterIntExt;
+    }
+
+    public void setFilterIntExt(String filterIntExt) {
+        this.filterIntExt = filterIntExt;
     }
 
 }

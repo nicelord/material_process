@@ -90,8 +90,10 @@
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <hlayout>
                                     <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-edit"
+                                            label="EDIT"
                                             onClick="@command('showFormUser', user=s)" />
                                     <button vflex="3" hflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash"
+                                            label="HAPUS"
                                             onClick="@command('hapusUser', user=s)" />
                                 </hlayout>
                             </listcell>

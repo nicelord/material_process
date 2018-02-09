@@ -88,6 +88,7 @@
 	<parameter name="DIKIRIM" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<parameter name="PENDING_KIRIM" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<parameter name="PENDING_PROSES" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="SORTIR" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<background>
 		<band height="3560" splitType="Stretch">
 			<componentElement>
@@ -611,7 +612,7 @@
 				</jr:table>
 			</componentElement>
 			<componentElement>
-				<reportElement key="table 2" style="table 2" positionType="Float" x="0" y="480" width="555" height="80" uuid="7d07edf5-75eb-4294-a228-4ec1db43c17e"/>
+				<reportElement key="table 2" style="table 2" positionType="Float" x="0" y="560" width="555" height="80" uuid="7d07edf5-75eb-4294-a228-4ec1db43c17e"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="TableGudang1" uuid="83c8b96c-9aef-47ef-ba01-01adb0a48811">
 						<dataSourceExpression><![CDATA[$P{DIKIRIM}]]></dataSourceExpression>
@@ -691,7 +692,7 @@
 				</jr:table>
 			</componentElement>
 			<componentElement>
-				<reportElement key="table 2" style="table 2" positionType="Float" x="0" y="560" width="555" height="80" uuid="6c7ddb18-12e6-4bb6-a82b-d6f2f3c84a7c"/>
+				<reportElement key="table 2" style="table 2" positionType="Float" x="0" y="640" width="555" height="80" uuid="6c7ddb18-12e6-4bb6-a82b-d6f2f3c84a7c"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="TableGudang1" uuid="ad2245ac-4939-4b56-88c6-3536dd5d1cba">
 						<dataSourceExpression><![CDATA[$P{PENDING_KIRIM}]]></dataSourceExpression>
@@ -771,7 +772,7 @@
 				</jr:table>
 			</componentElement>
 			<componentElement>
-				<reportElement key="table 2" style="table 2" positionType="Float" x="0" y="640" width="555" height="80" uuid="f1dc4649-e27e-44f5-b7f1-f9e41e3c6fe6"/>
+				<reportElement key="table 2" style="table 2" positionType="Float" x="0" y="720" width="555" height="80" uuid="f1dc4649-e27e-44f5-b7f1-f9e41e3c6fe6"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="TableGudang1" uuid="9fa3a390-238c-4118-b8f8-6bc2980b0ffd">
 						<dataSourceExpression><![CDATA[$P{PENDING_PROSES}]]></dataSourceExpression>
@@ -837,6 +838,86 @@
 							<jr:detailCell style="table 2_TD" height="20" rowSpan="1">
 								<textField>
 									<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="175" height="20" isPrintWhenDetailOverflows="true" uuid="d8bace4d-0626-45d8-b6b1-e1f354a56f01">
+										<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+										<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+									</reportElement>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Tahoma"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{jmlBerat}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement key="table 2" style="table 2" positionType="Float" x="0" y="480" width="555" height="80" uuid="02a254ec-1bd3-4946-bfc4-836e41454bb4"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="TableGudang1" uuid="d609bded-b43d-40f8-b3c4-e505861fb7dc">
+						<dataSourceExpression><![CDATA[$P{SORTIR}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:columnGroup width="553" uuid="aa8fc850-935e-4054-96ec-e0a345581346">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="553" height="30" uuid="073b2407-fb40-4434-a46d-07518a928708"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TOTAL LIMBAH DITERIMA GUDANG SORTIR]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="235" uuid="298fc005-6cbe-4dd2-bf72-d76646babf37">
+							<jr:columnHeader style="table 2_CH" height="30" rowSpan="1"/>
+							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table 2_TD" height="20" rowSpan="1"/>
+						</jr:column>
+						<jr:column width="143" uuid="38f55a1c-28f5-4c32-959f-d325e123f5d8">
+							<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="143" height="30" uuid="d1c93ba0-c23d-4de7-a04b-c082a20a9550"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Tahoma" isBold="true"/>
+									</textElement>
+									<text><![CDATA[KODE JENIS]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table 2_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="143" height="20" uuid="46a28342-a1bd-4913-b851-edcc3ad23e31">
+										<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+										<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+									</reportElement>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Tahoma"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{kodeLimbah}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="175" uuid="85c04aae-aa45-46ce-ab74-aaacde150990">
+							<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="175" height="30" uuid="572702ad-420f-47c0-94af-c6eeb57a0785"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Tahoma" isBold="true"/>
+									</textElement>
+									<text><![CDATA[BERAT]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="175" height="30" uuid="4985e51e-3ecb-4005-a890-bdd8d2b53f71"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Tahoma"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+								</textField>
+							</jr:columnFooter>
+							<jr:detailCell style="table 2_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="175" height="20" isPrintWhenDetailOverflows="true" uuid="f40f9205-83f9-4671-ad06-89bd406da5c6">
 										<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 										<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
 									</reportElement>

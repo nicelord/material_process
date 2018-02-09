@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="penerimaan" language="groovy" pageWidth="396" pageHeight="609" columnWidth="356" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="b6cf7754-23ad-452f-95a5-41c048df9466">
 	<property name="ireport.zoom" value="1.6528925619834722"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="399"/>
+	<property name="ireport.y" value="159"/>
 	<parameter name="NAMA_CUSTOMER" class="java.lang.String"/>
 	<parameter name="TGL_BUAT" class="java.util.Date"/>
 	<parameter name="MANIFEST" class="java.lang.String"/>
@@ -65,119 +65,98 @@
 				<textFieldExpression><![CDATA["Atas permintaan "+ $P{NAMA_CUSTOMER}+ ", sudah diterima limbah B3 dengan ketentuan sebagai berikut :"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="159" width="119" height="14" uuid="0372bb15-b3a4-49ec-b98e-8d10664483d9"/>
+				<reportElement x="0" y="159" width="119" height="14" uuid="d4842bf2-0d6d-4e93-986e-2d1ddc19009e"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
-				<text><![CDATA[1. BAP]]></text>
+				<text><![CDATA[1. Manifest]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="173" width="119" height="14" uuid="d4842bf2-0d6d-4e93-986e-2d1ddc19009e"/>
+				<reportElement x="0" y="173" width="119" height="14" uuid="c8a6c9ea-02db-40cc-8332-1fdef75670df"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
-				<text><![CDATA[2. Manifest]]></text>
+				<text><![CDATA[2. Jenis Limbah]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="187" width="119" height="14" uuid="c8a6c9ea-02db-40cc-8332-1fdef75670df"/>
+				<reportElement x="0" y="187" width="119" height="14" uuid="5c5dd197-ea3e-40c2-95a7-6e0f7f1355ef"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
-				<text><![CDATA[3. Jenis Limbah]]></text>
+				<text><![CDATA[3. Kendaraan Pengangkut]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="201" width="119" height="14" uuid="5c5dd197-ea3e-40c2-95a7-6e0f7f1355ef"/>
+				<reportElement x="0" y="216" width="238" height="14" uuid="aa7908bd-afad-4589-9a88-b342f7c14725"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
-				<text><![CDATA[4. Kendaraan Pengangkut]]></text>
+				<text><![CDATA[4. Kemasan / jumlah (volume) Limbah B3 terdiri dari]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="215" width="238" height="14" uuid="aa7908bd-afad-4589-9a88-b342f7c14725"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="9"/>
-				</textElement>
-				<text><![CDATA[5. Kemasan / jumlah (volume) Limbah B3 terdiri dari]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="133" y="201" width="64" height="14" uuid="a98501ab-3295-4344-ab74-830011b57f08"/>
+				<reportElement x="133" y="187" width="64" height="14" uuid="a98501ab-3295-4344-ab74-830011b57f08"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<text><![CDATA[Nama Sopir :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="251" y="201" width="67" height="14" uuid="2ba111ff-e77c-4660-b39f-a2b6f2debf73"/>
+				<reportElement x="133" y="201" width="67" height="14" uuid="2ba111ff-e77c-4660-b39f-a2b6f2debf73"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<text><![CDATA[No. Kendaraan :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="120" y="159" width="13" height="14" uuid="7d0b57cd-ba27-48bd-97db-1005bfb3b44a"/>
+				<reportElement x="120" y="159" width="13" height="14" uuid="2e122e08-0c05-425a-811f-007435a185d1"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="120" y="173" width="13" height="14" uuid="2e122e08-0c05-425a-811f-007435a185d1"/>
+				<reportElement x="120" y="173" width="13" height="14" uuid="705bc5ac-08eb-4220-99bc-c27dd5270535"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="120" y="187" width="13" height="14" uuid="705bc5ac-08eb-4220-99bc-c27dd5270535"/>
+				<reportElement x="120" y="187" width="13" height="14" uuid="0de96adb-4de2-41cf-8aa5-b81046bb26ad"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="120" y="201" width="13" height="14" uuid="0de96adb-4de2-41cf-8aa5-b81046bb26ad"/>
+				<reportElement x="238" y="216" width="13" height="14" uuid="61f78a04-decb-450e-ac1a-1c76af3f2604"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="238" y="215" width="13" height="14" uuid="61f78a04-decb-450e-ac1a-1c76af3f2604"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="9"/>
-				</textElement>
-				<text><![CDATA[:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="132" y="159" width="224" height="14" uuid="15ac1969-8ca1-4b4a-be85-dca98057c683"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="9"/>
-				</textElement>
-				<text><![CDATA[TIDAK ADA BAP]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="132" y="173" width="224" height="14" uuid="01b5e8ee-f734-42ee-b7a3-aedfd9cb4570"/>
+				<reportElement x="132" y="159" width="224" height="14" uuid="01b5e8ee-f734-42ee-b7a3-aedfd9cb4570"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{MANIFEST}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="132" y="187" width="224" height="14" uuid="3c819376-32f5-4e06-a448-cc1b3563f962"/>
+				<reportElement x="132" y="173" width="224" height="14" uuid="3c819376-32f5-4e06-a448-cc1b3563f962"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{JENIS_LIMBAH}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="197" y="201" width="54" height="14" uuid="13ff5cd9-00d2-4d66-a1a6-c7f18a9eea91"/>
+				<reportElement x="205" y="187" width="150" height="14" uuid="13ff5cd9-00d2-4d66-a1a6-c7f18a9eea91"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{SOPIR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="320" y="201" width="36" height="14" uuid="86b556d3-ab30-4e0f-8890-e80a8b380fff"/>
+				<reportElement x="205" y="201" width="150" height="14" uuid="86b556d3-ab30-4e0f-8890-e80a8b380fff"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
@@ -254,7 +233,7 @@ Yang menerima]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{USER}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="FillFrame" hAlign="Justified" isUsingCache="false" isLazy="true">
+			<image scaleImage="FillFrame" hAlign="Center" isUsingCache="false" isLazy="true">
 				<reportElement mode="Transparent" x="0" y="0" width="356" height="62" uuid="f04a76c8-19f8-4e3d-825f-5df1a616e203"/>
 				<imageExpression><![CDATA["D:\\NetBeansProjects\\material_process_monitoring\\web\\report\\header_penerimaan.jpg"]]></imageExpression>
 			</image>

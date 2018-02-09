@@ -36,6 +36,8 @@ public class InvoiceItem2 implements Serializable {
     
     String itemDetail = "";
     
+    String kodeManifest = "";
+    
     
 
     @Id @GeneratedValue
@@ -103,6 +105,14 @@ public class InvoiceItem2 implements Serializable {
 
     public void setItemDetail(String itemDetail) {
         this.itemDetail = itemDetail;
+    }
+
+    public String getKodeManifest() {
+        return kodeManifest;
+    }
+
+    public void setKodeManifest(String kodeManifest) {
+        this.kodeManifest = kodeManifest;
     }
 
 

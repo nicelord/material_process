@@ -65,7 +65,7 @@
                         <listheader label="CUSTOMER" />
                         <listheader label="INVOICE DATE" />
                         <listheader label="TOTAL NILAI" />
-                        <listheader width="150px"/>
+                        <listheader width="200px"/>
                     </listhead>
                     
                     <auxhead>
@@ -106,7 +106,7 @@
                     </auxhead>
                 
                     <template name="model" var="s">
-                        <listitem sclass="mainList" onClick="@command('showDetail', invoice=s)">
+                        <listitem sclass="mainList" onClick="@command('showDetail', invoice2=s)">
                             <listcell />
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.nomorInvoice)"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.customer.nama)"/>
@@ -116,13 +116,13 @@
                                 <hlayout>
                                     
                                     <button vflex="3" hflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-list-alt"
-                                            onClick="@command('showDetailInvoice',invoice=s)" />
+                                            onClick="@command('showDetailInvoice',invoice2=s)" />
                                     <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-edit"
-                                            onClick="@command('showEditInvoice', invoice=s)" />
+                                            onClick="@command('showEditInvoice', invoice2=s)" />
                                     <button vflex="3" hflex="3" sclass="btn-info btn-xs" iconSclass="glyphicon glyphicon-print"
-                                            onClick="@command('cetakInvoice', invoice=s)" />
+                                            onClick="@command('cetakInvoice2', invoice2=s)" />
                                     <button vflex="3" hflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash"
-                                            onClick="@command('hapusInvoice', invoice=s)" />
+                                            onClick="@command('hapusInvoice', invoice2=s)" />
                                 </hlayout>
                             </listcell>
                         </listitem>

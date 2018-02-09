@@ -258,8 +258,7 @@
                             <div style="float:left;">
                                 
                                 <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 
-                                        sclass="btn-primary"
-                                        if="${sessionScope.userCredential.getRoles()=='REPORTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
+                                        sclass="btn-primary">
                                 </button>
                             </div>
                             <div style="float:right;">
