@@ -68,9 +68,13 @@ public class PopNewPengirimanVM {
     
     @Command
     public void savePengiriman(){
-        Ebean.save(this.pengiriman);
-        BindUtils.postGlobalCommand(null, null, "refresh", null);
-        this.winPopPengiriman.detach();
+        try {
+            Ebean.save(this.pengiriman);
+            BindUtils.postGlobalCommand(null, null, "refresh", null);
+            this.winPopPengiriman.detach();
+        } catch (Exception exception) {
+            Messagebox.show("ERROR " + exception.getLocalizedMessage(), "ERROR", Messagebox.OK, Messagebox.ERROR);
+        }
     }
 
     public Window getWinPopPengiriman() {

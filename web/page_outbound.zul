@@ -85,7 +85,7 @@
                         <listheader sort="auto(jmlKemasan)" label="BANYAK" />
                         <listheader sort="auto(jmlBerat)" label="BERAT" />
                         <listheader label="STATUS PENGIRIMAN" />
-                        <listheader label="" width="160px"/>
+                        <listheader label="" width="170px"/>
                     </listhead>
                     
                     <auxhead>
@@ -149,8 +149,11 @@
                             </listcell>
                             
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <button vflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="LIST PENGIRIMAN" 
+                                <button sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="LIST PENGIRIMAN" 
                                         onClick="@command('showListPengiriman',outbound=s)" />
+                                <button sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash" label="" 
+                                            
+                                            onClick="@command('hapusOutbound',outbound=s)"/>
                             </listcell>
                             
                         </listitem>

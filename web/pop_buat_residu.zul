@@ -34,7 +34,7 @@
                                 <span class="input-group-addon">
                                     Gudang Penghasil :
                                 </span>
-                                <textbox readonly="true" class="form-control input-primary" value="@load(vm.residu.gudangPenghasil)"/>
+                                <textbox readonly="true" class="form-control input-primary" value="@bind(vm.residu.gudangPenghasil)"/>
                             </div> 
                                     
                             <div class="input-group" hflex="3">
@@ -58,7 +58,7 @@
                                 <combobox model="@load(vm.listNamaResidu)" 
                                           hflex="3"
                                           height="100%"
-                                          value="@save(vm.residu.namaResidu)" 
+                                          value="@bind(vm.residu.namaResidu)" 
                                           style="width:100%;height:100%" 
                                           class="input-primary">
                                     <template name="model">
@@ -78,7 +78,7 @@
                                               hflex="3"
                                               style="width:100%;height:100%"
                                               constraint="no empty"  
-                                              value="@save(vm.residu.satuanKemasan)">
+                                              value="@bind(vm.residu.satuanKemasan)">
                                         <attribute name="onCreate">
                                             self.setSelectedIndex(0);
                                         </attribute>
@@ -106,7 +106,7 @@
                                               hflex="3"
                                               style="width:100%;height:100%"
                                               constraint="no empty"  
-                                              value="@save(vm.residu.satuanKemasan2)">
+                                              value="@bind(vm.residu.satuanKemasan2)">
                                         <attribute name="onCreate">
                                             self.setSelectedIndex(3);
                                         </attribute>
@@ -134,7 +134,7 @@
                                               hflex="3"
                                               style="width:100%;height:100%"
                                               constraint="no empty"  
-                                              value="@save(vm.residu.satuanKemasan3)">
+                                              value="@bind(vm.residu.satuanKemasan3)">
                                         <attribute name="onCreate">
                                             self.setSelectedIndex(3);
                                         </attribute>
@@ -161,7 +161,7 @@
                                           hflex="3"
                                           style="width:100%;height:100%"
                                           constraint="no empty"  
-                                          value="@save(vm.residu.satuanBerat)">
+                                          value="@bind(vm.residu.satuanBerat)">
                                     <attribute name="onCreate">
                                         self.setSelectedIndex(1);
                                     </attribute>

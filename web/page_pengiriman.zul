@@ -120,7 +120,7 @@
                         <listitem sclass="mainList">
                             <listcell />
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.id)"/>
+                                <label value="@load(s.idPengiriman)"/>
                             </listcell>
                             
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">

@@ -38,6 +38,12 @@
         <vlayout>
             <div class="input-group" hflex="3">
                 <span class="input-group-addon">
+                    ID PENGIRIMAN : 
+                </span>
+                <textbox class="form-control input-primary" value="@bind(vm.pengiriman.idPengiriman)"/>
+            </div>
+            <div class="input-group" hflex="3">
+                <span class="input-group-addon">
                     Perusahaan Tujuan :
                 </span>
                 <textbox class="form-control input-primary" value="@bind(vm.pengiriman.perusahaanTujuan)"/>

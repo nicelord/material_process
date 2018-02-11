@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -39,6 +40,9 @@ public class Pengiriman implements Serializable {
     String nomorContainer;
     String nomorKolom;
     String perusahaanPengangkut;
+    
+    @Column(unique = true,nullable = false)
+    String idPengiriman;
 
     public String hitungTotalKemasan() {
 
@@ -138,6 +142,14 @@ public class Pengiriman implements Serializable {
 
     public void setPerusahaanPengangkut(String perusahaanPengangkut) {
         this.perusahaanPengangkut = perusahaanPengangkut;
+    }
+
+    public String getIdPengiriman() {
+        return idPengiriman;
+    }
+
+    public void setIdPengiriman(String idPengiriman) {
+        this.idPengiriman = idPengiriman;
     }
 
 }

@@ -79,7 +79,7 @@ public class PagePengirimanVM {
         if (this.tglAwal != null && this.tglAkhir != null) {
             this.listPengiriman = Ebean.find(Pengiriman.class)
                     .where()
-                    .contains("id", filterId)
+                    .contains("idPengiriman", filterId)
                     .contains("perusahaanTujuan", this.filterTujuan)
                     .contains("perusahaanPengangkut", this.filterPengangkut)
                     .contains("nomorKolom", this.filterKolom)
@@ -92,7 +92,7 @@ public class PagePengirimanVM {
         } else {
             this.listPengiriman = Ebean.find(Pengiriman.class)
                     .where()
-                    .contains("id", filterId)
+                    .contains("idPengiriman", filterId)
                     .contains("perusahaanTujuan", this.filterTujuan)
                     .contains("perusahaanPengangkut", this.filterPengangkut)
                     .contains("nomorKolom", this.filterKolom)

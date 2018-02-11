@@ -81,7 +81,7 @@
                         <listheader sort="auto(satuanKemasan)" label="SATUAN KEMASAN"/>
                         <listheader sort="auto(jmlBerat)" label="TOTAL BERAT"/>
                         <listheader sort="auto(satuanBerat)" label="SATUAN BERAT"/>
-                        <listheader label="NO. MANIFEST"/>
+                        <listheader label="NO. MANIFEST/RESIDU"/>
                         <listheader label="ID PENGIRIMAN"/>
                         <listheader label="" width="50px"/>
                         
@@ -144,7 +144,7 @@
                             </listcell>
                             
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.pengiriman.id)"/>
+                                <label value="@load(s.pengiriman.idPengiriman)"/>
                             </listcell>
                             
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
@@ -165,6 +165,10 @@
                                     onClick="@command('showPopListPengiriman')" 
                                     hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-inbox" 
                                     label="PINDAHKAN KE PENGIRIMAN"/>
+                                <button 
+                                    onClick="@command('exportExcel')" 
+                                    sclass="btn-primary" iconSclass="glyphicon glyphicon-download-alt" 
+                                    label="EXPORT EXCEL"/>
                             </div>
                         </listfooter>
                     </listfoot>	

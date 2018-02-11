@@ -11,6 +11,7 @@ import com.enseval.ttss.model.Invoice;
 import com.enseval.ttss.model.OutboundItem;
 import com.enseval.ttss.model.Pengiriman;
 import com.enseval.ttss.model.Residu;
+import com.enseval.ttss.model.Store;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
 import com.enseval.ttss.util.Util;
@@ -66,7 +67,10 @@ public class PageOutboundVM {
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        this.listOutboundItem = Ebean.find(OutboundItem.class).orderBy("id desc").findList();
+        this.listOutboundItem = Ebean.find(OutboundItem.class)
+                .where()
+                .isNotNull("tglBuat")
+                .orderBy("id desc").findList();
 
     }
 
@@ -85,6 +89,7 @@ public class PageOutboundVM {
             case "SEMUA":
                 this.listOutboundItem = Ebean.find(OutboundItem.class)
                         .where()
+                        .isNotNull("tglBuat")
                         .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
                         .contains("namaItem", filterLimbah)
                         .orderBy("id desc").findList();
@@ -92,6 +97,7 @@ public class PageOutboundVM {
             case "INTERNAL":
                 this.listOutboundItem = Ebean.find(OutboundItem.class)
                         .where()
+                        .isNotNull("tglBuat")
                         .isNotNull("residu")
                         .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
                         .contains("namaItem", filterLimbah)
@@ -100,6 +106,7 @@ public class PageOutboundVM {
             case "EXTERNAL":
                 this.listOutboundItem = Ebean.find(OutboundItem.class)
                         .where()
+                        .isNotNull("tglBuat")
                         .isNotNull("penerimaan")
                         .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
                         .contains("namaItem", filterLimbah)
@@ -115,12 +122,28 @@ public class PageOutboundVM {
     @NotifyChange({"*"})
     public void filterStatus(@BindingParam("s") String s) {
         if (s.equals("all")) {
-            this.listOutboundItem = Ebean.find(OutboundItem.class).orderBy("id desc").findList();
+            this.listOutboundItem = Ebean.find(OutboundItem.class)
+                    .where()
+                    .isNotNull("tglBuat")
+                    .orderBy("id desc").findList();
         } else {
-            this.listOutboundItem = Ebean.find(OutboundItem.class).orderBy("id desc").findList().stream().filter(p -> p.cekStatusPengiriman().equals(s)).collect(Collectors.toList());
+            this.listOutboundItem = Ebean.find(OutboundItem.class)
+                    .where()
+                    .isNotNull("tglBuat")
+                    .orderBy("id desc").findList().stream().filter(p -> p.cekStatusPengiriman().equals(s)).collect(Collectors.toList());
 
         }
 
+    }
+    
+    @Command
+    @NotifyChange({"listOutboundItem"})
+    public void hapusOutbound(@BindingParam("outbound") OutboundItem outboundItem){
+        for (Store store : outboundItem.getStores()) {
+            store.setOutboundItem(null);
+            Ebean.delete(store);
+        }
+        Ebean.delete(outboundItem);
     }
 
     @Command

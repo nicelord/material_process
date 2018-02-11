@@ -7,6 +7,7 @@ package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.Manifest;
+import com.enseval.ttss.model.OutboundItem;
 import com.enseval.ttss.model.Residu;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
@@ -29,35 +30,69 @@ import org.zkoss.zul.Window;
  * @author asus
  */
 public class PopBuatResiduVM {
-    
+
     @Wire("#buat_residu")
     Window winPopBuatResidu;
-    
+
     Residu residu;
-    
+
     User userLogin;
-    
+
     List<Residu> listNamaResidu = new ArrayList<>();
-    
+
     @AfterCompose
-    public void initSetup(@ContextParam(ContextType.VIEW) final Component view) {
+    public void initSetup(@ContextParam(ContextType.VIEW) final Component view, @ExecutionArgParam("residu") Residu residu) {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        this.residu = new Residu();
-        residu.setUserLogin(this.userLogin);
-        residu.setTglBuat(new Date());
-        residu.setGudangPenghasil(this.userLogin.getAkses());
+        if (residu != null) {
+            this.residu = residu;
+        } else {
+            this.residu = new Residu();
+            this.residu.setUserLogin(this.userLogin);
+            this.residu.setTglBuat(new Date());
+            this.residu.setGudangPenghasil(this.userLogin.getAkses());
+        }
+
         this.residu.setTipe("hasil");
-        
+
         this.listNamaResidu = Ebean.find(Residu.class).select("namaResidu").setDistinct(true).findList();
-        
+
         Selectors.wireComponents(view, this, false);
     }
-    
-    
+
     @Command
-    public void simpanResidu(){
+    public void simpanResidu() {
+
         this.residu.setCustomResiduId();
         Ebean.save(this.residu);
+
+        if (residu.getOutboundItem() == null) {
+            OutboundItem out = new OutboundItem();
+            out.setResidu(residu);
+            out.setNamaItem(residu.getNamaResidu());
+            out.setSatuanKemasan(residu.getSatuanKemasan());
+            out.setSatuanKemasan2(residu.getSatuanKemasan2());
+            out.setSatuanKemasan3(residu.getSatuanKemasan3());
+            out.setJmlKemasan(residu.getJmlKemasan());
+            out.setJmlKemasan2(residu.getJmlKemasan2());
+            out.setJmlKemasan3(residu.getJmlKemasan3());
+            out.setSatuanBerat(residu.getSatuanBerat());
+            out.setJmlBerat(residu.getJmlBerat());
+            out.setUserLogin(userLogin);
+            Ebean.save(out);
+        }else{
+            
+            residu.getOutboundItem().setNamaItem(residu.getNamaResidu());
+            residu.getOutboundItem().setSatuanKemasan(residu.getSatuanKemasan());
+            residu.getOutboundItem().setSatuanKemasan2(residu.getSatuanKemasan2());
+            residu.getOutboundItem().setSatuanKemasan3(residu.getSatuanKemasan3());
+            residu.getOutboundItem().setJmlKemasan(residu.getJmlKemasan());
+            residu.getOutboundItem().setJmlKemasan2(residu.getJmlKemasan2());
+            residu.getOutboundItem().setJmlKemasan3(residu.getJmlKemasan3());
+            residu.getOutboundItem().setSatuanBerat(residu.getSatuanBerat());
+            residu.getOutboundItem().setJmlBerat(residu.getJmlBerat());
+            Ebean.update(residu.getOutboundItem());
+        }
+
         BindUtils.postGlobalCommand(null, null, "refresh", null);
         this.winPopBuatResidu.detach();
     }
@@ -93,7 +128,5 @@ public class PopBuatResiduVM {
     public void setListNamaResidu(List<Residu> listNamaResidu) {
         this.listNamaResidu = listNamaResidu;
     }
-    
-    
-    
+
 }

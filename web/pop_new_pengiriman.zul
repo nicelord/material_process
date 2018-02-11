@@ -31,6 +31,12 @@
                         <vlayout>
                             <div class="input-group" hflex="3">
                                 <span class="input-group-addon">
+                                    ID PENGIRIMAN :
+                                </span>
+                                <textbox class="form-control input-primary" value="@save(vm.pengiriman.idPengiriman)"/>
+                            </div>
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
                                     Perusahaan Tujuan :
                                 </span>
                                 <textbox class="form-control input-primary" value="@save(vm.pengiriman.perusahaanTujuan)"/>
@@ -44,13 +50,13 @@
                             <hlayout width="100%">
                                 <div class="input-group" hflex="3">
                                     <span class="input-group-addon">
-                                        Nomor Kolom :
+                                        No. Kolom :
                                     </span>
                                     <textbox class="form-control input-primary" value="@save(vm.pengiriman.nomorKolom)"/>
                                 </div>
                                 <div class="input-group" hflex="3">
                                     <span class="input-group-addon">
-                                        Nomor Kontainer :
+                                        No. Kontainer :
                                     </span>
                                     <textbox class="form-control input-primary" value="@save(vm.pengiriman.nomorContainer)"/>
                                 </div>

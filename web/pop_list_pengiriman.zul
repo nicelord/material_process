@@ -35,6 +35,7 @@
                  mold="paging" width="100%" vflex="true" 
                  multiple="false"
                  checkmark="false"
+                 pageSize="10"
                  emptyMessage="Tidak ada data"
                  model="@load(vm.listPengiriman)">   
             <custom-attributes org.zkoss.zul.nativebar="true"/>  
@@ -53,7 +54,7 @@
         
             <listhead sizable="true" visible="true" >
                 <listheader width="30px" />
-                <listheader sort="auto(id)" label="ID" width="100px" />
+                <listheader sort="auto(idPengiriman)" label="ID" width="100px" />
                 <listheader sort="auto(perusahaanTujuan)" label="TUJUAN"/>
                 <listheader sort="auto(nomorKolom)" label="KOLOM"/>
                 <listheader sort="auto(nomorContainer)" label="KONTAINER"/>
@@ -67,7 +68,7 @@
                 <listitem sclass="mainList">
                     <listcell />
                     <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                        <label value="@load(s.id)"/>
+                        <label value="@load(s.idPengiriman)"/>
                     </listcell>
                     <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                         <label value="@load(s.perusahaanTujuan)"/>

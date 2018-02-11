@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="kolom_all.xls" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f5a4248a-762f-4997-8ed4-3c8c968ffa15">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="0d3b2c74-d4e3-4cd0-ae53-f57c70f2ecad">
+		<field name="kodeStore" class="java.lang.String"/>
+		<field name="outboundItem.namaItem" class="java.lang.String"/>
+		<field name="jmlKemasan" class="java.lang.Long"/>
+		<field name="satuanKemasan" class="java.lang.String"/>
+		<field name="jmlBerat" class="java.lang.Long"/>
+		<field name="satuanBerat" class="java.lang.String"/>
+		<field name="outboundItem.penerimaan" class="java.lang.Object"/>
+		<field name="pengiriman.idPengiriman" class="java.lang.String"/>
+		<field name="outboundItem.penerimaan.manifest.kodeManifest" class="java.lang.String"/>
+		<field name="outboundItem.residu.residuId" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="KOLOM" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="0" width="555" height="50" uuid="549ef438-27ab-4edf-b54e-53a78cf7d4b6"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="9eddbecb-8a7d-4c72-88c7-158b3d3cba5b">
+						<dataSourceExpression><![CDATA[$P{KOLOM}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="41d0341a-8c30-4d5a-95a6-0a9f1193aa4b">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="8b810224-b280-4b16-aba9-d8e5c14726fa"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" isBold="true"/>
+								</textElement>
+								<text><![CDATA[NO. KOLOM]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="6c68e7fd-15ef-41dc-a411-893c653a1fbe">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{kodeStore}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="85ed1bf9-af98-4993-b06b-b73f05c2d512">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="6dce3e13-0a6f-4e79-902d-51fc38f7bfa7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" isBold="true"/>
+								</textElement>
+								<text><![CDATA[LIMBAH/RESIDU]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="da62527c-c300-4a67-a517-4c97177438d5">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{outboundItem.namaItem}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="d63add12-99f2-4612-b0f5-c2c5e6dbdc61">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="454dfc97-63f3-4a0e-aad6-338db03eb342"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TOTAL KEMASAN]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="ad3f50dc-c3c0-42ba-b038-1e4121efe36c">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{jmlKemasan}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="f85f1541-894a-488a-8a19-8c8e858a0f0c">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="5c29ef92-40b8-4f5b-8412-0ce347facf03"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" isBold="true"/>
+								</textElement>
+								<text><![CDATA[SATUAN KEMASAN]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="65e02b70-6dc3-470f-b70d-5f0682575d89">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{satuanKemasan}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="45670939-c4d8-49f6-98e8-9784a980014d">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="30e6d512-7976-437b-9fa6-d0bd6d8ff10e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TOTAL BERAT]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="233bc023-375d-432d-bc7f-450f81435a18">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{jmlBerat}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="19d8e06b-b104-4b3d-a9a9-e7488fd71173">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="ad36cd1d-2d6a-4caa-91f7-fb4a1448bd7e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" isBold="true"/>
+								</textElement>
+								<text><![CDATA[SATUAN BERAT]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="d5733c37-ab66-48f5-9dcf-cba7740a0278">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{satuanBerat}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="32f4058f-6e99-4890-9f00-b9fdafa4840b">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="d5737615-c697-4afa-97db-c47619ca5127"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" isBold="true"/>
+								</textElement>
+								<text><![CDATA[NO. MANIFEST/RESIDU]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="5d99f63f-d117-4951-b809-59b528e9a08a">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{outboundItem.penerimaan}!=null?$F{outboundItem.penerimaan.manifest.kodeManifest}:$F{outboundItem.residu.residuId}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="7b7ef41e-49ae-4ef0-a718-cd42cc11003e">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="e8ec640e-2862-4f71-958e-1ba070c9dff6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" isBold="true"/>
+								</textElement>
+								<text><![CDATA[ID PENGIRIMAN]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="cfefa1e2-8d48-46d2-8357-b5dc7399a62d">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{pengiriman.idPengiriman}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

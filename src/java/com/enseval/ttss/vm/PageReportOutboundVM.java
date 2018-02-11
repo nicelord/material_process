@@ -58,7 +58,7 @@ public class PageReportOutboundVM {
 
     User userLogin;
     List<OutboundItem> listOutboundItem;
-    
+
     String filterManifest = "", filterLimbah = "", filterStatus = "", filterIntExt = "SEMUA";
 
     @AfterCompose
@@ -66,6 +66,7 @@ public class PageReportOutboundVM {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         this.listOutboundItem = Ebean.find(OutboundItem.class)
                 .where()
+                .isNotNull("tglBuat")
                 .eq("penerimaan.inReporting", true)
                 .orderBy("id desc").findList();
 
@@ -78,7 +79,7 @@ public class PageReportOutboundVM {
         m.put("isReporting", true);
         Executions.createComponents("pop_list_pengiriman_by_outbound.zul", (Component) null, m);
     }
-    
+
     @Command
     @NotifyChange({"*"})
     public void saring() {
@@ -86,6 +87,8 @@ public class PageReportOutboundVM {
             case "SEMUA":
                 this.listOutboundItem = Ebean.find(OutboundItem.class)
                         .where()
+                        .isNotNull("tglBuat")
+                        .eq("penerimaan.inReporting", true)
                         .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
                         .contains("namaItem", filterLimbah)
                         .orderBy("id desc").findList();
@@ -93,6 +96,7 @@ public class PageReportOutboundVM {
             case "INTERNAL":
                 this.listOutboundItem = Ebean.find(OutboundItem.class)
                         .where()
+                        .isNotNull("tglBuat")
                         .isNotNull("residu")
                         .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
                         .contains("namaItem", filterLimbah)
@@ -101,7 +105,9 @@ public class PageReportOutboundVM {
             case "EXTERNAL":
                 this.listOutboundItem = Ebean.find(OutboundItem.class)
                         .where()
+                        .isNotNull("tglBuat")
                         .isNotNull("penerimaan")
+                        .eq("penerimaan.inReporting", true)
                         .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
                         .contains("namaItem", filterLimbah)
                         .orderBy("id desc").findList();
@@ -110,11 +116,29 @@ public class PageReportOutboundVM {
                 break;
         }
     }
-    
+
     @Command
-    public void exportExcel(){
+    @NotifyChange({"*"})
+    public void filterStatus(@BindingParam("s") String s) {
+        if (s.equals("all")) {
+            this.listOutboundItem = Ebean.find(OutboundItem.class)
+                    .where()
+                    .isNotNull("tglBuat")
+                    .orderBy("id desc").findList();
+        } else {
+            this.listOutboundItem = Ebean.find(OutboundItem.class)
+                    .where()
+                    .isNotNull("tglBuat")
+                    .orderBy("id desc").findList().stream().filter(p -> p.cekStatusPengiriman().equals(s)).collect(Collectors.toList());
+
+        }
+
+    }
+
+    @Command
+    public void exportExcel() {
         File filenya = new File(Util.setting("pdf_path") + "external.xls");
-   
+
         try {
             InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/external.xls.jasper");
             JRDataSource datasource = new JRBeanCollectionDataSource(this.listOutboundItem);
@@ -123,7 +147,6 @@ public class PageReportOutboundVM {
             Map map = new HashMap();
             map.put("REPORT_DATA_SOURCE", datasource);
             map.put("OUTBOUND", beanColDataSource);
-
 
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);
             OutputStream outputStream = new FileOutputStream(filenya);

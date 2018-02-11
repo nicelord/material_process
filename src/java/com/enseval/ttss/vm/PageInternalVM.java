@@ -72,11 +72,8 @@ public class PageInternalVM {
     @Command
     @NotifyChange({"listProsesLimbah"})
     public void terimaLimbah(@BindingParam("prosesLimbah") ProsessLimbah prosessLimbah) {
-        if (prosessLimbah.getTglTerima() == null) {
-            prosessLimbah.setUserPenerima(userLogin);
-            prosessLimbah.setTglTerima(new Date());
-            Ebean.update(prosessLimbah);
-        }
+        prosessLimbah.setUserPenerima(userLogin);
+        Ebean.update(prosessLimbah);
     }
 
     @Command
@@ -96,7 +93,6 @@ public class PageInternalVM {
     @Command
     @NotifyChange({"listProsesLimbah"})
     public void prosesLimbah(@BindingParam("prosesLimbah") ProsessLimbah prosessLimbah) {
-        prosessLimbah.setTglProses(new Date());
         Ebean.update(prosessLimbah);
     }
 

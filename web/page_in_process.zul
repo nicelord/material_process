@@ -145,7 +145,7 @@
                             <listcell />
                             <listcell label="@load(s.penerimaan.manifest.kodeManifest)"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                                <label value="@load(s.tglKirim) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                                <label value="@load(s.tglTerima) @converter('formatedDate', format='dd-MM-yyyy')"/>
                             </listcell>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.namaLimbah)"/>

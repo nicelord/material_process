@@ -6,8 +6,10 @@
 package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
+import com.enseval.ttss.model.InvoiceItem2;
 import com.enseval.ttss.model.OutboundItem;
 import com.enseval.ttss.model.Residu;
+import com.enseval.ttss.model.Store;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
 import com.enseval.ttss.util.Util;
@@ -39,6 +41,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.util.JRLoader;
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -46,7 +49,11 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Filedownload;
+import org.zkoss.zul.Messagebox;
 
 /**
  *
@@ -68,12 +75,12 @@ public class PageResiduVM {
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        if(userLogin.getAkses().equals("ADMINISTRATOR") || userLogin.getAkses().equals("REPORTING")){
+        if (userLogin.getAkses().equals("ADMINISTRATOR") || userLogin.getAkses().equals("REPORTING")) {
             this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "hasil").findList();
-        }else{
+        } else {
             this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "hasil").where().eq("gudangPenghasil", this.userLogin.getAkses()).orderBy("id desc").findList();
         }
-        
+
         this.listResidu2 = this.listResidu;
         countingKemasan();
     }
@@ -85,21 +92,50 @@ public class PageResiduVM {
     }
 
     @Command
+    public void editResidu(@BindingParam("residu") Residu residu) {
+        Map m = new HashMap();
+        m.put("residu", residu);
+        Executions.createComponents("pop_buat_residu.zul", (Component) null, m);
+
+    }
+
+    @Command
+    @NotifyChange({"listResidu"})
+    public void hapusResidu(@BindingParam("residu") Residu residu) {
+
+        Messagebox.show("Menghapus residu yang sudah dikirim ke external berarti menghapus data di gudang external dan data pengiriman. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
+            if (t.getName().equals("onOK")) {
+                for (Store store : residu.getOutboundItem().getStores()) {
+                    store.setOutboundItem(null);
+                    Ebean.delete(store);
+                }
+                Ebean.delete(residu.getOutboundItem());
+
+                Ebean.delete(residu);
+                BindUtils.postGlobalCommand(null, null, "refresh", null);
+            }
+        });
+
+
+    }
+
+    @Command
     @NotifyChange({"listResidu"})
     public void kirimExternal(@BindingParam("residu") Residu residu) {
-        OutboundItem out = new OutboundItem();
-        out.setResidu(residu);
-        out.setNamaItem(residu.getNamaResidu());
-        out.setSatuanKemasan(residu.getSatuanKemasan());
-        out.setSatuanKemasan2(residu.getSatuanKemasan2());
-        out.setSatuanKemasan3(residu.getSatuanKemasan3());
-        out.setJmlKemasan(residu.getJmlKemasan());
-        out.setJmlKemasan2(residu.getJmlKemasan2());
-        out.setJmlKemasan3(residu.getJmlKemasan3());
-        out.setSatuanBerat(residu.getSatuanBerat());
-        out.setJmlBerat(residu.getJmlBerat());
-        out.setTglBuat(new Date());
-        Ebean.save(out);
+
+        residu.getOutboundItem().setUserLogin(userLogin);
+        Ebean.update(residu.getOutboundItem());
+
+        this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "hasil").where().eq("gudangPenghasil", this.userLogin.getAkses()).orderBy("id desc").findList();
+        this.listResidu2 = this.listResidu;
+    }
+
+    @Command
+    @NotifyChange({"listResidu"})
+    public void updateTglDihasilkan(@BindingParam("residu") Residu residu) {
+
+        Ebean.update(residu);
+
         this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "hasil").where().eq("gudangPenghasil", this.userLogin.getAkses()).orderBy("id desc").findList();
         this.listResidu2 = this.listResidu;
     }
@@ -234,11 +270,11 @@ public class PageResiduVM {
         this.totalBerat = sb.toString();
 
     }
-    
+
     @Command
-    public void exportExcel(){
+    public void exportExcel() {
         File filenya = new File(Util.setting("pdf_path") + "residu.xls");
-   
+
         try {
             InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/residu.xls.jasper");
             JRDataSource datasource = new JRBeanCollectionDataSource(this.listResidu);
@@ -247,7 +283,6 @@ public class PageResiduVM {
             Map map = new HashMap();
             map.put("REPORT_DATA_SOURCE", datasource);
             map.put("RESIDU", beanColDataSource);
-
 
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);
             OutputStream outputStream = new FileOutputStream(filenya);

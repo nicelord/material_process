@@ -113,7 +113,7 @@
                     <listcell label="@load(s.outboundItem.namaItem)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell label="@load(s.satuanKemasan)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell>
-                        <combobox hflex="3"
+<!--                        <combobox hflex="3"
                                   height="100%"
                                   readonly="true" 
                                   class="input-primary"
@@ -125,14 +125,28 @@
                                 <comboitem label="@load(each)"/>
                             </template>
                         
-                        </combobox>
+                        </combobox>-->
+                        
+                        <longbox class="form-control input-primary" constraint="no empty,no negative" value="@bind(s.jmlKemasan)"/>
                     </listcell>
                     <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                         <button hflex="3" iconSclass="glyphicon glyphicon-hand-up" onClick="@command('pilihItem', store=s)" sclass="btn-xs btn-success" label="PILIH"/>
                     </listcell>
                 </listitem>
             </template>	
+            
+            <listfoot>
+            <listfooter span="6">
+                   
+                <button 
+                    onClick="@command('exportExcel')" 
+                     sclass="btn-primary" iconSclass="glyphicon glyphicon-download-alt" 
+                    label="EXPORT EXCEL"/>
+
+            </listfooter>
+        </listfoot>
         </listbox>
+        
         <separator bar="true"/>
         <div class="btn-group" style="float:right;">
             <button onClick="pop_store.detach()">BATAL</button>
