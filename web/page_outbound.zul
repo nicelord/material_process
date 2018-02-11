@@ -152,8 +152,8 @@
                                 <button sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-list-alt" label="LIST PENGIRIMAN" 
                                         onClick="@command('showListPengiriman',outbound=s)" />
                                 <button sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash" label="" 
-                                            
-                                            onClick="@command('hapusOutbound',outbound=s)"/>
+                                        if="${sessionScope.userCredential.getRoles()!='REPORTING'}"
+                                        onClick="@command('hapusOutbound',outbound=s)"/>
                             </listcell>
                             
                         </listitem>
