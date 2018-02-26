@@ -257,7 +257,7 @@
                     </listcell>
                     <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                         <hlayout>
-                        <textbox hflex="2" class="form-control input-primary" value="@bind(s.jmlKemasan)"/>
+                        <textbox hflex="2" class="form-control input-primary" value="@bind(s.jmlKemasan)" onBlur="@command('doCount')"/>
                         <textbox hflex="5" class="form-control input-primary" value="@bind(s.satuanKemasan)"/>
                         </hlayout>
                     </listcell>

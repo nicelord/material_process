@@ -98,15 +98,7 @@ public class TES {
         Ebean.save(c);
 
         
-        JenisLimbah j = new JenisLimbah();
-        j.setKodeJenis("B1111");
-        j.setKeterangan("TEST1");
-        Ebean.save(j);
-        
-        j = new JenisLimbah();
-        j.setKodeJenis("B2222");
-        j.setKeterangan("TEST2");
-        Ebean.save(j);
+       
 
 //        List<ProsessLimbah> l = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", "GUDANG 1").orderBy("id desc").where().isNotNull("tglProses").findList();
 //        Map<String, Map<String, Long>> counting = l.stream().collect(

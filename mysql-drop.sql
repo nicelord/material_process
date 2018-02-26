@@ -2,6 +2,14 @@ SET FOREIGN_KEY_CHECKS=0;
 
 drop table customer;
 
+drop table doitem;
+
+drop table delivery_order;
+
+drop table good_received;
+
+drop table good_received_item;
+
 drop table invoice;
 
 drop table invoice_penerimaan;

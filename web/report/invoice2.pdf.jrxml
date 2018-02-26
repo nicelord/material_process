@@ -317,7 +317,7 @@
 			<rectangle>
 				<reportElement x="22" y="140" width="193" height="101" uuid="283f3f15-0138-4d49-9f84-a310ac0f882b"/>
 			</rectangle>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="22" y="147" width="193" height="23" uuid="dcdbb05a-097e-4a5d-bc5e-5e1bad2eaa45"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="9"/>
@@ -325,7 +325,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{NAMA_CUSTOMER}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="22" y="170" width="193" height="30" uuid="93604233-6ae4-449a-a9d9-adbaa99978d4"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="9"/>
@@ -372,7 +372,7 @@
 				</textElement>
 				<text><![CDATA[Attn ]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="55" y="215" width="160" height="11" uuid="845af7b1-aa73-4d96-b045-a967e24b331e"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
@@ -380,7 +380,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[":  "+$P{DEPT}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="55" y="226" width="160" height="11" uuid="ce37663a-242d-45dc-819f-72a1469602ed"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
@@ -432,28 +432,28 @@
 			<line>
 				<reportElement x="536" y="166" width="1" height="36" uuid="dd043303-e35e-4d91-bf86-97032a2b284b"/>
 			</line>
-			<textField pattern="dd-MMM-yy">
+			<textField pattern="dd-MMM-yy" isBlankWhenNull="true">
 				<reportElement x="239" y="182" width="57" height="20" uuid="9881864d-54e6-4dde-ad87-2ad1892fc69c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{TGL}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="297" y="182" width="67" height="20" uuid="0a5f44b1-6ba0-4333-af2c-42df705bc585"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{TERM}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="365" y="182" width="171" height="20" uuid="713c3f28-8b90-493d-8578-516579cfdfe1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{PO}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="537" y="181" width="75" height="20" uuid="a4694527-48e7-456f-8422-9e0ef93f3c37"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
@@ -498,7 +498,7 @@
 				</textElement>
 				<text><![CDATA[Currency]]></text>
 			</staticText>
-			<textField pattern="dd-MMM-yy">
+			<textField pattern="dd-MMM-yy" isBlankWhenNull="true">
 				<reportElement x="239" y="221" width="206" height="20" uuid="370c2a1f-45de-4e5d-874b-46960a50c097"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
@@ -512,7 +512,7 @@
 				</textElement>
 				<text><![CDATA[PO. No.]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="440" y="200" width="50" height="20" uuid="7e79b174-acde-4854-a033-fb6e81dee106"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
@@ -535,14 +535,14 @@
 				</textElement>
 				<text><![CDATA[DO. No.]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="446" y="222" width="101" height="20" uuid="55e9ce19-d5e5-46f8-b38d-7c6a5c598ef5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{PLAT}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd-MMM-yy">
+			<textField pattern="dd-MMM-yy" isBlankWhenNull="true">
 				<reportElement x="547" y="222" width="65" height="19" uuid="6910edc3-9844-4155-bff5-3fb5c9b9d7e4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
@@ -601,14 +601,14 @@ Email : dacb@gjgroups.com]]></text>
 				</textElement>
 				<text><![CDATA[NETTO :]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="498" y="611" width="19" height="20" uuid="05d3e42a-e072-4ffa-addf-46052930e459"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{TAX}+"%"]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="517" y="631" width="95" height="20" uuid="fa6c3e14-1bc9-4f69-b896-d2477e038f5d"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="true"/>
@@ -616,14 +616,14 @@ Email : dacb@gjgroups.com]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{NET}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="498" y="631" width="19" height="20" uuid="57cd3821-09a7-44e8-b62b-0e071dd51bb0"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CUR}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="517" y="611" width="95" height="20" uuid="bc17b334-c5cf-4d49-a990-71b7614975db"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
@@ -645,14 +645,14 @@ Email : dacb@gjgroups.com]]></text>
 				<text><![CDATA[FOR & BEHALF OF
 PT. DESA AIR CARGO BATAM]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="276" y="697" width="129" height="12" uuid="08c6da99-a8e0-45b9-bdba-38d7416c759a"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Tahoma" size="9" isUnderline="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{TTD}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="276" y="709" width="129" height="12" uuid="1fb09c1c-6bd6-4e7c-871f-78d3bb61e116"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Tahoma" size="9" isUnderline="false"/>

@@ -1,0 +1,144 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>
+
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+        
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        cursor: not-allowed;
+        background-color: #f5f5f5;
+        }
+        
+        .input-group-addon > span {
+        font-weight : 500;
+        }
+        
+        .panel-body{
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        }
+        
+        .z-datebox-input{
+        height:100%;
+        }
+        
+    </style>
+
+    <window title="DELIVERY ORDER" vflex="3" apply="org.zkoss.bind.BindComposer"  viewModel="@id('vm') @init('com.enseval.ttss.vm.PageDOVM')">
+        <borderlayout>
+            <center>
+                <listbox id="list_manifest" mold="paging" width="100%" vflex="true" autopaging="true" 
+                         checkmark="false" 
+                         multiple="false" 
+                         emptyMessage="Tidak ada data"
+                         model="@load(vm.listDeliveryOrder)">   
+                    <custom-attributes org.zkoss.zul.nativebar="true"/>  
+                
+                    <auxhead>
+                        <auxheader colspan="5">
+                            <button vflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="BUAT DO" onClick="@command('showFormDo')" />
+                        </auxheader>
+                    </auxhead>
+                    
+                    
+                
+                    <listhead sizable="true" visible="true" >
+                        <listheader label="TGL DO" />
+                        <listheader label="NOMOR DO" />
+                        <listheader label="CUSTOMER" />
+                        <listheader label="NO. PO" />
+                        <listheader width="200px"/>
+                    </listhead>
+                    
+                    <auxhead>
+                        <auxheader>
+                            <button popup="popupTimeChooser" iconSclass="glyphicon glyphicon-filter" label="FILTER" onClick="" sclass="btn-info btn-xs" hflex="3" />
+                          
+                            <popup id="popupTimeChooser" width="200px" style="word-wrap">
+                                <vlayout>
+                                    <label value="Dari :" />
+                                    <datebox id="startDate" value="@bind(vm.tglAwal)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <label value="Sampai :" />
+                                    <datebox id="endDate" value="@bind(vm.tglAkhir)" format="dd-MM-yyyy" readonly="true" hflex="3"/>
+                                    <div class="btn-group" hflex="3">
+                                        <button label="TAMPILKAN" onClick="@command('saring')" sclass="btn-info btn-xs" hflex="3" />
+                                        <button label="RESET" onClick="@command('resetSaringTgl')" sclass="btn-default btn-xs" hflex="3" >
+                                            <attribute name="onClick">
+                                                startDate.setText("");
+                                                endDate.setText("");
+                                            </attribute>
+                                        </button>
+                                    </div>
+                                </vlayout>
+                            </popup>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterNo)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterCust)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterPo)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                        </auxheader>
+                    </auxhead>
+                
+                    <template name="model" var="s">
+                        <listitem sclass="mainList">
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.tglDo) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.nomorDo)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.customer.nama)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.nomorPo)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <hlayout>
+                                    <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-edit"
+                                            onClick="@command('showEditDo', do=s)" />
+                                    <button vflex="3" hflex="3" sclass="btn-info btn-xs" iconSclass="glyphicon glyphicon-print"
+                                            onClick="@command('cetakDo', do=s)" />
+                                    <button vflex="3" hflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash"
+                                            onClick="@command('hapusDo', do=s)" />
+                                </hlayout>
+                            </listcell>
+                        </listitem>
+                    </template>
+                
+                
+                    <listfoot>
+                        <listfooter span="5" valign="middle">
+                            <div style="float:left;">
+                                
+                                Total data :
+                            </div>
+                            <div style="float:right;">
+                                
+                            </div>
+                        </listfooter>
+                    </listfoot>	
+                     
+                </listbox>
+                
+            </center>
+        </borderlayout>  
+    </window>  
+</zk>
+

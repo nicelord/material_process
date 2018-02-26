@@ -1,0 +1,221 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 10px 10px 10px 10px;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        .z-datebox-input{
+        height:100%;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+    </style>
+
+
+    <window 
+        id="pop_buat_do"  
+        style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
+        position="center,top"  
+        mode="modal" 
+        width="60%" vflex="1" 
+        title="FORM GOOD RECEIVED" 
+        border="normal" 
+        apply="org.zkoss.bind.BindComposer" 
+        viewModel="@id('vm') @init('com.enseval.ttss.vm.PopBuatGRVM')" 
+        closable="true">
+        <vlayout>
+            <hlayout>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Nomor GR.
+                    </span>
+                    <textbox class="form-control input-primary" value="@bind(vm.goodReceived.nomorGr)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-user"></span> 
+                    </span>
+                    <textbox readonly="true" class="form-control input-primary" value="@bind(vm.userLogin.nama)"/>
+                </div>        
+            </hlayout>
+            <hlayout>  
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Tgl. GR.
+                    </span>
+                    <datebox cols="12" 
+                             format="dd-MM-yyyy"
+                             style="height:32px;"
+                             hflex="3"
+                             readonly="true"
+                             value="@bind(vm.goodReceived.tglGr)"/>
+                </div>  
+                
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        PO No.
+                    </span>
+                    <textbox class="form-control input-primary" value="@bind(vm.goodReceived.nomorPo)"/>
+                </div> 
+                
+            </hlayout>
+            <separator spacing="20px" bar="true"/>        
+            <div class="input-group" width="100%">
+                <span class="input-group-addon">
+                    Customer.
+                </span>
+                <textbox sclass="form-control input-primary" hflex="3" placeholder="Nama Customer" readonly="true" value="@load(vm.goodReceived.customer.nama)"/>
+                <span class="input-group-btn">
+                    <button iconSclass="glyphicon glyphicon-search" sclass="btn-primary"  width="50px" onClick="@command('showCustomer', isPengirim=true)"/>
+                </span>
+            </div>
+            <div class="input-group" hflex="3" width="100%">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-home"></span> 
+                </span>
+                <textbox readonly="true" class="form-control input-primary" value="@load(vm.goodReceived.customer.alamat)"/>
+            </div>
+            <hlayout width="100%">
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-envelope"></span> 
+                    </span>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.goodReceived.customer.email)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-user"></span> 
+                    </span>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.goodReceived.customer.namaKontak)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-phone-alt"></span> 
+                    </span>
+                    <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.goodReceived.customer.nomorKontak)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-print"></span> 
+                    </span>
+                    <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.goodReceived.customer.fax)"/>
+                </div>
+            </hlayout>
+            <hlayout>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Attn.
+                    </span>
+                    <combobox model="@load(vm.listCcPerson)" 
+                              hflex="3"
+                              height="100%"
+                              value="@bind(vm.goodReceived.ccPerson)" 
+                              style="width:100%;height:100%" 
+                              class="input-primary">
+                        <template name="model">
+                            <comboitem label="@load(each.ccPerson)"/>
+                        </template>
+                    </combobox>
+                </div>
+            
+            </hlayout>
+        </vlayout>
+        <separator spacing="20px" bar="true"/>
+        <listbox id="list_penerimaan" mold="paging" width="100%" vflex="true" 
+                     
+                 pageSize="5"
+                 emptyMessage="Tidak ada data"
+                 model="@load(vm.listGoodReceivedItem)">        
+                                             
+            
+            <auxhead>
+                <auxheader colspan="8">
+                    <button vflex="3"
+                            onClick="@command('addItem')"
+                            sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-plus" 
+                            label="TAMBAH ITEM" />
+                </auxheader>
+            </auxhead>
+            
+                        
+            <listhead sizable="true" visible="true" >
+                <listheader label="NO" width="60px"/>
+                <listheader label="QTY" width="60px"/>
+                <listheader label="UNIT" width="100px"/>
+                <listheader label="DESC" />
+                <listheader label="TREATMENT" width="90px"/>
+                <listheader label="UNIT PRICE" width="100px"/>
+                <listheader label="AMOUNTS" width="100px"/>
+                <listheader label="HAPUS" width="50px"/>
+            </listhead>
+                
+            <template name="model" var="s">
+                <listitem sclass="mainList">
+                    <listcell 
+                        style="text-overflow: ellipsis; white-space: nowrap;">
+                        <intbox hflex="3" class="form-control input-primary" value="@bind(s.num)"/>
+                    </listcell>
+                    <listcell 
+                        style="text-overflow: ellipsis; white-space: nowrap;">
+                        <intbox hflex="3" class="form-control input-primary" value="@bind(s.qty)" onBlur="@command('doCount')"/>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <textbox hflex="3" class="form-control input-primary" value="@bind(s.unit)"/>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <textbox hflex="3" class="form-control input-primary" value="@bind(s.description)"/>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <textbox hflex="3" class="form-control input-primary" value="@bind(s.treatment)"/>
+                    </listcell>
+                    <listcell>
+                        <longbox class="form-control input-primary" maxlength="20" format=",###.#" constraint="no empty,no negative" value="@bind(s.hargaSatuan)" onBlur="@command('doCount')"/>
+                    </listcell>
+                    <listcell>
+                        <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" value="@bind(s.hargaSatuan*s.qty)"/>
+                    </listcell>
+                    <listcell>
+                        <button vflex="3" hflex="3" 
+                                sclass="btn-danger btn-xs"
+                                iconSclass="glyphicon glyphicon-remove"
+                                onClick="@command('hapusItem',gr=s)" />
+                    </listcell>
+                </listitem>
+            </template>
+            
+            
+            
+            <listfoot>
+                <listfooter span="6" valign="right">
+                    <div style="float:right">
+                        Total 
+                    </div>
+                </listfooter>
+                <listfooter span="2" valign="right">
+                    <longbox readonly="true" 
+                             value="@bind(vm.totalHarga)"
+                             class="form-control input-primary" 
+                             maxlength="20" format=",###.#"/>
+                </listfooter>
+            </listfoot>		
+        </listbox>
+        <separator spacing="20px" bar="true"/>
+        <div class="btn-group" style="float:right;">
+            <button onClick="@command('simpanGr')" sclass="btn-success" iconSclass="glyphicon glyphicon-floppy-disk" label="OK">
+            </button>
+            <button onClick="pop_buat_do.detach()">BATAL</button>
+        </div>
+    </window>
+</zk>

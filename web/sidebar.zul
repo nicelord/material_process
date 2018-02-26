@@ -55,6 +55,22 @@
                         </listitem>
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='AKUNTING'}"
+                           
+                                  onClick="@command('changePage', page='page_do.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="DELIVERY ORDER"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='AKUNTING'}"
+                           
+                                  onClick="@command('changePage', page='page_gr.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="GOOD RECEIVED"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles()=='ADMIN'}"
                            
                                   onClick="@command('changePage', page='page_sertifikat.zul')">
