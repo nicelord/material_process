@@ -1,0 +1,72 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        text-transform:uppercase;
+        
+        }
+     
+        
+        
+        
+       
+    </style>
+
+    <window id="pop_invoices" 
+            style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
+            position="center,top" 
+            mode="modal" 
+            width="70%" 
+            vflex="1" 
+            title="LIST INVOICE" 
+            border="normal" 
+            closable="true" 
+            apply="org.zkoss.bind.BindComposer" 
+            viewModel="@id('vm') @init('com.enseval.ttss.vm.PopInvoicesVM')">
+        
+        <listbox id="list_invoices" mold="paging" width="100%" vflex="true" 
+                 pageSize="10"
+                 emptyMessage="Tidak ada data"
+                 model="@load(vm.listInvoice)">        
+                                             
+                        
+            <listhead sizable="true" visible="true" >
+                <listheader sort="auto(nama)" label="NO. INVOICE" width="150px" />
+                <listheader sort="auto(customer.nama)" label="CUSTOMER" width="300px" />
+                <listheader sort="auto(getTotalNilaiNoTax())" label="NILAI INVOICE" />
+                <listheader sort="auto(tax)" label="TAX" width="50px" />
+                <listheader sort="auto(getTotalTerbayar())" label="SISA TAGIHAN" />
+                <listheader/>
+            </listhead>
+            
+            <auxhead>
+                <auxheader>
+                    <textbox instant="true" value="@bind(vm.filterNo)" hflex="3" onChange="@command('saring')"/>
+                </auxheader>
+                <auxheader>
+                    <textbox instant="true" value="@bind(vm.filterCust)" hflex="3" onChange="@command('saring')"/>
+                </auxheader>
+                <auxheader></auxheader>
+                <auxheader></auxheader>
+                <auxheader></auxheader>
+                <auxheader></auxheader>
+            </auxhead>
+                        
+                
+            <template name="model" var="s">
+                <listitem sclass="mainList">
+                    <listcell label="@load(s.nomorInvoice)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(s.customer.nama)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(vm.format(s.getTotalNilaiNoTax()))" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(''.concat(s.tax).concat('%'))" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell label="@load(vm.format(s.getTotalNilaiNoTax()-s.getTotalTerbayar()))" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell>
+                        <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-hand-up" label="" 
+                                onClick="@command('pilihInvoice',invoice=s)" />
+                    </listcell>
+                </listitem>
+            </template>	
+        </listbox>
+       
+    </window>
+</zk>

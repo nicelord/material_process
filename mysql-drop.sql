@@ -26,6 +26,8 @@ drop table manifest;
 
 drop table outbound_item;
 
+drop table pelunasan;
+
 drop table penanda_tangan;
 
 drop table penerimaan;

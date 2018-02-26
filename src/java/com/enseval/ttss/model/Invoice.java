@@ -25,6 +25,9 @@ import javax.persistence.TemporalType;
 @Entity
 public class Invoice implements Serializable {
 
+    @OneToMany(mappedBy = "invoice")
+    private List<Pelunasan> listPelunasan;
+
     @Id
     @GeneratedValue
     private Long id;
@@ -63,6 +66,21 @@ public class Invoice implements Serializable {
     public Long getTotalNilai() {
         Long total = listInvoiceItem.stream().mapToLong((InvoiceItem item) -> item.getHargaSatuan()*item.getJmlKemasan()).sum();
         return total - ((total / 100) * this.getTax());
+    }
+    
+    public Long getTotalNilaiNoTax() {
+        Long total = listInvoiceItem.stream().mapToLong((InvoiceItem item) -> item.getHargaSatuan()*item.getJmlKemasan()).sum();
+        return total;
+    }
+    
+    public Long getTaxValue() {
+        Long total = listInvoiceItem.stream().mapToLong((InvoiceItem item) -> item.getHargaSatuan()*item.getJmlKemasan()).sum();
+        return ((total / 100) * this.getTax());
+    }
+    
+    public Long getTotalTerbayar() {
+        Long total = listPelunasan.stream().mapToLong((Pelunasan item) -> item.getNilai()+item.getPotPPh()+item.getPotCN()+item.getPotAdm()).sum();
+        return total;
     }
 
     public String getNomorInvoice() {
@@ -215,6 +233,14 @@ public class Invoice implements Serializable {
 
     public void setCurrency(String Currency) {
         this.Currency = Currency;
+    }
+
+    public List<Pelunasan> getListPelunasan() {
+        return listPelunasan;
+    }
+
+    public void setListPelunasan(List<Pelunasan> listPelunasan) {
+        this.listPelunasan = listPelunasan;
     }
 
 }

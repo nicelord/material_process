@@ -61,6 +61,17 @@ public class Invoice2 implements Serializable {
         Long total = listInvoiceItem2.stream().mapToLong((InvoiceItem2 item) -> item.getHargaSatuan()*item.getJmlKemasan()).sum();
         return total - ((total / 100) * this.getTax());
     }
+    
+    public Long getTotalNilaiNoTax() {
+        Long total = listInvoiceItem2.stream().mapToLong((InvoiceItem2 item) -> item.getHargaSatuan()*item.getJmlKemasan()).sum();
+        return total;
+    }
+    
+    public Long getTaxValue() {
+        Long total = listInvoiceItem2.stream().mapToLong((InvoiceItem2 item) -> item.getHargaSatuan()*item.getJmlKemasan()).sum();
+        return ((total / 100) * this.getTax());
+    }
+   
 
     public String getNomorInvoice() {
         return nomorInvoice;

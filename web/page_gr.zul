@@ -125,7 +125,9 @@
                 
                     <listfoot>
                         <listfooter span="5" valign="middle">
-                            
+                            <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 
+                                        sclass="btn-primary">
+                                </button>
                         </listfooter>
                     </listfoot>	
                      

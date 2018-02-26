@@ -52,7 +52,7 @@
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
                 
                     <auxhead>
-                        <auxheader colspan="6">
+                        <auxheader colspan="8">
                             <button vflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="BUAT INVOICE" onClick="@command('showFormInvoice')" />
                         </auxheader>
                     </auxhead>
@@ -64,6 +64,8 @@
                         <listheader label="NOMOR INVOICE" />
                         <listheader label="CUSTOMER" />
                         <listheader label="INVOICE DATE" />
+                        <listheader label="NILAI INVOICE" />
+                        <listheader label="TAX" width="100px"/>
                         <listheader label="TOTAL NILAI" />
                         <listheader width="200px"/>
                     </listhead>
@@ -103,6 +105,10 @@
                         </auxheader>
                         <auxheader>
                         </auxheader>
+                        <auxheader>
+                        </auxheader>
+                        <auxheader>
+                        </auxheader>
                     </auxhead>
                 
                     <template name="model" var="s">
@@ -111,6 +117,8 @@
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.nomorInvoice)"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.customer.nama)"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.tglInvoice) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(vm.format(s.getTotalNilaiNoTax()))"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(''.concat(s.tax).concat('%'))"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(vm.format(s.getTotalNilai()))"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <hlayout>
@@ -130,10 +138,11 @@
                 
                 
                     <listfoot>
-                        <listfooter span="6" valign="middle">
+                        <listfooter span="8" valign="middle">
                             <div style="float:left;">
-                                
-                                Total data :
+                                <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 
+                                        sclass="btn-primary">
+                                </button>
                             </div>
                             <div style="float:right;">
                                 

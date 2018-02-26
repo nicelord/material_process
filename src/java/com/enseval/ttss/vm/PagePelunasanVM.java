@@ -4,6 +4,7 @@ import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.Invoice;
 import com.enseval.ttss.model.InvoiceItem;
 import com.enseval.ttss.model.Manifest;
+import com.enseval.ttss.model.Pelunasan;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
@@ -49,27 +50,30 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Filedownload;
+import org.zkoss.zul.Longbox;
 import org.zkoss.zul.Messagebox;
 
-public class PageInvoicesVM {
+public class PagePelunasanVM {
+    
+    
 
-    List<Invoice> listInvoice = new ArrayList<>();
-    Invoice selectedInvoice;
+    List<Pelunasan> listPelunasan = new ArrayList<>();
     User userLogin;
 
-    String filterNo = "", filterCust = "";
+    String filterNo = "", filterCust = "", filterInputKode = "", filterRemark = "";
     Date tglAwal, tglAkhir;
 
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        this.listInvoice = Ebean.find(Invoice.class).orderBy("id desc").findList();
+        this.listPelunasan = Ebean.find(Pelunasan.class).orderBy("id desc").findList();
     }
 
     @Command
-    public void showWinBuatInvoice() {
-        Executions.createComponents("pop_buat_invoice.zul", (Component) null, null);
+    public void showWinBuatPelunasan() {
+        Executions.createComponents("pop_buat_pelunasan.zul", (Component) null, null);
     }
 
     @Command
@@ -77,19 +81,23 @@ public class PageInvoicesVM {
     public void saring() {
 
         if (this.tglAwal != null && this.tglAkhir != null) {
-            this.listInvoice = Ebean.find(Invoice.class)
+            this.listPelunasan = Ebean.find(Pelunasan.class)
                     .where()
-                    .contains("nomorInvoice", filterNo)
-                    .contains("customer.nama", filterCust)
+                    .contains("kodeInput", filterInputKode)
+                    .contains("invoice.nomorInvoice", filterNo)
+                    .contains("invoice.customer.nama", filterCust)
+                    .contains("remark", filterRemark)
                     .between("tglInvoice",
                             Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                             Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                     .orderBy("id desc").findList();
         } else {
-            this.listInvoice = Ebean.find(Invoice.class)
+            this.listPelunasan = Ebean.find(Pelunasan.class)
                     .where()
-                    .contains("nomorInvoice", filterNo)
-                    .contains("customer.nama", filterCust)
+                    .contains("kodeInput", filterInputKode)
+                    .contains("invoice.nomorInvoice", filterNo)
+                    .contains("invoice.customer.nama", filterCust)
+                    .contains("remark", filterRemark)
                     .orderBy("id desc").findList();
         }
 
@@ -100,7 +108,7 @@ public class PageInvoicesVM {
     public void resetSaringTgl() {
         this.tglAwal = null;
         this.tglAkhir = null;
-        this.listInvoice = Ebean.find(Invoice.class).orderBy("id desc").findList();
+        saring();
     }
 
     @Command
@@ -108,40 +116,26 @@ public class PageInvoicesVM {
         Executions.createComponents("pop_buat_invoice.zul", (Component) null, null);
     }
 
-    @Command
-    @NotifyChange({"selectedInvoice"})
-    public void showDetail(@BindingParam("invoice") final Invoice i) {
-        this.selectedInvoice = i;
-    }
+   
 
     @GlobalCommand
     @NotifyChange({"*"})
     public void refresh() {
-        this.listInvoice = Ebean.find(Invoice.class).orderBy("id desc").findList();
+        saring();
     }
 
     @Command
-    public void showDetailInvoice(@BindingParam("invoice") Invoice invoice) {
+    public void showDetailPelunasan(@BindingParam("pelunasan") Pelunasan pelunasan) {
         Map m = new HashMap();
-        m.put("invoice", invoice);
-        Executions.createComponents("pop_view_invoice.zul", (Component) null, m);
+        m.put("pelunasan", pelunasan);
+        Executions.createComponents("pop_detail_pelunasan.zul", (Component) null, m);
     }
 
     @Command
-    public void showEditInvoice(@BindingParam("invoice") Invoice invoice) {
-        Map m = new HashMap();
-        m.put("invoice", invoice);
-        Executions.createComponents("pop_edit_invoice.zul", (Component) null, m);
-    }
-
-    @Command
-    public void hapusInvoice(@BindingParam("invoice") Invoice invoice) {
-        Messagebox.show("Data invoice akan dihapus, dan item-item didalamnya akan masuk kembali ke kategori item yang belum di invoice. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
+    public void hapusPelunasan(@BindingParam("pelunasan") Pelunasan pelunasan) {
+        Messagebox.show("Data pelunasan akan dihapus dan tidak akan bisa di restore kembali. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
             if (t.getName().equals("onOK")) {
-                for (InvoiceItem item : invoice.getListInvoiceItem()) {
-                    Ebean.delete(item);
-                }
-                Ebean.delete(invoice);
+                Ebean.delete(pelunasan);
                 BindUtils.postGlobalCommand(null, null, "refresh", null);
             }
         });
@@ -229,29 +223,39 @@ public class PageInvoicesVM {
             filenya.delete();
 
         } catch (JRException | FileNotFoundException ex4) {
-            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex4);
+            Logger.getLogger(PagePelunasanVM.class.getName()).log(Level.SEVERE, null, ex4);
         } catch (IOException ex2) {
-            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex2);
+            Logger.getLogger(PagePelunasanVM.class.getName()).log(Level.SEVERE, null, ex2);
         }
         BindUtils.postGlobalCommand(null, null, "refresh", null);
 
     }
 
-    public List<Invoice> getListInvoice() {
-        return listInvoice;
+    public List<Pelunasan> getListPelunasan() {
+        return listPelunasan;
     }
 
-    public void setListInvoice(List<Invoice> listInvoice) {
-        this.listInvoice = listInvoice;
+    public void setListPelunasan(List<Pelunasan> listPelunasan) {
+        this.listPelunasan = listPelunasan;
     }
 
-    public Invoice getSelectedInvoice() {
-        return selectedInvoice;
+    public String getFilterInputKode() {
+        return filterInputKode;
     }
 
-    public void setSelectedInvoice(Invoice selectedInvoice) {
-        this.selectedInvoice = selectedInvoice;
+    public void setFilterInputKode(String filterInputKode) {
+        this.filterInputKode = filterInputKode;
     }
+
+    public String getFilterRemark() {
+        return filterRemark;
+    }
+
+    public void setFilterRemark(String filterRemark) {
+        this.filterRemark = filterRemark;
+    }
+
+    
 
     public User getUserLogin() {
         return userLogin;
