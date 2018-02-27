@@ -121,6 +121,7 @@ public class PopBuatInvoiceVM {
     @GlobalCommand
     @NotifyChange({"listInvoiceItem"})
     public void addInvoiceItem(@BindingParam("temporalItem") TemporalItem temporalItem) {
+      
 
         InvoiceItem item = new InvoiceItem();
         item.setJenisItem("disposal cost");
@@ -169,6 +170,23 @@ public class PopBuatInvoiceVM {
     @Command
     @NotifyChange({"listInvoiceItem"})
     public void simpanInvoice() {
+        
+        
+        try {
+            if (this.invoice.getNomorInvoice().isEmpty()) {
+                Messagebox.show("Nomor invoice belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
+                return;
+            }
+        } catch (Exception e) {
+            Messagebox.show("Nomor invoice belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        if (this.listInvoiceItem.size() <= 0) {
+            Messagebox.show("Item kosong!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+        
         try {
             
             Ebean.save(this.invoice);
@@ -189,6 +207,7 @@ public class PopBuatInvoiceVM {
     public void setCustomer(@BindingParam("customer") Customer customer,
             @BindingParam("isPengirim") boolean isPengirim) {
         this.invoice.setCustomer(customer);
+        this.listInvoiceItem = new ArrayList<>();
     }
 
     @Command

@@ -28,6 +28,8 @@ drop table outbound_item;
 
 drop table pelunasan;
 
+drop table pelunasan2;
+
 drop table penanda_tangan;
 
 drop table penerimaan;

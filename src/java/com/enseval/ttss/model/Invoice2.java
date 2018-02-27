@@ -24,6 +24,9 @@ import javax.persistence.TemporalType;
  */
 @Entity
 public class Invoice2 implements Serializable {
+    
+    @OneToMany(mappedBy = "invoice2")
+    private List<Pelunasan2> listPelunasan2;
 
     @Id
     @GeneratedValue
@@ -54,24 +57,28 @@ public class Invoice2 implements Serializable {
     String nomorSpkWo = "";
 
     String keterangan = "";
-    
+
     String Currency = "IDR";
 
     public Long getTotalNilai() {
-        Long total = listInvoiceItem2.stream().mapToLong((InvoiceItem2 item) -> item.getHargaSatuan()*item.getJmlKemasan()).sum();
+        Long total = listInvoiceItem2.stream().mapToLong((InvoiceItem2 item) -> item.getHargaSatuan() * item.getJmlKemasan()).sum();
         return total - ((total / 100) * this.getTax());
     }
-    
+
     public Long getTotalNilaiNoTax() {
-        Long total = listInvoiceItem2.stream().mapToLong((InvoiceItem2 item) -> item.getHargaSatuan()*item.getJmlKemasan()).sum();
+        Long total = listInvoiceItem2.stream().mapToLong((InvoiceItem2 item) -> item.getHargaSatuan() * item.getJmlKemasan()).sum();
         return total;
     }
-    
+
     public Long getTaxValue() {
-        Long total = listInvoiceItem2.stream().mapToLong((InvoiceItem2 item) -> item.getHargaSatuan()*item.getJmlKemasan()).sum();
+        Long total = listInvoiceItem2.stream().mapToLong((InvoiceItem2 item) -> item.getHargaSatuan() * item.getJmlKemasan()).sum();
         return ((total / 100) * this.getTax());
     }
-   
+    
+    public Long getTotalTerbayar() {
+        Long total = listPelunasan2.stream().mapToLong((Pelunasan2 item) -> item.getNilai()+item.getPotPPh()+item.getPotCN()+item.getPotAdm()).sum();
+        return total;
+    }
 
     public String getNomorInvoice() {
         return nomorInvoice;
@@ -209,14 +216,20 @@ public class Invoice2 implements Serializable {
         this.listInvoiceItem2 = listInvoiceItem2;
     }
 
-  
-
     public String getCurrency() {
         return Currency;
     }
 
     public void setCurrency(String Currency) {
         this.Currency = Currency;
+    }
+
+    public List<Pelunasan2> getListPelunasan2() {
+        return listPelunasan2;
+    }
+
+    public void setListPelunasan2(List<Pelunasan2> listPelunasan2) {
+        this.listPelunasan2 = listPelunasan2;
     }
 
 }

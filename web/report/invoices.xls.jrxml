@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoices.xls" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34e73b6c-bdf5-4f8a-a8d0-127533c4b7f0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="233954c9-01d7-4b8f-8015-54496ea525fe">
+		<field name="nomorInvoice" class="java.lang.String"/>
+		<field name="customer.nama" class="java.lang.String"/>
+		<field name="tglInvoice" class="java.util.Date"/>
+		<field name="inv" class="java.lang.Object">
+			<fieldDescription><![CDATA[_THIS]]></fieldDescription>
+		</field>
+		<field name="tax" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="INVOICES" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" x="6" y="14" width="540" height="50" uuid="7fcd8922-cfea-45de-84c0-fa1bb95dc0db">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="eaab503c-3f8e-40e4-9220-845348b102c5">
+						<dataSourceExpression><![CDATA[$P{INVOICES}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="904ac1c4-85b8-427c-ac8d-1c6b5f1258ea">
+						<jr:columnHeader style="table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="154cfe92-a6b0-4a85-be29-d0aedf863f33"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<text><![CDATA[NO. INVOICE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="e285aad3-18a1-46af-8311-8d8a5442bbcc"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nomorInvoice}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="50f2ea52-83b0-498c-b589-e15406172b3d">
+						<jr:columnHeader style="table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="eb159af1-5192-45ec-9c4a-afad9e2bc814"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<text><![CDATA[CUSTOMER]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="b6b1146e-ad0a-48ec-a069-7894654762e1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{customer.nama}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="0c33b81c-7ee6-4e90-b170-0e1c59e86c43">
+						<jr:columnHeader style="table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="7e0411a0-3946-4fbf-9250-b8cea33ddda8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<text><![CDATA[INVOICE DATE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20">
+							<textField pattern="dd-MM-yyyy" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="0c6f9c92-c9ee-4203-8572-27e342d38489"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{tglInvoice}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="1f6ca618-c377-4b5b-9c53-dc13bd445e13">
+						<jr:columnHeader style="table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="533cc750-5540-4d8e-a44e-58cdb0cb2fb7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<text><![CDATA[NILAI INVOICE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20">
+							<textField pattern="#,##0.00" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="cbef6099-f4cd-4bf4-a603-e3ccc10867eb"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{inv}.getTotalNilaiNoTax()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="e4741d35-f9d9-480d-8506-ed04f585e22d">
+						<jr:columnHeader style="table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="7a16a1f9-0788-49e9-b615-a620f94326ee"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<text><![CDATA[TAX]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="edcbd45b-70e5-4af2-9b4f-90373972cecd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{tax}+" %"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="07c822c5-de08-48bf-b30c-4d5b88a47e1c">
+						<jr:columnHeader style="table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="cf600d67-67c5-4a0a-836b-598a42b8655e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<text><![CDATA[TOTAL NILAI]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20">
+							<textField pattern="#,##0.00" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="20" uuid="b8623ae8-9522-4021-87fd-8172caf7e85e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{inv}.getTotalNilai()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

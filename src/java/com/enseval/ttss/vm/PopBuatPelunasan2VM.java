@@ -7,7 +7,9 @@ package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.Invoice;
+import com.enseval.ttss.model.Invoice2;
 import com.enseval.ttss.model.Pelunasan;
+import com.enseval.ttss.model.Pelunasan2;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
 import java.text.DecimalFormat;
@@ -36,7 +38,7 @@ import org.zkoss.zul.Window;
  *
  * @author asus
  */
-public class PopBuatPelunasanVM {
+public class PopBuatPelunasan2VM {
 
     @Wire("#pop_buat_pelunasan")
     private Window winBuatPelunasan;
@@ -46,25 +48,25 @@ public class PopBuatPelunasanVM {
     Checkbox chkPph;
 
     User userLogin;
-    Pelunasan pelunasan;
+    Pelunasan2 pelunasan2;
     boolean editMode = false;
 
     @AfterCompose
-    public void initSetup(@ContextParam(ContextType.VIEW) final Component view, @ExecutionArgParam("pelunasan") Pelunasan p) {
+    public void initSetup(@ContextParam(ContextType.VIEW) final Component view, @ExecutionArgParam("pelunasan2") Pelunasan2 p) {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         if(p != null){
-            this.pelunasan = p;
+            this.pelunasan2 = p;
             this.editMode = true;
         }else{
-            this.pelunasan = new Pelunasan();
+            this.pelunasan2 = new Pelunasan2();
         }
-        this.pelunasan.setTglPelunasan(new Date());
+        this.pelunasan2.setTglPelunasan(new Date());
         Selectors.wireComponents(view, (Object) this, false);
     }
 
     @Command
     public void showInvoices() {
-        Executions.createComponents("pop_invoices.zul", null, null);
+        Executions.createComponents("pop_invoices2.zul", null, null);
     }
 
     @Command
@@ -79,41 +81,47 @@ public class PopBuatPelunasanVM {
     }
 
     @Command
-    @NotifyChange({"pelunasan"})
+    @NotifyChange({"pelunasan2"})
     public void calculate() {
         if(!editMode){
-            this.pelunasan.setNilai(this.pelunasan.getInvoice().getTotalNilaiNoTax() - this.pelunasan.getInvoice().getTotalTerbayar() - this.pelunasan.getPotPPh() - this.pelunasan.getPotAdm() - this.pelunasan.getPotCN());
+            this.pelunasan2.setNilai(this.pelunasan2.getInvoice2().getTotalNilaiNoTax() - this.pelunasan2.getInvoice2().getTotalTerbayar() - this.pelunasan2.getPotPPh() - this.pelunasan2.getPotAdm() - this.pelunasan2.getPotCN());
         }
         
     }
 
     @Command
     public void simpanPelunasan() {
-        if(this.pelunasan.getNilai() < 0){
+        if(this.pelunasan2.getNilai() < 0){
             Messagebox.show("Nilai pembayaran <= 0 !", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
         }
         if(editMode){
-            Ebean.update(this.pelunasan);
+            Ebean.update(this.pelunasan2);
         }else{
-            Ebean.save(this.pelunasan);
+            Ebean.save(this.pelunasan2);
+        }
+        
+        if(editMode){
+            Ebean.update(this.pelunasan2);
+        }else{
+            Ebean.save(this.pelunasan2);
         }
         BindUtils.postGlobalCommand(null, null, "refresh", null);
         this.winBuatPelunasan.detach();
     }
 
     @Command
-    @NotifyChange({"pelunasan"})
+    @NotifyChange({"pelunasan2"})
     public void setPPh() {
         this.boxPph.setReadonly(this.chkPph.isChecked());
-        this.pelunasan.setPotPPh(this.chkPph.isChecked() ? this.pelunasan.getInvoice().getTaxValue() : 0L);
+        this.pelunasan2.setPotPPh(this.chkPph.isChecked() ? this.pelunasan2.getInvoice2().getTaxValue() : 0L);
         calculate();
     }
 
     @GlobalCommand
-    @NotifyChange({"pelunasan"})
-    public void setInvoice(@BindingParam("invoice") Invoice invoice) {
-        this.pelunasan.setInvoice(invoice);
+    @NotifyChange({"pelunasan2"})
+    public void setInvoice(@BindingParam("invoice2") Invoice2 invoice2) {
+        this.pelunasan2.setInvoice2(invoice2);
         calculate();
     }
 
@@ -133,13 +141,7 @@ public class PopBuatPelunasanVM {
         this.userLogin = userLogin;
     }
 
-    public Pelunasan getPelunasan() {
-        return pelunasan;
-    }
-
-    public void setPelunasan(Pelunasan pelunasan) {
-        this.pelunasan = pelunasan;
-    }
+   
 
     public Longbox getBoxPph() {
         return boxPph;
@@ -163,6 +165,14 @@ public class PopBuatPelunasanVM {
 
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
+    }
+
+    public Pelunasan2 getPelunasan2() {
+        return pelunasan2;
+    }
+
+    public void setPelunasan2(Pelunasan2 pelunasan2) {
+        this.pelunasan2 = pelunasan2;
     }
 
 }

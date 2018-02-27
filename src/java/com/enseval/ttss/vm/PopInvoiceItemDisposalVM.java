@@ -33,6 +33,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 /**
@@ -155,6 +156,16 @@ public class PopInvoiceItemDisposalVM {
 
     @Command
     public void pilihItem(@BindingParam("item") TemporalItem temporalItem) {
+        
+        if (temporalItem.getJmlKemasan() > temporalItem.getListJmlKemasan().size()) {
+            Messagebox.show("Maksimal total kemasan untuk item ini : " + temporalItem.getListJmlKemasan().size() + " " + temporalItem.getSatuanKemasan(), "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+        
+        if (temporalItem.getJmlKemasan() <= 0) {
+            Messagebox.show("Minimum total kemasan : 1 " + temporalItem.getSatuanKemasan(), "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
 
         Map m = new HashMap();
         m.put("temporalItem", temporalItem);

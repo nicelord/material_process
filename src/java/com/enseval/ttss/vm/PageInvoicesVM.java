@@ -32,10 +32,13 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
@@ -235,6 +238,46 @@ public class PageInvoicesVM {
         }
         BindUtils.postGlobalCommand(null, null, "refresh", null);
 
+    }
+    
+    
+    @Command
+    public void exportExcel() {
+        File filenya = new File(Util.setting("pdf_path") + "invoices.xls");
+
+        try {
+            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/invoices.xls.jasper");
+            JRDataSource datasource = new JRBeanCollectionDataSource(this.listInvoice);
+
+            Map map = new HashMap();
+            map.put("INVOICES", datasource);
+
+            JasperPrint report = JasperFillManager.fillReport(streamReport, map, new JREmptyDataSource(1));
+            OutputStream outputStream = new FileOutputStream(filenya);
+
+            final JRXlsExporter exporterXLS = new JRXlsExporter();
+            exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, (Object) report);
+            exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, (Object) outputStream);
+            exporterXLS.setParameter(JRXlsExporterParameter.IS_COLLAPSE_ROW_SPAN, Boolean.TRUE);
+            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, (Object) Boolean.FALSE);
+            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_DETECT_CELL_TYPE, (Object) Boolean.TRUE);
+            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, (Object) Boolean.FALSE);
+            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, (Object) Boolean.TRUE);
+            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_COLUMNS, (Object) Boolean.TRUE);
+            exporterXLS.exportReport();
+            streamReport.close();
+            outputStream.close();
+
+            FileInputStream inputStream = new FileInputStream(filenya);
+            Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
+
+            filenya.delete();
+
+        } catch (JRException | FileNotFoundException ex4) {
+            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex4);
+        } catch (IOException ex2) {
+            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex2);
+        }
     }
 
     public List<Invoice> getListInvoice() {

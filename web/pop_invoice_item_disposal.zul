@@ -81,7 +81,7 @@
                     <listcell label="@load(s.kodeManifest)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell label="@load(s.namaTeknik)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell>
-                        <combobox hflex="3"
+<!--                        <combobox hflex="3"
                                   height="100%"
                                   value="@bind(s.jmlKemasan)"
                                   readonly="true" 
@@ -93,7 +93,9 @@
                                 <comboitem label="@load(each)"/>
                             </template>
                         
-                        </combobox>
+                        </combobox>-->
+                        
+                        <longbox class="form-control input-primary" constraint="no empty,no negative" value="@bind(s.jmlKemasan)"/>
                         
                         <!--<spinner value="@bind(s.jmlKemasan)" hflex="3" vflex="3" height="100%" class="input-primary" constraint="@load('no empty, min 1 max '.concat(s.jmlKemasan).concat(': no empty, minimal : 1, maksimal : '.concat(s.jmlKemasan)))"/>-->
                         

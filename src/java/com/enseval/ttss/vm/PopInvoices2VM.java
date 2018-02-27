@@ -44,26 +44,26 @@ import org.zkoss.zul.Window;
  *
  * @author asus
  */
-public class PopInvoicesVM {
+public class PopInvoices2VM {
 
     @Wire("#pop_invoices")
     Window winPopInvoice;
 
-    List<Invoice> listInvoice = new ArrayList<>();
+    List<Invoice2> listInvoice2 = new ArrayList<>();
 
     String filterCust = "", filterNo = "";
 
     @AfterCompose
     public void initSetup(@ContextParam(ContextType.VIEW) Component view) {
-        this.listInvoice = Ebean.find(Invoice.class).orderBy("id desc").findList()
+        this.listInvoice2 = Ebean.find(Invoice2.class).orderBy("id desc").findList()
                 .stream().filter(p -> p.getTotalNilai() - p.getTotalTerbayar() > 0L).collect(Collectors.toList());
         Selectors.wireComponents(view, this, false);
     }
 
     @Command
-    public void pilihInvoice(@BindingParam("invoice") Invoice invoice) {
+    public void pilihInvoice(@BindingParam("invoice2") Invoice2 invoice2) {
         Map m = new HashMap();
-        m.put("invoice", invoice);
+        m.put("invoice2", invoice2);
         BindUtils.postGlobalCommand(null, null, "setInvoice", m);
         winPopInvoice.detach();
     }
@@ -72,7 +72,7 @@ public class PopInvoicesVM {
     @NotifyChange({"*"})
     public void saring() {
 
-        this.listInvoice = Ebean.find(Invoice.class)
+        this.listInvoice2 = Ebean.find(Invoice2.class)
                 .where()
                 .contains("customer.nama", filterCust)
                 .contains("nomorInvoice", filterNo)
@@ -99,13 +99,7 @@ public class PopInvoicesVM {
         this.winPopInvoice = winPopInvoice;
     }
 
-    public List<Invoice> getListInvoice() {
-        return listInvoice;
-    }
-
-    public void setListInvoice(List<Invoice> listInvoice) {
-        this.listInvoice = listInvoice;
-    }
+   
 
     public String getFilterCust() {
         return filterCust;
@@ -121,6 +115,14 @@ public class PopInvoicesVM {
 
     public void setFilterNo(String filterNo) {
         this.filterNo = filterNo;
+    }
+
+    public List<Invoice2> getListInvoice2() {
+        return listInvoice2;
+    }
+
+    public void setListInvoice2(List<Invoice2> listInvoice2) {
+        this.listInvoice2 = listInvoice2;
     }
 
 }

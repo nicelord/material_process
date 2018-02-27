@@ -57,12 +57,11 @@ public class PopEditInvoice2VM {
     List<Invoice2> listTerm = new ArrayList<>();
     List<Invoice2> listGatePass = new ArrayList<>();
     List<Invoice2> listNmrKendaraan = new ArrayList<>();
-    
 
     @AfterCompose
     public void initSetup(@ContextParam(ContextType.VIEW) final Component view,
             @ExecutionArgParam("invoice2") Invoice2 invoice2) {
-        
+
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         this.invoice2 = invoice2;
         this.listInvoiceItem2 = this.invoice2.getListInvoiceItem2();
@@ -74,20 +73,22 @@ public class PopEditInvoice2VM {
         Selectors.wireComponents(view, (Object) this, false);
         doCount();
     }
-    
+
     @Command
     @NotifyChange({"invoice"})
-    public void currencyIDR(){
+    public void currencyIDR() {
         this.invoice2.setCurrency("IDR");
     }
+
     @Command
     @NotifyChange({"invoice"})
-    public void currencySGD(){
+    public void currencySGD() {
         this.invoice2.setCurrency("SGD");
     }
+
     @Command
     @NotifyChange({"invoice"})
-    public void currencyUSD(){
+    public void currencyUSD() {
         this.invoice2.setCurrency("USD");
     }
 
@@ -98,15 +99,14 @@ public class PopEditInvoice2VM {
         Executions.createComponents("pop_customer.zul", null, m);
     }
 
-    
     @Command
     @NotifyChange({"listInvoiceItem2"})
-    public void addTransportItem(){
+    public void addTransportItem() {
         InvoiceItem2 item2 = new InvoiceItem2();
         item2.setJmlKemasan(new Long(1));
         item2.setSatuanKemasan("");
         item2.setItemDetail("");
-        
+
         this.listInvoiceItem2.add(item2);
         this.invoice2.setListInvoiceItem2(listInvoiceItem2);
     }
@@ -116,15 +116,30 @@ public class PopEditInvoice2VM {
     public void hapusItem(@BindingParam("item") InvoiceItem2 invoiceItem2) {
         this.listInvoiceItem2.remove(invoiceItem2);
         Ebean.delete(invoiceItem2);
-        
+
     }
 
     @Command
     public void simpanInvoice() {
         try {
-            
+            if (this.invoice2.getNomorInvoice().isEmpty()) {
+                Messagebox.show("Nomor invoice belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
+                return;
+            }
+        } catch (Exception e) {
+            Messagebox.show("Nomor invoice belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        if (this.listInvoiceItem2.size() <= 0) {
+            Messagebox.show("Item kosong!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        try {
+
             Ebean.update(this.invoice2);
-            
+
             for (InvoiceItem2 invoiceItem2 : listInvoiceItem2) {
                 invoiceItem2.setInvoice2(this.invoice2);
                 Ebean.save(invoiceItem2);
@@ -139,10 +154,11 @@ public class PopEditInvoice2VM {
     }
 
     @GlobalCommand
-    @NotifyChange({"invoice"})
+    @NotifyChange({"invoice","listInvoiceItem"})
     public void setCustomer(@BindingParam("customer") Customer customer,
             @BindingParam("isPengirim") boolean isPengirim) {
         this.invoice2.setCustomer(customer);
+        this.listInvoiceItem2 = new ArrayList<>();
     }
 
     @Command
@@ -170,8 +186,6 @@ public class PopEditInvoice2VM {
     public void setUserLogin(User userLogin) {
         this.userLogin = userLogin;
     }
-
- 
 
     public Long getTotalHarga() {
         return totalHarga;
@@ -236,7 +250,5 @@ public class PopEditInvoice2VM {
     public void setListNmrKendaraan(List<Invoice2> listNmrKendaraan) {
         this.listNmrKendaraan = listNmrKendaraan;
     }
-
-    
 
 }

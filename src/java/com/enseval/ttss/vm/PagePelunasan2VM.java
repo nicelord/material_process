@@ -2,10 +2,10 @@ package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.Invoice;
-import com.enseval.ttss.model.Invoice2;
 import com.enseval.ttss.model.InvoiceItem;
-import com.enseval.ttss.model.InvoiceItem2;
 import com.enseval.ttss.model.Manifest;
+import com.enseval.ttss.model.Pelunasan;
+import com.enseval.ttss.model.Pelunasan2;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
@@ -54,27 +54,37 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Filedownload;
+import org.zkoss.zul.Longbox;
 import org.zkoss.zul.Messagebox;
 
-public class PageInvoices2VM {
+public class PagePelunasan2VM {
+    
+    
 
-    List<Invoice2> listInvoice2 = new ArrayList<>();
-    Invoice2 selectedInvoice2;
+    List<Pelunasan2> listPelunasan2 = new ArrayList<>();
     User userLogin;
 
-    String filterNo = "", filterCust = "";
+    String filterNo = "", filterCust = "", filterInputKode = "", filterRemark = "";
     Date tglAwal, tglAkhir;
 
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        this.listInvoice2 = Ebean.find(Invoice2.class).orderBy("id desc").findList();
+        this.listPelunasan2 = Ebean.find(Pelunasan2.class).orderBy("id desc").findList();
     }
 
     @Command
-    public void showWinBuatInvoice() {
-        Executions.createComponents("pop_buat_invoice2.zul", (Component) null, null);
+    public void showWinBuatPelunasan() {
+        Executions.createComponents("pop_buat_pelunasan2.zul", (Component) null, null);
+    }
+    
+    @Command
+    public void showDetailPelunasan(@BindingParam("pelunasan") Pelunasan2 pelunasan2){
+        Map m = new HashMap();
+        m.put("pelunasan2", pelunasan2);
+        Executions.createComponents("pop_buat_pelunasan2.zul", (Component) null, m);
     }
 
     @Command
@@ -82,176 +92,38 @@ public class PageInvoices2VM {
     public void saring() {
 
         if (this.tglAwal != null && this.tglAkhir != null) {
-            this.listInvoice2 = Ebean.find(Invoice2.class)
+            this.listPelunasan2 = Ebean.find(Pelunasan2.class)
                     .where()
-                    .contains("nomorInvoice", filterNo)
-                    .contains("customer.nama", filterCust)
+                    .contains("kodeInput", filterInputKode)
+                    .contains("invoice2.nomorInvoice", filterNo)
+                    .contains("invoice2.customer.nama", filterCust)
+                    .contains("remark", filterRemark)
                     .between("tglInvoice",
                             Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                             Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                     .orderBy("id desc").findList();
         } else {
-            this.listInvoice2 = Ebean.find(Invoice2.class)
+            this.listPelunasan2 = Ebean.find(Pelunasan2.class)
                     .where()
-                    .contains("nomorInvoice", filterNo)
-                    .contains("customer.nama", filterCust)
+                    .contains("kodeInput", filterInputKode)
+                    .contains("invoice2.nomorInvoice", filterNo)
+                    .contains("invoice2.customer.nama", filterCust)
+                    .contains("remark", filterRemark)
                     .orderBy("id desc").findList();
         }
-
-    }
-
-    @Command
-    @NotifyChange({"*"})
-    public void resetSaringTgl() {
-        this.tglAwal = null;
-        this.tglAkhir = null;
-        this.listInvoice2 = Ebean.find(Invoice2.class).orderBy("id desc").findList();
-    }
-
-    @Command
-    public void showFormInvoice() {
-        Executions.createComponents("pop_buat_invoice2.zul", (Component) null, null);
-    }
-
-    @Command
-    @NotifyChange({"selectedInvoice"})
-    public void showDetail(@BindingParam("invoice2") final Invoice2 i) {
-        this.selectedInvoice2 = i;
-    }
-
-    @GlobalCommand
-    @NotifyChange({"*"})
-    public void refresh() {
-        this.listInvoice2 = Ebean.find(Invoice2.class).orderBy("id desc").findList();
-    }
-
-    @Command
-    public void showDetailInvoice(@BindingParam("invoice2") Invoice2 invoice2) {
-        Map m = new HashMap();
-        m.put("invoice2", invoice2);
-        Executions.createComponents("pop_view_invoice2.zul", (Component) null, m);
-    }
-
-    @Command
-    public void showEditInvoice(@BindingParam("invoice2") Invoice2 invoice2) {
-        Map m = new HashMap();
-        m.put("invoice2", invoice2);
-        Executions.createComponents("pop_edit_invoice2.zul", (Component) null, m);
-    }
-
-    @Command
-    public void hapusInvoice(@BindingParam("invoice2") Invoice2 invoice2) {
-        Messagebox.show("Data invoice akan dihapus, dan item-item didalamnya akan masuk kembali ke kategori item yang belum di invoice. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
-            if (t.getName().equals("onOK")) {
-                for (InvoiceItem2 item : invoice2.getListInvoiceItem2()) {
-                    Ebean.delete(item);
-                }
-                Ebean.delete(invoice2);
-                BindUtils.postGlobalCommand(null, null, "refresh", null);
-            }
-        });
-    }
-
-    @Command
-    public String format(final long nilai) {
-        final DecimalFormat kursIndonesia = (DecimalFormat) NumberFormat.getCurrencyInstance();
-        final DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
-        formatRp.setCurrencySymbol("");
-        formatRp.setMonetaryDecimalSeparator(',');
-        formatRp.setGroupingSeparator('.');
-        kursIndonesia.setDecimalFormatSymbols(formatRp);
-        return kursIndonesia.format(nilai);
-    }
-
-    @Command
-    public void cetakInvoice2(@BindingParam("invoice2") Invoice2 invoice2) {
-
-        Invoice2 invoicex = invoice2;
-
-        Long totalHarga = 0L;
-        for (InvoiceItem2 item : invoicex.getListInvoiceItem2()) {
-            totalHarga += item.getHargaSatuan() * item.getJmlKemasan();
-        }
-
-        Long net = totalHarga - (totalHarga / 100) * invoicex.getTax();
-
-        int size = invoicex.getListInvoiceItem2().size();
-        int kurang = 13 - size;
-        if (kurang > 0) {
-            for (int i = 0; i <= kurang; i++) {
-                InvoiceItem2 ii = new InvoiceItem2();
-                invoicex.getListInvoiceItem2().add(ii);
-            }
-        }
-
-        File filenya = new File(Util.setting("pdf_path") + "invoice2.pdf");
-        filenya.delete();
-
-        try {
-            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/invoice2.pdf.jasper");
-            JRDataSource datasource = new JRBeanCollectionDataSource(invoicex.getListInvoiceItem2());
-            JRDataSource beanColDataSource = new JRBeanCollectionDataSource(invoicex.getListInvoiceItem2());
-
-            Map map = new HashMap();
-            map.put("REPORT_DATA_SOURCE", datasource);
-            map.put("INVOICE_ITEM", beanColDataSource);
-            map.put("NAMA_CUSTOMER", invoicex.getCustomer().getNama());
-            map.put("ALAMAT_CUSTOMER", invoicex.getCustomer().getAlamat());
-            map.put("TELP_CUSTOMER", invoicex.getCustomer().getNomorKontak());
-            map.put("FAX_CUSTOMER", invoicex.getCustomer().getFax());
-            map.put("CC", invoicex.getCcPerson());
-            map.put("DEPT", invoicex.getCcDept());
-            map.put("TOTAL", totalHarga);
-            map.put("NET", net);
-            map.put("TAX", invoicex.getTax());
-            map.put("NO_INVOICE", invoicex.getNomorInvoice());
-            map.put("NPWP", Util.setting("npwp"));
-            map.put("TGL", invoicex.getTglInvoice());
-            map.put("TERM", invoicex.getTerm());
-            map.put("PO", invoicex.getNomorPo());
-            map.put("DO", invoicex.getNomorDo());
-            map.put("CUR", invoicex.getCurrency());
-            map.put("TGL_ANGKUT", invoicex.getTglAngkut());
-            map.put("PLAT", invoicex.getNmrKendaraan());
-            map.put("TTD", Util.setting("invoice_ttd_person"));
-            map.put("JBT", Util.setting("invoice_ttd_jabatan"));
-            JasperPrint report = JasperFillManager.fillReport(streamReport, map);
-            OutputStream outputStream = new FileOutputStream(filenya);
-
-            JRExporter exporter = new JRPdfExporter();
-            exporter.setExporterInput(new SimpleExporterInput(report));
-            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
-            SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
-            configuration.setMetadataAuthor("Reza Elborneo");  //why not set some config as we like
-            exporter.setConfiguration(configuration);
-            exporter.exportReport();
-            streamReport.close();
-            outputStream.close();
-
-            FileInputStream inputStream = new FileInputStream(filenya);
-            Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
-
-            filenya.delete();
-
-        } catch (JRException | FileNotFoundException ex4) {
-            Logger.getLogger(PageInvoices2VM.class.getName()).log(Level.SEVERE, null, ex4);
-        } catch (IOException ex2) {
-            Logger.getLogger(PageInvoices2VM.class.getName()).log(Level.SEVERE, null, ex2);
-        }
-        BindUtils.postGlobalCommand(null, null, "refresh", null);
 
     }
     
     @Command
     public void exportExcel() {
-        File filenya = new File(Util.setting("pdf_path") + "invoices2.xls");
+        File filenya = new File(Util.setting("pdf_path") + "pelunasan2.xls");
 
         try {
-            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/invoices2.xls.jasper");
-            JRDataSource datasource = new JRBeanCollectionDataSource(this.listInvoice2);
+            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/pelunasan2.xls.jasper");
+            JRDataSource datasource = new JRBeanCollectionDataSource(this.listPelunasan2);
 
             Map map = new HashMap();
-            map.put("INVOICES", datasource);
+            map.put("PELUNASAN", datasource);
 
             JasperPrint report = JasperFillManager.fillReport(streamReport, map, new JREmptyDataSource(1));
             OutputStream outputStream = new FileOutputStream(filenya);
@@ -281,24 +153,154 @@ public class PageInvoices2VM {
         }
     }
 
-    public List<Invoice2> getListInvoice2() {
-        return listInvoice2;
+    @Command
+    @NotifyChange({"*"})
+    public void resetSaringTgl() {
+        this.tglAwal = null;
+        this.tglAkhir = null;
+        saring();
     }
 
-    public void setListInvoice2(List<Invoice2> listInvoice2) {
-        this.listInvoice2 = listInvoice2;
+    @Command
+    public void showFormInvoice() {
+        Executions.createComponents("pop_buat_invoice.zul", (Component) null, null);
     }
 
-    public Invoice2 getSelectedInvoice2() {
-        return selectedInvoice2;
+   
+
+    @GlobalCommand
+    @NotifyChange({"*"})
+    public void refresh() {
+        saring();
     }
 
-    public void setSelectedInvoice2(Invoice2 selectedInvoice2) {
-        this.selectedInvoice2 = selectedInvoice2;
+    @Command
+    public void hapusPelunasan(@BindingParam("pelunasan") Pelunasan2 pelunasan2) {
+        Messagebox.show("Data pelunasan akan dihapus dan tidak akan bisa di restore kembali. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
+            if (t.getName().equals("onOK")) {
+                Ebean.delete(pelunasan2);
+                BindUtils.postGlobalCommand(null, null, "refresh", null);
+            }
+        });
     }
 
+    @Command
+    public String format(final long nilai) {
+        final DecimalFormat kursIndonesia = (DecimalFormat) NumberFormat.getCurrencyInstance();
+        final DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+        formatRp.setCurrencySymbol("");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        return kursIndonesia.format(nilai);
+    }
+
+    @Command
+    public void cetakInvoice(@BindingParam("invoice") Invoice invoice) {
+
+        Invoice invoice2 = invoice;
+
+        Long totalHarga = 0L;
+        for (InvoiceItem item : invoice2.getListInvoiceItem()) {
+            totalHarga += item.getHargaSatuan() * item.getJmlKemasan();
+        }
+
+        Long net = totalHarga - (totalHarga / 100) * invoice2.getTax();
+
+        int size = invoice2.getListInvoiceItem().size();
+        int kurang = 13 - size;
+        if (kurang > 0) {
+            for (int i = 0; i <= kurang; i++) {
+                InvoiceItem ii = new InvoiceItem();
+                invoice2.getListInvoiceItem().add(ii);
+            }
+        }
+
+        File filenya = new File(Util.setting("pdf_path") + "invoice.pdf");
+        filenya.delete();
+
+        try {
+            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/invoice.pdf.jasper");
+            JRDataSource datasource = new JRBeanCollectionDataSource(invoice2.getListInvoiceItem());
+            JRDataSource beanColDataSource = new JRBeanCollectionDataSource(invoice2.getListInvoiceItem());
+
+            Map map = new HashMap();
+            map.put("REPORT_DATA_SOURCE", datasource);
+            map.put("INVOICE_ITEM", beanColDataSource);
+            map.put("NAMA_CUSTOMER", invoice2.getCustomer().getNama());
+            map.put("ALAMAT_CUSTOMER", invoice2.getCustomer().getAlamat());
+            map.put("TELP_CUSTOMER", invoice2.getCustomer().getNomorKontak());
+            map.put("FAX_CUSTOMER", invoice2.getCustomer().getFax());
+            map.put("CC", invoice2.getCcPerson());
+            map.put("DEPT", invoice2.getCcDept());
+            map.put("TOTAL", totalHarga);
+            map.put("NET", net);
+            map.put("TAX", invoice2.getTax());
+            map.put("NO_INVOICE", invoice2.getNomorInvoice());
+            map.put("NPWP", Util.setting("npwp"));
+            map.put("TGL", invoice2.getTglInvoice());
+            map.put("TERM", invoice2.getTerm());
+            map.put("PO", invoice2.getNomorPo());
+            map.put("DO", invoice2.getNomorDo());
+            map.put("CUR", invoice2.getCurrency());
+            map.put("TGL_ANGKUT", invoice2.getTglAngkut());
+            map.put("PLAT", invoice2.getNmrKendaraan());
+            map.put("TTD", Util.setting("invoice_ttd_person"));
+            map.put("JBT", Util.setting("invoice_ttd_jabatan"));
+            JasperPrint report = JasperFillManager.fillReport(streamReport, map);
+            OutputStream outputStream = new FileOutputStream(filenya);
+
+            JRExporter exporter = new JRPdfExporter();
+            exporter.setExporterInput(new SimpleExporterInput(report));
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+            SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
+            configuration.setMetadataAuthor("Reza Elborneo");  //why not set some config as we like
+            exporter.setConfiguration(configuration);
+            exporter.exportReport();
+            streamReport.close();
+            outputStream.close();
+
+            FileInputStream inputStream = new FileInputStream(filenya);
+            Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
+
+            filenya.delete();
+
+        } catch (JRException | FileNotFoundException ex4) {
+            Logger.getLogger(PagePelunasan2VM.class.getName()).log(Level.SEVERE, null, ex4);
+        } catch (IOException ex2) {
+            Logger.getLogger(PagePelunasan2VM.class.getName()).log(Level.SEVERE, null, ex2);
+        }
+        BindUtils.postGlobalCommand(null, null, "refresh", null);
+
+    }
+
+    public List<Pelunasan2> getListPelunasan2() {
+        return listPelunasan2;
+    }
+
+    public void setListPelunasan2(List<Pelunasan2> listPelunasan2) {
+        this.listPelunasan2 = listPelunasan2;
+    }
 
   
+
+    public String getFilterInputKode() {
+        return filterInputKode;
+    }
+
+    public void setFilterInputKode(String filterInputKode) {
+        this.filterInputKode = filterInputKode;
+    }
+
+    public String getFilterRemark() {
+        return filterRemark;
+    }
+
+    public void setFilterRemark(String filterRemark) {
+        this.filterRemark = filterRemark;
+    }
+
+    
 
     public User getUserLogin() {
         return userLogin;

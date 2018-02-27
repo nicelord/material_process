@@ -1,0 +1,150 @@
+<?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<zk>   
+    <style>
+        .z-combobox-input{
+        height : 100%;
+        width : 100%;
+        }  
+        
+        input[type="checkbox"], input[type="radio"] {
+        margin : 0px 0px 0px 0px;
+        padding: 0px;
+        box-sizing: border-box;
+        }
+        .z-textbox[readonly], .z-decimalbox[readonly], .z-intbox[readonly], .z-longbox[readonly], .z-doublebox[readonly]{
+        border-color: #ccc;
+        }
+        
+        .z-datebox-input{
+        height:100%;
+        }
+        
+        
+        .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent !important}
+    </style>
+
+
+    <window 
+        id="pop_buat_pelunasan"  
+        style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
+        position="center,top"  
+        mode="modal" 
+        width="50%" vflex="1" 
+        title="FORM PELUNASAN 2" 
+        border="normal" 
+        apply="org.zkoss.bind.BindComposer" 
+        viewModel="@id('vm') @init('com.enseval.ttss.vm.PopBuatPelunasan2VM')" 
+        closable="true">
+        <vlayout>
+            <div class="input-group" width="100%">
+                <span class="input-group-addon">
+                    Nomor Invoice : 
+                </span>
+                <textbox sclass="form-control input-primary" hflex="3" placeholder="Nomor Invoice" readonly="true" value="@load(vm.pelunasan2.invoice2.nomorInvoice)"/>
+                <span class="input-group-btn">
+                    <button iconSclass="glyphicon glyphicon-search" sclass="btn-primary"  width="50px" onClick="@command('showInvoices')"/>
+                </span>
+            </div>
+           
+            <div class="input-group" width="100%">
+                <span class="input-group-addon">
+                    Customer : 
+                </span>
+                <textbox sclass="form-control input-primary" hflex="3" placeholder="Nomor Invoice" readonly="true" value="@load(vm.pelunasan2.invoice2.customer.nama)"/>
+            </div>
+            <hlayout>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Nilai Invoice :
+                    </span>
+                    <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" value="@load(vm.pelunasan2.invoice2.getTotalNilaiNoTax())"/>
+                </div>
+                <div class="input-group" hflex="2">
+                    <span class="input-group-addon">
+                        Tax :
+                    </span>
+                    <textbox sclass="form-control input-primary" hflex="3" placeholder="Tax" readonly="true" value="@load(''.concat(vm.pelunasan2.invoice2.tax).concat('%'))"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Sisa Tagihan :
+                    </span>
+                    <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" value="@load(vm.pelunasan2.invoice2.getTotalNilaiNoTax()-vm.pelunasan2.invoice2.getTotalTerbayar())"/>
+                </div>
+            </hlayout>
+            <hlayout>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        <checkbox id="chk_pph" disabled="@load(vm.pelunasan2.invoice2 eq null)" onCheck="@command('setPPh')" /> Pot. PPh :
+                    </span>
+                    <longbox id="longbox_pph" readonly="@load(vm.pelunasan2.invoice2 eq null || vm.chkPph.isChecked())" class="form-control input-primary" maxlength="20" format=",###.#" value="@bind(vm.pelunasan2.potPPh)" onBlur="@command('calculate')"/>
+                    
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Pot. CN :
+                    </span>
+                    <longbox readonly="@load(vm.pelunasan2.invoice2 eq null)" class="form-control input-primary" maxlength="20" format=",###.#" value="@bind(vm.pelunasan2.potCN)" onBlur="@command('calculate')"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Pot. Adm :
+                    </span>
+                    <longbox readonly="@load(vm.pelunasan2.invoice2 eq null)" class="form-control input-primary" maxlength="20" format=",###.#"  value="@bind(vm.pelunasan2.potAdm)" onBlur="@command('calculate')"/>
+                </div>
+            </hlayout>
+            <hlayout>
+                
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Nilai Pembayaran :
+                    </span>
+                    <longbox readonly="@load(vm.pelunasan2.invoice2 eq null)" class="form-control input-primary" maxlength="20" format=",###.#" value="@bind(vm.pelunasan2.nilai)"/>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        TOTAL :
+                    </span>
+                    <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" value="@bind(vm.pelunasan2.nilai+vm.pelunasan2.potPPh+vm.pelunasan2.potCN+vm.pelunasan2.potAdm)"/>
+                </div>
+               
+            </hlayout>
+            
+        </vlayout>
+        <separator spacing="20px" bar="true"/>
+        <vlayout>
+            <hlayout>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon" hflex="3">
+                        Tgl Pembayaran :
+                    </span>
+                    <datebox format="dd-MM-yyyy"
+                             readonly="true"
+                             style="height:30px;"
+                             hflex="3"
+                             buttonVisible="@load(vm.pelunasan2.invoice2 ne null)"
+                             value="@bind(vm.pelunasan2.tglPelunasan)"/>
+                </div> 
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Kode Input :
+                    </span>
+                    <textbox readonly="@load(vm.pelunasan2.invoice2 eq null)" sclass="form-control input-primary" hflex="3" placeholder="kode input" value="@bind(vm.pelunasan2.kodeInput)"/>
+                </div>
+            
+            </hlayout>
+            <div class="input-group" hflex="3">
+                <span class="input-group-addon">
+                    Remark :
+                </span>
+                <textbox readonly="@load(vm.pelunasan2.invoice2 eq null)" sclass="form-control input-primary" hflex="3" placeholder="remark" value="@bind(vm.pelunasan2.remark)"/>
+            </div>
+        </vlayout>
+        <separator spacing="20px" bar="true"/>
+        <div class="btn-group" style="float:right;">
+            <button disabled="@load(vm.pelunasan2.invoice2 eq null)" onClick="@command('simpanPelunasan')" sclass="btn-success" iconSclass="glyphicon glyphicon-floppy-disk" label="OK">
+            </button>
+            <button onClick="pop_buat_pelunasan.detach()">BATAL</button>
+        </div>
+    </window>
+</zk>

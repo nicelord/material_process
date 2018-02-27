@@ -120,6 +120,22 @@ public class PopBuatInvoice2VM {
     @Command
     @NotifyChange({"listInvoiceItem2"})
     public void simpanInvoice() {
+        
+        try {
+            if (this.invoice2.getNomorInvoice().isEmpty()) {
+                Messagebox.show("Nomor invoice belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
+                return;
+            }
+        } catch (Exception e) {
+            Messagebox.show("Nomor invoice belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        if (this.listInvoiceItem2.size() <= 0) {
+            Messagebox.show("Item kosong!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+        
         try {
             
             Ebean.save(this.invoice2);

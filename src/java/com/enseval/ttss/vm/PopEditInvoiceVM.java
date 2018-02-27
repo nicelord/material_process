@@ -176,6 +176,21 @@ public class PopEditInvoiceVM {
     @Command
     public void simpanInvoice() {
         try {
+            if (this.invoice.getNomorInvoice().isEmpty()) {
+                Messagebox.show("Nomor invoice belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
+                return;
+            }
+        } catch (Exception e) {
+            Messagebox.show("Nomor invoice belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        if (this.listInvoiceItem.size() <= 0) {
+            Messagebox.show("Item kosong!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+        
+        try {
             
             Ebean.update(this.invoice);
             
@@ -193,10 +208,11 @@ public class PopEditInvoiceVM {
     }
 
     @GlobalCommand
-    @NotifyChange({"invoice"})
+    @NotifyChange({"invoice","listInvoiceItem"})
     public void setCustomer(@BindingParam("customer") Customer customer,
             @BindingParam("isPengirim") boolean isPengirim) {
         this.invoice.setCustomer(customer);
+        this.listInvoiceItem = new ArrayList<>();
     }
 
     @Command

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="delivery_order" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34e73b6c-bdf5-4f8a-a8d0-127533c4b7f0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="f8af7923-6147-463a-b659-f54ec0e7fb6a">
+		<field name="tglDo" class="java.util.Date"/>
+		<field name="nomorDo" class="java.lang.String"/>
+		<field name="customer.nama" class="java.lang.String"/>
+		<field name="nomorPo" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="DO" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table 2" style="table 2" x="1" y="11" width="554" height="50" uuid="f7d2f281-76ab-48c3-8dec-f3955c87b57a">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="f1ac82b2-07f7-4ff7-a9e6-d70c1cbc0cc2">
+						<dataSourceExpression><![CDATA[$P{DO}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="62" uuid="4b8b8069-b419-461f-b6fd-abf1561972a5">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="62" height="30" uuid="83c4591b-1574-473e-8d82-2489c2479f59"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<text><![CDATA[TGL DO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="20" rowSpan="1">
+							<textField pattern="dd-MM-yyyy" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="62" height="20" uuid="bc1d720d-ef4b-4897-bc1a-81ac225ad605"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{tglDo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="106" uuid="81f175fd-f875-40f7-895b-7b795aa2a4c1">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="106" height="30" uuid="5d78e7dc-87ab-4c0d-893e-f06dae7954df"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<text><![CDATA[NO. DO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="106" height="20" uuid="5c8beba8-82b4-483b-b8d1-9ecf63cb38ee"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nomorDo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="224" uuid="76d2465c-4a03-4282-a9cd-f749a4bd2f5b">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="224" height="30" uuid="e8b2cefa-6473-4d6e-b70c-e7993fc519ef"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<text><![CDATA[CUSTOMER]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="224" height="20" uuid="673fb766-1901-49e4-b75a-0eaa7b4c8d7f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{customer.nama}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="161" uuid="d74ff65e-3e64-44b0-86f4-640c95384a4f">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="161" height="30" uuid="da1d40c7-4fe1-40a4-821c-d335ebceeda6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<text><![CDATA[NO. PO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="161" height="20" uuid="90251fb4-a413-406e-9140-ce8620420ee1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nomorPo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

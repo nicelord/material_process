@@ -65,6 +65,14 @@
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 
                                   if="${sessionScope.userCredential.getRoles()=='AKUNTING'}"
                            
+                                  onClick="@command('changePage', page='page_pelunasan2.zul')">
+                            <listcell iconSclass="glyphicon glyphicon-list-alt"/>
+                            <listcell label="PELUNASAN 2"/>
+                        </listitem>
+                        
+                        <listitem style="border-bottom: 1px dotted #cfcfcf;" 
+                                  if="${sessionScope.userCredential.getRoles()=='AKUNTING'}"
+                           
                                   onClick="@command('changePage', page='page_do.zul')">
                             <listcell iconSclass="glyphicon glyphicon-list-alt"/>
                             <listcell label="DELIVERY ORDER"/>
