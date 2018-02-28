@@ -159,6 +159,8 @@ public class PopEditInvoice2VM {
             @BindingParam("isPengirim") boolean isPengirim) {
         this.invoice2.setCustomer(customer);
         this.listInvoiceItem2 = new ArrayList<>();
+        this.listInvoiceItem2 = new ArrayList<>();
+        this.invoice2.setListInvoiceItem2(listInvoiceItem2);
     }
 
     @Command

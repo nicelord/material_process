@@ -203,11 +203,12 @@ public class PopBuatInvoiceVM {
     }
 
     @GlobalCommand
-    @NotifyChange({"invoice"})
+    @NotifyChange({"invoice","listInvoiceItem"})
     public void setCustomer(@BindingParam("customer") Customer customer,
             @BindingParam("isPengirim") boolean isPengirim) {
         this.invoice.setCustomer(customer);
         this.listInvoiceItem = new ArrayList<>();
+        this.invoice.setListInvoiceItem(listInvoiceItem);
     }
 
     @Command
