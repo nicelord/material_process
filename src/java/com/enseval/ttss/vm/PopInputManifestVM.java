@@ -112,6 +112,37 @@ public class PopInputManifestVM {
 
     @Command
     public void simpanManifest() {
+
+        if (this.manifest.getKodeManifest().isEmpty() || this.manifest.getKodeManifest().toLowerCase().equals("jl ") || this.manifest.getKodeManifest().toLowerCase().equals("jl")) {
+            Messagebox.show("Kode manifest belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+        
+        if (this.manifest.getNamaTeknikLimbah().isEmpty()) {
+            Messagebox.show("Nama teknik limbah belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+        
+        if (this.manifest.getJenisFisik().isEmpty()) {
+            Messagebox.show("Jenis fisik limbah belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        if ((this.manifest.getJmlKemasan() > 0L && this.manifest.getJmlKemasan2() > 0L) && this.manifest.getSatuanKemasan().equals(this.manifest.getSatuanKemasan2())) {
+            Messagebox.show("Setiap kemasan harus beda satuan", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        if ((this.manifest.getJmlKemasan2() > 0L && this.manifest.getJmlKemasan3() > 0L) && this.manifest.getJmlKemasan2() > 0L && this.manifest.getSatuanKemasan2().equals(this.manifest.getSatuanKemasan3())) {
+            Messagebox.show("Setiap kemasan harus beda satuan", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        if ((this.manifest.getJmlKemasan() > 0L && this.manifest.getJmlKemasan3() > 0L) && this.manifest.getSatuanKemasan().equals(this.manifest.getSatuanKemasan3())) {
+            Messagebox.show("Setiap kemasan harus beda satuan", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
         try {
 
             if (this.manifest.getPenerimaan() != null) {
@@ -157,7 +188,6 @@ public class PopInputManifestVM {
             if (Util.setting("gmail_account").isEmpty() && Util.setting("gmail_password").isEmpty()
                     || Util.setting("gmail_account") != null && Util.setting("gmail_password") != null) {
 
-               
                 if (isEdit) {
                     if (Util.setting("mail_notif_update_manifest_active").equals("true")) {
                         final Manifest m = this.manifest;

@@ -41,14 +41,14 @@
                 <span class="input-group-addon">
                     Alamat :
                 </span>
-                <textbox constraint="no empty" class="form-control input-primary" value="@bind(vm.customer.alamat)"/>
+                <textbox class="form-control input-primary" value="@bind(vm.customer.alamat)"/>
             </div>
             <hlayout>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Telp :
                     </span>
-                    <textbox constraint="no empty" class="form-control input-primary" value="@bind(vm.customer.nomorKontak)"/>
+                    <textbox class="form-control input-primary" value="@bind(vm.customer.nomorKontak)"/>
                 </div>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
