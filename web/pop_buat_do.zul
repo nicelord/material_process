@@ -39,7 +39,21 @@
             <hlayout>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
-                        Nomor DO.
+                        Attn.
+                    </span>
+                    <combobox hflex="3"
+                              height="100%"
+                              readonly="true"
+                              value="@bind(vm.deliveryOrder.doOrGr)" 
+                              style="width:100%;height:100%" 
+                              class="input-primary">
+                            <comboitem label="DELIVERY ORDER"/>
+                            <comboitem label="GOOD RECEIVED"/>
+                    </combobox>
+                </div>
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Nomor.
                     </span>
                     <textbox class="form-control input-primary" value="@bind(vm.deliveryOrder.nomorDo)"/>
                 </div>
@@ -53,7 +67,7 @@
             <hlayout>  
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
-                        Tgl. DO.
+                        Tgl.
                     </span>
                     <datebox cols="12" 
                              format="dd-MM-yyyy"
@@ -114,6 +128,24 @@
                 </div>
             </hlayout>
             <hlayout>
+            
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Penanda tangan.
+                    </span>
+                    <textbox hflex="3" class="form-control input-primary" value="@bind(vm.deliveryOrder.penandaTangan)"/>
+                </div>
+                
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Jabatan.
+                    </span>
+                    <textbox hflex="3" class="form-control input-primary" value="@bind(vm.deliveryOrder.jabatan)"/>
+                </div>
+                
+            </hlayout>
+            
+            <hlayout>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Attn.
@@ -129,7 +161,14 @@
                         </template>
                     </combobox>
                 </div>
-            
+                
+                <div class="input-group" hflex="3">
+                    <span class="input-group-addon">
+                        Lain-lain.
+                    </span>
+                    <textbox hflex="3" class="form-control input-primary" value="@bind(vm.deliveryOrder.other)"/>
+                </div>
+                
             </hlayout>
         </vlayout>
         <separator spacing="20px" bar="true"/>

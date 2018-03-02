@@ -5,7 +5,11 @@
  */
 package com.enseval.ttss.model;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlRow;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -60,26 +64,26 @@ public class Invoice implements Serializable {
     String nomorSpkWo = "";
 
     String keterangan = "";
-    
+
     String Currency = "IDR";
 
     public Long getTotalNilai() {
-        Long total = listInvoiceItem.stream().mapToLong((InvoiceItem item) -> item.getHargaSatuan()*item.getJmlKemasan()).sum();
+        Long total = listInvoiceItem.stream().mapToLong((InvoiceItem item) -> item.getHargaSatuan() * item.getJmlKemasan()).sum();
         return total - ((total / 100) * this.getTax());
     }
-    
+
     public Long getTotalNilaiNoTax() {
-        Long total = listInvoiceItem.stream().mapToLong((InvoiceItem item) -> item.getHargaSatuan()*item.getJmlKemasan()).sum();
+        Long total = listInvoiceItem.stream().mapToLong((InvoiceItem item) -> item.getHargaSatuan() * item.getJmlKemasan()).sum();
         return total;
     }
-    
+
     public Long getTaxValue() {
-        Long total = listInvoiceItem.stream().mapToLong((InvoiceItem item) -> item.getHargaSatuan()*item.getJmlKemasan()).sum();
+        Long total = listInvoiceItem.stream().mapToLong((InvoiceItem item) -> item.getHargaSatuan() * item.getJmlKemasan()).sum();
         return ((total / 100) * this.getTax());
     }
-    
+
     public Long getTotalTerbayar() {
-        Long total = listPelunasan.stream().mapToLong((Pelunasan item) -> item.getNilai()+item.getPotPPh()+item.getPotCN()+item.getPotAdm()).sum();
+        Long total = listPelunasan.stream().mapToLong((Pelunasan item) -> item.getNilai() + item.getPotPPh() + item.getPotCN() + item.getPotAdm()).sum();
         return total;
     }
 
@@ -241,6 +245,22 @@ public class Invoice implements Serializable {
 
     public void setListPelunasan(List<Pelunasan> listPelunasan) {
         this.listPelunasan = listPelunasan;
+    }
+
+    public void setNomorInvoice() {
+
+        this.setNomorInvoice(this.getLastNomor());
+
+    }
+
+    public String getLastNomor() {
+        DateFormat dateFormat = new SimpleDateFormat("yy/MM");
+        Date date = new Date();
+        String tgl = dateFormat.format(date);
+        int count = Ebean.find(Invoice.class).where().endsWith("nomorInvoice", tgl).findRowCount();
+
+        String formatted = String.format("%04d", count+1);
+        return tgl + "/DACB/" + formatted;
     }
 
 }

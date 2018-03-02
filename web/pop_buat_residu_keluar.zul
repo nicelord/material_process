@@ -196,7 +196,7 @@
                                     </attribute>
                                     <comboitem label="Liter"/>
                                     <comboitem label="KG"/>
-                                    <comboitem label="Ton"/>
+                                    <comboitem label="M3"/>
                                 </combobox>
                             </hlayout>
                             

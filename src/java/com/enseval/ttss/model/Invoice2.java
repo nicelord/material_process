@@ -5,7 +5,10 @@
  */
 package com.enseval.ttss.model;
 
+import com.avaje.ebean.Ebean;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -231,5 +234,23 @@ public class Invoice2 implements Serializable {
     public void setListPelunasan2(List<Pelunasan2> listPelunasan2) {
         this.listPelunasan2 = listPelunasan2;
     }
+    
+    
+    public void setNomorInvoice() {
+
+        this.setNomorInvoice(this.getLastNomor());
+
+    }
+
+    public String getLastNomor() {
+        DateFormat dateFormat = new SimpleDateFormat("MM/yy");
+        Date date = new Date();
+        String tgl = dateFormat.format(date);
+        int count = Ebean.find(Invoice2.class).where().endsWith("nomorInvoice", tgl).findRowCount();
+        
+        String formatted = String.format("%04d", count+1);
+        return formatted + "/DACB/" + tgl;
+    }
+
 
 }

@@ -41,7 +41,7 @@
                     <span class="input-group-addon">
                         Nomor invoice.
                     </span>
-                    <textbox class="form-control input-primary" value="@save(vm.invoice2.nomorInvoice)"/>
+                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.invoice2.nomorInvoice)"/>
                 </div>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
@@ -63,12 +63,12 @@
                 </div>        
             </hlayout>
             <hlayout>
-                <div class="input-group" hflex="3">
+<!--                <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Nmr Izin.
                     </span>
                     <textbox class="form-control input-primary" value="@save(vm.invoice2.sial)"/>
-                </div>   
+                </div>   -->
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         Nmr. Kendaraan.
@@ -120,16 +120,16 @@
                 </div> 
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
-                        DO No.
+                        DO No./SIAL/Etc.
                     </span>
                     <textbox class="form-control input-primary" value="@save(vm.invoice2.nomorDo)"/>
                 </div> 
-                <div class="input-group" hflex="3">
+<!--                <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         SPK/WO
                     </span>
                     <textbox class="form-control input-primary" value="@save(vm.invoice2.nomorSpkWo)"/>
-                </div> 
+                </div> -->
             </hlayout>
             <separator spacing="20px" bar="true"/>        
             <div class="input-group" width="100%">
@@ -318,9 +318,9 @@
         <hlayout>
             <div class="input-group" hflex="3">
                 <span class="input-group-addon">
-                    Keterangan tambahan.
+                    Note.
                 </span>
-                <textbox class="form-control input-primary" value="@save(vm.invoice2.keterangan)"/>
+                <textbox multiline="true" rows="2" class="form-control input-primary" value="@save(vm.invoice2.keterangan)"/>
             </div> 
         </hlayout>
         <separator spacing="20px" bar="true"/>

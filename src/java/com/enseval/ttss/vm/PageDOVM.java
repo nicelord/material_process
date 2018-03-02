@@ -166,6 +166,9 @@ public class PageDOVM {
         List<DOItem> tmp = deliveryOrder.getListDoItem();
 
         File filenya = new File(Util.setting("pdf_path") + "delivery_order.pdf");
+        if(deliveryOrder.getDoOrGr().equals("GOOD RECEIVED")){
+            filenya = new File(Util.setting("pdf_path") + "good_received.pdf");
+        }
         filenya.delete();
 
         try {
@@ -223,7 +226,7 @@ public class PageDOVM {
     
     @Command
     public void exportExcel() {
-        File filenya = new File(Util.setting("pdf_path") + "delivery_order.xls");
+        File filenya = new File(Util.setting("pdf_path") + "delivery_order_good_received.xls");
 
         try {
             InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/delivery_order.xls.jasper");

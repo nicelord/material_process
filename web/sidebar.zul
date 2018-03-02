@@ -75,7 +75,7 @@
                            
                                   onClick="@command('changePage', page='page_do.zul')">
                             <listcell iconSclass="glyphicon glyphicon-list-alt"/>
-                            <listcell label="DELIVERY ORDER"/>
+                            <listcell label="DO / GR"/>
                         </listitem>
                         
                         <listitem style="border-bottom: 1px dotted #cfcfcf;" 

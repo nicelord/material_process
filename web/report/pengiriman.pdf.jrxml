@@ -185,7 +185,7 @@
 								<reportElement x="0" y="0" width="165" height="20" uuid="60ed7463-8b61-47c5-91af-18ad249279e4"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
-									<paragraph leftIndent="3" rightIndent="3"/>
+									<paragraph leftIndent="6" rightIndent="3"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{penerimaan}!=null?$F{penerimaan.manifest.customerPenghasil.nama}:"PT. DACB"]]></textFieldExpression>
 							</textField>
@@ -207,7 +207,7 @@
 								<reportElement x="0" y="0" width="147" height="20" uuid="6cd98ffe-2c4f-457a-84c2-9e36c2369361"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
-									<paragraph leftIndent="3" rightIndent="3"/>
+									<paragraph leftIndent="6" rightIndent="3"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{namaItem}]]></textFieldExpression>
 							</textField>
@@ -226,7 +226,7 @@
 						<jr:columnFooter style="table_CH" height="29" rowSpan="1">
 							<textField>
 								<reportElement x="0" y="0" width="155" height="29" uuid="1dffeebd-7396-4f6b-9762-2092f7cac557"/>
-								<textElement verticalAlignment="Middle">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8" isBold="true"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$P{TOTAL_KEMASAN}]]></textFieldExpression>
@@ -235,7 +235,7 @@
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField>
 								<reportElement x="0" y="0" width="162" height="20" uuid="9569d5f0-8eb8-43fd-968a-ba20d7b34e2b"/>
-								<textElement verticalAlignment="Middle">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
 									<paragraph leftIndent="3" rightIndent="3"/>
 								</textElement>
@@ -256,8 +256,9 @@
 						<jr:columnFooter style="table_CH" height="29" rowSpan="1">
 							<textField>
 								<reportElement x="0" y="0" width="90" height="29" uuid="ea5032bb-433a-49e8-bcb9-86d7bba53426"/>
-								<textElement verticalAlignment="Middle">
+								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8" isBold="true"/>
+									<paragraph rightIndent="6"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$P{TOTAL_BERAT}]]></textFieldExpression>
 							</textField>
@@ -265,18 +266,18 @@
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField>
 								<reportElement x="0" y="0" width="90" height="20" uuid="e1c92e25-bbcf-4522-ac74-e9cb730e751d"/>
-								<textElement verticalAlignment="Middle">
+								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
-									<paragraph leftIndent="3" rightIndent="3"/>
+									<paragraph leftIndent="3" rightIndent="6"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{jmlBerat}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="96" uuid="65f40c88-4852-4eb5-86f9-146d613927b4">
+					<jr:column width="154" uuid="65f40c88-4852-4eb5-86f9-146d613927b4">
 						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="96" height="30" uuid="981efbb1-60d2-4021-8b64-5d7bff6dec2d"/>
+								<reportElement x="0" y="0" width="154" height="30" uuid="981efbb1-60d2-4021-8b64-5d7bff6dec2d"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -286,8 +287,8 @@
 						<jr:columnFooter style="table_CH" height="29" rowSpan="1"/>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="96" height="20" uuid="44904ad7-18d5-4da4-990c-e886574f22c6"/>
-								<textElement verticalAlignment="Middle">
+								<reportElement x="0" y="0" width="154" height="20" uuid="44904ad7-18d5-4da4-990c-e886574f22c6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
 									<paragraph leftIndent="3" rightIndent="3"/>
 								</textElement>
@@ -295,10 +296,10 @@
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="126" uuid="854986df-8a98-4501-a76b-88532302a855">
+					<jr:column width="67" uuid="854986df-8a98-4501-a76b-88532302a855">
 						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="126" height="30" uuid="afd74437-3273-4975-b0c9-2470f60960a5"/>
+								<reportElement x="0" y="0" width="67" height="30" uuid="afd74437-3273-4975-b0c9-2470f60960a5"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>

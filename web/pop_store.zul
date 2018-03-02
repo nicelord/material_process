@@ -64,6 +64,7 @@
                     </attribute>
                     <comboitem label="KG"/>
                     <comboitem label="Liter"/>
+                    <comboitem label="M3"/>
                 </combobox>
             
             </hlayout>

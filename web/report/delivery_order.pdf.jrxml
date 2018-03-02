@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="delivery_order.pdf" language="groovy" pageWidth="636" pageHeight="787" columnWidth="636" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="faf5b0c4-d17e-4017-84e5-cb317c3696e9">
 	<property name="ireport.zoom" value="1.4019755979255695"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="210"/>
+	<property name="ireport.y" value="66"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -45,99 +45,99 @@
 				<reportElement x="25" y="0" width="593" height="105" uuid="19395aea-8551-4395-9d5a-d53476a560bc"/>
 				<imageExpression><![CDATA["D:\\NetBeansProjects\\material_process_monitoring\\web\\report\\header_penerimaan.jpg"]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement x="25" y="120" width="593" height="33" uuid="2674ea4d-0ebf-45b4-8254-eee139ceea2f"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+			<textField>
+				<reportElement x="25" y="120" width="593" height="33" uuid="c097c0d9-47e7-4440-939a-d9dad7148ba4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Bookman Old Style" size="24" isBold="true" isUnderline="true" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[DELIVERY ORDER]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{delivery_order}.getDoOrGr()=="DELIVERY ORDER"?"DELIVERY ORDER":"GOOD RECEIVED"]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="336" y="197" width="100" height="14" uuid="5994a592-45cf-4195-8644-50f91048960f"/>
+				<reportElement x="336" y="187" width="100" height="14" uuid="5994a592-45cf-4195-8644-50f91048960f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="336" y="211" width="100" height="14" uuid="c73b9d1f-3339-49f2-873e-d1e3f87cec6b"/>
+				<reportElement x="336" y="201" width="100" height="14" uuid="c73b9d1f-3339-49f2-873e-d1e3f87cec6b"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[Your P/O No.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="336" y="225" width="100" height="14" uuid="971c2a23-327f-4532-a6cd-75f4ec5f5e75"/>
+				<reportElement x="336" y="215" width="100" height="14" uuid="971c2a23-327f-4532-a6cd-75f4ec5f5e75"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[Order By]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="336" y="270" width="100" height="14" uuid="be607cf3-424f-417f-8e23-0b69bf204630"/>
+				<reportElement x="336" y="260" width="100" height="14" uuid="be607cf3-424f-417f-8e23-0b69bf204630"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[Attn]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="436" y="197" width="12" height="14" uuid="60dcfb70-0e23-4ec4-b55e-cd649155b8af"/>
+				<reportElement x="436" y="187" width="12" height="14" uuid="60dcfb70-0e23-4ec4-b55e-cd649155b8af"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="436" y="211" width="12" height="14" uuid="e98d225f-091c-44b3-822a-316c1231dab0"/>
+				<reportElement x="436" y="201" width="12" height="14" uuid="e98d225f-091c-44b3-822a-316c1231dab0"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="436" y="225" width="12" height="14" uuid="c6abc111-02f9-4acf-ac33-6ac1aaa565aa"/>
+				<reportElement x="436" y="215" width="12" height="14" uuid="c6abc111-02f9-4acf-ac33-6ac1aaa565aa"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="436" y="270" width="12" height="14" uuid="93d2979a-0584-4881-9d98-d8087cf1cbef"/>
+				<reportElement x="436" y="260" width="12" height="14" uuid="93d2979a-0584-4881-9d98-d8087cf1cbef"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
-				<reportElement x="448" y="197" width="170" height="14" uuid="4dcf80b2-88f3-416f-8f6c-41a71cb4787d"/>
+				<reportElement x="448" y="187" width="170" height="14" uuid="4dcf80b2-88f3-416f-8f6c-41a71cb4787d"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{delivery_order}.getTglDo()]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="448" y="211" width="170" height="14" uuid="4e096488-9874-48a3-9f92-59ef80daada2"/>
+				<reportElement x="448" y="201" width="170" height="14" uuid="4e096488-9874-48a3-9f92-59ef80daada2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{delivery_order}.getNomorPo()]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="448" y="225" width="170" height="14" uuid="7a72b19c-3bfe-4b7d-a1f2-4106446ebfb4"/>
+				<reportElement x="448" y="215" width="170" height="14" uuid="7a72b19c-3bfe-4b7d-a1f2-4106446ebfb4"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{delivery_order}.getCustomer().getNama()]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="448" y="270" width="170" height="14" uuid="108dfc21-a885-4456-85ee-63250ade72d0"/>
+				<reportElement x="448" y="260" width="170" height="14" uuid="108dfc21-a885-4456-85ee-63250ade72d0"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{delivery_order}.getCcPerson()]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="448" y="239" width="170" height="31" uuid="c5ab2801-9a99-4f00-ab17-b01eed864149"/>
+				<reportElement x="448" y="229" width="170" height="31" uuid="c5ab2801-9a99-4f00-ab17-b01eed864149"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma"/>
 				</textElement>
@@ -298,26 +298,33 @@
 				<text><![CDATA[PT. DESA AIR CARGO BATAM]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="434" y="684" width="100" height="13" uuid="3872ad4c-5c2b-4967-8f8a-553ba7bc8d5e"/>
-				<textElement textAlignment="Center">
-					<font fontName="Tahoma" isBold="true" isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[KURNIAWAN]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="434" y="697" width="100" height="13" uuid="d9d3c77a-e8b3-45cd-811d-f0632e12ed4e"/>
-				<textElement textAlignment="Center">
-					<font fontName="Tahoma"/>
-				</textElement>
-				<text><![CDATA[Director]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="65" y="697" width="147" height="13" uuid="00513bac-1df3-4642-bb12-83f1a37e7469"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[(.......................................)]]></text>
 			</staticText>
+			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
+				<reportElement x="413" y="683" width="142" height="14" uuid="d734ca55-9582-4b01-be42-85b0569a0d4c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{delivery_order}.getPenandaTangan()]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
+				<reportElement x="413" y="697" width="142" height="14" uuid="fa07d073-10f5-432a-b84e-20e520002a99"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{delivery_order}.getJabatan()]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="448" y="274" width="170" height="14" uuid="a932cd85-4541-4f5b-b343-b17033cc0017"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{delivery_order}.getOther()]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

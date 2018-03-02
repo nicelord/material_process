@@ -40,6 +40,9 @@ public class DeliveryOrder implements Serializable {
     
     @ManyToOne
     Customer customer;
+    
+    String doOrGr = "DELIVERY ORDER";
+    String other = "";
 
     
     @OneToMany(mappedBy = "deliveryOrder")
@@ -48,6 +51,9 @@ public class DeliveryOrder implements Serializable {
     String ccPerson = "";
 
     String nomorPo = "";
+    
+    String penandaTangan = "";
+    String jabatan = "";
 
 
 
@@ -117,6 +123,38 @@ public class DeliveryOrder implements Serializable {
 
     public void setListDoItem(List<DOItem> listDoItem) {
         this.listDoItem = listDoItem;
+    }
+
+    public String getPenandaTangan() {
+        return penandaTangan;
+    }
+
+    public void setPenandaTangan(String penandaTangan) {
+        this.penandaTangan = penandaTangan;
+    }
+
+    public String getJabatan() {
+        return jabatan;
+    }
+
+    public void setJabatan(String jabatan) {
+        this.jabatan = jabatan;
+    }
+
+    public String getDoOrGr() {
+        return doOrGr;
+    }
+
+    public void setDoOrGr(String doOrGr) {
+        this.doOrGr = doOrGr;
+    }
+
+    public String getOther() {
+        return other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
     }
 
     

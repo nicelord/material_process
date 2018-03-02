@@ -63,6 +63,7 @@ public class PopBuatInvoiceVM {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         this.invoice = new Invoice();
         this.invoice.setUserLogin(userLogin);
+        this.invoice.setNomorInvoice();
         this.listCcPerson = Ebean.find(Invoice.class).select("ccPerson").setDistinct(true).findList();
         this.listCcDept = Ebean.find(Invoice.class).select("ccDept").setDistinct(true).findList();
         this.listTerm = Ebean.find(Invoice.class).select("term").setDistinct(true).findList();

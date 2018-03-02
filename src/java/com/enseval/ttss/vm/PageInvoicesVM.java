@@ -174,7 +174,7 @@ public class PageInvoicesVM {
         Long net = totalHarga - (totalHarga / 100) * invoice2.getTax();
 
         int size = invoice2.getListInvoiceItem().size();
-        int kurang = 13 - size;
+        int kurang = 11 - size;
         if (kurang > 0) {
             for (int i = 0; i <= kurang; i++) {
                 InvoiceItem ii = new InvoiceItem();
@@ -210,6 +210,7 @@ public class PageInvoicesVM {
             map.put("DO", invoice2.getNomorDo());
             map.put("CUR", invoice2.getCurrency());
             map.put("TGL_ANGKUT", invoice2.getTglAngkut());
+            map.put("KET", invoice2.getKeterangan());
             map.put("PLAT", invoice2.getNmrKendaraan());
             map.put("TTD", Util.setting("invoice_ttd_person"));
             map.put("JBT", Util.setting("invoice_ttd_jabatan"));

@@ -124,6 +124,7 @@
                                           value="@bind(vm.prosesLimbah.satuanBerat)">
                                     <comboitem label="Liter"/>
                                     <comboitem label="KG"/>
+                                    <comboitem label="M3"/>
                                 </combobox>
                             </hlayout>
                             <hlayout>

@@ -176,7 +176,7 @@ public class PageInvoices2VM {
         Long net = totalHarga - (totalHarga / 100) * invoicex.getTax();
 
         int size = invoicex.getListInvoiceItem2().size();
-        int kurang = 13 - size;
+        int kurang = 11 - size;
         if (kurang > 0) {
             for (int i = 0; i <= kurang; i++) {
                 InvoiceItem2 ii = new InvoiceItem2();
@@ -215,6 +215,7 @@ public class PageInvoices2VM {
             map.put("PLAT", invoicex.getNmrKendaraan());
             map.put("TTD", Util.setting("invoice_ttd_person"));
             map.put("JBT", Util.setting("invoice_ttd_jabatan"));
+            map.put("KET", invoicex.getKeterangan());
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);
             OutputStream outputStream = new FileOutputStream(filenya);
 

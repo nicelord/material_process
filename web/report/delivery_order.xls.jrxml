@@ -88,7 +88,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
-								<text><![CDATA[TGL DO]]></text>
+								<text><![CDATA[TGL]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table 2_TD" height="20" rowSpan="1">
@@ -108,7 +108,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
-								<text><![CDATA[NO. DO]]></text>
+								<text><![CDATA[NO. DO/GR]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table 2_TD" height="20" rowSpan="1">

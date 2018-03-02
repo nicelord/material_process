@@ -495,7 +495,7 @@ Telp. 711476 - 711478   Fax. 711449]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Tahoma" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[KG]]></text>
+				<text><![CDATA[BERAT]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="279" y="300" width="33" height="14" uuid="6ac73bc7-ac3a-48d9-ac50-928e05917062"/>
