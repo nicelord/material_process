@@ -16,7 +16,7 @@
 	<parameter name="KEMASAN3" class="java.lang.String"/>
 	<parameter name="JML_KEMASAN3" class="java.lang.Long"/>
 	<parameter name="BERAT" class="java.lang.String"/>
-	<parameter name="JML_BERAT" class="java.lang.Long"/>
+	<parameter name="JML_BERAT" class="java.lang.Double"/>
 	<parameter name="TTD" class="java.lang.String"/>
 	<parameter name="JBT" class="java.lang.String"/>
 	<parameter name="USER" class="java.lang.String"/>
@@ -484,11 +484,11 @@ Telp. 711476 - 711478   Fax. 711449]]></text>
 				<text><![CDATA[buah]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="248" y="300" width="31" height="14" uuid="d6b5831e-33d0-4c83-9cd9-6bda35f07149"/>
+				<reportElement x="248" y="300" width="64" height="14" uuid="d6b5831e-33d0-4c83-9cd9-6bda35f07149"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{JML_BERAT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{JML_BERAT} + " " + $P{BERAT}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="190" y="300" width="42" height="14" uuid="3cb29a4a-910f-4e32-bc33-56556d90ef4f"/>
@@ -496,13 +496,6 @@ Telp. 711476 - 711478   Fax. 711449]]></text>
 					<font fontName="Tahoma" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[BERAT]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="279" y="300" width="33" height="14" uuid="6ac73bc7-ac3a-48d9-ac50-928e05917062"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Tahoma" size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[KG]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="232" y="300" width="13" height="14" uuid="2e6c29ab-ee0b-4c96-a658-ea864254986b"/>

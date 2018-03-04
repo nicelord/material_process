@@ -97,7 +97,7 @@ public class PagePelunasanVM {
                     .contains("invoice.nomorInvoice", filterNo)
                     .contains("invoice.customer.nama", filterCust)
                     .contains("remark", filterRemark)
-                    .between("tglInvoice",
+                    .between("tglPelunasan",
                             Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                             Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                     .orderBy("id desc").findList();

@@ -23,6 +23,7 @@ import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 /**
@@ -50,20 +51,26 @@ public class PopProsesLimbahVM {
             this.prosesLimbah.setPenerimaan(this.penerimaan);
             this.prosesLimbah.setGudangPengirim("PENERIMAAN");
             this.prosesLimbah.setNamaLimbah(this.penerimaan.getManifest().getNamaTeknikLimbah());
-            this.prosesLimbah.setSatuanKemasan(this.penerimaan.getManifest().getSatuanKemasan());
-            this.prosesLimbah.setJmlKemasan(this.penerimaan.getManifest().getJmlKemasan());
-            this.prosesLimbah.setSatuanKemasan2(this.penerimaan.getManifest().getSatuanKemasan2());
-            this.prosesLimbah.setJmlKemasan2(this.penerimaan.getManifest().getJmlKemasan2());
-            this.prosesLimbah.setSatuanKemasan3(this.penerimaan.getManifest().getSatuanKemasan3());
-            this.prosesLimbah.setJmlKemasan3(this.penerimaan.getManifest().getJmlKemasan3());
-            this.prosesLimbah.setSatuanBerat(this.penerimaan.getManifest().getSatuanBerat());
-            this.prosesLimbah.setJmlBerat(this.penerimaan.getManifest().getJmlBerat());
+            this.prosesLimbah.setSatuanKemasan(this.penerimaan.getSatuanKemasan());
+            this.prosesLimbah.setJmlKemasan(this.penerimaan.getJmlKemasan());
+            this.prosesLimbah.setSatuanKemasan2(this.penerimaan.getSatuanKemasan2());
+            this.prosesLimbah.setJmlKemasan2(this.penerimaan.getJmlKemasan2());
+            this.prosesLimbah.setSatuanKemasan3(this.penerimaan.getSatuanKemasan3());
+            this.prosesLimbah.setJmlKemasan3(this.penerimaan.getJmlKemasan3());
+            this.prosesLimbah.setSatuanBerat(this.penerimaan.getSatuanBerat());
+            this.prosesLimbah.setJmlBerat(this.penerimaan.getJmlBerat());
         }
+        this.prosesLimbah.setGudangTujuan("");
         Selectors.wireComponents(view, (Object) this, false);
     }
 
     @Command
     public void doProses() {
+        
+        if(this.prosesLimbah.getGudangTujuan().isEmpty()){
+            Messagebox.show("Gudang tujuan belum disi!", "ERROR", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
         if (this.prosesLimbah.getGudangTujuan().equals("EXTERNAL")) {
             OutboundItem out = new OutboundItem();
             out.setPenerimaan(this.penerimaan);

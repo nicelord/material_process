@@ -47,14 +47,15 @@ public class PageMasterCustomerVM {
 
 
     @AfterCompose
-    public void initSetup() {
-        this.listCustomers = Ebean.find(Customer.class).orderBy("id desc").findList();
+    public void initSetup(@ContextParam(ContextType.VIEW) Component view) {
+        this.listCustomers = Ebean.find(Customer.class).orderBy("id asc").findList();
+        Selectors.wireComponents(view, this, false);
     }
     
-     @Command
+    @Command
     @NotifyChange("listCustomers")
     public void cari() {
-        this.listCustomers = Ebean.find(Customer.class).where().like("nama", "%" + this.txtCari.getValue() + "%").orderBy("id desc").findList();
+        this.listCustomers = Ebean.find(Customer.class).where().contains("nama", this.txtCari.getValue()).orderBy("id asc").findList();
 //        this.listCustomers = Ebean.find(Customer.class).orderBy("id desc").findList();
     }
 
@@ -83,7 +84,7 @@ public class PageMasterCustomerVM {
     @GlobalCommand
     @NotifyChange({"listCustomers"})
     public void refresh() {
-        this.listCustomers = Ebean.find(Customer.class).orderBy("id desc").findList();
+        this.listCustomers = Ebean.find(Customer.class).orderBy("id asc").findList();
     }
 
     public Textbox getTxtCari() {

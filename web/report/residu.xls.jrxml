@@ -34,7 +34,7 @@
 		<field name="jmlKemasan2" class="java.lang.Long"/>
 		<field name="satuanKemasan3" class="java.lang.String"/>
 		<field name="jmlKemasan3" class="java.lang.Long"/>
-		<field name="jmlBerat" class="java.lang.Long"/>
+		<field name="jmlBerat" class="java.lang.Double"/>
 		<field name="satuanBerat" class="java.lang.String"/>
 		<field name="tglBuat" class="java.util.Date"/>
 		<field name="satuanKemasan" class="java.lang.String"/>

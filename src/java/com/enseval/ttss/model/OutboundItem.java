@@ -61,7 +61,7 @@ public class OutboundItem implements Serializable {
     Long jmlKemasan3 = 0L;
 
     String satuanBerat = "KG";
-    Long jmlBerat = 0L;
+    double jmlBerat = 0;
     
     @Transient
     String statusPengiriman;
@@ -196,13 +196,15 @@ public class OutboundItem implements Serializable {
         this.satuanBerat = satuanBerat;
     }
 
-    public Long getJmlBerat() {
+    public double getJmlBerat() {
         return jmlBerat;
     }
 
-    public void setJmlBerat(Long jmlBerat) {
+    public void setJmlBerat(double jmlBerat) {
         this.jmlBerat = jmlBerat;
     }
+
+   
 
     public String getNamaItem() {
         return namaItem;

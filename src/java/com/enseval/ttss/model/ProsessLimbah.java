@@ -59,7 +59,7 @@ public class ProsessLimbah implements Serializable {
     
     
     String satuanBerat = "";
-    Long jmlBerat = 0L;
+    double jmlBerat = 0;
     
     String keterangan = "";
     
@@ -139,13 +139,15 @@ public class ProsessLimbah implements Serializable {
         this.satuanBerat = satuanBerat;
     }
 
-    public Long getJmlBerat() {
+    public double getJmlBerat() {
         return jmlBerat;
     }
 
-    public void setJmlBerat(Long jmlBerat) {
+    public void setJmlBerat(double jmlBerat) {
         this.jmlBerat = jmlBerat;
     }
+
+   
 
     public String getKeterangan() {
         return keterangan;

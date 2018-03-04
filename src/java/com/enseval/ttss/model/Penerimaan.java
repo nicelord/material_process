@@ -61,7 +61,7 @@ public class Penerimaan implements Serializable {
     Long jmlKemasan3 = 0L;
 
     String satuanBerat = "";
-    Long jmlBerat = 0L;
+    double jmlBerat = 0;
 
     @ManyToOne
     User userPenerima;
@@ -232,11 +232,11 @@ public class Penerimaan implements Serializable {
         this.jmlKemasan = jmlKemasan;
     }
 
-    public Long getJmlBerat() {
+    public double getJmlBerat() {
         return jmlBerat;
     }
 
-    public void setJmlBerat(Long jmlBerat) {
+    public void setJmlBerat(double jmlBerat) {
         this.jmlBerat = jmlBerat;
     }
 

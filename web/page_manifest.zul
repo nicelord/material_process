@@ -231,7 +231,7 @@
                 </listbox>
                 
             </center>
-            <east title="DETAIL MANIFEST" size="45%" splittable="true" collapsible="true">
+            <east title="DETAIL MANIFEST" size="45%" splittable="true" collapsible="true" open="false">
                 <div vflex="3" hflex="3">
                     <vbox align="center" hflex="3" vflex="3">
                         <grid hflex="3" vflex="3" oddRowSclass="none">
@@ -370,7 +370,7 @@
                                                         <span class="input-group-addon">
                                                             Berat.
                                                         </span>
-                                                        <textbox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.jmlBerat)"/>
+                                                        <doublebox readonly="true" class="form-control input-primary" value="@load(vm.selectedManifest.jmlBerat)"/>
                                                         <span class="input-group-addon">
                                                             <label value="@load(vm.selectedManifest.satuanBerat)"/>
                                                         </span>

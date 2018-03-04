@@ -44,15 +44,15 @@ public class Manifest implements Serializable {
     String satuanKemasan = "Drum";
     Long jmlKemasan = 0L;
     
-    String satuanKemasan2 = "";
+    String satuanKemasan2 = "Pcs";
     Long jmlKemasan2 = 0L;
     
-    String satuanKemasan3 = "";
+    String satuanKemasan3 = "Box";
     Long jmlKemasan3 = 0L;
     
     
     String satuanBerat = "KG";
-    Long jmlBerat = 0L;
+    double jmlBerat = 0;
     String nomorKendaraan = "";
     @Temporal(TemporalType.DATE)
     Date tglApprove = new Date();
@@ -198,13 +198,15 @@ public class Manifest implements Serializable {
         this.jmlKemasan = jmlKemasan;
     }
 
-    public Long getJmlBerat() {
+    public double getJmlBerat() {
         return jmlBerat;
     }
 
-    public void setJmlBerat(Long jmlBerat) {
+    public void setJmlBerat(double jmlBerat) {
         this.jmlBerat = jmlBerat;
     }
+
+    
 
     public Date getTglApprove() {
         return tglApprove;

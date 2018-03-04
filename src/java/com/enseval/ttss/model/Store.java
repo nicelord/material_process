@@ -42,7 +42,7 @@ public class Store implements Serializable {
     Long jmlKemasan = 0L;
 
     String satuanBerat;
-    Long jmlBerat = 0L;
+    double jmlBerat = 0;
     
     int kemasanKe;
     
@@ -100,13 +100,15 @@ public class Store implements Serializable {
         this.satuanBerat = satuanBerat;
     }
 
-    public Long getJmlBerat() {
+    public double getJmlBerat() {
         return jmlBerat;
     }
 
-    public void setJmlBerat(Long jmlBerat) {
+    public void setJmlBerat(double jmlBerat) {
         this.jmlBerat = jmlBerat;
     }
+
+   
 
     public OutboundItem getOutboundItem() {
         return outboundItem;

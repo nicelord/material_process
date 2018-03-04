@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" pageWidth="637" pageHeight="787" columnWidth="627" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="7dafb8d3-fcf1-47c3-aee8-9b45e3b6027d">
 	<property name="ireport.zoom" value="1.6105100000000014"/>
 	<property name="ireport.x" value="38"/>
-	<property name="ireport.y" value="591"/>
+	<property name="ireport.y" value="783"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -126,6 +126,10 @@
 	<parameter name="TTD" class="java.lang.String"/>
 	<parameter name="JBT" class="java.lang.String"/>
 	<parameter name="KET" class="java.lang.String"/>
+	<parameter name="REK1" class="java.lang.String"/>
+	<parameter name="REK2" class="java.lang.String"/>
+	<parameter name="FAX" class="java.lang.String"/>
+	<parameter name="EMAIL" class="java.lang.String"/>
 	<summary>
 		<band height="787">
 			<componentElement>
@@ -561,26 +565,26 @@
 				</textElement>
 				<text><![CDATA[Payment can be transferred to :]]></text>
 			</staticText>
-			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="24" y="646" width="191" height="45" uuid="910e1329-4218-4cd5-a369-dc2c862725c1"/>
-				<textElement>
+			<textField>
+				<reportElement positionType="FixRelativeToBottom" x="24" y="646" width="191" height="45" uuid="2de4f9d9-e525-463c-8cc8-4620a5be2735"/>
+				<textElement markup="none">
 					<font fontName="Tahoma" size="9"/>
-					<paragraph leftIndent="2" rightIndent="2"/>
+					<paragraph leftIndent="2"/>
 				</textElement>
-				<text><![CDATA[PT. DESA AIR CARGO BATAM
-
-BANK MAYBANK IDR A/C : 203-412848-6
-BANK MANDIRI  IDR A/C : 109-000424-5684]]></text>
-			</staticText>
-			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="24" y="691" width="191" height="32" uuid="faebdbda-5131-4189-b658-236b8904caa5"/>
-				<textElement verticalAlignment="Middle">
+				<textFieldExpression><![CDATA["PT. DESA AIR CARGO BATAM\n\n"
++
+"BANK MAYBANK IDR A/C : " + $P{REK1} +
+"\nBANK MANDIRI  IDR A/C : " + $P{REK2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="FixRelativeToBottom" x="24" y="691" width="191" height="32" uuid="3890d13b-10f0-4106-a7d7-44236fa4feb4"/>
+				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Tahoma" size="9"/>
-					<paragraph leftIndent="2" rightIndent="2"/>
+					<paragraph leftIndent="2"/>
 				</textElement>
-				<text><![CDATA[Bank slip please fax to (0778) 711449
-Email : dacb@gjgroups.com]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["Bank slip please fax to : "+$P{FAX}+"\n" +
+"Email : " + $P{EMAIL}]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement positionType="FixRelativeToBottom" x="450" y="611" width="48" height="20" uuid="3af25f7a-431e-49bd-ba9f-aa57486539b3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">

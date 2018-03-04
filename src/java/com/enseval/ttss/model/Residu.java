@@ -55,7 +55,7 @@ public class Residu implements Serializable {
     Long jmlKemasan3 = 0L;
 
     String satuanBerat = "KG";
-    Long jmlBerat = 0L;
+    double jmlBerat = 0;
 
     String tipe = "";
     
@@ -165,13 +165,15 @@ public class Residu implements Serializable {
         this.satuanBerat = satuanBerat;
     }
 
-    public Long getJmlBerat() {
+    public double getJmlBerat() {
         return jmlBerat;
     }
 
-    public void setJmlBerat(Long jmlBerat) {
+    public void setJmlBerat(double jmlBerat) {
         this.jmlBerat = jmlBerat;
     }
+
+   
 
     public void setCustomResiduId() {
         if (this.getTipe().equals("hasil")) {

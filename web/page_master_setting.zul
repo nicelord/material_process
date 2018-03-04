@@ -57,8 +57,8 @@
                     <listcell>
                         <button hflex="3" sclass="btn-warning btn-xs" iconSclass="glyphicon glyphicon-edit" label="" 
                                 onClick="@command('showEditSetting',setting=s)" />
-                        <button hflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash" label="" 
-                                onClick="@command('hapus',setting=s)" />
+<!--                        <button hflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash" label="" 
+                                onClick="@command('hapus',setting=s)" />-->
                     </listcell>
                 </listitem>
             </template>	

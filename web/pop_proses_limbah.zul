@@ -118,7 +118,7 @@
                                     <span class="input-group-addon" >
                                         Total berat :
                                     </span>
-                                    <longbox readonly="@load(vm.penerimaan ne null)" sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.prosesLimbah.jmlBerat)"/>
+                                    <doublebox readonly="@load(vm.penerimaan ne null)" sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.prosesLimbah.jmlBerat)"/>
                                 </div>
                                 <combobox readonly="true" 
                                           disabled="@load(vm.penerimaan ne null)"

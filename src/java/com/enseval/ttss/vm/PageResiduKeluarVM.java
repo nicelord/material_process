@@ -169,13 +169,13 @@ public class PageResiduKeluarVM {
 
         sb = new StringBuilder();
 
-        Map<String, Long> berat = listResidu.stream().collect(
+        Map<String, Double> berat = listResidu.stream().collect(
                 Collectors.groupingBy(Residu::getSatuanBerat,
-                        Collectors.summingLong(Residu::getJmlBerat)));
+                        Collectors.summingDouble(Residu::getJmlBerat)));
 
-        for (Map.Entry<String, Long> entry : berat.entrySet()) {
+        for (Map.Entry<String, Double> entry : berat.entrySet()) {
             String key = entry.getKey();
-            Long value = entry.getValue();
+            double value = entry.getValue();
 
             sb.append(value).append(" ").append(key).append(", ");
 

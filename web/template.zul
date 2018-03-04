@@ -9,7 +9,7 @@
                 <hbox hflex="1" vflex="1" pack="start" align="middle">
                     <separator />
                     <separator />
-                    <label id="" value="MONITORING LIMBAH"/>
+                    <label id="" value="DACB WASTE MANAGEMENT SYSTEM"/>
                 </hbox>
                 <hbox hflex="1" pack="end">
                     <label id="" value="${sessionScope.userCredential.name}"/>

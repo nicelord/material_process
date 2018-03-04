@@ -204,7 +204,7 @@
                                     <span class="input-group-addon" >
                                         Total berat.
                                     </span>
-                                    <longbox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.manifest.penerimaan.jmlBerat)"/>
+                                    <doublebox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.manifest.penerimaan.jmlBerat)"/>
                                 </div>
                                 <combobox readonly="true" 
                                           hflex="3"

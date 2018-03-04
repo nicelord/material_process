@@ -50,6 +50,19 @@
                                          value="@bind(vm.residu.tglBuat)"/>
                             </div> 
                             
+<!--                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
+                                    Tanggal Kirim External :
+                                </span>
+                                <datebox cols="12" 
+                                         format="dd-MM-yyyy"
+                                         readonly="true"
+                                         style="height:30px;"
+                                         hflex="3"
+                                         buttonVisible="true"
+                                         value="@bind(vm.residu.outboundItem.tglBuat)"/>
+                            </div> -->
+                            
                             <separator />
                             <div class="input-group" hflex="3">
                                 <span class="input-group-addon" >
@@ -155,7 +168,7 @@
                                     <span class="input-group-addon" >
                                         Total berat :
                                     </span>
-                                    <longbox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.residu.jmlBerat)"/>
+                                    <doublebox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.residu.jmlBerat)"/>
                                 </div>
                                 <combobox readonly="true" 
                                           hflex="3"

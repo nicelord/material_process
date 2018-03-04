@@ -5,7 +5,6 @@
  */
 package com.enseval.ttss.model;
 
-import com.enseval.ttss.vm.PageResiduVM;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +14,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
@@ -66,13 +64,13 @@ public class Pengiriman implements Serializable {
     public String hitungTotalBerat() {
         StringBuilder sb = new StringBuilder();
         
-        Map<String, Long> berat = listStore.stream().collect(
+        Map<String, Double> berat = listStore.stream().collect(
                 Collectors.groupingBy(Store::getSatuanBerat,
-                        Collectors.summingLong(Store::getJmlBerat)));
+                        Collectors.summingDouble(Store::getJmlBerat)));
 
-        for (Map.Entry<String, Long> entry : berat.entrySet()) {
+        for (Map.Entry<String, Double> entry : berat.entrySet()) {
             String key = entry.getKey();
-            Long value = entry.getValue();
+            double value = entry.getValue();
 
             sb.append(value).append(" ").append(key).append(", ");
 

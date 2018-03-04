@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sertifikat" pageWidth="595" pageHeight="836" columnWidth="567" leftMargin="14" rightMargin="14" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="7dafb8d3-fcf1-47c3-aee8-9b45e3b6027d">
 	<property name="ireport.zoom" value="1.4615378250000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="339"/>
+	<property name="ireport.y" value="243"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -128,7 +128,7 @@
 		<field name="manifest.satuanKemasan2" class="java.lang.String"/>
 		<field name="manifest.jmlKemasan3" class="java.lang.Long"/>
 		<field name="manifest.satuanKemasan3" class="java.lang.String"/>
-		<field name="manifest.jmlBerat" class="java.lang.Long"/>
+		<field name="manifest.jmlBerat" class="java.lang.Double"/>
 		<field name="manifest.satuanBerat" class="java.lang.String"/>
 	</subDataset>
 	<parameter name="INVOICE_ITEM" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
@@ -255,7 +255,7 @@ Hazardous Waste Management]]></text>
 										<font fontName="Tahoma"/>
 										<paragraph leftIndent="4" rightIndent="2"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{manifest.jmlKemasan} + $F{manifest.satuanKemasan} + ($F{manifest.jmlKemasan2}.longValue()==0L?"":" + "+$F{manifest.jmlKemasan2} + " " + $F{manifest.satuanKemasan2}) + ($F{manifest.jmlKemasan3}.longValue()==0L?"":" + "+$F{manifest.jmlKemasan3} + " " + $F{manifest.satuanKemasan3}) + " ( " + $F{manifest.jmlBerat} + " " + $F{manifest.satuanBerat} + " ) "]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{manifest.jmlKemasan} + " " + $F{manifest.satuanKemasan} + ($F{manifest.jmlKemasan2}.longValue()==0L?"":" + "+$F{manifest.jmlKemasan2} + " " + $F{manifest.satuanKemasan2}) + ($F{manifest.jmlKemasan3}.longValue()==0L?"":" + "+$F{manifest.jmlKemasan3} + " " + $F{manifest.satuanKemasan3}) + " ( " + $F{manifest.jmlBerat} + " " + $F{manifest.satuanBerat} + " ) "]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>

@@ -8,8 +8,8 @@ import org.zkoss.bind.annotation.*;
 public class LoginVM
 {
     AuthenticationService authService;
-    String username = "admin";
-    String password = "admin";
+    String username = "";
+    String password = "";
     String msg;
     String browser;
     

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rekap_penerimaan_external.xls" language="groovy" pageWidth="595" pageHeight="3600" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f557e41b-b8dd-4179-a7c0-8d3296a95c60">
 	<property name="ireport.zoom" value="0.620921323059155"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -66,16 +66,16 @@
 	<subDataset name="Table Dataset 1" uuid="29bd139c-035d-4d54-bd75-82ad56d88200">
 		<field name="namaLimbah" class="java.lang.String"/>
 		<field name="kodeLimbah" class="java.lang.String"/>
-		<field name="jmlBerat" class="java.lang.Long"/>
-		<variable name="total" class="java.lang.Long" calculation="Sum">
+		<field name="jmlBerat" class="java.lang.Double"/>
+		<variable name="total" class="java.lang.Double" calculation="Sum">
 			<variableExpression><![CDATA[$F{jmlBerat}]]></variableExpression>
 		</variable>
 	</subDataset>
 	<subDataset name="TableGudang1" uuid="f5c0f611-10b1-4ad2-9f7d-49e4dfa838ba">
-		<field name="jmlBerat" class="java.lang.Long"/>
+		<field name="jmlBerat" class="java.lang.Double"/>
 		<field name="namaLimbah" class="java.lang.String"/>
 		<field name="kodeLimbah" class="java.lang.String"/>
-		<variable name="total" class="java.lang.Long" calculation="Sum">
+		<variable name="total" class="java.lang.Double" calculation="Sum">
 			<variableExpression><![CDATA[$F{jmlBerat}]]></variableExpression>
 		</variable>
 	</subDataset>

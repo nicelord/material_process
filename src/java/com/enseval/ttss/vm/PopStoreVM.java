@@ -83,7 +83,7 @@ public class PopStoreVM {
     String kodeStore = "";
 
     String satuanBerat = "KG";
-    long jmlBerat = 0L;
+    double jmlBerat = 0L;
 
     String filterKode = "", filterPerusahaan = "", filterItem = "", filterSatuan = "";
 
@@ -298,13 +298,15 @@ public class PopStoreVM {
         this.satuanBerat = satuanBerat;
     }
 
-    public long getJmlBerat() {
+    public double getJmlBerat() {
         return jmlBerat;
     }
 
-    public void setJmlBerat(long jmlBerat) {
+    public void setJmlBerat(double jmlBerat) {
         this.jmlBerat = jmlBerat;
     }
+
+   
 
     public List<Store> getListStore2() {
         return listStore2;

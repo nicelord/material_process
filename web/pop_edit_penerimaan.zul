@@ -29,6 +29,97 @@
                 <rows>
                     <row>
                         <vlayout>
+                            <hlayout width="100%">
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        Nmr Manifest.
+                                    </span>
+                                    <textbox readonly="true" class="form-control input-primary" value="@load(vm.penerimaan.manifest.kodeManifest)"/>
+                                </div> 
+                                    
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span> 
+                                    </span>
+                                    <datebox cols="12" 
+                                             format="dd-MM-yyyy"
+                                             readonly="true"
+                                             style="height:30px;"
+                                             hflex="3"
+                                             buttonVisible="false"
+                                             value="@load(vm.penerimaan.manifest.tglBuat)"/>
+                                </div> 
+                                
+                                
+                            </hlayout>
+                            <hlayout>
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        Tgl Terima
+                                    </span>
+                                    <datebox cols="12" 
+                                             format="dd-MM-yyyy"
+                                             readonly="true"
+                                             style="height:30px;"
+                                             hflex="3"
+                                             buttonVisible="true"
+                                             value="@bind(vm.penerimaan.tglPenerimaan)"/>
+                                </div> 
+                                
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Driver.
+                                    </span>
+                                    <combobox model="@load(vm.listDriver)" 
+                                              hflex="3"
+                                              height="100%"
+                                              value="@bind(vm.penerimaan.manifest.namaDriver)" 
+                                              style="width:100%;height:100%" 
+                                              class="input-primary">
+                                        <template name="model">
+                                            <comboitem label="@load(each.namaDriver)"/>
+                                        </template>
+                                    </combobox>
+                                </div>
+                            </hlayout>
+                            
+                                
+                            <hlayout width="100%">
+                                    
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Nmr Kendaraan.
+                                    </span>
+                                    <combobox model="@load(vm.listNomorKendaraan)" 
+                                              hflex="3"
+                                              height="100%"
+                                              value="@bind(vm.penerimaan.manifest.nomorKendaraan)" 
+                                              style="width:100%;height:100%" 
+                                              class="input-primary">
+                                        <template name="model">
+                                            <comboitem label="@load(each.nomorKendaraan)"/>
+                                        </template>
+                                    </combobox>
+                                </div>
+                                
+                                <div class="input-group" hflex="3">
+                                    <span class="input-group-addon">
+                                        Tgl angkut.
+                                    </span>
+                                    <datebox cols="12" 
+                                             format="dd-MM-yyyy"
+                                             readonly="true"
+                                             style="height:30px;"
+                                             hflex="3"
+                                             buttonVisible="true"
+                                             value="@bind(vm.penerimaan.manifest.tglAngkut)"/>
+                                </div> 
+                            </hlayout>
+                            <separator/>     
+                        </vlayout>
+                    </row>
+                    <row>
+                        <vlayout>
                             <div class="input-group" hflex="3">
                                 <span class="input-group-addon">
                                     Nama limbah :
@@ -115,7 +206,7 @@
                                     <span class="input-group-addon" >
                                         Total berat :
                                     </span>
-                                    <longbox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.penerimaan.jmlBerat)"/>
+                                    <doublebox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.penerimaan.jmlBerat)"/>
                                 </div>
                                 <combobox readonly="true" 
                                           hflex="3"

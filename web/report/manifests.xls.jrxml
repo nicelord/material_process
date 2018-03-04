@@ -35,7 +35,7 @@
 		<field name="satuanKemasan" class="java.lang.String"/>
 		<field name="satuanKemasan2" class="java.lang.String"/>
 		<field name="satuanKemasan3" class="java.lang.String"/>
-		<field name="jmlBerat" class="java.lang.Long"/>
+		<field name="jmlBerat" class="java.lang.Double"/>
 		<field name="satuanBerat" class="java.lang.String"/>
 		<field name="penerimaan.statusPenerimaan" class="java.lang.String"/>
 	</subDataset>
@@ -167,7 +167,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{jmlKemasan} + $F{satuanKemasan} + ($F{jmlKemasan2}.longValue()==0L?"":" + "+$F{jmlKemasan2} + " " + $F{satuanKemasan2}) + ($F{jmlKemasan3}.longValue()==0L?"":" + "+$F{jmlKemasan3} + " " + $F{satuanKemasan3})]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{jmlKemasan} + " " + $F{satuanKemasan} + ($F{jmlKemasan2}.longValue()==0L?"":" + "+$F{jmlKemasan2} + " " + $F{satuanKemasan2}) + ($F{jmlKemasan3}.longValue()==0L?"":" + "+$F{jmlKemasan3} + " " + $F{satuanKemasan3})]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

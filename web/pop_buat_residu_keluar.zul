@@ -184,7 +184,7 @@
                                     <span class="input-group-addon" >
                                         Total berat :
                                     </span>
-                                    <longbox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.residu.jmlBerat)"/>
+                                    <doublebox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.residu.jmlBerat)"/>
                                 </div>
                                 <combobox readonly="true" 
                                           hflex="3"

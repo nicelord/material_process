@@ -216,6 +216,10 @@ public class PageInvoices2VM {
             map.put("TTD", Util.setting("invoice_ttd_person"));
             map.put("JBT", Util.setting("invoice_ttd_jabatan"));
             map.put("KET", invoicex.getKeterangan());
+            map.put("REK1", Util.setting("invoice_rekening_maybank"));
+            map.put("REK2", Util.setting("invoice_rekening_mandiri"));
+            map.put("FAX", Util.setting("invoice_company_fax"));
+            map.put("EMAIL", Util.setting("invoice_company_email"));
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);
             OutputStream outputStream = new FileOutputStream(filenya);
 

@@ -69,16 +69,16 @@ public class PageRekapPenerimaanLimbahVM {
 
     List<TotalLimbah> listTotalLimbah = new ArrayList<>();
 
-    Long totalBerat = 0L;
-    Long totalGudang1 = 0L;
-    Long totalGudang2 = 0L;
-    Long totalGudang3 = 0L;
-    Long totalGudang4 = 0L;
-    Long totalGudang5 = 0L;
-    Long totalGudangSortir = 0L;
-    Long totalDikirim = 0L;
-    Long totalPendingKirim = 0L;
-    Long totalPendingProses = 0L;
+    double totalBerat = 0L;
+    double totalGudang1 = 0L;
+    double totalGudang2 = 0L;
+    double totalGudang3 = 0L;
+    double totalGudang4 = 0L;
+    double totalGudang5 = 0L;
+    double totalGudangSortir = 0L;
+    double totalDikirim = 0L;
+    double totalPendingKirim = 0L;
+    double totalPendingProses = 0L;
 
     List<TotalLimbah> listTotalGudang1 = new ArrayList<>();
     List<TotalLimbah> listTotalGudang2 = new ArrayList<>();
@@ -91,7 +91,7 @@ public class PageRekapPenerimaanLimbahVM {
 
     List<TotalLimbah> listTotalDiPengumpulan = new ArrayList<>();
 
-    Long totalDetail = 0L;
+    double totalDetail = 0;
 
     @AfterCompose
     public void initSetup() {
@@ -114,19 +114,19 @@ public class PageRekapPenerimaanLimbahVM {
                         Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                 .orderBy("id desc").findList();
 
-        Map<String, Map<String, Long>> grup = listPenerimaan.stream().collect(
+        Map<String, Map<String, Double>> grup = listPenerimaan.stream().collect(
                 Collectors.groupingBy(p -> p.getManifest().getNamaTeknikLimbah(),
                         Collectors.groupingBy(p -> p.getManifest().getJenisFisik(),
-                                Collectors.summingLong(Penerimaan::getJmlBerat))));
+                                Collectors.summingDouble(Penerimaan::getJmlBerat))));
 
-        for (Map.Entry<String, Map<String, Long>> entry : grup.entrySet()) {
+        for (Map.Entry<String, Map<String, Double>> entry : grup.entrySet()) {
 
             String key = entry.getKey();
-            Map<String, Long> value = entry.getValue();
+            Map<String, Double> value = entry.getValue();
 
-            for (Map.Entry<String, Long> entry1 : value.entrySet()) {
+            for (Map.Entry<String, Double> entry1 : value.entrySet()) {
                 String key1 = entry1.getKey();
-                Long value1 = entry1.getValue();
+                double value1 = entry1.getValue();
                 TotalLimbah t = new TotalLimbah();
                 t.setNamaLimbah(key);
                 t.setKodeLimbah(key1);
@@ -137,7 +137,7 @@ public class PageRekapPenerimaanLimbahVM {
 
         }
 
-        this.totalBerat = this.listTotalLimbah.stream().mapToLong(m -> m.getJmlBerat()).sum();
+        this.totalBerat = this.listTotalLimbah.stream().mapToDouble(m -> m.getJmlBerat()).sum();
 
         //TOTAL GUDANG 1
         countProsesLimbahByGudang("GUDANG 1");
@@ -164,14 +164,14 @@ public class PageRekapPenerimaanLimbahVM {
                         Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                 .findList();
 
-        Map<String, Long> grupStoreTerkirim = listStoreTerikirim.stream().collect(
+        Map<String, Double> grupStoreTerkirim = listStoreTerikirim.stream().collect(
                 Collectors.groupingBy(p -> p.getOutboundItem().getPenerimaan().getManifest().getJenisFisik(),
-                        Collectors.summingLong(Store::getJmlBerat)));
+                        Collectors.summingDouble(Store::getJmlBerat)));
 
-        for (Map.Entry<String, Long> entry : grupStoreTerkirim.entrySet()) {
+        for (Map.Entry<String, Double> entry : grupStoreTerkirim.entrySet()) {
 
             String key = entry.getKey();
-            Long value = entry.getValue();
+            double value = entry.getValue();
 
             TotalLimbah t = new TotalLimbah();
             t.setNamaLimbah("");
@@ -181,7 +181,7 @@ public class PageRekapPenerimaanLimbahVM {
 
         }
 
-        this.totalDikirim = listTotalDikirim.stream().mapToLong(m -> m.getJmlBerat()).sum();
+        this.totalDikirim = listTotalDikirim.stream().mapToDouble(m -> m.getJmlBerat()).sum();
 
         //TOTAL PENDING KIRIM
         this.listTotalPendingKirim = new ArrayList<>();
@@ -194,16 +194,16 @@ public class PageRekapPenerimaanLimbahVM {
                         Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                 .findList();
 
-        Map<String, Long> grupPendingKirim = listTotalPending.stream().collect(
+        Map<String, Double> grupPendingKirim = listTotalPending.stream().collect(
                 Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getJenisFisik(),
-                        Collectors.summingLong(OutboundItem::getJmlBerat)));
+                        Collectors.summingDouble(OutboundItem::getJmlBerat)));
 
-        for (Map.Entry<String, Long> entry : grupPendingKirim.entrySet()) {
+        for (Map.Entry<String, Double> entry : grupPendingKirim.entrySet()) {
 
             String key = entry.getKey();
-            Long value = entry.getValue();
+            double value = entry.getValue();
 
-            Long sisa = listTotalDikirim.stream().filter(p -> p.getKodeLimbah().equals(key)).mapToLong(m -> m.getJmlBerat()).sum();
+            double sisa = listTotalDikirim.stream().filter(p -> p.getKodeLimbah().equals(key)).mapToDouble(m -> m.getJmlBerat()).sum();
 
             if (value - sisa > 0) {
                 TotalLimbah t = new TotalLimbah();
@@ -214,19 +214,19 @@ public class PageRekapPenerimaanLimbahVM {
             }
         }
 
-        this.totalPendingKirim = listTotalPendingKirim.stream().mapToLong(m -> m.getJmlBerat()).sum();
+        this.totalPendingKirim = listTotalPendingKirim.stream().mapToDouble(m -> m.getJmlBerat()).sum();
 
         //TOTAL SISA DI PENGUMPULAN
         this.listTotalDiPengumpulan = new ArrayList<>();
-        Map<String, Long> grupTotalPendingProses = listPenerimaan.stream().filter(p -> p.getProsessLimbahs().isEmpty()).collect(
+        Map<String, Double> grupTotalPendingProses = listPenerimaan.stream().filter(p -> p.getProsessLimbahs().isEmpty()).collect(
                
                         Collectors.groupingBy(p -> p.getManifest().getJenisFisik(),
-                                Collectors.summingLong(Penerimaan::getJmlBerat)));
+                                Collectors.summingDouble(Penerimaan::getJmlBerat)));
 
-        for (Map.Entry<String, Long> entry : grupTotalPendingProses.entrySet()) {
+        for (Map.Entry<String, Double> entry : grupTotalPendingProses.entrySet()) {
 
             String key = entry.getKey();
-            Long value = entry.getValue();
+            double value = entry.getValue();
             
             TotalLimbah t = new TotalLimbah();
                 t.setNamaLimbah("");
@@ -236,7 +236,7 @@ public class PageRekapPenerimaanLimbahVM {
 
         }
 
-        this.totalPendingProses = this.listTotalDiPengumpulan.stream().mapToLong(m -> m.getJmlBerat()).sum();
+        this.totalPendingProses = this.listTotalDiPengumpulan.stream().mapToDouble(m -> m.getJmlBerat()).sum();
 
         this.totalDetail = this.totalPendingProses + this.totalGudang1 + this.totalGudang2 + this.totalGudang3 + this.totalGudang4 + this.totalGudang5 + this.totalGudangSortir + this.totalDikirim + this.totalPendingKirim;
 
@@ -273,14 +273,14 @@ public class PageRekapPenerimaanLimbahVM {
                         Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                 .findList();
 
-        Map<String, Long> grupProsesGudang1 = listProsesGudang.stream().collect(
+        Map<String, Double> grupProsesGudang1 = listProsesGudang.stream().collect(
                 Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getJenisFisik(),
-                        Collectors.summingLong(ProsessLimbah::getJmlBerat)));
+                        Collectors.summingDouble(ProsessLimbah::getJmlBerat)));
 
-        for (Map.Entry<String, Long> entry : grupProsesGudang1.entrySet()) {
+        for (Map.Entry<String, Double> entry : grupProsesGudang1.entrySet()) {
 
             String key = entry.getKey();
-            Long value = entry.getValue();
+            double value = entry.getValue();
 
             TotalLimbah t = new TotalLimbah();
             t.setNamaLimbah("");
@@ -316,26 +316,26 @@ public class PageRekapPenerimaanLimbahVM {
         }
 
         if (gudang.equals("GUDANG 1")) {
-            this.totalGudang1 = this.listTotalGudang1.stream().mapToLong(m -> m.getJmlBerat()).sum();
+            this.totalGudang1 = this.listTotalGudang1.stream().mapToDouble(m -> m.getJmlBerat()).sum();
         }
 
         if (gudang.equals("GUDANG 2")) {
-            this.totalGudang2 = this.listTotalGudang2.stream().mapToLong(m -> m.getJmlBerat()).sum();
+            this.totalGudang2 = this.listTotalGudang2.stream().mapToDouble(m -> m.getJmlBerat()).sum();
         }
 
         if (gudang.equals("GUDANG 3")) {
-            this.totalGudang3 = this.listTotalGudang3.stream().mapToLong(m -> m.getJmlBerat()).sum();
+            this.totalGudang3 = this.listTotalGudang3.stream().mapToDouble(m -> m.getJmlBerat()).sum();
         }
 
         if (gudang.equals("GUDANG 4")) {
-            this.totalGudang4 = this.listTotalGudang4.stream().mapToLong(m -> m.getJmlBerat()).sum();
+            this.totalGudang4 = this.listTotalGudang4.stream().mapToDouble(m -> m.getJmlBerat()).sum();
         }
 
         if (gudang.equals("GUDANG 5")) {
-            this.totalGudang5 = this.listTotalGudang5.stream().mapToLong(m -> m.getJmlBerat()).sum();
+            this.totalGudang5 = this.listTotalGudang5.stream().mapToDouble(m -> m.getJmlBerat()).sum();
         }
         if (gudang.equals("SORTIR")) {
-            this.totalGudangSortir = this.listTotalGudangSortir.stream().mapToLong(m -> m.getJmlBerat()).sum();
+            this.totalGudangSortir = this.listTotalGudangSortir.stream().mapToDouble(m -> m.getJmlBerat()).sum();
         }
 
     }
@@ -418,13 +418,8 @@ public class PageRekapPenerimaanLimbahVM {
         }
     }
 
-    public Long getTotalBerat() {
-        return totalBerat;
-    }
+  
 
-    public void setTotalBerat(Long totalBerat) {
-        this.totalBerat = totalBerat;
-    }
 
     public User getUserLogin() {
         return userLogin;
@@ -462,7 +457,7 @@ public class PageRekapPenerimaanLimbahVM {
 
         String namaLimbah;
         String kodeLimbah;
-        Long jmlBerat;
+        double jmlBerat;
 
         public String getNamaLimbah() {
             return namaLimbah;
@@ -480,11 +475,11 @@ public class PageRekapPenerimaanLimbahVM {
             this.kodeLimbah = kodeLimbah;
         }
 
-        public Long getJmlBerat() {
+        public double getJmlBerat() {
             return jmlBerat;
         }
 
-        public void setJmlBerat(Long jmlBerat) {
+        public void setJmlBerat(double jmlBerat) {
             this.jmlBerat = jmlBerat;
         }
 
@@ -498,69 +493,6 @@ public class PageRekapPenerimaanLimbahVM {
         this.listTotalLimbah = listTotalLimbah;
     }
 
-    public Long getTotalGudang1() {
-        return totalGudang1;
-    }
-
-    public void setTotalGudang1(Long totalGudang1) {
-        this.totalGudang1 = totalGudang1;
-    }
-
-    public Long getTotalGudang2() {
-        return totalGudang2;
-    }
-
-    public void setTotalGudang2(Long totalGudang2) {
-        this.totalGudang2 = totalGudang2;
-    }
-
-    public Long getTotalGudang3() {
-        return totalGudang3;
-    }
-
-    public void setTotalGudang3(Long totalGudang3) {
-        this.totalGudang3 = totalGudang3;
-    }
-
-    public Long getTotalGudang4() {
-        return totalGudang4;
-    }
-
-    public void setTotalGudang4(Long totalGudang4) {
-        this.totalGudang4 = totalGudang4;
-    }
-
-    public Long getTotalGudang5() {
-        return totalGudang5;
-    }
-
-    public void setTotalGudang5(Long totalGudang5) {
-        this.totalGudang5 = totalGudang5;
-    }
-
-    public Long getTotalDikirim() {
-        return totalDikirim;
-    }
-
-    public void setTotalDikirim(Long totalDikirim) {
-        this.totalDikirim = totalDikirim;
-    }
-
-    public Long getTotalPendingKirim() {
-        return totalPendingKirim;
-    }
-
-    public void setTotalPendingKirim(Long totalPendingKirim) {
-        this.totalPendingKirim = totalPendingKirim;
-    }
-
-    public Long getTotalPendingProses() {
-        return totalPendingProses;
-    }
-
-    public void setTotalPendingProses(Long totalPendingProses) {
-        this.totalPendingProses = totalPendingProses;
-    }
 
     public List<TotalLimbah> getListTotalGudang1() {
         return listTotalGudang1;
@@ -570,13 +502,15 @@ public class PageRekapPenerimaanLimbahVM {
         this.listTotalGudang1 = listTotalGudang1;
     }
 
-    public Long getTotalDetail() {
+    public double getTotalDetail() {
         return totalDetail;
     }
 
-    public void setTotalDetail(Long totalDetail) {
+    public void setTotalDetail(double totalDetail) {
         this.totalDetail = totalDetail;
     }
+
+   
 
     public List<TotalLimbah> getListTotalGudang2() {
         return listTotalGudang2;
@@ -633,21 +567,93 @@ public class PageRekapPenerimaanLimbahVM {
     public void setListTotalDiPengumpulan(List<TotalLimbah> listTotalDiPengumpulan) {
         this.listTotalDiPengumpulan = listTotalDiPengumpulan;
     }
-
-    public Long getTotalGudangSortir() {
-        return totalGudangSortir;
-    }
-
-    public void setTotalGudangSortir(Long totalGudangSortir) {
-        this.totalGudangSortir = totalGudangSortir;
-    }
-
+    
     public List<TotalLimbah> getListTotalGudangSortir() {
         return listTotalGudangSortir;
     }
 
     public void setListTotalGudangSortir(List<TotalLimbah> listTotalGudangSortir) {
         this.listTotalGudangSortir = listTotalGudangSortir;
+    }
+
+    public double getTotalBerat() {
+        return totalBerat;
+    }
+
+    public void setTotalBerat(double totalBerat) {
+        this.totalBerat = totalBerat;
+    }
+
+    public double getTotalGudang1() {
+        return totalGudang1;
+    }
+
+    public void setTotalGudang1(double totalGudang1) {
+        this.totalGudang1 = totalGudang1;
+    }
+
+    public double getTotalGudang2() {
+        return totalGudang2;
+    }
+
+    public void setTotalGudang2(double totalGudang2) {
+        this.totalGudang2 = totalGudang2;
+    }
+
+    public double getTotalGudang3() {
+        return totalGudang3;
+    }
+
+    public void setTotalGudang3(double totalGudang3) {
+        this.totalGudang3 = totalGudang3;
+    }
+
+    public double getTotalGudang4() {
+        return totalGudang4;
+    }
+
+    public void setTotalGudang4(double totalGudang4) {
+        this.totalGudang4 = totalGudang4;
+    }
+
+    public double getTotalGudang5() {
+        return totalGudang5;
+    }
+
+    public void setTotalGudang5(double totalGudang5) {
+        this.totalGudang5 = totalGudang5;
+    }
+
+    public double getTotalGudangSortir() {
+        return totalGudangSortir;
+    }
+
+    public void setTotalGudangSortir(double totalGudangSortir) {
+        this.totalGudangSortir = totalGudangSortir;
+    }
+
+    public double getTotalDikirim() {
+        return totalDikirim;
+    }
+
+    public void setTotalDikirim(double totalDikirim) {
+        this.totalDikirim = totalDikirim;
+    }
+
+    public double getTotalPendingKirim() {
+        return totalPendingKirim;
+    }
+
+    public void setTotalPendingKirim(double totalPendingKirim) {
+        this.totalPendingKirim = totalPendingKirim;
+    }
+
+    public double getTotalPendingProses() {
+        return totalPendingProses;
+    }
+
+    public void setTotalPendingProses(double totalPendingProses) {
+        this.totalPendingProses = totalPendingProses;
     }
 
 }

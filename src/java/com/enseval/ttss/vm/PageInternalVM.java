@@ -82,6 +82,7 @@ public class PageInternalVM {
         prosessLimbah.setPenerimaan(null);
         prosessLimbah.setGudangTujuan(null);
         Ebean.update(prosessLimbah);
+        Ebean.delete(prosessLimbah);
 
         if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", userLogin.getAkses()).orderBy("id desc").findList();

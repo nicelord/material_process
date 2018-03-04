@@ -35,7 +35,7 @@
 		<field name="satuanKemasan2" class="java.lang.String"/>
 		<field name="jmlKemasan3" class="java.lang.Long"/>
 		<field name="satuanKemasan3" class="java.lang.String"/>
-		<field name="jmlBerat" class="java.lang.Long"/>
+		<field name="jmlBerat" class="java.lang.Double"/>
 		<field name="penerimaan.manifest.kodeManifest" class="java.lang.String"/>
 		<field name="residu.residuId" class="java.lang.String"/>
 	</subDataset>

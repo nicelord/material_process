@@ -27,8 +27,12 @@ create table delivery_order (
   user_login_id             bigint,
   tgl_do                    datetime,
   customer_id               bigint,
+  do_or_gr                  varchar(255),
+  other                     varchar(255),
   cc_person                 varchar(255),
   nomor_po                  varchar(255),
+  penanda_tangan            varchar(255),
+  jabatan                   varchar(255),
   constraint uq_delivery_order_nomor_do unique (nomor_do),
   constraint pk_delivery_order primary key (id))
 ;
@@ -153,7 +157,7 @@ create table manifest (
   satuan_kemasan3           varchar(255),
   jml_kemasan3              bigint,
   satuan_berat              varchar(255),
-  jml_berat                 bigint,
+  jml_berat                 double,
   nomor_kendaraan           varchar(255),
   tgl_approve               datetime,
   status_approval           varchar(255),
@@ -187,7 +191,7 @@ create table outbound_item (
   satuan_kemasan3           varchar(255),
   jml_kemasan3              bigint,
   satuan_berat              varchar(255),
-  jml_berat                 bigint,
+  jml_berat                 double,
   constraint uq_outbound_item_residu_id unique (residu_id),
   constraint uq_outbound_item_penerimaan_id unique (penerimaan_id),
   constraint pk_outbound_item primary key (id))
@@ -239,7 +243,7 @@ create table penerimaan (
   satuan_kemasan3           varchar(255),
   jml_kemasan3              bigint,
   satuan_berat              varchar(255),
-  jml_berat                 bigint,
+  jml_berat                 double,
   user_penerima_id          bigint,
   tgl_penerimaan            datetime,
   lokasi_gudang             varchar(255),
@@ -280,7 +284,7 @@ create table prosess_limbah (
   satuan_kemasan3           varchar(255),
   jml_kemasan3              bigint,
   satuan_berat              varchar(255),
-  jml_berat                 bigint,
+  jml_berat                 double,
   keterangan                varchar(255),
   nama_limbah               varchar(255),
   constraint pk_prosess_limbah primary key (id))
@@ -301,7 +305,7 @@ create table residu (
   satuan_kemasan3           varchar(255),
   jml_kemasan3              bigint,
   satuan_berat              varchar(255),
-  jml_berat                 bigint,
+  jml_berat                 double,
   tipe                      varchar(255),
   nama_perusahaan           varchar(255),
   constraint pk_residu primary key (id))
@@ -335,7 +339,7 @@ create table store (
   satuan_kemasan            varchar(255),
   jml_kemasan               bigint,
   satuan_berat              varchar(255),
-  jml_berat                 bigint,
+  jml_berat                 double,
   kemasan_ke                integer,
   in_reporting              tinyint(1) default 0,
   constraint pk_store primary key (id))

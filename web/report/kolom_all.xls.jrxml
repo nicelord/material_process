@@ -28,7 +28,7 @@
 		<field name="outboundItem.namaItem" class="java.lang.String"/>
 		<field name="jmlKemasan" class="java.lang.Long"/>
 		<field name="satuanKemasan" class="java.lang.String"/>
-		<field name="jmlBerat" class="java.lang.Long"/>
+		<field name="jmlBerat" class="java.lang.Double"/>
 		<field name="satuanBerat" class="java.lang.String"/>
 		<field name="outboundItem.penerimaan" class="java.lang.Object"/>
 		<field name="pengiriman.idPengiriman" class="java.lang.String"/>

@@ -35,7 +35,7 @@
 		<field name="jmlKemasan2" class="java.lang.Long"/>
 		<field name="satuanKemasan3" class="java.lang.String"/>
 		<field name="jmlKemasan3" class="java.lang.Long"/>
-		<field name="jmlBerat" class="java.lang.Long"/>
+		<field name="jmlBerat" class="java.lang.Double"/>
 		<field name="satuanBerat" class="java.lang.String"/>
 		<field name="gudangTujuan" class="java.lang.String"/>
 		<field name="userPenerima.nama" class="java.lang.String"/>

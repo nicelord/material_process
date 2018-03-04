@@ -242,8 +242,7 @@
                                     <button 
                                         vflex="3" sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-remove" 
                                         label="REJECT" 
-                                        onClick="@command('reject',prosesLimbah=s)"
-                                        disabled="@load(s.tglTerima ne null)"/>
+                                        onClick="@command('reject',prosesLimbah=s)"/>
                                     <!--                                    <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" 
                                     label="PROSES"
                                     onClick="@command('prosesLimbah',prosesLimbah=s)"

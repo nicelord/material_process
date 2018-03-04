@@ -72,6 +72,7 @@ public class PopInputManifestVM {
         this.listPenandaTangan = Ebean.find(Manifest.class).select("penandaTangan").setDistinct(true).findList();
         this.listJabatanPenandaTangan = Ebean.find(Manifest.class).select("jabatanPenandaTangan").setDistinct(true).findList();
         this.listJenisFisik = Ebean.find(Manifest.class).select("jenisFisik").setDistinct(true).findList();
+        this.manifest.setNamaTeknikLimbah("");
 
         Selectors.wireComponents(view, (Object) this, false);
     }
@@ -117,9 +118,13 @@ public class PopInputManifestVM {
             Messagebox.show("Kode manifest belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
         }
-        
-        if (this.manifest.getNamaTeknikLimbah().isEmpty()) {
-            Messagebox.show("Nama teknik limbah belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
+
+//        if (this.manifest.getNamaTeknikLimbah().isEmpty()) {
+//            Messagebox.show("Nama teknik limbah belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
+//            return;
+//        }
+        if (this.manifest.getCustomerPenghasil() == null) {
+            Messagebox.show("Customer belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
         }
         
@@ -127,20 +132,71 @@ public class PopInputManifestVM {
             Messagebox.show("Jenis fisik limbah belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
         }
-
-        if ((this.manifest.getJmlKemasan() > 0L && this.manifest.getJmlKemasan2() > 0L) && this.manifest.getSatuanKemasan().equals(this.manifest.getSatuanKemasan2())) {
-            Messagebox.show("Setiap kemasan harus beda satuan", "Error", Messagebox.OK, Messagebox.ERROR);
+        
+        if (this.manifest.getJenisLimbah() == null) {
+            Messagebox.show("Kode limbah belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
         }
 
-        if ((this.manifest.getJmlKemasan2() > 0L && this.manifest.getJmlKemasan3() > 0L) && this.manifest.getJmlKemasan2() > 0L && this.manifest.getSatuanKemasan2().equals(this.manifest.getSatuanKemasan3())) {
-            Messagebox.show("Setiap kemasan harus beda satuan", "Error", Messagebox.OK, Messagebox.ERROR);
+        if (this.manifest.getKarakteristikLimbah().isEmpty()) {
+            Messagebox.show("Karakteristik belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
         }
 
-        if ((this.manifest.getJmlKemasan() > 0L && this.manifest.getJmlKemasan3() > 0L) && this.manifest.getSatuanKemasan().equals(this.manifest.getSatuanKemasan3())) {
-            Messagebox.show("Setiap kemasan harus beda satuan", "Error", Messagebox.OK, Messagebox.ERROR);
+        if (this.manifest.getNamaTeknikLimbah().isEmpty()) {
+            Messagebox.show("Nama teknik limbah belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
+        }
+
+        if (this.manifest.getJmlKemasan() <= 0L && this.manifest.getJmlKemasan2() <= 0L && this.manifest.getJmlKemasan3() <= 0L) {
+            Messagebox.show("Jumlah kemasan masih kosong!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        if (this.manifest.getJmlKemasan() < 0L) {
+            Messagebox.show("Jumlah kemasan 1 <= 0!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        if (this.manifest.getJmlKemasan2() < 0L) {
+            Messagebox.show("Jumlah kemasan 2 <= 0!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        if (this.manifest.getJmlKemasan3() < 0L) {
+            Messagebox.show("Jumlah kemasan 3 <= 0!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        if (this.manifest.getJmlBerat() <= 0L) {
+            Messagebox.show("Jml berat masih kosong!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        if (this.manifest.getCustomerTujuan() == null) {
+            Messagebox.show("Customer tujuan masih kosong!", "Error", Messagebox.OK, Messagebox.ERROR);
+            return;
+        }
+
+        if (this.manifest.getJmlKemasan() > 0 && this.manifest.getJmlKemasan2() > 0) {
+            if (this.manifest.getSatuanKemasan().toLowerCase().equals(this.manifest.getSatuanKemasan2().toLowerCase())) {
+                Messagebox.show("Satuan kemasan tidak boleh ada yang sama!", "Error", Messagebox.OK, Messagebox.ERROR);
+                return;
+            }
+        }
+
+        if (this.manifest.getJmlKemasan2() > 0 && this.manifest.getJmlKemasan3() > 0) {
+            if (this.manifest.getSatuanKemasan2().toLowerCase().equals(this.manifest.getSatuanKemasan3().toLowerCase())) {
+                Messagebox.show("Satuan kemasan tidak boleh ada yang sama!", "Error", Messagebox.OK, Messagebox.ERROR);
+                return;
+            }
+        }
+
+        if (this.manifest.getJmlKemasan() > 0 && this.manifest.getJmlKemasan3() > 0) {
+            if (this.manifest.getSatuanKemasan().toLowerCase().equals(this.manifest.getSatuanKemasan3().toLowerCase())) {
+                Messagebox.show("Satuan kemasan tidak boleh ada yang sama!", "Error", Messagebox.OK, Messagebox.ERROR);
+                return;
+            }
         }
 
         try {
@@ -226,6 +282,7 @@ public class PopInputManifestVM {
             this.winInputManifest.detach();
 
         } catch (Exception e) {
+            e.printStackTrace();
             Messagebox.show(e.getMessage(), "Error", Messagebox.OK, Messagebox.ERROR);
         }
     }

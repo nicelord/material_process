@@ -140,8 +140,7 @@
                                   autodrop="true" 
                                   buttonVisible="true" 
                                   value="@save(vm.manifest.namaTeknikLimbah)" 
-                                  width="100%" 
-                                  constraint="no empty">
+                                  width="100%" >
                             <template name="model">
                                 <comboitem label="@load(each.namaTeknikLimbah)"/>
                             </template>
@@ -158,17 +157,17 @@
                                     <span class="input-group-addon" >
                                         Kemasan 1
                                     </span>
-                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@save(vm.manifest.jmlKemasan)"/>
+                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.manifest.jmlKemasan)"/>
                                 </div>
                                 <div class="input-group" hflex="3">
                                     <combobox style="width:100%;height:100%"
-                                              constraint="no empty"  
+                                               
                                               hflex="3"
                                               readonly="true"
-                                              value="@save(vm.manifest.satuanKemasan)">
-                                        <attribute name="onCreate">
+                                              value="@bind(vm.manifest.satuanKemasan)">
+<!--                                        <attribute name="onCreate">
                                             self.setSelectedIndex(0);
-                                        </attribute>
+                                        </attribute>-->
                                         <comboitem label="Pallet"/>
                                         <comboitem label="Drum"/>
                                         <comboitem label="Bag"/>
@@ -185,17 +184,17 @@
                                     <span class="input-group-addon" >
                                         Kemasan 2
                                     </span>
-                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@save(vm.manifest.jmlKemasan2)"/>
+                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.manifest.jmlKemasan2)"/>
                                 </div>
                                 <div class="input-group" hflex="3">
                                     <combobox style="width:100%;height:100%"
-                                              constraint="no empty"  
+                                                
                                               hflex="3"
                                               readonly="true"
-                                              value="@save(vm.manifest.satuanKemasan2)">
-                                        <attribute name="onCreate">
+                                              value="@bind(vm.manifest.satuanKemasan2)">
+<!--                                        <attribute name="onCreate">
                                             self.setSelectedIndex(4);
-                                        </attribute>
+                                        </attribute>-->
                                         <comboitem label="Pallet"/>
                                         <comboitem label="Drum"/>
                                         <comboitem label="Bag"/>
@@ -214,17 +213,17 @@
                                     <span class="input-group-addon" >
                                         Kemasan 3
                                     </span>
-                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@save(vm.manifest.jmlKemasan3)"/>
+                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.manifest.jmlKemasan3)"/>
                                 </div>
                                 <div class="input-group" hflex="3">
                                     <combobox style="width:100%;height:100%"
                                               hflex="3"
                                               readonly="true"
-                                              constraint="no empty"  
-                                              value="@save(vm.manifest.satuanKemasan3)">
-                                        <attribute name="onCreate">
+                                              
+                                              value="@bind(vm.manifest.satuanKemasan3)">
+<!--                                        <attribute name="onCreate">
                                             self.setSelectedIndex(4);
-                                        </attribute>
+                                        </attribute>-->
                                         <comboitem label="Pallet"/>
                                         <comboitem label="Drum"/>
                                         <comboitem label="Bag"/>
@@ -241,7 +240,7 @@
                                     <span class="input-group-addon" >
                                         Total berat.
                                     </span>
-                                    <longbox sclass="form-control input-primary" placeholder="Banyak" value="@save(vm.manifest.jmlBerat)"/>
+                                    <doublebox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.manifest.jmlBerat)"/>
                                 </div>
                                 <combobox readonly="true" 
                                           constraint="no empty" 

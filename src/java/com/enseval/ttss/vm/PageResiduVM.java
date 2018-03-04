@@ -105,17 +105,18 @@ public class PageResiduVM {
 
         Messagebox.show("Menghapus residu yang sudah dikirim ke external berarti menghapus data di gudang external dan data pengiriman. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
             if (t.getName().equals("onOK")) {
-                for (Store store : residu.getOutboundItem().getStores()) {
-                    store.setOutboundItem(null);
-                    Ebean.delete(store);
+                if (residu.getOutboundItem() != null) {
+                    for (Store store : residu.getOutboundItem().getStores()) {
+                        store.setOutboundItem(null);
+                        Ebean.delete(store);
+                    }
+                    Ebean.delete(residu.getOutboundItem());
                 }
-                Ebean.delete(residu.getOutboundItem());
 
                 Ebean.delete(residu);
                 BindUtils.postGlobalCommand(null, null, "refresh", null);
             }
         });
-
 
     }
 
@@ -255,13 +256,13 @@ public class PageResiduVM {
 
         sb = new StringBuilder();
 
-        Map<String, Long> berat = listResidu.stream().collect(
+        Map<String, Double> berat = listResidu.stream().collect(
                 Collectors.groupingBy(Residu::getSatuanBerat,
-                        Collectors.summingLong(Residu::getJmlBerat)));
+                        Collectors.summingDouble(Residu::getJmlBerat)));
 
-        for (Map.Entry<String, Long> entry : berat.entrySet()) {
+        for (Map.Entry<String, Double> entry : berat.entrySet()) {
             String key = entry.getKey();
-            Long value = entry.getValue();
+            double value = entry.getValue();
 
             sb.append(value).append(" ").append(key).append(", ");
 

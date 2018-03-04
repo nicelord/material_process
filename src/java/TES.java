@@ -1,36 +1,21 @@
 
-import org.avaje.agentloader.*;
-import com.avaje.ebean.*;
-import com.enseval.ttss.model.*;
-import com.enseval.ttss.util.Util;
-import com.enseval.ttss.vm.ReportDailyProses;
-import java.io.File;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import javax.mail.Authenticator;
-import javax.persistence.Tuple;
-import org.apache.commons.mail.DefaultAuthenticator;
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.HtmlEmail;
-import org.apache.commons.mail.SimpleEmail;
+import com.avaje.ebean.Ebean;
+import com.enseval.ttss.model.Customer;
+import com.enseval.ttss.model.User;
+import java.text.DecimalFormat;
+import org.avaje.agentloader.AgentLoader;
 
 public class TES {
 
     public static void main(final String[] args) {
+        
+//        Long l = 1200L;
+//        Double d = 12.1;
+//        Double d2 = 12.023;
+//        DecimalFormat df = new DecimalFormat("#.###");
+//        System.out.println(df.format(d+d2));
+//        System.out.println(d.longValue());
+        
         AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent", "debug=1");
 //
         TES t = new TES();

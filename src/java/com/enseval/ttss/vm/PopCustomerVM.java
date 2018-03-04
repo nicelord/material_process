@@ -49,7 +49,7 @@ public class PopCustomerVM {
     @Command
     @NotifyChange("listCustomers")
     public void cari() {
-        this.listCustomers = Ebean.find(Customer.class).where().like("nama", "%" + this.txtCari.getValue() + "%").orderBy("id desc").findList();
+        this.listCustomers = Ebean.find(Customer.class).where().like("nama", "%" + this.txtCari.getValue() + "%").orderBy("id asc").findList();
     }
 
     @Command
@@ -68,7 +68,7 @@ public class PopCustomerVM {
     @AfterCompose
     public void initSetup(@ContextParam(ContextType.VIEW) Component view,
             @ExecutionArgParam("isPengirim") boolean isPengirim) {
-        this.listCustomers = Ebean.find(Customer.class).orderBy("id desc").findList();
+        this.listCustomers = Ebean.find(Customer.class).orderBy("id asc").findList();
         this.isPengirim = isPengirim;
         Selectors.wireComponents(view, this, false);
     }
@@ -88,7 +88,7 @@ public class PopCustomerVM {
     @GlobalCommand
     @NotifyChange({"listCustomers"})
     public void refresh(){
-        this.listCustomers = Ebean.find(Customer.class).where().like("nama", "%" + this.txtCari.getValue() + "%").orderBy("id desc").findList();
+        this.listCustomers = Ebean.find(Customer.class).where().like("nama", "%" + this.txtCari.getValue() + "%").orderBy("id asc").findList();
     }
 
     public Window getWinPopCustomer() {

@@ -10,6 +10,7 @@ import com.avaje.ebean.Expr;
 import com.enseval.ttss.model.Invoice;
 import com.enseval.ttss.model.OutboundItem;
 import com.enseval.ttss.model.Pengiriman;
+import com.enseval.ttss.model.ProsessLimbah;
 import com.enseval.ttss.model.Residu;
 import com.enseval.ttss.model.Store;
 import com.enseval.ttss.model.User;
@@ -143,8 +144,26 @@ public class PageOutboundVM {
             store.setOutboundItem(null);
             Ebean.delete(store);
         }
-        Ebean.delete(outboundItem);
+        
+        if(outboundItem.getPenerimaan()!=null){
+            Ebean.delete(Ebean.find(ProsessLimbah.class).where().eq("penerimaan", outboundItem.getPenerimaan()).findUnique());
+            Ebean.delete(outboundItem);
+        }else{
+            outboundItem.setTglBuat(null);
+            Residu r = outboundItem.getResidu();
+            r.setTglKirim(null);
+            Ebean.update(r);
+            Ebean.update(outboundItem);
+            
+            
+        }
+        
+        
+        saring();
+        
     }
+    
+    
 
     @Command
     public void exportExcel() {
