@@ -1,104 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="manifest.pdf" language="groovy" pageWidth="595" pageHeight="921" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="faf5b0c4-d17e-4017-84e5-cb317c3696e9">
-	<property name="ireport.zoom" value="1.5"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="manifest.pdf" language="groovy" pageWidth="595" pageHeight="929" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="faf5b0c4-d17e-4017-84e5-cb317c3696e9">
+	<property name="ireport.zoom" value="1.0245201830476058"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="148"/>
+	<property name="ireport.y" value="114"/>
 	<parameter name="manifest" class="java.lang.Object"/>
+	<parameter name="TELP" class="java.lang.String"/>
 	<detail>
 		<band height="921">
 			<textField isBlankWhenNull="true">
-				<reportElement x="32" y="153" width="266" height="14" uuid="b0b080a2-8421-4f4d-b9e8-6a8708c23dae"/>
+				<reportElement x="32" y="148" width="266" height="14" uuid="b0b080a2-8421-4f4d-b9e8-6a8708c23dae"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerPenghasil().getNama()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="32" y="167" width="266" height="13" uuid="a9974acb-dd4d-48bd-be29-be6ea880c323"/>
+				<reportElement x="32" y="162" width="266" height="13" uuid="a9974acb-dd4d-48bd-be29-be6ea880c323"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerPenghasil().getAlamat()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="72" y="180" width="108" height="14" uuid="8428220e-d311-478f-a080-c88eac725c02"/>
+				<reportElement x="72" y="177" width="108" height="14" uuid="8428220e-d311-478f-a080-c88eac725c02"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerPenghasil().getNomorKontak()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="192" y="180" width="106" height="14" uuid="d3a92aa6-b95f-4ee0-8644-6953b2e82d32"/>
+				<reportElement x="192" y="177" width="106" height="14" uuid="d3a92aa6-b95f-4ee0-8644-6953b2e82d32"/>
 				<textElement>
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerPenghasil().getFax()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="29" y="226" width="81" height="13" uuid="3dd47abf-0345-4a85-b600-40d00e712c5f"/>
+				<reportElement x="29" y="220" width="81" height="13" uuid="3dd47abf-0345-4a85-b600-40d00e712c5f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getJenisFisik()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="129" y="224" width="136" height="13" uuid="e74e1667-05d4-4d79-b374-95191716675e"/>
+				<reportElement x="129" y="218" width="136" height="13" uuid="e74e1667-05d4-4d79-b374-95191716675e"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getNamaTeknikLimbah()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="283" y="223" width="112" height="13" uuid="946e128e-c29e-4646-b096-196e44dfd5c4"/>
+				<reportElement x="283" y="217" width="112" height="13" uuid="946e128e-c29e-4646-b096-196e44dfd5c4"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getKarakteristikLimbah()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="406" y="223" width="106" height="13" uuid="a2295543-4284-4fbd-9546-2dbc20bd3fe8"/>
+				<reportElement x="406" y="217" width="106" height="13" uuid="a2295543-4284-4fbd-9546-2dbc20bd3fe8"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getJenisLimbah().getKodeJenis()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="199" y="338" width="191" height="15" uuid="e180bf4c-938e-498c-838d-0623b0bdd9de"/>
+				<reportElement x="199" y="336" width="191" height="15" uuid="e180bf4c-938e-498c-838d-0623b0bdd9de"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
+					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerTujuan().getNama()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="250" y="321" width="178" height="14" uuid="2a52da76-d620-424f-a3e6-f1b9502f199a"/>
+				<reportElement x="250" y="319" width="178" height="14" uuid="2a52da76-d620-424f-a3e6-f1b9502f199a"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
+					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerTujuan().getNomorKontak()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{TELP}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="41" y="257" width="115" height="13" uuid="3254ead2-f21d-4d9b-a99a-5217da378532"/>
+				<reportElement x="41" y="251" width="115" height="13" uuid="3254ead2-f21d-4d9b-a99a-5217da378532"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
+					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+$P{manifest}.getSatuanKemasan() + " "+$P{manifest}.getSatuanKemasan2() + " "+$P{manifest}.getSatuanKemasan3()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{manifest}.getSatuanKemasan()+($P{manifest}.getJmlKemasan2().longValue()==0L?"":"+"+$P{manifest}.getSatuanKemasan2())+($P{manifest}.getJmlKemasan3().longValue()==0L?"":"+"+$P{manifest}.getSatuanKemasan3())]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="222" y="257" width="76" height="13" uuid="0f354654-dd7e-48b7-8b2a-3b0d6c1228a8"/>
+				<reportElement x="222" y="251" width="76" height="13" uuid="0f354654-dd7e-48b7-8b2a-3b0d6c1228a8"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
+					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{manifest}.getJmlBerat() + " "+$P{manifest}.getSatuanBerat()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{manifest}.getJmlBerat()-(int)$P{manifest}.getJmlBerat()!=0?$P{manifest}.getJmlBerat():new DecimalFormat("####0").format($P{manifest}.getJmlBerat())).toString().replace(".",",") + " "+$P{manifest}.getSatuanBerat()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="333" y="257" width="179" height="13" uuid="89f88b28-361f-4284-8ccb-a94e2a1cbf8c"/>
+				<reportElement x="333" y="251" width="179" height="13" uuid="89f88b28-361f-4284-8ccb-a94e2a1cbf8c"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
+					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{manifest}.getJmlKemasan() + " " + $P{manifest}.getSatuanKemasan() + ($P{manifest}.getJmlKemasan2().longValue()==0L?"":" + "+$P{manifest}.getJmlKemasan2() + " " + $P{manifest}.getSatuanKemasan2()) + ($P{manifest}.getJmlKemasan3().longValue()==0L?"":" + "+$P{manifest}.getJmlKemasan3() + " " + $P{manifest}.getSatuanKemasan3())]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="180" y="180" width="12" height="14" uuid="f39f34b3-368a-4d39-bfd8-4275498566f5"/>
+				<reportElement x="180" y="177" width="12" height="14" uuid="f39f34b3-368a-4d39-bfd8-4275498566f5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
@@ -107,33 +108,33 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="28" y="531" width="120" height="14" uuid="2bce1062-f6b8-4d3e-a3e9-8e220a000dcb"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
+					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getNamaDriver()]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd-MMM-yy" isBlankWhenNull="true">
 				<reportElement x="465" y="527" width="120" height="14" uuid="45eaca92-1301-4600-8832-6d1addedfbea"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
+					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{manifest}.getTglAngkut()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="29" y="751" width="249" height="15" uuid="ce8f17d4-2a0f-4f6b-a5fb-c572c62b8ff6"/>
+				<reportElement x="29" y="747" width="249" height="15" uuid="ce8f17d4-2a0f-4f6b-a5fb-c572c62b8ff6"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getCustomerTujuan().getNama()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="29" y="818" width="127" height="15" uuid="603a2ab6-d2cd-4d03-a676-40f7c129d31a"/>
+				<reportElement x="29" y="814" width="127" height="15" uuid="603a2ab6-d2cd-4d03-a676-40f7c129d31a"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getPenandaTangan()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="322" y="818" width="135" height="15" uuid="6d4a18d2-b4bc-4170-9cf3-dc3e3a700146"/>
+				<reportElement x="322" y="814" width="135" height="15" uuid="6d4a18d2-b4bc-4170-9cf3-dc3e3a700146"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>

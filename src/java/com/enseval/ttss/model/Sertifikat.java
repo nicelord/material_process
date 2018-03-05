@@ -48,6 +48,8 @@ public class Sertifikat implements Serializable {
     String jabatanPenandaTangan = "";
     
     String description = "";
+    
+    String transporter = "PT. DESA AIR CARGO BATAM";
 
     public Long getId() {
         return id;
@@ -121,6 +123,14 @@ public class Sertifikat implements Serializable {
 
     public void setUserLogin(User userLogin) {
         this.userLogin = userLogin;
+    }
+
+    public String getTransporter() {
+        return transporter;
+    }
+
+    public void setTransporter(String transporter) {
+        this.transporter = transporter;
     }
 
 }

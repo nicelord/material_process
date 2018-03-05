@@ -220,6 +220,7 @@ public class PageInvoices2VM {
             map.put("REK2", Util.setting("invoice_rekening_mandiri"));
             map.put("FAX", Util.setting("invoice_company_fax"));
             map.put("EMAIL", Util.setting("invoice_company_email"));
+            map.put("PATH", Executions.getCurrent().getDesktop().getWebApp().getRealPath("/report"));
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);
             OutputStream outputStream = new FileOutputStream(filenya);
 

@@ -142,6 +142,7 @@
 	<parameter name="TGL_BUAT" class="java.util.Date"/>
 	<parameter name="TTD" class="java.lang.String"/>
 	<parameter name="JABATAN" class="java.lang.String"/>
+	<parameter name="TRANSPORTER" class="java.lang.String"/>
 	<pageHeader>
 		<band height="86"/>
 	</pageHeader>
@@ -188,7 +189,7 @@ Hazardous Waste Management]]></text>
 								<box>
 									<topPen lineWidth="0.0"/>
 								</box>
-								<textField pattern="MMM dd, yyyy">
+								<textField pattern="MMM dd, yyyy" isBlankWhenNull="true">
 									<reportElement x="0" y="0" width="101" height="20" uuid="4581b905-f168-49e5-aedc-fedc8712f425"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma"/>
@@ -208,7 +209,7 @@ Hazardous Waste Management]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-								<textField>
+								<textField isBlankWhenNull="true">
 									<reportElement x="0" y="0" width="154" height="20" uuid="42c2bcc9-b298-4ab3-8358-55da84797607"/>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Tahoma"/>
@@ -229,7 +230,7 @@ Hazardous Waste Management]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-								<textField>
+								<textField isBlankWhenNull="true">
 									<reportElement x="0" y="0" width="117" height="20" uuid="5a299730-9432-4f88-a2bd-efeafd52d64e"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma"/>
@@ -249,7 +250,7 @@ Hazardous Waste Management]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-								<textField>
+								<textField isBlankWhenNull="true">
 									<reportElement x="0" y="0" width="194" height="20" uuid="c728ab94-e62b-4a9e-a7eb-52bc4f48b7a1"/>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Tahoma"/>
@@ -336,13 +337,13 @@ Hazardous Waste Management]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{ALAMAT_CUSTOMER}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="155" y="164" width="412" height="20" uuid="5e779435-ade0-44db-8b6c-84abc48f0ff0"/>
-				<textElement verticalAlignment="Middle">
+			<textField isBlankWhenNull="true">
+				<reportElement x="155" y="164" width="412" height="20" uuid="b02a47ad-5fa7-44b5-b233-ba049c9f4594"/>
+				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PT. DESA AIR CARGO BATAM]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{TRANSPORTER}]]></textFieldExpression>
+			</textField>
 			<textField>
 				<reportElement x="155" y="184" width="412" height="20" uuid="e1a5026b-5b17-403e-bad0-aa8be3b2778f"/>
 				<textElement verticalAlignment="Middle">

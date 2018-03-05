@@ -207,6 +207,7 @@ public class PagePenerimaanVM {
             map.put("TTD", p.getManifest().getPenandaTangan());
             map.put("JBT", p.getManifest().getJabatanPenandaTangan());
             map.put("USER", this.userLogin.getNama());
+            map.put("PATH", Executions.getCurrent().getDesktop().getWebApp().getRealPath("/report"));
 
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);
             OutputStream outputStream = new FileOutputStream(filenya);

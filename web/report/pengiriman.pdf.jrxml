@@ -48,6 +48,7 @@
 	<parameter name="KONTAINER" class="java.lang.String"/>
 	<parameter name="TOTAL_KEMASAN" class="java.lang.String"/>
 	<parameter name="TOTAL_BERAT" class="java.lang.String"/>
+	<parameter name="PATH" class="java.lang.String"/>
 	<pageHeader>
 		<band height="138">
 			<rectangle>
@@ -116,7 +117,7 @@
 			</textField>
 			<image>
 				<reportElement x="4" y="35" width="484" height="77" uuid="babc6ace-8b49-43e0-a38e-b50a506c4688"/>
-				<imageExpression><![CDATA["D:\\NetBeansProjects\\material_process_monitoring\\web\\report\\header_pengiriman.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{PATH}+"/header_pengiriman.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>

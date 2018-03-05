@@ -1,11 +1,7 @@
 <?init class="com.enseval.ttss.util.AuthenticationInit"?>
 <zk>   
     <style>
-        .z-combobox-input{
-        text-transform:uppercase;
-        
-        }
-     
+      
         
         input[type="checkbox"], input[type="radio"] {
         margin : 10px 10px 10px 10px;

@@ -217,6 +217,14 @@ public class PageManifestVM {
         m.put("manifest", manifest);
         Executions.createComponents("pop_revisi_manifest.zul", (Component) null, m);
     }
+    
+    @Command
+    public void duplicateManifest(@BindingParam("manifest") Manifest manifest) {
+        Map m = new HashMap();
+        m.put("manifest", manifest);
+        m.put("duplicate", true);
+        Executions.createComponents("pop_revisi_manifest.zul", (Component) null, m);
+    }
 
     @Command
     public void deleteManifest() {
@@ -262,6 +270,7 @@ public class PageManifestVM {
 
             Map map = new HashMap();
             map.put("manifest", this.selectedManifest);
+            map.put("TELP", Util.setting("manifest_company_telp"));
 //            map.put("REPORT_DATA_SOURCE", datasource);
 //            map.put("PENERIMAAN", beanColDataSource);
 //            map.put("NOMOR", this.selectedSertifikat.getNomorSertifikat());

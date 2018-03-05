@@ -55,12 +55,40 @@ public class PopInputManifestVM {
     List<Manifest> listJenisFisik = new ArrayList<>();
 
     boolean isEdit = false;
+    boolean isDuplicate = false;
 
     @AfterCompose
-    public void initSetup(@ContextParam(ContextType.VIEW) final Component view, @ExecutionArgParam("manifest") Manifest manifest) {
-        if (manifest != null) {
+    public void initSetup(@ContextParam(ContextType.VIEW) final Component view,
+            @ExecutionArgParam("manifest") Manifest manifest,
+            @ExecutionArgParam("duplicate") Boolean duplicate) {
+        if (manifest != null && duplicate == null) {
             this.manifest = manifest;
             isEdit = true;
+
+        } else if (duplicate != null && duplicate == true) {
+            isDuplicate = true;
+            this.manifest = new Manifest();
+            this.manifest.setKodeManifest("JL ");
+            this.manifest.setCustomerPenghasil(manifest.getCustomerPenghasil());
+            this.manifest.setCustomerTujuan(manifest.getCustomerTujuan());
+            this.manifest.setJabatanPenandaTangan(manifest.getJabatanPenandaTangan());
+            this.manifest.setJenisFisik(manifest.getJenisFisik());
+            this.manifest.setJenisLimbah(manifest.getJenisLimbah());
+            this.manifest.setJmlBerat(manifest.getJmlBerat());
+            this.manifest.setJmlKemasan(manifest.getJmlKemasan());
+            this.manifest.setJmlKemasan2(manifest.getJmlKemasan2());
+            this.manifest.setJmlKemasan3(manifest.getJmlKemasan3());
+            this.manifest.setKarakteristikLimbah(manifest.getKarakteristikLimbah());
+            this.manifest.setKetApprovalAkunting(manifest.getKetApprovalAkunting());
+            this.manifest.setNamaDriver(manifest.getNamaDriver());
+            this.manifest.setNamaTeknikLimbah(manifest.getNamaTeknikLimbah());
+            this.manifest.setNomorKendaraan(manifest.getNomorKendaraan());
+            this.manifest.setPenandaTangan(manifest.getPenandaTangan());
+            this.manifest.setSatuanBerat(manifest.getSatuanBerat());
+            this.manifest.setSatuanKemasan(manifest.getSatuanKemasan());
+            this.manifest.setSatuanKemasan2(manifest.getSatuanKemasan2());
+            this.manifest.setSatuanKemasan3(manifest.getSatuanKemasan3());
+            this.manifest.setTglAngkut(manifest.getTglAngkut());
         } else {
             this.manifest = new Manifest();
             this.manifest.setKodeManifest("JL ");
@@ -72,7 +100,6 @@ public class PopInputManifestVM {
         this.listPenandaTangan = Ebean.find(Manifest.class).select("penandaTangan").setDistinct(true).findList();
         this.listJabatanPenandaTangan = Ebean.find(Manifest.class).select("jabatanPenandaTangan").setDistinct(true).findList();
         this.listJenisFisik = Ebean.find(Manifest.class).select("jenisFisik").setDistinct(true).findList();
-        this.manifest.setNamaTeknikLimbah("");
 
         Selectors.wireComponents(view, (Object) this, false);
     }
@@ -127,12 +154,12 @@ public class PopInputManifestVM {
             Messagebox.show("Customer belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
         }
-        
+
         if (this.manifest.getJenisFisik().isEmpty()) {
             Messagebox.show("Jenis fisik limbah belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
         }
-        
+
         if (this.manifest.getJenisLimbah() == null) {
             Messagebox.show("Kode limbah belum diisi!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
@@ -168,11 +195,10 @@ public class PopInputManifestVM {
             return;
         }
 
-        if (this.manifest.getJmlBerat() <= 0L) {
-            Messagebox.show("Jml berat masih kosong!", "Error", Messagebox.OK, Messagebox.ERROR);
-            return;
-        }
-
+//        if (this.manifest.getJmlBerat() <= 0L) {
+//            Messagebox.show("Jml berat masih kosong!", "Error", Messagebox.OK, Messagebox.ERROR);
+//            return;
+//        }
         if (this.manifest.getCustomerTujuan() == null) {
             Messagebox.show("Customer tujuan masih kosong!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
@@ -365,6 +391,14 @@ public class PopInputManifestVM {
 
     public void setListJenisFisik(List<Manifest> listJenisFisik) {
         this.listJenisFisik = listJenisFisik;
+    }
+
+    public boolean isIsDuplicate() {
+        return isDuplicate;
+    }
+
+    public void setIsDuplicate(boolean isDuplicate) {
+        this.isDuplicate = isDuplicate;
     }
 
 }

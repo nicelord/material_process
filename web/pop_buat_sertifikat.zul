@@ -136,14 +136,19 @@
                     <textbox readonly="true" hflex="3" class="form-control input-primary" value="@load(vm.sertifikat.customer.fax)"/>
                 </div>
             </hlayout>
-            <hlayout>
-                <div class="input-group" hflex="3">
-                    <span class="input-group-addon">
-                        Deskripsi.
-                    </span>
-                    <textbox class="form-control input-primary" value="@bind(vm.sertifikat.description)"/>
-                </div> 
-            </hlayout>
+            <div class="input-group" hflex="3">
+                <span class="input-group-addon">
+                    Transporter.
+                </span>
+                <textbox class="form-control input-primary" value="@bind(vm.sertifikat.transporter)"/>
+            </div> 
+            <div class="input-group" hflex="3">
+                <span class="input-group-addon">
+                    Deskripsi.
+                </span>
+                <textbox class="form-control input-primary" value="@bind(vm.sertifikat.description)"/>
+            </div> 
+           
         </vlayout>
         <separator spacing="20px" bar="true"/>
         <listbox id="list_penerimaan" mold="paging" width="100%" vflex="true" 

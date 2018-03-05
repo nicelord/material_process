@@ -1,12 +1,6 @@
 <?init class="com.enseval.ttss.util.AuthenticationInit"?>
 <zk>   
     <style>
-        .z-combobox-input{
-        text-transform:uppercase;
-        
-        }
-     
-        
         
         
        

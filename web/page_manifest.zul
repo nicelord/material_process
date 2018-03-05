@@ -140,7 +140,7 @@
                             <listcell>
                                 <label value="@load(s.tglBuat) @converter('formatedDate', format='dd-MM-yyyy')"/>
                             </listcell>
-                            <listcell label="@load(s.kodeManifest)"/>
+                            <listcell label="@load(s.kodeManifest)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.customerPenghasil.nama)"/>
                             </listcell>
@@ -517,6 +517,9 @@
                                 <button onClick="@command('showRejectNote')" hflex="3" sclass="btn-danger" iconSclass="glyphicon glyphicon-remove" label="REJECT" 
                                         disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.statusApproval ne 'pending')"
                                         if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>-->
+                                        <button onClick="@command('duplicateManifest', manifest=vm.selectedManifest)" hflex="3" sclass="btn-success" iconSclass="glyphicon glyphicon-file" label="DUPLIKAT" 
+                                                disabled="@load(vm.selectedManifest eq null)"
+                                                if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                                         <button onClick="@command('revisiManifest', manifest=vm.selectedManifest)" hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-edit" label="REVISI" 
                                                 disabled="@load(vm.selectedManifest eq null)"
                                                 if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>

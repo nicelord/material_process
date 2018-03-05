@@ -23,6 +23,7 @@
     <window id="input_manifest"  style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;" mode="modal" width="70%" vflex="1" 
             title="INPUT MANIFEST BARU" 
             border="normal" 
+            position="center,top" 
             apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.enseval.ttss.vm.PopInputManifestVM')" 
             closable="true">
         <vbox align="center">
@@ -34,18 +35,18 @@
                 <rows>
                     <row>
                         Nomor Manifest
-                        <textbox hflex="1" value="@bind(vm.manifest.kodeManifest)" constraint="no empty" sclass="form-control input-primary"/> 
+                        <textbox hflex="3" value="@bind(vm.manifest.kodeManifest)" sclass="form-control input-primary"/> 
                     </row> 
                     <row>
                         Perusahaan Pengirim
                         <vlayout>
-                            <div class="input-group" width="100%">
+                            <div class="input-group" hflex="3">
                                 <textbox sclass="form-control input-primary" hflex="3" placeholder="Nama Customer" readonly="true" value="@load(vm.manifest.customerPenghasil.nama)"/>
                                 <span class="input-group-btn">
                                     <button iconSclass="glyphicon glyphicon-search" sclass="btn-primary"  width="50px" onClick="@command('showCustomer', isPengirim=true)"/>
                                 </span>
                             </div>
-                            <div class="input-group" hflex="3" width="100%">
+                            <div class="input-group" hflex="3">
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-home"></span> 
                                 </span>
@@ -117,8 +118,7 @@
                     <row>
                         Karakteristik
                         <combobox id="cmbKarakterLimbah" readonly="true" width="97%" 
-                                  hflex="3"
-                                  constraint="no empty" 
+                                  hflex="3" 
                                   value="@save(vm.manifest.karakteristikLimbah)">
                             <comboitem label="-"/>
                             <comboitem label="Beracun (toxic - T)"/>
@@ -137,7 +137,7 @@
                         Nama Teknik
                         <combobox id="namaTeknik"  
                                   model="@load(vm.listNamaTeknik)" 
-                                  autodrop="true" 
+                                  autodrop="false" 
                                   buttonVisible="true" 
                                   value="@save(vm.manifest.namaTeknikLimbah)" 
                                   width="100%" >
@@ -163,7 +163,7 @@
                                     <combobox style="width:100%;height:100%"
                                                
                                               hflex="3"
-                                              readonly="true"
+                                              readonly="false"
                                               value="@bind(vm.manifest.satuanKemasan)">
 <!--                                        <attribute name="onCreate">
                                             self.setSelectedIndex(0);
@@ -177,6 +177,8 @@
                                         <comboitem label="Can"/>
                                         <comboitem label="Bottle"/>
                                         <comboitem label="Totes"/>
+                                        <comboitem label="Tin"/>
+                                        <comboitem label="Tank"/>
                                     </combobox>
                                 </div>
                                 <!--<separator hflex="1"/>-->
@@ -190,7 +192,7 @@
                                     <combobox style="width:100%;height:100%"
                                                 
                                               hflex="3"
-                                              readonly="true"
+                                              readonly="false"
                                               value="@bind(vm.manifest.satuanKemasan2)">
 <!--                                        <attribute name="onCreate">
                                             self.setSelectedIndex(4);
@@ -204,6 +206,8 @@
                                         <comboitem label="Can"/>
                                         <comboitem label="Bottle"/>
                                         <comboitem label="Totes"/>
+                                        <comboitem label="Tin"/>
+                                        <comboitem label="Tank"/>
                                     </combobox>
                                 </div>
                             </hlayout>
@@ -218,7 +222,7 @@
                                 <div class="input-group" hflex="3">
                                     <combobox style="width:100%;height:100%"
                                               hflex="3"
-                                              readonly="true"
+                                              readonly="false"
                                               
                                               value="@bind(vm.manifest.satuanKemasan3)">
 <!--                                        <attribute name="onCreate">
@@ -233,6 +237,8 @@
                                         <comboitem label="Can"/>
                                         <comboitem label="Bottle"/>
                                         <comboitem label="Totes"/>
+                                        <comboitem label="Tin"/>
+                                        <comboitem label="Tank"/>
                                     </combobox>
                                 </div>
                                 <!--<separator hflex="1"/>-->
@@ -243,14 +249,13 @@
                                     <doublebox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.manifest.jmlBerat)"/>
                                 </div>
                                 <combobox readonly="true" 
-                                          constraint="no empty" 
                                           style="width:100%;height:100%"
                                           hflex="3" 
                                           value="@save(vm.manifest.satuanBerat)">
                                     <attribute name="onCreate">
                                         self.setSelectedIndex(0);
                                     </attribute>
-                                    <comboitem label="KG"/>
+                                    <comboitem label="Kg"/>
                                     <comboitem label="Liter"/>
                                     <comboitem label="M3"/>
                                 </combobox>

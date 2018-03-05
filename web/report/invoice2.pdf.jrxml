@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" pageWidth="637" pageHeight="787" columnWidth="627" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="7dafb8d3-fcf1-47c3-aee8-9b45e3b6027d">
 	<property name="ireport.zoom" value="1.331000000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="537"/>
+	<property name="ireport.y" value="144"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -128,6 +128,7 @@
 	<parameter name="REK2" class="java.lang.String"/>
 	<parameter name="FAX" class="java.lang.String"/>
 	<parameter name="EMAIL" class="java.lang.String"/>
+	<parameter name="PATH" class="java.lang.String"/>
 	<summary>
 		<band height="787">
 			<componentElement>
@@ -220,7 +221,7 @@
 								<reportElement x="0" y="0" width="137" height="21" uuid="f0a74344-d469-4f1c-92ce-e5f8153e6ae1"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="9"/>
-									<paragraph leftIndent="2" rightIndent="2"/>
+									<paragraph leftIndent="6" rightIndent="2"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{itemDetail}]]></textFieldExpression>
 							</textField>
@@ -666,11 +667,11 @@ PT. DESA AIR CARGO BATAM]]></text>
 			</textField>
 			<image>
 				<reportElement positionType="FixRelativeToBottom" x="22" y="725" width="590" height="62" uuid="e765a1a5-fb7a-41bb-89b1-81dc6e43ef9a"/>
-				<imageExpression><![CDATA["D:\\NetBeansProjects\\material_process_monitoring\\web\\report\\footer.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{PATH}+"/footer.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="22" y="4" width="590" height="108" uuid="ee079fa7-1504-4fa9-bc91-7dcc61aed69f"/>
-				<imageExpression><![CDATA["D:\\NetBeansProjects\\material_process_monitoring\\web\\report\\header.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{PATH}+"/header.jpg"]]></imageExpression>
 			</image>
 			<rectangle>
 				<reportElement positionType="FixRelativeToBottom" x="21" y="555" width="590" height="51" uuid="6e460b72-beb3-4b02-8819-5ca14f9716a3"/>

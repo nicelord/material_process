@@ -170,6 +170,7 @@ public class PopDetailPengirimanVM {
             map.put("KONTAINER", this.pengiriman.getNomorContainer());
             map.put("TOTAL_KEMASAN", this.pengiriman.hitungTotalKemasan());
             map.put("TOTAL_BERAT", this.pengiriman.hitungTotalBerat());
+            map.put("PATH", Executions.getCurrent().getDesktop().getWebApp().getRealPath("/report"));
 
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);
             OutputStream outputStream = new FileOutputStream(filenya);

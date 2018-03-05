@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="penerimaan" language="groovy" pageWidth="396" pageHeight="609" columnWidth="356" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="b6cf7754-23ad-452f-95a5-41c048df9466">
 	<property name="ireport.zoom" value="1.6528925619834722"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="159"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="NAMA_CUSTOMER" class="java.lang.String"/>
 	<parameter name="TGL_BUAT" class="java.util.Date"/>
 	<parameter name="MANIFEST" class="java.lang.String"/>
@@ -20,6 +20,7 @@
 	<parameter name="TTD" class="java.lang.String"/>
 	<parameter name="JBT" class="java.lang.String"/>
 	<parameter name="USER" class="java.lang.String"/>
+	<parameter name="PATH" class="java.lang.String"/>
 	<background>
 		<band height="609" splitType="Stretch">
 			<staticText>
@@ -210,32 +211,32 @@ Yang menerima]]></text>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{SOPIR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{SOPIR}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="113" y="482" width="120" height="14" uuid="82e283fe-a97f-4292-9ee1-ea7c1ed6329e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{JBT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{JBT}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="113" y="526" width="120" height="14" uuid="b8a355c3-da4d-4f29-88a8-32a579150664"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{TTD}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{TTD}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="255" y="460" width="100" height="15" uuid="07da41f0-92f3-4c69-bea7-fe0c075332f3"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{USER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{USER}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<image scaleImage="FillFrame" hAlign="Center" isUsingCache="false" isLazy="true">
 				<reportElement mode="Transparent" x="0" y="0" width="356" height="62" uuid="f04a76c8-19f8-4e3d-825f-5df1a616e203"/>
-				<imageExpression><![CDATA["D:\\NetBeansProjects\\material_process_monitoring\\web\\report\\header_penerimaan.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{PATH}+"/header_penerimaan.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="572" width="356" height="37" uuid="9a7b0349-fad4-49b9-a5e2-a465102adc89"/>
@@ -495,7 +496,7 @@ Telp. 711476 - 711478   Fax. 711449]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Tahoma" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[BERAT]]></text>
+				<text><![CDATA[Berat]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="232" y="300" width="13" height="14" uuid="2e6c29ab-ee0b-4c96-a658-ea864254986b"/>

@@ -163,6 +163,7 @@ public class PageSertifikatVM {
             map.put("TGL_BUAT", this.selectedSertifikat.getTglSertifkat());
             map.put("TTD", this.selectedSertifikat.getPenandaTangan());
             map.put("JABATAN", this.selectedSertifikat.getJabatanPenandaTangan());
+            map.put("TRANSPORTER", this.selectedSertifikat.getTransporter());
             
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);
             OutputStream outputStream = new FileOutputStream(filenya);
