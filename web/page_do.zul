@@ -41,7 +41,7 @@
         
     </style>
 
-    <window title="DELIVERY ORDER" vflex="3" apply="org.zkoss.bind.BindComposer"  viewModel="@id('vm') @init('com.enseval.ttss.vm.PageDOVM')">
+    <window title="DELIVERY ORDER / GOOD RECEIVED" vflex="3" apply="org.zkoss.bind.BindComposer"  viewModel="@id('vm') @init('com.enseval.ttss.vm.PageDOVM')">
         <borderlayout>
             <center>
                 <listbox id="list_manifest" mold="paging" width="100%" vflex="true" autopaging="true" 
@@ -60,8 +60,8 @@
                     
                 
                     <listhead sizable="true" visible="true" >
-                        <listheader label="TGL DO" />
-                        <listheader label="NOMOR DO" />
+                        <listheader label="TGL DO/DR" />
+                        <listheader label="NOMOR DO/GR" />
                         <listheader label="CUSTOMER" />
                         <listheader label="NO. PO" />
                         <listheader width="200px"/>

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="delivery_order.pdf" language="groovy" pageWidth="636" pageHeight="787" columnWidth="636" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="faf5b0c4-d17e-4017-84e5-cb317c3696e9">
 	<property name="ireport.zoom" value="1.4019755979255695"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="66"/>
+	<property name="ireport.y" value="18"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -32,10 +32,11 @@
 	</subDataset>
 	<parameter name="delivery_order" class="java.lang.Object"/>
 	<parameter name="delivery_order_item" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="PATH" class="java.lang.String"/>
 	<detail>
 		<band height="787">
 			<textField isBlankWhenNull="true">
-				<reportElement x="25" y="153" width="593" height="18" uuid="4b9f9ad9-b9a9-46d6-b5b5-9b30e4715b4b"/>
+				<reportElement x="25" y="144" width="593" height="18" uuid="4b9f9ad9-b9a9-46d6-b5b5-9b30e4715b4b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12" isBold="false"/>
 				</textElement>
@@ -43,10 +44,10 @@
 			</textField>
 			<image scaleImage="FillFrame">
 				<reportElement x="25" y="0" width="593" height="105" uuid="19395aea-8551-4395-9d5a-d53476a560bc"/>
-				<imageExpression><![CDATA["D:\\NetBeansProjects\\material_process_monitoring\\web\\report\\header_penerimaan.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{PATH}+"/header_penerimaan.jpg"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="25" y="120" width="593" height="33" uuid="c097c0d9-47e7-4440-939a-d9dad7148ba4"/>
+				<reportElement x="25" y="111" width="593" height="33" uuid="c097c0d9-47e7-4440-939a-d9dad7148ba4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Bookman Old Style" size="24" isBold="true" isUnderline="true" isPdfEmbedded="false"/>
 				</textElement>
@@ -145,7 +146,7 @@
 			</textField>
 			<image scaleImage="FillFrame">
 				<reportElement x="18" y="730" width="600" height="48" uuid="8f6f6651-b1c5-4c64-99c8-944f8843be74"/>
-				<imageExpression><![CDATA["D:\\NetBeansProjects\\material_process_monitoring\\web\\report\\footer.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{PATH}+"/footer.jpg"]]></imageExpression>
 			</image>
 			<componentElement>
 				<reportElement key="table" style="table" x="25" y="295" width="593" height="324" uuid="52ad0cba-eac7-4849-ae64-c2c7dc84442b"/>

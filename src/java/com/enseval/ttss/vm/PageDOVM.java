@@ -186,6 +186,7 @@ public class PageDOVM {
             map.put("delivery_order", deliveryOrder);
             JRDataSource datasource = new JRBeanCollectionDataSource(deliveryOrder.getListDoItem());
             map.put("delivery_order_item", datasource);
+            map.put("PATH", Executions.getCurrent().getDesktop().getWebApp().getRealPath("/report"));
 //            map.put("PENERIMAAN", beanColDataSource);
 //            map.put("NOMOR", this.selectedSertifikat.getNomorSertifikat());
 //            map.put("NAMA_CUSTOMER", this.selectedSertifikat.getCustomer().getNama());

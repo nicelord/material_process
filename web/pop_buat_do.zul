@@ -30,7 +30,7 @@
         position="center,top"  
         mode="modal" 
         width="60%" vflex="1" 
-        title="FORM DELIVERY ORDER" 
+        title="FORM DELIVERY ORDER / GOOD RECEIVED" 
         border="normal" 
         apply="org.zkoss.bind.BindComposer" 
         viewModel="@id('vm') @init('com.enseval.ttss.vm.PopBuatDOVM')" 
@@ -39,7 +39,7 @@
             <hlayout>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
-                        Attn.
+                        JENIS :
                     </span>
                     <combobox hflex="3"
                               height="100%"
