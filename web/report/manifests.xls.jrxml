@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="manifests.xls" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3c442631-02e7-487d-975b-4f44db593ef5">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="manifests.xls" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="3c442631-02e7-487d-975b-4f44db593ef5">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -63,7 +63,10 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20">
 							<textField pattern="dd-MM-yyyy">
-								<reportElement x="0" y="0" width="90" height="20" uuid="b2b78a89-4d36-4bbe-ba92-3fe89a2127a4"/>
+								<reportElement x="0" y="0" width="90" height="20" uuid="b2b78a89-4d36-4bbe-ba92-3fe89a2127a4">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -83,7 +86,10 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="20" uuid="39183669-4532-4eba-8f3b-c7d440ba28f3"/>
+								<reportElement x="0" y="0" width="90" height="20" uuid="39183669-4532-4eba-8f3b-c7d440ba28f3">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -103,7 +109,10 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="20" uuid="91ed0adb-9116-4d27-acd4-1da1890d267a"/>
+								<reportElement x="0" y="0" width="90" height="20" uuid="91ed0adb-9116-4d27-acd4-1da1890d267a">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -123,7 +132,10 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="20" uuid="9f818da2-333b-4f51-a96a-fe9d9a0ad9f2"/>
+								<reportElement x="0" y="0" width="90" height="20" uuid="9f818da2-333b-4f51-a96a-fe9d9a0ad9f2">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -143,7 +155,10 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="20" uuid="ebaf4396-016f-4f04-913d-644f4e9e5e20"/>
+								<reportElement x="0" y="0" width="90" height="20" uuid="ebaf4396-016f-4f04-913d-644f4e9e5e20">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -163,7 +178,10 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="20" uuid="0b6bd39f-289f-4ffe-b5c4-8fd9790370e9"/>
+								<reportElement x="0" y="0" width="90" height="20" uuid="0b6bd39f-289f-4ffe-b5c4-8fd9790370e9">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -183,7 +201,10 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="20" uuid="8949f7c2-d96c-4001-b56e-17331b762970"/>
+								<reportElement x="0" y="0" width="90" height="20" uuid="8949f7c2-d96c-4001-b56e-17331b762970">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -203,7 +224,10 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="20">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="20" uuid="d8c63062-e464-4bc5-bce5-7a187b0314e3"/>
+								<reportElement x="0" y="0" width="90" height="20" uuid="d8c63062-e464-4bc5-bce5-7a187b0314e3">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>

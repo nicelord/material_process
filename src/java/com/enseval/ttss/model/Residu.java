@@ -54,7 +54,7 @@ public class Residu implements Serializable {
     String satuanKemasan3 = "";
     Long jmlKemasan3 = 0L;
 
-    String satuanBerat = "KG";
+    String satuanBerat = "Kg";
     double jmlBerat = 0;
 
     String tipe = "";

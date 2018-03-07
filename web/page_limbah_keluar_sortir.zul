@@ -38,7 +38,7 @@
     </style>
 
     <window id="page_internal" 
-            title="LIMBAH SEDANG DALAM PROSES" 
+            title="LIMBAH HASIL SORTIR" 
             vflex="3" apply="org.zkoss.bind.BindComposer"  
             viewModel="@id('vm') @init('com.enseval.ttss.vm.PageLimbahKeluarSortirVM')">
         <borderlayout>
@@ -52,7 +52,10 @@
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
                 
 <!--                    <auxhead>
-                        
+                        <auxheader colspan="9">
+                            <button 
+                                vflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="INPUT LIMBAH KELUAR" onClick="@command('showKirimSortir')" />
+                        </auxheader>
                     </auxhead>-->
                 
                     <listhead sizable="true" visible="true" >
@@ -141,7 +144,7 @@
                                 <label value="@load(s.namaLimbah)"/>
                             </listcell>
                         
-                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))"/>
                                 <label if="${s.jmlKemasan2 ne 0}" value="@load(' + '.concat(s.jmlKemasan2).concat(' ').concat(s.satuanKemasan2))"/>
                                 <label if="${s.jmlKemasan3 ne 0}" value="@load(' + '.concat(s.jmlKemasan3).concat(' ').concat(s.satuanKemasan3))"/>

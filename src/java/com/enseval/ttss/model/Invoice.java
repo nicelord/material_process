@@ -254,12 +254,19 @@ public class Invoice implements Serializable {
     }
 
     public String getLastNomor() {
-        DateFormat dateFormat = new SimpleDateFormat("yy/MM");
+        DateFormat dateFormat = new SimpleDateFormat("YYYY/MM");
         Date date = new Date();
         String tgl = dateFormat.format(date);
-        int count = Ebean.find(Invoice.class).where().endsWith("nomorInvoice", tgl).findRowCount();
-
-        String formatted = String.format("%04d", count+1);
+        String s = null;
+        try {
+            s = Ebean.find(Invoice.class).where().startsWith("nomorInvoice", tgl + "/DACB/").orderBy("id desc").setMaxRows(1).findUnique().getNomorInvoice().split("/")[3].replaceAll("/", "");
+//            System.out.println(s);
+        } catch (Exception e) {
+            s = "0";
+//            e.printStackTrace();
+        }
+        int count = Integer.parseInt(s);
+        String formatted = String.format("%04d", count + 1);
         return tgl + "/DACB/" + formatted;
     }
 

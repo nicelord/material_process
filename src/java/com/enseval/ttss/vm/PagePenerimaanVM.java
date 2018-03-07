@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.activation.MimetypesFileTypeMap;
 import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -35,6 +36,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
@@ -213,6 +215,80 @@ public class PagePenerimaanVM {
             OutputStream outputStream = new FileOutputStream(filenya);
 
             JRExporter exporter = new JRPdfExporter();
+            exporter.setExporterInput(new SimpleExporterInput(report));
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+            SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
+            configuration.setMetadataAuthor("Reza Elborneo");  //why not set some config as we like
+            exporter.setConfiguration(configuration);
+            exporter.exportReport();
+            streamReport.close();
+            outputStream.close();
+
+//            final JRXlsExporter exporterXLS = new JRXlsExporter();
+//            exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, (Object) report);
+//            exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, (Object) outputStream);
+//            exporterXLS.setParameter(JRXlsExporterParameter.IS_COLLAPSE_ROW_SPAN, Boolean.TRUE);
+//            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, (Object) Boolean.FALSE);
+//            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_DETECT_CELL_TYPE, (Object) Boolean.TRUE);
+//            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, (Object) Boolean.FALSE);
+//            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, (Object) Boolean.TRUE);
+//            exporterXLS.setParameter((JRExporterParameter) JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_COLUMNS, (Object) Boolean.TRUE);
+//            exporterXLS.exportReport();
+//            streamReport.close();
+//            outputStream.close();
+
+            FileInputStream inputStream = new FileInputStream(filenya);
+            Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
+
+            filenya.delete();
+
+        } catch (JRException | FileNotFoundException ex4) {
+            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex4);
+        } catch (IOException ex2) {
+            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex2);
+        }
+    }
+    
+    
+    @Command
+    public void cetakPenerimaan2(@BindingParam("penerimaan") Penerimaan p) {
+        File filenya = new File(Util.setting("pdf_path") + "penerimaan.docx");
+        
+        List<Penerimaan> listP = new ArrayList<>();
+        listP.add(p);
+
+        try {
+            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/penerimaan.docx.jasper");
+            JRDataSource datasource = new JRBeanCollectionDataSource(listP);
+//            JRDataSource beanColDataSource = new JRBeanCollectionDataSource(p.getListInvoiceItem());
+
+            Map map = new HashMap();
+            map.put("REPORT_DATA_SOURCE", datasource);
+//            map.put("INVOICE_ITEM", beanColDataSource);
+
+            map.put("NAMA_CUSTOMER", p.getManifest().getCustomerPenghasil().getNama());
+            map.put("TGL_BUAT", p.getTglPenerimaan());
+            map.put("MANIFEST", p.getManifest().getKodeManifest());
+            map.put("JENIS_LIMBAH", p.getManifest().getKarakteristikLimbah());
+            map.put("SOPIR", p.getManifest().getNamaDriver());
+            map.put("PLAT", p.getManifest().getNomorKendaraan());
+            map.put("KEMASAN", p.getSatuanKemasan());
+            map.put("KEMASAN2", p.getSatuanKemasan2());
+            map.put("KEMASAN3", p.getSatuanKemasan3());
+            map.put("JML_KEMASAN", p.getJmlKemasan());
+            map.put("JML_KEMASAN2", p.getJmlKemasan2());
+            map.put("JML_KEMASAN3", p.getJmlKemasan3());
+            map.put("BERAT", p.getSatuanBerat());
+            map.put("JML_BERAT", p.getJmlBerat());
+            map.put("TTD", p.getManifest().getPenandaTangan());
+            map.put("JBT", p.getManifest().getJabatanPenandaTangan());
+            map.put("USER", this.userLogin.getNama());
+            map.put("PATH", Executions.getCurrent().getDesktop().getWebApp().getRealPath("/report"));
+
+            JasperPrint report = JasperFillManager.fillReport(streamReport, map, new JREmptyDataSource(1));
+            OutputStream outputStream = new FileOutputStream(filenya);
+
+            JRExporter exporter = new JRDocxExporter();
             exporter.setExporterInput(new SimpleExporterInput(report));
             exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
             SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();

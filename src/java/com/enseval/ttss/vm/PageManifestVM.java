@@ -70,9 +70,9 @@ public class PageManifestVM {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         this.showWin = false;
         if (userLogin.getAkses().equals("PENERIMA")) {
-            this.listManifest = Ebean.find(Manifest.class).where().eq("statusApproval", "approved").orderBy("id desc").findList();
+            this.listManifest = Ebean.find(Manifest.class).where().eq("statusApproval", "approved").orderBy("kodeManifest desc").findList();
         } else {
-            this.listManifest = Ebean.find(Manifest.class).orderBy("id desc").findList();
+            this.listManifest = Ebean.find(Manifest.class).orderBy("kodeManifest desc").findList();
         }
 //        this.listManifest2 = this.listManifest;
     }
@@ -94,7 +94,7 @@ public class PageManifestVM {
                                 Date.from(this.tsAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                                 Date.from(this.tsAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                         .eq("statusApproval", "approved")
-                        .orderBy("id desc").findList();
+                        .orderBy("kodeManifest desc").findList();
             } else {
                 this.listManifest = Ebean.find(Manifest.class)
                         .where()
@@ -105,7 +105,7 @@ public class PageManifestVM {
                         .between("tglBuat",
                                 Date.from(this.tsAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                                 Date.from(this.tsAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
-                        .orderBy("id desc").findList();
+                        .orderBy("kodeManifest desc").findList();
             }
 
         } else {
@@ -123,7 +123,7 @@ public class PageManifestVM {
                         .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
                         .contains("namaTeknikLimbah", this.filterKodeJenis)
                         .eq("statusApproval", "approved")
-                        .orderBy("id desc").findList();
+                        .orderBy("kodeManifest desc").findList();
             } else {
                 this.listManifest = Ebean.find(Manifest.class)
                         .where()
@@ -131,7 +131,7 @@ public class PageManifestVM {
                         .contains("customerPenghasil.nama", this.filterPenghasil)
                         .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
                         .contains("namaTeknikLimbah", this.filterKodeJenis)
-                        .orderBy("id desc").findList();
+                        .orderBy("kodeManifest desc").findList();
             }
 
         }

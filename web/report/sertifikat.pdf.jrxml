@@ -256,7 +256,7 @@ Hazardous Waste Management]]></text>
 										<font fontName="Tahoma"/>
 										<paragraph leftIndent="4" rightIndent="2"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{manifest.jmlKemasan} + " " + $F{manifest.satuanKemasan} + ($F{manifest.jmlKemasan2}.longValue()==0L?"":" + "+$F{manifest.jmlKemasan2} + " " + $F{manifest.satuanKemasan2}) + ($F{manifest.jmlKemasan3}.longValue()==0L?"":" + "+$F{manifest.jmlKemasan3} + " " + $F{manifest.satuanKemasan3}) + " ( " + $F{manifest.jmlBerat} + " " + $F{manifest.satuanBerat} + " ) "]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{manifest.jmlKemasan} + " " + $F{manifest.satuanKemasan} + ($F{manifest.jmlKemasan2}.longValue()==0L?"":" + "+$F{manifest.jmlKemasan2} + " " + $F{manifest.satuanKemasan2}) + ($F{manifest.jmlKemasan3}.longValue()==0L?"":" + "+$F{manifest.jmlKemasan3} + " " + $F{manifest.satuanKemasan3}) + " ( " + ($F{manifest.jmlBerat}-$F{manifest.jmlBerat}.intValue()!=0?$F{manifest.jmlBerat}:new DecimalFormat("####0").format($F{manifest.jmlBerat})).toString().replace(".",",") + " " + $F{manifest.satuanBerat} + " ) "]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>

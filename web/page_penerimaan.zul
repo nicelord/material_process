@@ -237,19 +237,34 @@
                                                     sessionScope.userCredential.getRoles()=='AKUNTING' ||
                                                     sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                             onClick="@command('showManifest',manifest=s.manifest)" />
-                                    <button vflex="3" hflex="3" sclass="btn-info btn-xs" iconSclass="glyphicon glyphicon-print" label="" 
-                                            onClick="@command('cetakPenerimaan',penerimaan=s)"
+                                    
+                                    <button popup="@load('print'.concat(s.id))" vflex="3" hflex="3" sclass="btn-info btn-xs" iconSclass="glyphicon glyphicon-print" label=""
                                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                    
+                                    
+                            
                                     <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-share-alt" label="" 
                                             disabled="@load(s.prosessLimbahs.isEmpty() ne 'true' and s.prosessLimbahs.get(0).gudangPengirim eq 'PENERIMAAN')"
                                             onClick="@command('showPopProses',penerimaan=s)"
                                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                                 </hlayout>
-                       
+                                <popup id="@load('print'.concat(s.id))" >
+                                    <vlayout>
+                                        <button sclass="btn-danger btn-xs"  label="PDF" 
+                                                    onClick="@command('cetakPenerimaan',penerimaan=s)"
+                                                    if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                        <button sclass="btn-primary btn-xs" label="DOCX" 
+                                                    onClick="@command('cetakPenerimaan2',penerimaan=s)"
+                                                    if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                    
+                                    </vlayout>
+                                </popup>
                             </listcell>
                             
                             
                         </listitem>
+                        
+                        
                     </template>
                 
                 

@@ -27,7 +27,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 public class Invoice2 implements Serializable {
-    
+
     @OneToMany(mappedBy = "invoice2")
     private List<Pelunasan2> listPelunasan2;
 
@@ -77,9 +77,9 @@ public class Invoice2 implements Serializable {
         Long total = listInvoiceItem2.stream().mapToLong((InvoiceItem2 item) -> item.getHargaSatuan() * item.getJmlKemasan()).sum();
         return ((total / 100) * this.getTax());
     }
-    
+
     public Long getTotalTerbayar() {
-        Long total = listPelunasan2.stream().mapToLong((Pelunasan2 item) -> item.getNilai()+item.getPotPPh()+item.getPotCN()+item.getPotAdm()).sum();
+        Long total = listPelunasan2.stream().mapToLong((Pelunasan2 item) -> item.getNilai() + item.getPotPPh() + item.getPotCN() + item.getPotAdm()).sum();
         return total;
     }
 
@@ -234,8 +234,7 @@ public class Invoice2 implements Serializable {
     public void setListPelunasan2(List<Pelunasan2> listPelunasan2) {
         this.listPelunasan2 = listPelunasan2;
     }
-    
-    
+
     public void setNomorInvoice() {
 
         this.setNomorInvoice(this.getLastNomor());
@@ -243,14 +242,20 @@ public class Invoice2 implements Serializable {
     }
 
     public String getLastNomor() {
-        DateFormat dateFormat = new SimpleDateFormat("MM/yy");
+        DateFormat dateFormat = new SimpleDateFormat("MM/YYYY");
         Date date = new Date();
         String tgl = dateFormat.format(date);
-        int count = Ebean.find(Invoice2.class).where().endsWith("nomorInvoice", tgl).findRowCount();
-        
-        String formatted = String.format("%04d", count+1);
+        String s = null;
+        try {
+            s = Ebean.find(Invoice2.class).where().endsWith("nomorInvoice", "/DACB/" + tgl).orderBy("id desc").setMaxRows(1).findUnique().getNomorInvoice().split("/")[0].replaceAll("/", "");
+//            System.out.println(s);
+        } catch (Exception e) {
+            s = "0";
+//            e.printStackTrace();
+        }
+        int count = Integer.parseInt(s);
+        String formatted = String.format("%04d", count + 1);
         return formatted + "/DACB/" + tgl;
     }
-
 
 }

@@ -51,7 +51,8 @@ public class Manifest implements Serializable {
     Long jmlKemasan3 = 0L;
     
     
-    String satuanBerat = "KG";
+    String satuanBerat = "Kg";
+    
     double jmlBerat = 0;
     String nomorKendaraan = "";
     @Temporal(TemporalType.DATE)
@@ -95,7 +96,7 @@ public class Manifest implements Serializable {
     }
 
     public void setNamaTeknikLimbah(String namaTeknikLimbah) {
-        this.namaTeknikLimbah = namaTeknikLimbah.toUpperCase();
+        this.namaTeknikLimbah = namaTeknikLimbah;
     }
     
     public String getApprovalStatus() {
@@ -123,7 +124,7 @@ public class Manifest implements Serializable {
     }
 
     public void setKodeManifest(String kodeManifest) {
-        this.kodeManifest = kodeManifest.toUpperCase();
+        this.kodeManifest = kodeManifest;
     }
 
     public Customer getCustomerPenghasil() {
@@ -245,7 +246,7 @@ public class Manifest implements Serializable {
     }
 
     public void setPenandaTangan(String penandaTangan) {
-        this.penandaTangan = penandaTangan.toUpperCase();
+        this.penandaTangan = penandaTangan;
     }
 
     public String getJabatanPenandaTangan() {
@@ -253,7 +254,7 @@ public class Manifest implements Serializable {
     }
 
     public void setJabatanPenandaTangan(String jabatanPenandaTangan) {
-        this.jabatanPenandaTangan = jabatanPenandaTangan.toUpperCase();
+        this.jabatanPenandaTangan = jabatanPenandaTangan;
     }
 
     public String getNamaDriver() {
@@ -261,7 +262,7 @@ public class Manifest implements Serializable {
     }
 
     public void setNamaDriver(String namaDriver) {
-        this.namaDriver = namaDriver.toUpperCase();
+        this.namaDriver = namaDriver;
     }
 
     public String getSatuanKemasan2() {

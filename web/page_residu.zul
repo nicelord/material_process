@@ -61,12 +61,12 @@
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
                         <listheader sort="auto(residuId)" label="KODE RESIDU" />
-                        <listheader sort="auto(gudangPenghasil)" label="GUDANG PENGHASIL" width="200px" />
+                        <listheader sort="auto(gudangPenghasil)" label="GUDANG PENGHASIL" width="150px" />
                         <listheader sort="auto(namaResidu)" label="NAMA RESIDU" />
                         <listheader sort="auto(jmlKemasan)" label="BANYAK" />
                         <listheader sort="auto(jmlBerat)" label="BERAT" />
                         <listheader sort="auto(tglBuat)" label="TGL DIHASILKAN"/>
-                        <listheader label="TGL KIRIM EXTERNAL"/>
+                        <listheader label="TGL PROSES"/>
                         <listheader 
                             if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')}"
                             label=""/>
@@ -151,14 +151,14 @@
                                 <!--<label value="@load(s.tglBuat) @converter('formatedDate', format='dd-MM-yyyy')"/>-->
                             </listcell>
                             <listcell>
-<!--                                <label 
-                                    if="${s.outboundItem ne null}"
-                                    sclass="label label-success"
-                                    value="@load(s.outboundItem.tglBuat) @converter('formatedDate', format='dd-MM-yyyy')"/>
-                                <label 
-                                    if="${s.outboundItem eq null}"
-                                    sclass="label label-danger"
-                                    value="belum dikirim"/>-->
+                                <!--                                <label 
+                                if="${s.outboundItem ne null}"
+                                sclass="label label-success"
+                                value="@load(s.outboundItem.tglBuat) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                            <label 
+                                if="${s.outboundItem eq null}"
+                                sclass="label label-danger"
+                                value="belum dikirim"/>-->
                                 
                                 <datebox value="@bind(s.outboundItem.tglBuat)" 
                                          format="dd-MM-yyyy" 
@@ -171,11 +171,9 @@
                                 if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
                                 <button sclass="btn-warning btn-xs" iconSclass="glyphicon glyphicon-edit" label="EDIT" 
-                                            
-                                            onClick="@command('editResidu',residu=s)"/>
-                                <button sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash" label="HAPUS" 
-                                            
-                                            onClick="@command('hapusResidu',residu=s)"/>
+                                        onClick="@command('editResidu',residu=s)"/>
+                                <button sclass="btn-danger btn-xs" iconSclass="glyphicon glyphicon-trash" label="HAPUS"   
+                                        onClick="@command('hapusResidu',residu=s)"/>
                             </listcell>
                         </listitem>
                     </template>
