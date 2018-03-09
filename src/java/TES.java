@@ -10,23 +10,8 @@ import org.avaje.agentloader.AgentLoader;
 public class TES {
 
     public static void main(final String[] args) {
-        Integer a[] = {1, 2, 3, 4, 5, 6, 99, 213, 65, 123, 786, 23};
-        Arrays.sort(a);
-        for (int i : a) {
-            System.out.println(i);
-        }
-
-        int b = 9;
-
-        boolean isPrima = true;
-        for (int i = 2; i < b; i++) {
-            if (b % i == 0) {
-                isPrima = false;
-                break;
-            }
-            
-        }
-        System.out.println(isPrima);
+//        double a = 2.2;
+//        System.out.println(a*12);
 
 //        Long l = 1200L;
 //        Double d = 12.1;
@@ -34,44 +19,44 @@ public class TES {
 //        DecimalFormat df = new DecimalFormat("#.###");
 //        System.out.println(df.format(d+d2));
 //        System.out.println(d.longValue());
-//        AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent", "debug=1");
-////
-//        TES t = new TES();
-//        t.runtest();
-//        User u = new User();
-//        u.setUsername("admin");
-//        u.setPassword("admin");
-//        u.setAkses("ADMINISTRATOR");
-//        u.setNama("Reza");
-//        Ebean.save(u);
-//        
-//        u = new User();
-//        u.setUsername("ak");
-//        u.setPassword("ak");
-//        u.setAkses("AKUNTING");
-//        u.setNama("ak");
-//        Ebean.save(u);
-//        
-//        u = new User();
-//        u.setUsername("ad");
-//        u.setPassword("ad");
-//        u.setAkses("ADMIN");
-//        u.setNama("ad");
-//        Ebean.save(u);
-//        
-//        u = new User();
-//        u.setUsername("p");
-//        u.setPassword("p");
-//        u.setAkses("PENERIMA");
-//        u.setNama("p");
-//        Ebean.save(u);
-//        
-//        u = new User();
-//        u.setUsername("g1");
-//        u.setPassword("g1");
-//        u.setAkses("GUDANG 1");
-//        u.setNama("g1");
-//        Ebean.save(u);
+        AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent", "debug=1");
+//
+        TES t = new TES();
+        t.runtest();
+        User u = new User();
+        u.setUsername("admin");
+        u.setPassword("admin");
+        u.setAkses("ADMINISTRATOR");
+        u.setNama("Reza");
+        Ebean.save(u);
+        
+        u = new User();
+        u.setUsername("ak");
+        u.setPassword("ak");
+        u.setAkses("AKUNTING");
+        u.setNama("ak");
+        Ebean.save(u);
+        
+        u = new User();
+        u.setUsername("ad");
+        u.setPassword("ad");
+        u.setAkses("ADMIN");
+        u.setNama("ad");
+        Ebean.save(u);
+        
+        u = new User();
+        u.setUsername("p");
+        u.setPassword("p");
+        u.setAkses("PENERIMA");
+        u.setNama("p");
+        Ebean.save(u);
+        
+        u = new User();
+        u.setUsername("g1");
+        u.setPassword("g1");
+        u.setAkses("GUDANG 1");
+        u.setNama("g1");
+        Ebean.save(u);
 //        
 //        Customer c = new Customer();
 //        

@@ -27,7 +27,7 @@ public class InvoiceItem implements Serializable {
     
     String jenisItem = "limbah";
     
-    Long jmlKemasan = 0L;
+    double jmlKemasan = 0;
     String satuanKemasan = "";
     
     Long banyak = 0L;
@@ -75,13 +75,15 @@ public class InvoiceItem implements Serializable {
         this.jenisItem = jenisItem;
     }
 
-    public Long getJmlKemasan() {
+    public double getJmlKemasan() {
         return jmlKemasan;
     }
 
-    public void setJmlKemasan(Long jmlKemasan) {
+    public void setJmlKemasan(double jmlKemasan) {
         this.jmlKemasan = jmlKemasan;
     }
+
+    
 
     public String getSatuanKemasan() {
         return satuanKemasan;
@@ -122,5 +124,6 @@ public class InvoiceItem implements Serializable {
     public void setTransportDetail(String transportDetail) {
         this.transportDetail = transportDetail;
     }
+    
     
 }

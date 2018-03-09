@@ -4,8 +4,8 @@
       
      
         .z-spinner-input,.z-spinner-button{
-            border-radius: 0;
-            height:26px;
+        border-radius: 0;
+        height:26px;
         }
         
         input[type="checkbox"], input[type="radio"] {
@@ -78,25 +78,7 @@
                     <listcell label="@load(s.kodeManifest)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell label="@load(s.namaTeknik)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell>
-<!--                        <combobox hflex="3"
-                                  height="100%"
-                                  value="@bind(s.jmlKemasan)"
-                                  readonly="true" 
-                                  class="input-primary"
-                                  onAfterRender="self.setSelectedIndex(self.getItemCount()-1)"
-                                  model="@load(s.listJmlKemasan)">
-                            
-                            <template name="model">
-                                <comboitem label="@load(each)"/>
-                            </template>
-                        
-                        </combobox>-->
-                        
-                        <longbox class="form-control input-primary" constraint="no empty,no negative" value="@bind(s.jmlKemasan)"/>
-                        
-                        <!--<spinner value="@bind(s.jmlKemasan)" hflex="3" vflex="3" height="100%" class="input-primary" constraint="@load('no empty, min 1 max '.concat(s.jmlKemasan).concat(': no empty, minimal : 1, maksimal : '.concat(s.jmlKemasan)))"/>-->
-                        
-                        
+                        <doublebox class="form-control input-primary" constraint="no empty,no negative" value="@bind(s.jmlKemasan)"/>
                     </listcell>
                     <listcell label="@load(s.satuanKemasan)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell style="text-overflow: ellipsis; white-space: nowrap;">

@@ -168,12 +168,12 @@ public class PageInvoices2VM {
 
         Invoice2 invoicex = invoice2;
 
-        Long totalHarga = 0L;
+        double totalHarga = 0;
         for (InvoiceItem2 item : invoicex.getListInvoiceItem2()) {
             totalHarga += item.getHargaSatuan() * item.getJmlKemasan();
         }
 
-        Long net = totalHarga - (totalHarga / 100) * invoicex.getTax();
+        double net = totalHarga - (totalHarga / 100) * invoicex.getTax();
 
         int size = invoicex.getListInvoiceItem2().size();
         int kurang = 11 - size;

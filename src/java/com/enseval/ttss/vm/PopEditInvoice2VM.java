@@ -48,7 +48,7 @@ public class PopEditInvoice2VM {
     private Window winBuatInvoice;
     User userLogin;
     List<InvoiceItem2> listInvoiceItem2 = new ArrayList<>();
-    Long totalHarga = 0L;
+    double totalHarga = 0;
 
     Invoice2 invoice2;
 
@@ -166,7 +166,7 @@ public class PopEditInvoice2VM {
     @Command
     @NotifyChange({"totalHarga"})
     public void doCount() {
-        this.totalHarga = 0L;
+        this.totalHarga = 0;
         for (InvoiceItem2 item2 : listInvoiceItem2) {
             this.totalHarga += item2.getHargaSatuan() * item2.getJmlKemasan();
         }
@@ -189,13 +189,15 @@ public class PopEditInvoice2VM {
         this.userLogin = userLogin;
     }
 
-    public Long getTotalHarga() {
+    public double getTotalHarga() {
         return totalHarga;
     }
 
-    public void setTotalHarga(Long totalHarga) {
+    public void setTotalHarga(double totalHarga) {
         this.totalHarga = totalHarga;
     }
+
+  
 
     public List<InvoiceItem2> getListInvoiceItem2() {
         return listInvoiceItem2;

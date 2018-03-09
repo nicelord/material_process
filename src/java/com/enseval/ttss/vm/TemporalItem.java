@@ -16,10 +16,11 @@ public class TemporalItem {
 
     String kodeManifest;
     String namaTeknik;
-    Long jmlKemasan;
+    double jmlKemasan;
     String satuanKemasan;
     int kemasanKe;
-    List<Long> listJmlKemasan = new ArrayList<>();
+    
+    double maxItem;
 
     public TemporalItem() {
     }
@@ -40,13 +41,15 @@ public class TemporalItem {
         this.kodeManifest = kodeManifest;
     }
 
-    public Long getJmlKemasan() {
+    public double getJmlKemasan() {
         return jmlKemasan;
     }
 
-    public void setJmlKemasan(Long jmlKemasan) {
+    public void setJmlKemasan(double jmlKemasan) {
         this.jmlKemasan = jmlKemasan;
     }
+
+    
 
     public String getSatuanKemasan() {
         return satuanKemasan;
@@ -56,13 +59,15 @@ public class TemporalItem {
         this.satuanKemasan = satuanKemasan;
     }
 
-    public List<Long> getListJmlKemasan() {
-        return listJmlKemasan;
+    public double getMaxItem() {
+        return maxItem;
     }
 
-    public void setListJmlKemasan(List<Long> listJmlKemasan) {
-        this.listJmlKemasan = listJmlKemasan;
+    public void setMaxItem(double maxItem) {
+        this.maxItem = maxItem;
     }
+
+ 
 
     public int getKemasanKe() {
         return kemasanKe;
@@ -71,5 +76,7 @@ public class TemporalItem {
     public void setKemasanKe(int kemasanKe) {
         this.kemasanKe = kemasanKe;
     }
+
+   
 
 }

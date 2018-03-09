@@ -49,7 +49,7 @@ public class PopViewInvoiceVM {
     private Window winBuatInvoice;
     User userLogin;
     List<InvoiceItem> listInvoiceItem = new ArrayList<>();
-    Long totalHarga = 0L;
+    double totalHarga = 0;
 
     Invoice invoice;
 
@@ -178,7 +178,7 @@ public class PopViewInvoiceVM {
     @Command
     @NotifyChange({"totalHarga"})
     public void doCount() {
-        this.totalHarga = 0L;
+        this.totalHarga = 0;
         for (InvoiceItem item : listInvoiceItem) {
             this.totalHarga += item.getHargaSatuan() * item.getJmlKemasan();
         }
@@ -209,13 +209,15 @@ public class PopViewInvoiceVM {
         this.listInvoiceItem = listInvoiceItem;
     }
 
-    public Long getTotalHarga() {
+    public double getTotalHarga() {
         return totalHarga;
     }
 
-    public void setTotalHarga(Long totalHarga) {
+    public void setTotalHarga(double totalHarga) {
         this.totalHarga = totalHarga;
     }
+
+   
 
     public Invoice getInvoice() {
         return invoice;

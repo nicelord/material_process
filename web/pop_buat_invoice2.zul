@@ -30,7 +30,7 @@
         position="center,top"  
         mode="modal" 
         width="60%" vflex="1" 
-        title="FORM INVOICE" 
+        title="FORM INVOICE 2" 
         border="normal" 
         apply="org.zkoss.bind.BindComposer" 
         viewModel="@id('vm') @init('com.enseval.ttss.vm.PopBuatInvoice2VM')" 
@@ -257,8 +257,8 @@
                     </listcell>
                     <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                         <hlayout>
-                        <textbox hflex="2" class="form-control input-primary" value="@bind(s.jmlKemasan)" onBlur="@command('doCount')"/>
-                        <textbox hflex="5" class="form-control input-primary" value="@bind(s.satuanKemasan)"/>
+                        <doublebox hflex="3" class="form-control input-primary" value="@bind(s.jmlKemasan)" onBlur="@command('doCount')"/>
+                        <textbox hflex="3" class="form-control input-primary" value="@bind(s.satuanKemasan)"/>
                         </hlayout>
                     </listcell>
                      <listcell>

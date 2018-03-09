@@ -27,8 +27,8 @@ public class Pelunasan {
     
     @ManyToOne
     Invoice invoice;
-    Long nilai = 0L;
-    Long potPPh = 0L;
+    double nilai = 0;
+    double potPPh = 0;
     Long potCN = 0L;
     Long potAdm = 0L;
     
@@ -54,23 +54,23 @@ public class Pelunasan {
         this.invoice = invoice;
     }
 
-    public Long getNilai() {
+    public double getNilai() {
         return nilai;
     }
 
-    public void setNilai(Long nilai) {
+    public void setNilai(double nilai) {
         this.nilai = nilai;
     }
 
- 
-
-    public Long getPotPPh() {
+    public double getPotPPh() {
         return potPPh;
     }
 
-    public void setPotPPh(Long potPPh) {
+    public void setPotPPh(double potPPh) {
         this.potPPh = potPPh;
     }
+
+   
 
     public Long getPotCN() {
         return potCN;

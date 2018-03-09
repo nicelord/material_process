@@ -80,8 +80,8 @@ public class Penerimaan implements Serializable {
 
   
 
-    public Long getRemainingInvoice1() {
-        Long totalInvoiced = 0L;
+    public double getRemainingInvoice1() {
+        double totalInvoiced = 0;
         List<InvoiceItem> item = Ebean.find(InvoiceItem.class)
                     .where().eq("jenisItem", "disposal cost")
                     .where().eq("penerimaan.id", this.getId())
@@ -96,8 +96,8 @@ public class Penerimaan implements Serializable {
         
     }
 
-    public Long getRemainingInvoice2() {
-        Long totalInvoiced = 0L;
+    public double getRemainingInvoice2() {
+        double totalInvoiced = 0;
         List<InvoiceItem> item = Ebean.find(InvoiceItem.class)
                     .where().eq("jenisItem", "disposal cost")
                     .where().eq("penerimaan.id", this.getId())
@@ -110,8 +110,8 @@ public class Penerimaan implements Serializable {
         return totalInvoiced;
     }
 
-    public Long getRemainingInvoice3() {
-        Long totalInvoiced = 0L;
+    public double getRemainingInvoice3() {
+        double totalInvoiced = 0;
         List<InvoiceItem> item = Ebean.find(InvoiceItem.class)
                     .where().eq("jenisItem", "disposal cost")
                     .where().eq("penerimaan.id", this.getId())

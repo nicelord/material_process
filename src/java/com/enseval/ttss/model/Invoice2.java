@@ -63,23 +63,23 @@ public class Invoice2 implements Serializable {
 
     String Currency = "IDR";
 
-    public Long getTotalNilai() {
-        Long total = listInvoiceItem2.stream().mapToLong((InvoiceItem2 item) -> item.getHargaSatuan() * item.getJmlKemasan()).sum();
+    public double getTotalNilai() {
+        double total = listInvoiceItem2.stream().mapToDouble((InvoiceItem2 item) -> item.getHargaSatuan() * item.getJmlKemasan()).sum();
         return total - ((total / 100) * this.getTax());
     }
 
-    public Long getTotalNilaiNoTax() {
-        Long total = listInvoiceItem2.stream().mapToLong((InvoiceItem2 item) -> item.getHargaSatuan() * item.getJmlKemasan()).sum();
+    public double getTotalNilaiNoTax() {
+        double total = listInvoiceItem2.stream().mapToDouble((InvoiceItem2 item) -> item.getHargaSatuan() * item.getJmlKemasan()).sum();
         return total;
     }
 
-    public Long getTaxValue() {
-        Long total = listInvoiceItem2.stream().mapToLong((InvoiceItem2 item) -> item.getHargaSatuan() * item.getJmlKemasan()).sum();
+    public double getTaxValue() {
+        double total = listInvoiceItem2.stream().mapToDouble((InvoiceItem2 item) -> item.getHargaSatuan() * item.getJmlKemasan()).sum();
         return ((total / 100) * this.getTax());
     }
 
-    public Long getTotalTerbayar() {
-        Long total = listPelunasan2.stream().mapToLong((Pelunasan2 item) -> item.getNilai() + item.getPotPPh() + item.getPotCN() + item.getPotAdm()).sum();
+    public double getTotalTerbayar() {
+        double total = listPelunasan2.stream().mapToDouble((Pelunasan2 item) -> item.getNilai() + item.getPotPPh() + item.getPotCN() + item.getPotAdm()).sum();
         return total;
     }
 

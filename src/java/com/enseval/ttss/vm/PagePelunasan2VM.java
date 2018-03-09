@@ -200,12 +200,12 @@ public class PagePelunasan2VM {
 
         Invoice invoice2 = invoice;
 
-        Long totalHarga = 0L;
+        double totalHarga = 0;
         for (InvoiceItem item : invoice2.getListInvoiceItem()) {
             totalHarga += item.getHargaSatuan() * item.getJmlKemasan();
         }
 
-        Long net = totalHarga - (totalHarga / 100) * invoice2.getTax();
+        double net = totalHarga - (totalHarga / 100) * invoice2.getTax();
 
         int size = invoice2.getListInvoiceItem().size();
         int kurang = 13 - size;

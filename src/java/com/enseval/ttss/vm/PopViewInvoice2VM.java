@@ -51,7 +51,7 @@ public class PopViewInvoice2VM {
     private Window winBuatInvoice;
     User userLogin;
     List<InvoiceItem2> listInvoiceItem2 = new ArrayList<>();
-    Long totalHarga = 0L;
+    double totalHarga = 0L;
 
     Invoice2 invoice2;
 
@@ -142,16 +142,15 @@ public class PopViewInvoice2VM {
         this.userLogin = userLogin;
     }
 
-  
-
-    public Long getTotalHarga() {
+    public double getTotalHarga() {
         return totalHarga;
     }
 
-    public void setTotalHarga(Long totalHarga) {
+    public void setTotalHarga(double totalHarga) {
         this.totalHarga = totalHarga;
     }
 
+  
     public List<InvoiceItem2> getListInvoiceItem2() {
         return listInvoiceItem2;
     }

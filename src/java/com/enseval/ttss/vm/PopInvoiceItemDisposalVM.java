@@ -59,10 +59,11 @@ public class PopInvoiceItemDisposalVM {
     List<InvoiceItem> tempInvoiceItem = new ArrayList<>();
 
     boolean isEdit = false;
+
     @AfterCompose
     public void initSetup(@ContextParam(ContextType.VIEW) final Component view,
-            @ExecutionArgParam("invoice") Invoice invoice,  @ExecutionArgParam("isEdit") boolean isEdit) {
-        
+            @ExecutionArgParam("invoice") Invoice invoice, @ExecutionArgParam("isEdit") boolean isEdit) {
+
         this.isEdit = isEdit;
 
         this.invoice = invoice;
@@ -75,11 +76,11 @@ public class PopInvoiceItemDisposalVM {
                 i.setPenerimaan(penerimaan);
                 i.setInvoice(this.invoice);
                 i.setJenisItem("disposal cost");
-                Long invoiced = Ebean.find(InvoiceItem.class)
+                double invoiced = Ebean.find(InvoiceItem.class)
                         .where().eq("penerimaan", penerimaan)
                         .where().eq("jenisItem", "disposal cost")
                         .where().eq("kemasanKe", 1)
-                        .findList().stream().mapToLong(m -> m.getJmlKemasan()).sum();
+                        .findList().stream().mapToDouble(m -> m.getJmlKemasan()).sum();
                 i.setJmlKemasan(penerimaan.getJmlKemasan() - invoiced);
                 i.setSatuanKemasan(penerimaan.getSatuanKemasan());
                 i.setKemasanKe(1);
@@ -92,11 +93,11 @@ public class PopInvoiceItemDisposalVM {
                 i.setPenerimaan(penerimaan);
                 i.setInvoice(this.invoice);
                 i.setJenisItem("disposal cost");
-                Long invoiced = Ebean.find(InvoiceItem.class)
+                double invoiced = Ebean.find(InvoiceItem.class)
                         .where().eq("penerimaan", penerimaan)
                         .where().eq("jenisItem", "disposal cost")
                         .where().eq("kemasanKe", 2)
-                        .findList().stream().mapToLong(m -> m.getJmlKemasan()).sum();
+                        .findList().stream().mapToDouble(m -> m.getJmlKemasan()).sum();
                 i.setJmlKemasan(penerimaan.getJmlKemasan2() - invoiced);
                 i.setSatuanKemasan(penerimaan.getSatuanKemasan2());
                 i.setKemasanKe(2);
@@ -108,28 +109,46 @@ public class PopInvoiceItemDisposalVM {
                 i.setPenerimaan(penerimaan);
                 i.setInvoice(this.invoice);
                 i.setJenisItem("disposal cost");
-                Long invoiced = Ebean.find(InvoiceItem.class)
+                double invoiced = Ebean.find(InvoiceItem.class)
                         .where().eq("penerimaan", penerimaan)
                         .where().eq("jenisItem", "disposal cost")
                         .where().eq("kemasanKe", 3)
-                        .findList().stream().mapToLong(m -> m.getJmlKemasan()).sum();
+                        .findList().stream().mapToDouble(m -> m.getJmlKemasan()).sum();
                 i.setJmlKemasan(penerimaan.getJmlKemasan3() - invoiced);
                 i.setSatuanKemasan(penerimaan.getSatuanKemasan3());
                 i.setKemasanKe(3);
                 tempInvoiceItem.add(i);
             }
+            
+            
+            if (penerimaan.getJmlBerat() != 0) {
+                InvoiceItem i = new InvoiceItem();
+                i.setPenerimaan(penerimaan);
+                i.setInvoice(this.invoice);
+                i.setJenisItem("disposal cost");
+                double invoiced = Ebean.find(InvoiceItem.class)
+                        .where().eq("penerimaan", penerimaan)
+                        .where().eq("jenisItem", "disposal cost")
+                        .where().eq("kemasanKe", 4)
+                        .findList().stream().mapToDouble(m -> m.getJmlKemasan()).sum();
+                i.setJmlKemasan(penerimaan.getJmlBerat() - invoiced);
+                i.setSatuanKemasan(penerimaan.getSatuanBerat());
+                i.setKemasanKe(4);
+                tempInvoiceItem.add(i);
+            }
+
+           
 
         }
 
         for (InvoiceItem invoiceItem : tempInvoiceItem) {
-            Long inList = this.invoice.getListInvoiceItem().stream().filter(p -> p.getJenisItem().equals("disposal cost") && p.getPenerimaan().getManifest().getKodeManifest().equals(invoiceItem.getPenerimaan().getManifest().getKodeManifest()) && p.getKemasanKe() == invoiceItem.getKemasanKe()).mapToLong(m -> m.getJmlKemasan()).sum();
-           
-            if(this.isEdit){
+            double inList = this.invoice.getListInvoiceItem().stream().filter(p -> p.getJenisItem().equals("disposal cost") && p.getPenerimaan().getManifest().getKodeManifest().equals(invoiceItem.getPenerimaan().getManifest().getKodeManifest()) && p.getKemasanKe() == invoiceItem.getKemasanKe()).mapToDouble(m -> m.getJmlKemasan()).sum();
+
+            if (this.isEdit) {
                 invoiceItem.setJmlKemasan(invoiceItem.getJmlKemasan());
-            }else{
+            } else {
                 invoiceItem.setJmlKemasan(invoiceItem.getJmlKemasan() - inList);
             }
-            
 
             if (invoiceItem.getJmlKemasan() > 0) {
                 TemporalItem t = new TemporalItem();
@@ -138,13 +157,11 @@ public class PopInvoiceItemDisposalVM {
                 t.setJmlKemasan(invoiceItem.getJmlKemasan());
                 t.setSatuanKemasan(invoiceItem.getSatuanKemasan());
                 t.setKemasanKe(invoiceItem.getKemasanKe());
-
-                for (int i = 1; i <= t.getJmlKemasan(); i++) {
-                    t.getListJmlKemasan().add(new Long(i));
-                }
-
+                t.setMaxItem(invoiceItem.getJmlKemasan());
+                
                 this.listTemporalItem.add(t);
             }
+            
 
         }
 
@@ -156,12 +173,12 @@ public class PopInvoiceItemDisposalVM {
 
     @Command
     public void pilihItem(@BindingParam("item") TemporalItem temporalItem) {
-        
-        if (temporalItem.getJmlKemasan() > temporalItem.getListJmlKemasan().size()) {
-            Messagebox.show("Maksimal total kemasan untuk item ini : " + temporalItem.getListJmlKemasan().size() + " " + temporalItem.getSatuanKemasan(), "Error", Messagebox.OK, Messagebox.ERROR);
+
+        if (temporalItem.getJmlKemasan() > temporalItem.getMaxItem()) {
+            Messagebox.show("Maksimal total kemasan untuk item ini : " + temporalItem.getMaxItem() + " " + temporalItem.getSatuanKemasan(), "Error", Messagebox.OK, Messagebox.ERROR);
             return;
         }
-        
+
         if (temporalItem.getJmlKemasan() <= 0) {
             Messagebox.show("Minimum total kemasan : 1 " + temporalItem.getSatuanKemasan(), "Error", Messagebox.OK, Messagebox.ERROR);
             return;

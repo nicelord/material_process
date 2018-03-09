@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" pageWidth="637" pageHeight="787" columnWidth="627" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="7dafb8d3-fcf1-47c3-aee8-9b45e3b6027d">
 	<property name="ireport.zoom" value="1.331000000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.y" value="480"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -91,11 +91,11 @@
 	</style>
 	<subDataset name="Table Dataset 1" uuid="b3654c6e-ba59-4433-ab5e-6c0d2d832cdb">
 		<parameter name="DEPT" class="java.lang.String"/>
-		<parameter name="TOTAL" class="java.lang.Long"/>
+		<parameter name="TOTAL" class="java.lang.Double"/>
 		<parameter name="NET" class="java.lang.Long"/>
 		<parameter name="TAX" class="java.lang.Integer"/>
 		<parameter name="CUR" class="java.lang.String"/>
-		<field name="jmlKemasan" class="java.lang.Long"/>
+		<field name="jmlKemasan" class="java.lang.Double"/>
 		<field name="hargaSatuan" class="java.lang.Long"/>
 		<field name="satuanKemasan" class="java.lang.String"/>
 		<field name="itemDetail" class="java.lang.String"/>
@@ -108,9 +108,9 @@
 	<parameter name="TELP_CUSTOMER" class="java.lang.String"/>
 	<parameter name="FAX_CUSTOMER" class="java.lang.String"/>
 	<parameter name="CC" class="java.lang.String"/>
-	<parameter name="TOTAL" class="java.lang.Long"/>
+	<parameter name="TOTAL" class="java.lang.Double"/>
 	<parameter name="DEPT" class="java.lang.String"/>
-	<parameter name="NET" class="java.lang.Long"/>
+	<parameter name="NET" class="java.lang.Double"/>
 	<parameter name="TAX" class="java.lang.Integer"/>
 	<parameter name="NO_INVOICE" class="java.lang.String"/>
 	<parameter name="NPWP" class="java.lang.String"/>
@@ -169,7 +169,7 @@
 									<font fontName="Tahoma" size="9"/>
 									<paragraph leftIndent="2" rightIndent="2"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{jmlKemasan}.longValue() == 0L?"":$F{jmlKemasan} + " " + $F{satuanKemasan}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{jmlKemasan}.doubleValue() == 0L?"":$F{jmlKemasan} + " " + $F{satuanKemasan}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -244,7 +244,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="9"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{jmlKemasan}.longValue() == 0L?"":"PT. DACB"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{jmlKemasan}.doubleValue() == 0?"":"PT. DACB"]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -629,13 +629,13 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CUR}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="-#,##0.00" isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="517" y="611" width="95" height="20" uuid="bc17b334-c5cf-4d49-a990-71b7614975db"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 					<paragraph rightIndent="2"/>
 				</textElement>
-				<textFieldExpression><![CDATA["-" + ($P{TOTAL}/100) * $P{TAX}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{TOTAL}/100) * $P{TAX}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="517" y="611" width="95" height="20" uuid="1252b9bc-62af-4a63-93bf-61ad838084e0"/>

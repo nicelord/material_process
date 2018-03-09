@@ -25,7 +25,7 @@ public class InvoiceItem2 implements Serializable {
     private Invoice2 invoice2;
     
     
-    Long jmlKemasan = 0L;
+    double jmlKemasan = 0;
     String satuanKemasan = "";
     
     Long banyak = 0L;
@@ -59,13 +59,15 @@ public class InvoiceItem2 implements Serializable {
         this.invoice2 = invoice2;
     }
 
-    public Long getJmlKemasan() {
+    public double getJmlKemasan() {
         return jmlKemasan;
     }
 
-    public void setJmlKemasan(Long jmlKemasan) {
+    public void setJmlKemasan(double jmlKemasan) {
         this.jmlKemasan = jmlKemasan;
     }
+
+   
 
     public String getSatuanKemasan() {
         return satuanKemasan;
