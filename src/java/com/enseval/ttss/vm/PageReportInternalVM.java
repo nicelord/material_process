@@ -57,9 +57,9 @@ public class PageReportInternalVM {
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+        if (userLogin.getAkses().startsWith("GUDANG")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", userLogin.getAkses()).orderBy("id desc").findList();
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+        } else if (userLogin.getAkses().startsWith("REPORTING")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
                     .ne("gudangTujuan", "EXTERNAL")

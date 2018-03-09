@@ -30,14 +30,14 @@ import javax.persistence.Transient;
 public class Penerimaan implements Serializable {
 
     @OneToOne(mappedBy = "penerimaan")
+    private ProsessLimbah prosessLimbah;
+
+    @OneToOne(mappedBy = "penerimaan")
     private OutboundItem outboundItem;
 
     @ManyToOne
     @Column(unique = true, nullable = false)
     private Sertifikat sertifikat;
-
-    @OneToMany(mappedBy = "penerimaan")
-    private List<ProsessLimbah> prosessLimbahs;
 
     @OneToMany(mappedBy = "penerimaan")
     List<InvoiceItem> listInvoiceItem;
@@ -122,10 +122,6 @@ public class Penerimaan implements Serializable {
         }
         
         return totalInvoiced;
-    }
-
-    public ProsessLimbah getLastProsesLimbah() {
-        return this.getProsessLimbahs().get(0);
     }
 
     public Long getId() {
@@ -240,14 +236,6 @@ public class Penerimaan implements Serializable {
         this.jmlBerat = jmlBerat;
     }
 
-    public List<ProsessLimbah> getProsessLimbahs() {
-        return prosessLimbahs;
-    }
-
-    public void setProsessLimbahs(List<ProsessLimbah> prosessLimbahs) {
-        this.prosessLimbahs = prosessLimbahs;
-    }
-
     public String getSatuanKemasan2() {
         return satuanKemasan2;
     }
@@ -302,6 +290,14 @@ public class Penerimaan implements Serializable {
 
     public void setInReporting(boolean inReporting) {
         this.inReporting = inReporting;
+    }
+
+    public ProsessLimbah getProsessLimbah() {
+        return prosessLimbah;
+    }
+
+    public void setProsessLimbah(ProsessLimbah prosessLimbah) {
+        this.prosessLimbah = prosessLimbah;
     }
 
 }

@@ -58,6 +58,7 @@
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
                         <listheader sort="auto(penerimaan.manifest.kodeManifest)" label="NO. MANIFEST" />
+                        <listheader sort="" label="PT. PENGHASIL" />
                         <listheader sort="auto(gudangPengirim)" label="GUDANG PENGIRIM" />
                         <listheader sort="auto(userPengirim.nama)" label="USER PENGIRIM" />
                         <listheader sort="auto(tglKirim)" label="TGL KIRIM" />
@@ -83,6 +84,10 @@
                         <auxheader>
                             <textbox instant="true" value="@bind(vm.filterManifest)" hflex="3" onChange="@command('saring')"/>
                         </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterPT)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+
                         <auxheader>
                             <textbox instant="true" value="@bind(vm.filterGudangPengirim)" hflex="3" onChange="@command('saring')"/>
                         </auxheader>
@@ -175,7 +180,12 @@
                     <template name="model" var="s">
                         <listitem sclass="mainList">
                             <listcell />
-                            <listcell label="@load(s.penerimaan.manifest.kodeManifest)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.penerimaan eq null ? s.residu.residuId:s.penerimaan.manifest.kodeManifest)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.penerimaan eq null ? s.residu.namaPerusahaan:s.penerimaan.manifest.customerPenghasil.nama)"/>
+                            </listcell>
                             <listcell label="@load(s.gudangPengirim)"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.userPengirim.nama)"/>
@@ -256,7 +266,7 @@
                 
                 
                     <listfoot>
-                        <listfooter span="9" valign="middle">
+                        <listfooter span="10" valign="middle">
                             <div style="float:left;">
                                 
                                 <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 

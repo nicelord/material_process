@@ -50,15 +50,15 @@ public class PageInProcessVM {
 
     List<ProsessLimbah> listProsesLimbah = new ArrayList<>();
 
-    String filterManifest = "", filterNamaLimbah = "", filterGudangTujuan = "", filterUserPenerima = "";
+    String filterPT="", filterManifest = "", filterNamaLimbah = "", filterGudangTujuan = "", filterUserPenerima = "";
     Date tglTerimaAwal, tglTerimaAkhir, tglProsesAwal, tglProsesAkhir;
 
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+        if (userLogin.getAkses().startsWith("GUDANG")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", userLogin.getAkses()).orderBy("id desc").where().isNotNull("tglProses").findList();
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+        } else if (userLogin.getAkses().startsWith("REPORTING")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class).where().isNotNull("tglProses").orderBy("id desc").findList();
         }
 
@@ -91,19 +91,21 @@ public class PageInProcessVM {
         this.tglProsesAwal = null;
         this.tglProsesAkhir = null;
 
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+        if (userLogin.getAkses().startsWith("GUDANG")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("namaLimbah", filterNamaLimbah)
                     .eq("gudangTujuan", userLogin.getAkses())
                     .isNotNull("tglProses")
                     .orderBy("id desc").findList();
 
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+        } else if (userLogin.getAkses().startsWith("REPORTING")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("namaLimbah", filterNamaLimbah)
                     .contains("gudangTujuan", filterGudangTujuan)
                     .or(Expr.contains("userPenerima.nama", filterUserPenerima), Expr.isNull("userPenerima.nama"))
@@ -120,11 +122,12 @@ public class PageInProcessVM {
         this.tglProsesAwal = null;
         this.tglProsesAkhir = null;
 
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+        if (userLogin.getAkses().startsWith("GUDANG")) {
 
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("namaLimbah", filterNamaLimbah)
                     .eq("gudangTujuan", userLogin.getAkses())
                     .between("tglTerima",
@@ -132,10 +135,11 @@ public class PageInProcessVM {
                             Date.from(this.tglTerimaAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                     .orderBy("id desc").findList();
 
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+        } else if (userLogin.getAkses().startsWith("REPORTING")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("namaLimbah", filterNamaLimbah)
                     .contains("gudangTujuan", filterGudangTujuan)
                     .or(Expr.contains("userPenerima.nama", filterUserPenerima), Expr.isNull("userPenerima.nama"))
@@ -153,11 +157,12 @@ public class PageInProcessVM {
         this.tglTerimaAwal = null;
         this.tglTerimaAkhir = null;
 
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+        if (userLogin.getAkses().startsWith("GUDANG")) {
 
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("namaLimbah", filterNamaLimbah)
                     .eq("gudangTujuan", userLogin.getAkses())
                     .between("tglProses",
@@ -165,10 +170,11 @@ public class PageInProcessVM {
                             Date.from(this.tglProsesAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                     .orderBy("id desc").findList();
 
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+        } else if (userLogin.getAkses().startsWith("REPORTING")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("namaLimbah", filterNamaLimbah)
                     .contains("gudangTujuan", filterGudangTujuan)
                     .or(Expr.contains("userPenerima.nama", filterUserPenerima), Expr.isNull("userPenerima.nama"))
@@ -309,6 +315,14 @@ public class PageInProcessVM {
 
     public void setTglProsesAkhir(Date tglProsesAkhir) {
         this.tglProsesAkhir = tglProsesAkhir;
+    }
+
+    public String getFilterPT() {
+        return filterPT;
+    }
+
+    public void setFilterPT(String filterPT) {
+        this.filterPT = filterPT;
     }
 
 }

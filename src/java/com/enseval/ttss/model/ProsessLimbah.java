@@ -26,9 +26,11 @@ public class ProsessLimbah implements Serializable {
     @Id @GeneratedValue
     private Long id;
     
-    @ManyToOne
+    @OneToOne
     Penerimaan penerimaan;
     
+    @OneToOne
+    Residu residu;
     
     String gudangPengirim;
     String gudangTujuan;
@@ -221,7 +223,13 @@ public class ProsessLimbah implements Serializable {
         this.jmlKemasan3 = jmlKemasan3;
     }
 
-  
+    public Residu getResidu() {
+        return residu;
+    }
+
+    public void setResidu(Residu residu) {
+        this.residu = residu;
+    }
     
     
     

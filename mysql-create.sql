@@ -270,6 +270,7 @@ create table pengiriman (
 create table prosess_limbah (
   id                        bigint auto_increment not null,
   penerimaan_id             bigint,
+  residu_id                 bigint,
   gudang_pengirim           varchar(255),
   gudang_tujuan             varchar(255),
   user_pengirim_id          bigint,
@@ -287,6 +288,8 @@ create table prosess_limbah (
   jml_berat                 double,
   keterangan                varchar(255),
   nama_limbah               varchar(255),
+  constraint uq_prosess_limbah_penerimaan_id unique (penerimaan_id),
+  constraint uq_prosess_limbah_residu_id unique (residu_id),
   constraint pk_prosess_limbah primary key (id))
 ;
 
@@ -306,6 +309,7 @@ create table residu (
   jml_kemasan3              bigint,
   satuan_berat              varchar(255),
   jml_berat                 double,
+  gudang_tujuan             varchar(255),
   tipe                      varchar(255),
   nama_perusahaan           varchar(255),
   constraint pk_residu primary key (id))
@@ -320,6 +324,7 @@ create table sertifikat (
   penanda_tangan            varchar(255),
   jabatan_penanda_tangan    varchar(255),
   description               varchar(255),
+  transporter               varchar(255),
   constraint uq_sertifikat_nomor_sertifikat unique (nomor_sertifikat),
   constraint pk_sertifikat primary key (id))
 ;
@@ -415,20 +420,22 @@ alter table penerimaan add constraint fk_penerimaan_userPenerima_26 foreign key 
 create index ix_penerimaan_userPenerima_26 on penerimaan (user_penerima_id);
 alter table prosess_limbah add constraint fk_prosess_limbah_penerimaan_27 foreign key (penerimaan_id) references penerimaan (id) on delete restrict on update restrict;
 create index ix_prosess_limbah_penerimaan_27 on prosess_limbah (penerimaan_id);
-alter table prosess_limbah add constraint fk_prosess_limbah_userPengirim_28 foreign key (user_pengirim_id) references user (id) on delete restrict on update restrict;
-create index ix_prosess_limbah_userPengirim_28 on prosess_limbah (user_pengirim_id);
-alter table prosess_limbah add constraint fk_prosess_limbah_userPenerima_29 foreign key (user_penerima_id) references user (id) on delete restrict on update restrict;
-create index ix_prosess_limbah_userPenerima_29 on prosess_limbah (user_penerima_id);
-alter table residu add constraint fk_residu_userLogin_30 foreign key (user_login_id) references user (id) on delete restrict on update restrict;
-create index ix_residu_userLogin_30 on residu (user_login_id);
-alter table sertifikat add constraint fk_sertifikat_userLogin_31 foreign key (user_login_id) references user (id) on delete restrict on update restrict;
-create index ix_sertifikat_userLogin_31 on sertifikat (user_login_id);
-alter table sertifikat add constraint fk_sertifikat_customer_32 foreign key (customer_id) references customer (id) on delete restrict on update restrict;
-create index ix_sertifikat_customer_32 on sertifikat (customer_id);
-alter table store add constraint fk_store_pengiriman_33 foreign key (pengiriman_id) references pengiriman (id) on delete restrict on update restrict;
-create index ix_store_pengiriman_33 on store (pengiriman_id);
-alter table store add constraint fk_store_outboundItem_34 foreign key (outbound_item_id) references outbound_item (id) on delete restrict on update restrict;
-create index ix_store_outboundItem_34 on store (outbound_item_id);
+alter table prosess_limbah add constraint fk_prosess_limbah_residu_28 foreign key (residu_id) references residu (id) on delete restrict on update restrict;
+create index ix_prosess_limbah_residu_28 on prosess_limbah (residu_id);
+alter table prosess_limbah add constraint fk_prosess_limbah_userPengirim_29 foreign key (user_pengirim_id) references user (id) on delete restrict on update restrict;
+create index ix_prosess_limbah_userPengirim_29 on prosess_limbah (user_pengirim_id);
+alter table prosess_limbah add constraint fk_prosess_limbah_userPenerima_30 foreign key (user_penerima_id) references user (id) on delete restrict on update restrict;
+create index ix_prosess_limbah_userPenerima_30 on prosess_limbah (user_penerima_id);
+alter table residu add constraint fk_residu_userLogin_31 foreign key (user_login_id) references user (id) on delete restrict on update restrict;
+create index ix_residu_userLogin_31 on residu (user_login_id);
+alter table sertifikat add constraint fk_sertifikat_userLogin_32 foreign key (user_login_id) references user (id) on delete restrict on update restrict;
+create index ix_sertifikat_userLogin_32 on sertifikat (user_login_id);
+alter table sertifikat add constraint fk_sertifikat_customer_33 foreign key (customer_id) references customer (id) on delete restrict on update restrict;
+create index ix_sertifikat_customer_33 on sertifikat (customer_id);
+alter table store add constraint fk_store_pengiriman_34 foreign key (pengiriman_id) references pengiriman (id) on delete restrict on update restrict;
+create index ix_store_pengiriman_34 on store (pengiriman_id);
+alter table store add constraint fk_store_outboundItem_35 foreign key (outbound_item_id) references outbound_item (id) on delete restrict on update restrict;
+create index ix_store_outboundItem_35 on store (outbound_item_id);
 
 
 

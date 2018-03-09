@@ -137,7 +137,7 @@
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma" isBold="true"/>
 									</textElement>
-									<text><![CDATA[KODE JENIS]]></text>
+									<text><![CDATA[JENIS]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>
@@ -238,7 +238,7 @@
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma" isBold="true"/>
 									</textElement>
-									<text><![CDATA[KODE JENIS]]></text>
+									<text><![CDATA[JENIS]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>
@@ -340,7 +340,7 @@
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma" isBold="true"/>
 									</textElement>
-									<text><![CDATA[KODE JENIS]]></text>
+									<text><![CDATA[JENIS]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>
@@ -439,7 +439,7 @@
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma" isBold="true"/>
 									</textElement>
-									<text><![CDATA[KODE JENIS]]></text>
+									<text><![CDATA[JENIS]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>
@@ -538,7 +538,7 @@
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma" isBold="true"/>
 									</textElement>
-									<text><![CDATA[KODE JENIS]]></text>
+									<text><![CDATA[JENIS]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>
@@ -637,7 +637,7 @@
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma" isBold="true"/>
 									</textElement>
-									<text><![CDATA[KODE JENIS]]></text>
+									<text><![CDATA[JENIS]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>
@@ -736,7 +736,7 @@
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma" isBold="true"/>
 									</textElement>
-									<text><![CDATA[KODE JENIS]]></text>
+									<text><![CDATA[JENIS]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>
@@ -835,7 +835,7 @@
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma" isBold="true"/>
 									</textElement>
-									<text><![CDATA[KODE JENIS]]></text>
+									<text><![CDATA[JENIS]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>
@@ -934,7 +934,7 @@
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Tahoma" isBold="true"/>
 									</textElement>
-									<text><![CDATA[KODE JENIS]]></text>
+									<text><![CDATA[JENIS]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="table 2_CH" height="30" rowSpan="1"/>

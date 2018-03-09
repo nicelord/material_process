@@ -3,88 +3,86 @@ import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.Customer;
 import com.enseval.ttss.model.User;
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import org.avaje.agentloader.AgentLoader;
 
 public class TES {
 
     public static void main(final String[] args) {
-        
+        Integer a[] = {1, 2, 3, 4, 5, 6, 99, 213, 65, 123, 786, 23};
+        Arrays.sort(a);
+        for (int i : a) {
+            System.out.println(i);
+        }
+
+        int b = 9;
+
+        boolean isPrima = true;
+        for (int i = 2; i < b; i++) {
+            if (b % i == 0) {
+                isPrima = false;
+                break;
+            }
+            
+        }
+        System.out.println(isPrima);
+
 //        Long l = 1200L;
 //        Double d = 12.1;
 //        Double d2 = 12.023;
 //        DecimalFormat df = new DecimalFormat("#.###");
 //        System.out.println(df.format(d+d2));
 //        System.out.println(d.longValue());
-        
-        AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent", "debug=1");
-//
-        TES t = new TES();
-        t.runtest();
-        User u = new User();
-        u.setUsername("admin");
-        u.setPassword("admin");
-        u.setAkses("ADMINISTRATOR");
-        u.setNama("Reza");
-        Ebean.save(u);
-        
-        u = new User();
-        u.setUsername("ak");
-        u.setPassword("ak");
-        u.setAkses("AKUNTING");
-        u.setNama("ak");
-        Ebean.save(u);
-        
-        u = new User();
-        u.setUsername("ad");
-        u.setPassword("ad");
-        u.setAkses("ADMIN");
-        u.setNama("ad");
-        Ebean.save(u);
-        
-        u = new User();
-        u.setUsername("p");
-        u.setPassword("p");
-        u.setAkses("PENERIMA");
-        u.setNama("p");
-        Ebean.save(u);
-        
-        u = new User();
-        u.setUsername("g1");
-        u.setPassword("g1");
-        u.setAkses("GUDANG 1");
-        u.setNama("g1");
-        Ebean.save(u);
-        
-        Customer c = new Customer();
-        c.setNama("PT. PHILIPS INDUSTRIES BATAM");
-        c.setAlamat("Jl. Ahmad Yani PIE B1 Lot. 1-6, B2A Lot. 12-17, Muka Kuning - Batam");
-        c.setNomorKontak("123123");
-        c.setEmail("asdasd@adsad.com");
-        c.setFax("123123");
-        c.setNpwp("123-123-123");
-        Ebean.save(c);
-        
-        c = new Customer();
-        c.setNama("PT. PANASONIC INDUSTRIAL DEVICES BATAM");
-        c.setAlamat("Jl. Ahmad Yani PIE B1 Lot. 1-6, B2A Lot. 12-17, Muka Kuning - Batam");
-        c.setNomorKontak("123123");
-        c.setEmail("asdasd@adsad.com");
-        c.setFax("123123");
-        c.setNpwp("123-123-123");
-        Ebean.save(c);
-        
-        c = new Customer();
-        c.setNama("PT. DESA AIR CARGO BATAM");
-        c.setAlamat("Jl. Ahmad Yani PIE B1 Lot. 1-6, B2A Lot. 12-17, Muka Kuning - Batam");
-        c.setNomorKontak("123123");
-        c.setEmail("asdasd@adsad.com");
-        c.setFax("123123");
-        c.setNpwp("123-123-123");
-        Ebean.save(c);
-
-        
-       
-
+//        AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent", "debug=1");
+////
+//        TES t = new TES();
+//        t.runtest();
+//        User u = new User();
+//        u.setUsername("admin");
+//        u.setPassword("admin");
+//        u.setAkses("ADMINISTRATOR");
+//        u.setNama("Reza");
+//        Ebean.save(u);
+//        
+//        u = new User();
+//        u.setUsername("ak");
+//        u.setPassword("ak");
+//        u.setAkses("AKUNTING");
+//        u.setNama("ak");
+//        Ebean.save(u);
+//        
+//        u = new User();
+//        u.setUsername("ad");
+//        u.setPassword("ad");
+//        u.setAkses("ADMIN");
+//        u.setNama("ad");
+//        Ebean.save(u);
+//        
+//        u = new User();
+//        u.setUsername("p");
+//        u.setPassword("p");
+//        u.setAkses("PENERIMA");
+//        u.setNama("p");
+//        Ebean.save(u);
+//        
+//        u = new User();
+//        u.setUsername("g1");
+//        u.setPassword("g1");
+//        u.setAkses("GUDANG 1");
+//        u.setNama("g1");
+//        Ebean.save(u);
+//        
+//        Customer c = new Customer();
+//        
+//        c = new Customer();
+//        c.setNama("PT. DESA AIR CARGO BATAM");
+//        c.setAlamat("Jl. Ahmad Yani PIE B1 Lot. 1-6, B2A Lot. 12-17, Muka Kuning - Batam");
+//        c.setNomorKontak("123123");
+//        c.setEmail("asdasd@adsad.com");
+//        c.setFax("123123");
+//        c.setNpwp("123-123-123");
+//        Ebean.save(c);
 //        List<ProsessLimbah> l = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", "GUDANG 1").orderBy("id desc").where().isNotNull("tglProses").findList();
 //        Map<String, Map<String, Long>> counting = l.stream().collect(
 //                Collectors.groupingBy(ProsessLimbah::getNamaLimbah, 
@@ -110,7 +108,7 @@ public class TES {
 //        }
     }
 
-    public void runtest(){
+    public void runtest() {
 
 //        try {
 //            String msg = "<html>"

@@ -67,7 +67,8 @@ public class PageReportOutboundVM {
         this.listOutboundItem = Ebean.find(OutboundItem.class)
                 .where()
                 .isNotNull("tglBuat")
-                .eq("penerimaan.inReporting", true)
+//                .eq("penerimaan.inReporting", true)
+                .or(Expr.eq("penerimaan.inReporting", true), Expr.isNotNull("residu.residuId"))
                 .orderBy("id desc").findList();
 
     }
@@ -88,7 +89,7 @@ public class PageReportOutboundVM {
                 this.listOutboundItem = Ebean.find(OutboundItem.class)
                         .where()
                         .isNotNull("tglBuat")
-                        .eq("penerimaan.inReporting", true)
+                        .or(Expr.eq("penerimaan.inReporting", true), Expr.isNotNull("residu.residuId"))
                         .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
                         .contains("namaItem", filterLimbah)
                         .orderBy("id desc").findList();
@@ -107,7 +108,7 @@ public class PageReportOutboundVM {
                         .where()
                         .isNotNull("tglBuat")
                         .isNotNull("penerimaan")
-                        .eq("penerimaan.inReporting", true)
+                        .or(Expr.eq("penerimaan.inReporting", true), Expr.isNotNull("residu.residuId"))
                         .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
                         .contains("namaItem", filterLimbah)
                         .orderBy("id desc").findList();

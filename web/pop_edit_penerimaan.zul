@@ -214,7 +214,7 @@
                                           constraint="no empty"  
                                           value="@bind(vm.penerimaan.satuanBerat)">
                                     <comboitem label="Liter"/>
-                                    <comboitem label="KG"/>
+                                    <comboitem label="Kg"/>
                                     <comboitem label="M3"/>
                                 </combobox>
                             </hlayout>

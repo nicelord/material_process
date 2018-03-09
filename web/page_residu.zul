@@ -52,7 +52,7 @@
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
                 
                     <auxhead if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')}">
-                        <auxheader colspan="9">
+                        <auxheader colspan="10">
                             <button 
                                 vflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-file" label="INPUT RESIDU" onClick="@command('buatResidu')" />
                         </auxheader>
@@ -66,7 +66,8 @@
                         <listheader sort="auto(jmlKemasan)" label="BANYAK" />
                         <listheader sort="auto(jmlBerat)" label="BERAT" />
                         <listheader sort="auto(tglBuat)" label="TGL DIHASILKAN"/>
-                        <listheader label="TGL PROSES"/>
+                        <listheader sort="auto(gudangTujuan)" label="GDG. TUJUAN" />
+                        <listheader sort="auto(tglKirim)" label="TGL KIRIM"/>
                         <listheader 
                             if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')}"
                             label=""/>
@@ -113,6 +114,9 @@
                             </popup>
                         </auxheader>
                         <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterTujuan)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
                             
                         </auxheader>
                         <auxheader if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')}">
@@ -140,15 +144,10 @@
                                 <label value="@load(''.concat(s.jmlBerat).concat(' ').concat(s.satuanBerat))"/>
                             </listcell>
                             <listcell>
-                                
-                                <datebox value="@bind(s.tglBuat)" 
-                                         format="dd-MM-yyyy" 
-                                         readonly="true" 
-                                         hflex="3"
-                                         buttonVisible="@load(vm.userLogin.akses.startsWith('GUDANG') || vm.userLogin.akses.startsWith('SORTIR'))"
-                                         onChange="@command('updateTglDihasilkan',residu=s)"
-                                />
-                                <!--<label value="@load(s.tglBuat) @converter('formatedDate', format='dd-MM-yyyy')"/>-->
+                                <label value="@load(s.tglBuat) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.gudangTujuan)"/>
                             </listcell>
                             <listcell>
                                 <!--                                <label 
@@ -160,12 +159,14 @@
                                 sclass="label label-danger"
                                 value="belum dikirim"/>-->
                                 
-                                <datebox value="@bind(s.outboundItem.tglBuat)" 
-                                         format="dd-MM-yyyy" 
-                                         readonly="true" 
-                                         hflex="3"
-                                         buttonVisible="@load(vm.userLogin.akses.startsWith('GUDANG') || vm.userLogin.akses.startsWith('SORTIR'))"
-                                         onChange="@command('kirimExternal',residu=s)"/>
+                                <!--                                <datebox value="@bind(s.outboundItem.tglBuat)" 
+                                format="dd-MM-yyyy" 
+                                readonly="true" 
+                                hflex="3"
+                                buttonVisible="@load(vm.userLogin.akses.startsWith('GUDANG') || vm.userLogin.akses.startsWith('SORTIR'))"
+                                onChange="@command('kirimExternal',residu=s)"/>-->
+                                  
+                                <label value="@load(s.tglKirim) @converter('formatedDate', format='dd-MM-yyyy')"/>
                             </listcell>
                             <listcell 
                                 if="${sessionScope.userCredential.getRoles().startsWith('GUDANG')}"
@@ -180,7 +181,7 @@
                 
                 
                     <listfoot>
-                        <listfooter span="@load(vm.userLogin.akses.startsWith('GUDANG')?'9':'8')" valign="middle">
+                        <listfooter span="@load(vm.userLogin.akses.startsWith('GUDANG')?'10':'9')" valign="middle">
                             <div style="float:left;">
                                 
                                 <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 
@@ -190,9 +191,9 @@
                                 
                             </div>
                             <div style="float:right;">
-                                Total Kemasan : <label value="@load(vm.totalKemasan)"/>
+<!--                                Total Kemasan : <label value="@load(vm.totalKemasan)"/>
                                 <space />
-                                Total Berat : <label value="@load(vm.totalBerat)"/>
+                                Total Berat : <label value="@load(vm.totalBerat)"/>-->
                             </div>
                         </listfooter>
                     </listfoot>	

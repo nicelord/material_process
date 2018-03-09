@@ -121,7 +121,7 @@
                                   hflex="3" 
                                   value="@save(vm.manifest.karakteristikLimbah)">
                             <comboitem label="-"/>
-                            <comboitem label="Beracun (toxic - T)"/>
+                            <comboitem label="Beracun (T)"/>
                             <comboitem label="Infeksius (infectious - X)"/>
                             <comboitem label="Reaktif (reactive - R)"/>
                             <comboitem label="Padatan Mudah menyala (ignitable - I)"/>

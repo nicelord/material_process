@@ -70,7 +70,7 @@ public class PagePenerimaanVM {
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
-        this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty()).collect(Collectors.toList()).size();
+        this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbah()==null).collect(Collectors.toList()).size();
         this.jmlPendingInvoice = listPenerimaan.stream().filter(l -> l.getListInvoiceItem().isEmpty()).collect(Collectors.toList()).size();
         this.listPenerimaan2 = this.listPenerimaan;
     }
@@ -106,7 +106,7 @@ public class PagePenerimaanVM {
         if (this.filterStatusProses.equals("semua")) {
             this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
         } else {
-            this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty()).collect(Collectors.toList());
+            this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getProsessLimbah()==null).collect(Collectors.toList());
         }
     }
 
@@ -135,7 +135,7 @@ public class PagePenerimaanVM {
     @NotifyChange({"listPenerimaan", "jmlPendingInvoice", "jmlPendingProses"})
     public void refresh() {
 
-        this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty()).collect(Collectors.toList()).size();
+        this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbah()==null).collect(Collectors.toList()).size();
 
         this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
         this.listPenerimaan2 = this.listPenerimaan;
@@ -179,7 +179,7 @@ public class PagePenerimaanVM {
     @Command
     public void cetakPenerimaan(@BindingParam("penerimaan") Penerimaan p) {
         File filenya = new File(Util.setting("pdf_path") + "penerimaan.pdf");
-        
+
         List<Penerimaan> listP = new ArrayList<>();
         listP.add(p);
 
@@ -236,7 +236,6 @@ public class PagePenerimaanVM {
 //            exporterXLS.exportReport();
 //            streamReport.close();
 //            outputStream.close();
-
             FileInputStream inputStream = new FileInputStream(filenya);
             Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
 
@@ -248,12 +247,11 @@ public class PagePenerimaanVM {
             Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex2);
         }
     }
-    
-    
+
     @Command
     public void cetakPenerimaan2(@BindingParam("penerimaan") Penerimaan p) {
         File filenya = new File(Util.setting("pdf_path") + "penerimaan.docx");
-        
+
         List<Penerimaan> listP = new ArrayList<>();
         listP.add(p);
 
@@ -310,7 +308,6 @@ public class PagePenerimaanVM {
 //            exporterXLS.exportReport();
 //            streamReport.close();
 //            outputStream.close();
-
             FileInputStream inputStream = new FileInputStream(filenya);
             Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
 
@@ -322,12 +319,11 @@ public class PagePenerimaanVM {
             Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex2);
         }
     }
-    
-    
+
     @Command
-    public void exportExcel(){
+    public void exportExcel() {
         File filenya = new File(Util.setting("pdf_path") + "penerimaan.xls");
-   
+
         try {
             InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/penerimaan.xls.jasper");
             JRDataSource datasource = new JRBeanCollectionDataSource(this.listPenerimaan);
@@ -336,7 +332,6 @@ public class PagePenerimaanVM {
             Map map = new HashMap();
             map.put("REPORT_DATA_SOURCE", datasource);
             map.put("PENERIMAAN", beanColDataSource);
-
 
             JasperPrint report = JasperFillManager.fillReport(streamReport, map);
             OutputStream outputStream = new FileOutputStream(filenya);

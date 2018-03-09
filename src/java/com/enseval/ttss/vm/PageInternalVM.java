@@ -52,18 +52,19 @@ public class PageInternalVM {
 
     List<ProsessLimbah> listProsesLimbah = new ArrayList<>();
 
-    String filterManifest = "", filterGudangPengirim = "", filterNamaLimbah = "", filterGudangTujuan = "", filterUserPenerima = "", filterUserPengirim = "";
+    String filterPT = "", filterManifest = "", filterGudangPengirim = "", filterNamaLimbah = "", filterGudangTujuan = "", filterUserPenerima = "", filterUserPengirim = "";
     Date tglKirimAwal, tglKirimAkhir, tglTerimaAwal, tglTerimaAkhir, tglProsesAwal, tglProsesAkhir;
 
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+        if (userLogin.getAkses().startsWith("GUDANG")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", userLogin.getAkses()).orderBy("id desc").findList();
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+        } else if (userLogin.getAkses().startsWith("REPORTING")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
                     .ne("gudangTujuan", "EXTERNAL")
+                    .eq("penerimaan.inReporting", true)
                     .orderBy("id desc").findList();
         }
 
@@ -81,14 +82,19 @@ public class PageInternalVM {
     public void reject(@BindingParam("prosesLimbah") ProsessLimbah prosessLimbah) {
         prosessLimbah.setPenerimaan(null);
         prosessLimbah.setGudangTujuan(null);
+
+        if (prosessLimbah.getResidu() != null) {
+            prosessLimbah.getResidu().setGudangTujuan(null);
+            prosessLimbah.getResidu().setTglKirim(null);
+            Ebean.update(prosessLimbah.getResidu());
+        }
+
+        prosessLimbah.setResidu(null);
+
         Ebean.update(prosessLimbah);
         Ebean.delete(prosessLimbah);
 
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
-            this.listProsesLimbah = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", userLogin.getAkses()).orderBy("id desc").findList();
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
-            this.listProsesLimbah = Ebean.find(ProsessLimbah.class).orderBy("id desc").findList();
-        }
+        saring();
     }
 
     @Command
@@ -108,20 +114,23 @@ public class PageInternalVM {
         this.tglProsesAwal = null;
         this.tglProsesAkhir = null;
 
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+        if (userLogin.getAkses().startsWith("GUDANG")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("gudangPengirim", filterGudangPengirim)
                     .contains("userPengirim", filterUserPengirim)
                     .contains("namaLimbah", filterNamaLimbah)
                     .eq("gudangTujuan", userLogin.getAkses())
                     .orderBy("id desc").findList();
 
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+        } else if (userLogin.getAkses().startsWith("REPORTING")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .eq("penerimaan.inReporting", true)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("gudangPengirim", filterGudangPengirim)
                     .contains("userPengirim.nama", filterUserPengirim)
                     .contains("namaLimbah", filterNamaLimbah)
@@ -141,11 +150,12 @@ public class PageInternalVM {
         this.tglProsesAwal = null;
         this.tglProsesAkhir = null;
 
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+        if (userLogin.getAkses().startsWith("GUDANG")) {
 
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("gudangPengirim", filterGudangPengirim)
                     .contains("userPengirim", filterUserPengirim)
                     .contains("namaLimbah", filterNamaLimbah)
@@ -155,10 +165,12 @@ public class PageInternalVM {
                             Date.from(this.tglKirimAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                     .orderBy("id desc").findList();
 
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+        } else if (userLogin.getAkses().startsWith("REPORTING")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .eq("penerimaan.inReporting", true)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("gudangPengirim", filterGudangPengirim)
                     .contains("userPengirim.nama", filterUserPengirim)
                     .contains("namaLimbah", filterNamaLimbah)
@@ -181,11 +193,12 @@ public class PageInternalVM {
         this.tglProsesAwal = null;
         this.tglProsesAkhir = null;
 
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+        if (userLogin.getAkses().startsWith("GUDANG")) {
 
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("gudangPengirim", filterGudangPengirim)
                     .contains("userPengirim", filterUserPengirim)
                     .contains("namaLimbah", filterNamaLimbah)
@@ -195,10 +208,12 @@ public class PageInternalVM {
                             Date.from(this.tglTerimaAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                     .orderBy("id desc").findList();
 
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+        } else if (userLogin.getAkses().startsWith("REPORTING")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .eq("penerimaan.inReporting", true)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("gudangPengirim", filterGudangPengirim)
                     .contains("userPengirim.nama", filterUserPengirim)
                     .contains("namaLimbah", filterNamaLimbah)
@@ -220,11 +235,12 @@ public class PageInternalVM {
         this.tglTerimaAwal = null;
         this.tglTerimaAkhir = null;
 
-        if (userLogin.getAkses().startsWith("GUDANG") || userLogin.getAkses().startsWith("SORTIR")) {
+        if (userLogin.getAkses().startsWith("GUDANG")) {
 
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("gudangPengirim", filterGudangPengirim)
                     .contains("userPengirim", filterUserPengirim)
                     .contains("namaLimbah", filterNamaLimbah)
@@ -234,10 +250,12 @@ public class PageInternalVM {
                             Date.from(this.tglProsesAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                     .orderBy("id desc").findList();
 
-        } else if (userLogin.getAkses().startsWith("ADMINISTRATOR") || userLogin.getAkses().startsWith("REPORTING")) {
+        } else if (userLogin.getAkses().startsWith("REPORTING")) {
             this.listProsesLimbah = Ebean.find(ProsessLimbah.class)
                     .where()
-                    .contains("penerimaan.manifest.kodeManifest", filterManifest)
+                    .eq("penerimaan.inReporting", true)
+                    .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                    .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPT), Expr.contains("residu.namaPerusahaan", filterPT))
                     .contains("gudangPengirim", filterGudangPengirim)
                     .contains("userPengirim.nama", filterUserPengirim)
                     .contains("namaLimbah", filterNamaLimbah)
@@ -412,6 +430,14 @@ public class PageInternalVM {
 
     public void setFilterUserPengirim(String filterUserPengirim) {
         this.filterUserPengirim = filterUserPengirim;
+    }
+
+    public String getFilterPT() {
+        return filterPT;
+    }
+
+    public void setFilterPT(String filterPT) {
+        this.filterPT = filterPT;
     }
 
 }

@@ -69,7 +69,7 @@ public class PageReportPenerimaanVM {
                 .where()
                 .eq("inReporting", true)
                 .eq("isDiterima", true).orderBy("id desc").findList();
-        this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty()).collect(Collectors.toList()).size();
+        this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getStatusPenerimaan().equals("belum diterima")).collect(Collectors.toList()).size();
         this.jmlPendingInvoice = listPenerimaan.stream().filter(l -> l.getListInvoiceItem().isEmpty()).collect(Collectors.toList()).size();
         this.listPenerimaan2 = this.listPenerimaan;
     }
@@ -122,7 +122,7 @@ public class PageReportPenerimaanVM {
                     .eq("inReporting", true)
                     .eq("isDiterima", true).orderBy("id desc").findList();
         } else {
-            this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty() && l.isInReporting() == true).collect(Collectors.toList());
+            this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getStatusPenerimaan().equals("belum diterima") && l.isInReporting() == true).collect(Collectors.toList());
         }
     }
 
@@ -151,7 +151,7 @@ public class PageReportPenerimaanVM {
     @NotifyChange({"listPenerimaan", "jmlPendingInvoice", "jmlPendingProses"})
     public void refresh() {
 
-        this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbahs().isEmpty()).collect(Collectors.toList()).size();
+        this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbah()==null).collect(Collectors.toList()).size();
 
         this.listPenerimaan = Ebean.find(Penerimaan.class)
                 .where()

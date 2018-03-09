@@ -83,6 +83,7 @@ public class PopProsesLimbahVM {
             
             out.setSatuanBerat(this.penerimaan.getSatuanBerat());
             out.setJmlBerat(this.penerimaan.getJmlBerat());
+            out.setUserLogin(userLogin);
             
             out.setTglBuat(new Date());
             

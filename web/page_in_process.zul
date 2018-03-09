@@ -58,6 +58,7 @@
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
                         <listheader sort="auto(penerimaan.manifest.kodeManifest)" label="NO. MANIFEST" />
+                        <listheader label="PENGHASIL" />
                         <listheader sort="auto(tglTerima)" label="TGL TERIMA" />
                         <listheader sort="auto(namaLimbah)" label="NAMA LIMBAH" width="200px" />
                         <listheader sort="auto(jmlKemasan)" label="BANYAK" />
@@ -76,6 +77,9 @@
                         </auxheader>
                         <auxheader>
                             <textbox instant="true" value="@bind(vm.filterManifest)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterPT)" hflex="3" onChange="@command('saring')"/>
                         </auxheader>
                         <auxheader>
                             <button popup="popupTimeChooser" iconSclass="glyphicon glyphicon-filter" label="FILTER" onClick="" sclass="btn-info btn-xs" hflex="3" />
@@ -143,7 +147,12 @@
                     <template name="model" var="s">
                         <listitem sclass="mainList">
                             <listcell />
-                            <listcell label="@load(s.penerimaan.manifest.kodeManifest)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.penerimaan eq null ? s.residu.residuId:s.penerimaan.manifest.kodeManifest)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.penerimaan eq null ? s.residu.namaPerusahaan:s.penerimaan.manifest.customerPenghasil.nama)"/>
+                            </listcell>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.tglTerima) @converter('formatedDate', format='dd-MM-yyyy')"/>
                             </listcell>
@@ -199,12 +208,11 @@
                 
                 
                     <listfoot>
-                        <listfooter span="9" valign="middle">
+                        <listfooter span="10" valign="middle">
                             <div style="float:left;">
                                 
                                 <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 
-                                        sclass="btn-primary"
-                                        if="${sessionScope.userCredential.getRoles()=='REPORTING' || sessionScope.userCredential.getRoles()=='SORTIR'}">
+                                        sclass="btn-primary">
                                 </button>
                             </div>
                             <div style="float:right;">

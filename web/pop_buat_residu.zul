@@ -49,6 +49,36 @@
                                          buttonVisible="true"
                                          value="@bind(vm.residu.tglBuat)"/>
                             </div> 
+                            <div class="input-group" hflex="3">
+                                    <span class="input-group-addon" >
+                                        Gudang tujuan :
+                                    </span>
+                                    <combobox readonly="true" 
+                                              hflex="3"
+                                              style="width:100%;height:100%"
+                                              constraint="no empty"  
+                                              disabled="@load(vm.isEdit and vm.residu.tglKirim ne null)"
+                                              value="@bind(vm.residu.gudangTujuan)">
+                                        <comboitem label="GUDANG 1"/>
+                                        <comboitem label="GUDANG 2"/>
+                                        <comboitem label="GUDANG 3"/>
+                                        <comboitem label="GUDANG 4"/>
+                                        <comboitem label="GUDANG 5"/>
+                                        <comboitem label="EXTERNAL"/>
+                                    </combobox>
+                                </div>
+                            <div class="input-group" hflex="3">
+                                <span class="input-group-addon">
+                                    Tanggal Kirim :
+                                </span>
+                                <datebox cols="12" 
+                                         format="dd-MM-yyyy"
+                                         readonly="true"
+                                         style="height:30px;"
+                                         hflex="3"
+                                         buttonVisible="true"
+                                         value="@bind(vm.residu.tglKirim)"/>
+                            </div> 
                             
 <!--                            <div class="input-group" hflex="3">
                                 <span class="input-group-addon">
@@ -179,7 +209,7 @@
                                         self.setSelectedIndex(1);
                                     </attribute>
                                     <comboitem label="Liter"/>
-                                    <comboitem label="KG"/>
+                                    <comboitem label="Kg"/>
                                     <comboitem label="M3"/>
                                 </combobox>
                             </hlayout>

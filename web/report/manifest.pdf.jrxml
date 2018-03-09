@@ -43,8 +43,8 @@
 				<textFieldExpression><![CDATA[""+$P{manifest}.getJenisFisik()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="129" y="222" width="136" height="13" uuid="e74e1667-05d4-4d79-b374-95191716675e"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement x="129" y="222" width="149" height="33" uuid="e74e1667-05d4-4d79-b374-95191716675e"/>
+				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$P{manifest}.getNamaTeknikLimbah()]]></textFieldExpression>

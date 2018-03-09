@@ -555,6 +555,7 @@
                                 <footer>
                                     <hlayout>
                                         Total Detail Proses : <label value="@load(vm.totalDetail)" style="font-weight:bold;color:red"/>
+                                        <label value="   (Tidak termasuk proses antar gudang!)" style="font-weight:bold;color:red"/>
                                     </hlayout>
                                 </footer>
                             </foot>

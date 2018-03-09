@@ -42,6 +42,9 @@
 		<field name="tglTerima" class="java.util.Date"/>
 		<field name="tglProses" class="java.util.Date"/>
 		<field name="satuanKemasan" class="java.lang.String"/>
+		<field name="penerimaan.manifest.customerPenghasil.nama" class="java.lang.String"/>
+		<field name="residu.namaPerusahaan" class="java.lang.String"/>
+		<field name="residu.residuId" class="java.lang.String"/>
 	</subDataset>
 	<parameter name="PROSES" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<background>
@@ -73,7 +76,27 @@
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{penerimaan.manifest.kodeManifest}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{penerimaan.manifest.kodeManifest}==null?$F{residu.residuId}:$F{penerimaan.manifest.kodeManifest}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="fc6af255-114f-48f9-80e2-e8443b1a81a5">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="b472bb02-4130-410e-a930-113893c67b36"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" isBold="true"/>
+								</textElement>
+								<text><![CDATA[PENGHASIL]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="d65e7dcf-b7e4-4ef5-bdce-2359adbb009f">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
+								<textFieldExpression><![CDATA[$F{penerimaan.manifest.customerPenghasil.nama}==null?$F{residu.namaPerusahaan}:$F{penerimaan.manifest.customerPenghasil.nama}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

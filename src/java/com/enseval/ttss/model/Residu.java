@@ -24,6 +24,9 @@ import javax.persistence.TemporalType;
 public class Residu implements Serializable {
 
     @OneToOne(mappedBy = "residu")
+    private ProsessLimbah prosessLimbah;
+
+    @OneToOne(mappedBy = "residu")
     private OutboundItem outboundItem;
 
     @Id
@@ -56,6 +59,8 @@ public class Residu implements Serializable {
 
     String satuanBerat = "Kg";
     double jmlBerat = 0;
+    
+    String gudangTujuan = "EXTERNAL";
 
     String tipe = "";
     
@@ -216,6 +221,22 @@ public class Residu implements Serializable {
 
     public void setNamaPerusahaan(String namaPerusahaan) {
         this.namaPerusahaan = namaPerusahaan;
+    }
+
+    public String getGudangTujuan() {
+        return gudangTujuan;
+    }
+
+    public void setGudangTujuan(String gudangTujuan) {
+        this.gudangTujuan = gudangTujuan;
+    }
+
+    public ProsessLimbah getProsessLimbah() {
+        return prosessLimbah;
+    }
+
+    public void setProsessLimbah(ProsessLimbah prosessLimbah) {
+        this.prosessLimbah = prosessLimbah;
     }
 
 }

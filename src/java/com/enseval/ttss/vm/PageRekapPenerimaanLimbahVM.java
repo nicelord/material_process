@@ -165,7 +165,7 @@ public class PageRekapPenerimaanLimbahVM {
                 .findList();
 
         Map<String, Double> grupStoreTerkirim = listStoreTerikirim.stream().collect(
-                Collectors.groupingBy(p -> p.getOutboundItem().getPenerimaan().getManifest().getJenisFisik(),
+                Collectors.groupingBy(p -> p.getOutboundItem().getNamaItem(),
                         Collectors.summingDouble(Store::getJmlBerat)));
 
         for (Map.Entry<String, Double> entry : grupStoreTerkirim.entrySet()) {
@@ -195,7 +195,7 @@ public class PageRekapPenerimaanLimbahVM {
                 .findList();
 
         Map<String, Double> grupPendingKirim = listTotalPending.stream().collect(
-                Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getJenisFisik(),
+                Collectors.groupingBy(p -> p.getNamaItem(),
                         Collectors.summingDouble(OutboundItem::getJmlBerat)));
 
         for (Map.Entry<String, Double> entry : grupPendingKirim.entrySet()) {
@@ -218,7 +218,7 @@ public class PageRekapPenerimaanLimbahVM {
 
         //TOTAL SISA DI PENGUMPULAN
         this.listTotalDiPengumpulan = new ArrayList<>();
-        Map<String, Double> grupTotalPendingProses = listPenerimaan.stream().filter(p -> p.getProsessLimbahs().isEmpty()).collect(
+        Map<String, Double> grupTotalPendingProses = listPenerimaan.stream().filter(p -> p.getProsessLimbah()==null).collect(
                
                         Collectors.groupingBy(p -> p.getManifest().getJenisFisik(),
                                 Collectors.summingDouble(Penerimaan::getJmlBerat)));
@@ -267,14 +267,14 @@ public class PageRekapPenerimaanLimbahVM {
         List<ProsessLimbah> listProsesGudang = Ebean.find(ProsessLimbah.class)
                 .where()
                 .eq("gudangTujuan", gudang)
-                .ne("gudangPengirim", "SORTIR")
+                .eq("gudangPengirim", "PENERIMAAN")
                 .between("tglTerima",
                         Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                         Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
                 .findList();
 
         Map<String, Double> grupProsesGudang1 = listProsesGudang.stream().collect(
-                Collectors.groupingBy(p -> p.getPenerimaan().getManifest().getJenisFisik(),
+                Collectors.groupingBy(p -> p.getNamaLimbah(),
                         Collectors.summingDouble(ProsessLimbah::getJmlBerat)));
 
         for (Map.Entry<String, Double> entry : grupProsesGudang1.entrySet()) {

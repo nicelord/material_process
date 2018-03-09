@@ -127,7 +127,7 @@
                                           constraint="no empty"  
                                           value="@bind(vm.prosesLimbah.satuanBerat)">
                                     <comboitem label="Liter"/>
-                                    <comboitem label="KG"/>
+                                    <comboitem label="Kg"/>
                                     <comboitem label="M3"/>
                                 </combobox>
                             </hlayout>
@@ -141,7 +141,6 @@
                                               style="width:100%;height:100%"
                                               constraint="no empty"  
                                               value="@save(vm.prosesLimbah.gudangTujuan)">
-                                        <comboitem label="SORTIR"/>
                                         <comboitem label="GUDANG 1"/>
                                         <comboitem label="GUDANG 2"/>
                                         <comboitem label="GUDANG 3"/>

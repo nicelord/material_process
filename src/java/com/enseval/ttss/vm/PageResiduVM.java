@@ -68,26 +68,28 @@ public class PageResiduVM {
 
     String totalKemasan = "", totalBerat = "";
 
-    String filterId = "", filterGudang = "", filterNama = "";
+    String filterId = "", filterGudang = "", filterNama = "", filterTujuan = "";
 
     Date tsAwal, tsAkhir;
 
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        if (userLogin.getAkses().equals("ADMINISTRATOR") || userLogin.getAkses().equals("REPORTING")) {
+        if (userLogin.getAkses().equals("REPORTING")) {
             this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "hasil").findList();
         } else {
             this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "hasil").where().eq("gudangPenghasil", this.userLogin.getAkses()).orderBy("id desc").findList();
         }
 
         this.listResidu2 = this.listResidu;
-        countingKemasan();
+//        countingKemasan();
     }
 
     @Command
     public void buatResidu() {
-        Executions.createComponents("pop_buat_residu.zul", (Component) null, null);
+        Map m = new HashMap();
+        m.put("isEdit", false);
+        Executions.createComponents("pop_buat_residu.zul", (Component) null, m);
 
     }
 
@@ -95,6 +97,7 @@ public class PageResiduVM {
     public void editResidu(@BindingParam("residu") Residu residu) {
         Map m = new HashMap();
         m.put("residu", residu);
+        m.put("isEdit", true);
         Executions.createComponents("pop_buat_residu.zul", (Component) null, m);
 
     }
@@ -103,7 +106,7 @@ public class PageResiduVM {
     @NotifyChange({"listResidu"})
     public void hapusResidu(@BindingParam("residu") Residu residu) {
 
-        Messagebox.show("Menghapus residu yang sudah dikirim ke external berarti menghapus data di gudang external dan data pengiriman. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
+        Messagebox.show("Menghapus residu yang sudah di proses berarti menghapus data di gudang lainnya. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
             if (t.getName().equals("onOK")) {
                 if (residu.getOutboundItem() != null) {
                     for (Store store : residu.getOutboundItem().getStores()) {
@@ -113,6 +116,9 @@ public class PageResiduVM {
                     Ebean.delete(residu.getOutboundItem());
                 }
 
+                if (residu.getProsessLimbah() != null) {
+                    Ebean.delete(residu.getProsessLimbah());
+                }
                 Ebean.delete(residu);
                 BindUtils.postGlobalCommand(null, null, "refresh", null);
             }
@@ -152,17 +158,19 @@ public class PageResiduVM {
             this.listResidu = listResidu2.stream().filter(l -> (l.getTglBuat().after(Date.from(localDateTimeAwal.atStartOfDay(ZoneId.systemDefault()).toInstant())) && l.getTglBuat().before(Date.from(localDateTimeAkhir.atStartOfDay(ZoneId.systemDefault()).toInstant())))
                     && l.getResiduId().toLowerCase().contains(this.filterId.toLowerCase())
                     && l.getGudangPenghasil().toLowerCase().contains(this.filterGudang.toLowerCase())
+                    && l.getGudangTujuan().toLowerCase().contains(this.filterTujuan.toLowerCase())
                     && l.getNamaResidu().toLowerCase().contains(this.filterNama.toLowerCase()))
                     .collect(Collectors.toList());
         } else {
             this.listResidu = this.listResidu2.stream().filter(l
                     -> l.getResiduId().toLowerCase().contains(this.filterId.toLowerCase())
                     && l.getGudangPenghasil().toLowerCase().contains(this.filterGudang.toLowerCase())
+                    && l.getGudangTujuan().toLowerCase().contains(this.filterTujuan.toLowerCase())
                     && l.getNamaResidu().toLowerCase().contains(this.filterNama.toLowerCase()))
                     .collect(Collectors.toList());
         }
 
-        countingKemasan();
+//        countingKemasan();
 
     }
 
@@ -173,14 +181,14 @@ public class PageResiduVM {
         this.tsAkhir = null;
         this.listResidu = Ebean.find(Residu.class).where().eq("tipe", "hasil").where().eq("gudangPenghasil", this.userLogin.getAkses()).orderBy("id desc").findList();
         this.listResidu2 = this.listResidu;
-        countingKemasan();
+//        countingKemasan();
     }
 
     @GlobalCommand
     @NotifyChange({"*"})
     public void refresh() {
         this.listResidu = Ebean.find(Residu.class).where().eq("gudangPenghasil", this.userLogin.getAkses()).orderBy("id desc").findList();
-        countingKemasan();
+//        countingKemasan();
     }
 
     public void countingKemasan() {
@@ -424,6 +432,14 @@ public class PageResiduVM {
             this.jmlSatuan = jmlSatuan;
         }
 
+    }
+
+    public String getFilterTujuan() {
+        return filterTujuan;
+    }
+
+    public void setFilterTujuan(String filterTujuan) {
+        this.filterTujuan = filterTujuan;
     }
 
 }
