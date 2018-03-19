@@ -305,11 +305,10 @@
                 <listfooter span="2" valign="middle">
                     <div class="input-group" hflex="3">
                         <span class="input-group-addon"><label value="@load(vm.invoice2.currency)"/></span>
-                        <longbox readonly="true" 
+                        <doublebox readonly="true" 
                                  value="@bind(vm.totalHarga)"
                                  class="form-control input-primary" 
-                                 maxlength="20" format=",###.#"/>
-                        <span class="input-group-addon">,00</span>
+                                 maxlength="20" format=",###.##"/>
                     </div>
                 </listfooter>
             </listfoot>		

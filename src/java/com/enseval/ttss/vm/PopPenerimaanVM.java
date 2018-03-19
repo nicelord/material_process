@@ -66,7 +66,7 @@ public class PopPenerimaanVM {
     @Command
     public void konfirmasiPenerimaan() {
         this.manifest.getPenerimaan().setUserPenerima(userLogin);
-        this.manifest.getPenerimaan().setTglPenerimaan(new Date());
+//        this.manifest.getPenerimaan().setTglPenerimaan(new Date());
         this.manifest.getPenerimaan().setStatusPenerimaan("diterima");
         this.manifest.getPenerimaan().setIsDiterima(true);
         Ebean.update(this.manifest.getPenerimaan());

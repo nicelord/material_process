@@ -6,6 +6,7 @@ import com.enseval.ttss.model.Invoice2;
 import com.enseval.ttss.model.InvoiceItem;
 import com.enseval.ttss.model.InvoiceItem2;
 import com.enseval.ttss.model.Manifest;
+import com.enseval.ttss.model.Pelunasan2;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
@@ -141,8 +142,13 @@ public class PageInvoices2VM {
 
     @Command
     public void hapusInvoice(@BindingParam("invoice2") Invoice2 invoice2) {
-        Messagebox.show("Data invoice akan dihapus, dan item-item didalamnya akan masuk kembali ke kategori item yang belum di invoice. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
+        Messagebox.show("Data invoice akan dihapus, dan item-item didalamnya akan masuk kembali ke kategori item yang belum di invoice. Dan pelunasan yg dibuat atas invoice ini juga akan dihapus. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
             if (t.getName().equals("onOK")) {
+                if(!invoice2.getListPelunasan2().isEmpty()){
+                    for (Pelunasan2 p : invoice2.getListPelunasan2()) {
+                        Ebean.delete(p);
+                    }
+                }
                 for (InvoiceItem2 item : invoice2.getListInvoiceItem2()) {
                     Ebean.delete(item);
                 }

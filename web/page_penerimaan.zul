@@ -186,7 +186,9 @@
                     <template name="model" var="s">
                         <listitem sclass="mainList">
                             <listcell />
-                            <listcell label="@load(s.manifest.kodeManifest)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.manifest.kodeManifest)"/>
+                            </listcell>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.manifest.customerPenghasil.nama)"/>
                             </listcell>
@@ -228,8 +230,9 @@
                                                         
                             <listcell>
                                 <hlayout>
+                                             <!--disabled="@load(s.prosessLimbah ne null and s.prosessLimbah.gudangPengirim eq 'PENERIMAAN')"-->
                                     <button vflex="3" hflex="3" sclass="btn-warning btn-xs" iconSclass="glyphicon glyphicon-edit" label="@load(sessionScope.userCredential.getRoles() eq 'AKUNTING'?'LIHAT MANIFEST':'')" 
-                                            disabled="@load(s.prosessLimbah ne null and s.prosessLimbah.gudangPengirim eq 'PENERIMAAN')"
+                                   
                                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                             onClick="@command('editPenerimaan',penerimaan=s)" />
                                     <button vflex="3" hflex="3" sclass="btn-primary btn-xs" iconSclass="glyphicon glyphicon-file" label="@load(sessionScope.userCredential.getRoles() eq 'AKUNTING'?'LIHAT MANIFEST':'')" 

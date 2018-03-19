@@ -49,7 +49,8 @@ public class Sertifikat implements Serializable {
     
     String description = "";
     
-    String transporter = "PT. DESA AIR CARGO BATAM";
+    String transporter = "PT. Desa Air Cargo Batam";
+    
 
     public Long getId() {
         return id;

@@ -2,61 +2,130 @@
 import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.Customer;
 import com.enseval.ttss.model.User;
+import java.io.FileReader;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Stack;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.avaje.agentloader.AgentLoader;
 
 public class TES {
 
-    public static void main(final String[] args) {
+    public static < E > void genericTest( E[] arr ) {
+   
+      for(E e : arr) {
+         System.out.printf("%s ", e);
+      }
+      System.out.println();
+   }
+    
+    public class TES2{
+        
+    }
+    public List<String> countWords(List<String> listWords) {
+        List<String> ret = new ArrayList<>();
+        long count = listWords.stream().filter(p->p.toLowerCase().startsWith("m")).count();
+        System.out.println("Number of words starts with M or m : "+count);
+        listWords.stream().filter((s) -> (s.toCharArray().length > 5)).forEachOrdered((s) -> {
+            ret.add(s);
+        });
+        return ret;
+        
+        
+        
+//        String ret[] = new String[v.length];
+//        int pos = 0;
+//        for (String string : v) {
+//            Stack<Character> stackChar = new Stack<>();
+//            char c[] = string.toCharArray();
+//            for (char d : c) {
+//                if (d == '{' || d == '[' || d == '(') {
+//                    stackChar.push(d);
+//                } else {
+//                    if (d == ']' && !stackChar.isEmpty() && stackChar.pop() == '[') {
+//                    } else if (d == '}' && !stackChar.isEmpty() && stackChar.pop() == '{') {
+//                    } else if (d == ')' && !stackChar.isEmpty() && stackChar.pop() == '(') {
+//                    } else {
+//                        ret[pos] = "YES";
+//                    }
+//                }
+//            }
+//
+//            if (!stackChar.isEmpty()) {
+//                ret[pos] = "NO";
+//            } else {
+//                ret[pos] = "YES";
+//            }
+//            pos++;
+//        }
+//        return ret;
+//    }
+//
+//    public static void main(final String[] args) {
+//        Scanner s = new Scanner(System.in);
+//        try {
+//            // Write your code here
+//
+//            int a = s.nextInt();
+//            int b = s.nextInt();
+//            System.out.println(new MyCalculator().power(a, b));
+//        } catch (ArithmeticException ex) {
+//            Logger.getLogger(TES.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (Exception ex) {
+//            Logger.getLogger(TES.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
 //        double a = 2.2;
 //        System.out.println(a*12);
-
 //        Long l = 1200L;
 //        Double d = 12.1;
 //        Double d2 = 12.023;
 //        DecimalFormat df = new DecimalFormat("#.###");
 //        System.out.println(df.format(d+d2));
 //        System.out.println(d.longValue());
-        AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent", "debug=1");
-//
-        TES t = new TES();
-        t.runtest();
-        User u = new User();
-        u.setUsername("admin");
-        u.setPassword("admin");
-        u.setAkses("ADMINISTRATOR");
-        u.setNama("Reza");
-        Ebean.save(u);
-        
-        u = new User();
-        u.setUsername("ak");
-        u.setPassword("ak");
-        u.setAkses("AKUNTING");
-        u.setNama("ak");
-        Ebean.save(u);
-        
-        u = new User();
-        u.setUsername("ad");
-        u.setPassword("ad");
-        u.setAkses("ADMIN");
-        u.setNama("ad");
-        Ebean.save(u);
-        
-        u = new User();
-        u.setUsername("p");
-        u.setPassword("p");
-        u.setAkses("PENERIMA");
-        u.setNama("p");
-        Ebean.save(u);
-        
-        u = new User();
-        u.setUsername("g1");
-        u.setPassword("g1");
-        u.setAkses("GUDANG 1");
-        u.setNama("g1");
-        Ebean.save(u);
+//        AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent", "debug=1");
+////
+//        TES t = new TES();
+//        t.runtest();
+//        User u = new User();
+//        u.setUsername("admin");
+//        u.setPassword("admin");
+//        u.setAkses("ADMINISTRATOR");
+//        u.setNama("Reza");
+//        Ebean.save(u);
+//        
+//        u = new User();
+//        u.setUsername("ak");
+//        u.setPassword("ak");
+//        u.setAkses("AKUNTING");
+//        u.setNama("ak");
+//        Ebean.save(u);
+//        
+//        u = new User();
+//        u.setUsername("ad");
+//        u.setPassword("ad");
+//        u.setAkses("ADMIN");
+//        u.setNama("ad");
+//        Ebean.save(u);
+//        
+//        u = new User();
+//        u.setUsername("p");
+//        u.setPassword("p");
+//        u.setAkses("PENERIMA");
+//        u.setNama("p");
+//        Ebean.save(u);
+//        
+//        u = new User();
+//        u.setUsername("g1");
+//        u.setPassword("g1");
+//        u.setAkses("GUDANG 1");
+//        u.setNama("g1");
+//        Ebean.save(u);
 //        
 //        Customer c = new Customer();
 //        
@@ -70,7 +139,7 @@ public class TES {
 //        Ebean.save(c);
 //        List<ProsessLimbah> l = Ebean.find(ProsessLimbah.class).where().eq("gudangTujuan", "GUDANG 1").orderBy("id desc").where().isNotNull("tglProses").findList();
 //        Map<String, Map<String, Long>> counting = l.stream().collect(
-//                Collectors.groupingBy(ProsessLimbah::getNamaLimbah, 
+//                Collectors.groupingBy(ProsessLimbah::getNamaLimbah,
 //                        Collectors.groupingBy(ProsessLimbah::getSatuanKemasan, 
 //                                Collectors.summingLong(ProsessLimbah::getJmlKemasan))));
 //        Map<String, Map<String, List<ProsessLimbah>>> counting = l.stream().collect(

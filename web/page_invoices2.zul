@@ -1,4 +1,5 @@
 <?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
 <zk>
 
     <style>
@@ -117,9 +118,9 @@
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.nomorInvoice)"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.customer.nama)"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.tglInvoice) @converter('formatedDate', format='dd-MM-yyyy')"/>
-                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(vm.format(s.getTotalNilaiNoTax()))"/>
+                                                        <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(c:formatNumber(s.getTotalNilaiNoTax(), '###,###,###.##'))"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(''.concat(s.tax).concat('%'))"/>
-                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(vm.format(s.getTotalNilai()))"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(c:formatNumber(s.getTotalNilai(), '###,###,###.##'))"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <hlayout>
                                     

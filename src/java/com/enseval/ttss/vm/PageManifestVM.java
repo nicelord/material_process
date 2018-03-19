@@ -62,7 +62,7 @@ public class PageManifestVM {
     boolean showWin = false;
     User userLogin;
 
-    String filterKode = "", filterPenghasil = "", filterKodeJenis = "", filterNamaTeknik = "";
+    String filterKode = "", filterPenghasil = "", filterKodeJenis = "", filterNamaTeknik = "", filterPenerimaan = "";
     Date tsAwal, tsAkhir;
 
     @AfterCompose
@@ -90,6 +90,7 @@ public class PageManifestVM {
                         .contains("customerPenghasil.nama", this.filterPenghasil)
                         .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
                         .contains("namaTeknikLimbah", this.filterKodeJenis)
+                        .startsWith("penerimaan.statusPenerimaan", filterPenerimaan)
                         .between("tglBuat",
                                 Date.from(this.tsAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                                 Date.from(this.tsAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
@@ -102,6 +103,7 @@ public class PageManifestVM {
                         .contains("customerPenghasil.nama", this.filterPenghasil)
                         .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
                         .contains("namaTeknikLimbah", this.filterKodeJenis)
+                        .startsWith("penerimaan.statusPenerimaan", filterPenerimaan)
                         .between("tglBuat",
                                 Date.from(this.tsAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                                 Date.from(this.tsAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
@@ -122,6 +124,7 @@ public class PageManifestVM {
                         .contains("customerPenghasil.nama", this.filterPenghasil)
                         .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
                         .contains("namaTeknikLimbah", this.filterKodeJenis)
+                        .startsWith("penerimaan.statusPenerimaan", filterPenerimaan)
                         .eq("statusApproval", "approved")
                         .orderBy("kodeManifest desc").findList();
             } else {
@@ -131,11 +134,23 @@ public class PageManifestVM {
                         .contains("customerPenghasil.nama", this.filterPenghasil)
                         .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
                         .contains("namaTeknikLimbah", this.filterKodeJenis)
+                        .startsWith("penerimaan.statusPenerimaan", filterPenerimaan)
                         .orderBy("kodeManifest desc").findList();
             }
 
         }
 
+    }
+    
+    @Command
+    @NotifyChange({"listManifest"})
+    public void saringPenerimaan(@BindingParam("s") String s){
+        if(!s.equalsIgnoreCase("semua")){
+            this.filterPenerimaan = s;
+        }else{
+            this.filterPenerimaan = "";
+        }
+        refresh();
     }
 
     @Command
@@ -445,6 +460,14 @@ public class PageManifestVM {
 
     public void setTsAkhir(Date tsAkhir) {
         this.tsAkhir = tsAkhir;
+    }
+
+    public String getFilterPenerimaan() {
+        return filterPenerimaan;
+    }
+
+    public void setFilterPenerimaan(String filterPenerimaan) {
+        this.filterPenerimaan = filterPenerimaan;
     }
 
 }

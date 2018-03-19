@@ -127,7 +127,16 @@
                             
                         </auxheader>
                         <auxheader>
-                            
+                            <button popup="123" iconSclass="glyphicon glyphicon-filter" label="FILTER" onClick="" sclass="btn-info btn-xs" hflex="3" />
+                          
+                            <popup id="123" width="200px" style="word-wrap">
+                                <vlayout>
+                                    <button label="DITERIMA" onClick="@command('saringPenerimaan', s='diterima')" sclass="btn-success btn-xs" hflex="3" />
+                                    <button label="BELUM DITERIMA" onClick="@command('saringPenerimaan', s='belum diterima')" sclass="btn-warning btn-xs" hflex="3" />
+                                    <button label="SEMUA" onClick="@command('saringPenerimaan', s='semua')" sclass="btn-primary btn-xs" hflex="3" />    
+                                </vlayout>
+                                
+                            </popup>
                         </auxheader>
                         <auxheader if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR' }">
                             

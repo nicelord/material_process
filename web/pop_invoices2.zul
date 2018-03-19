@@ -1,4 +1,5 @@
 <?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
 <zk>   
     <style>
         
@@ -51,9 +52,9 @@
                 <listitem sclass="mainList">
                     <listcell label="@load(s.nomorInvoice)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell label="@load(s.customer.nama)" style="text-overflow: ellipsis; white-space: nowrap;"/>
-                    <listcell label="@load(vm.format(s.getTotalNilaiNoTax()))" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(c:formatNumber(s.getTotalNilaiNoTax(), '###,###,###.##'))"/>
                     <listcell label="@load(''.concat(s.tax).concat('%'))" style="text-overflow: ellipsis; white-space: nowrap;"/>
-                    <listcell label="@load(vm.format(s.getTotalNilaiNoTax()-s.getTotalTerbayar()))" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(c:formatNumber(s.getTotalNilaiNoTax()-s.getTotalTerbayar(), '###,###,###.##'))"/>
                     <listcell>
                         <button vflex="3" hflex="3" sclass="btn-success btn-xs" iconSclass="glyphicon glyphicon-hand-up" label="" 
                                 onClick="@command('pilihInvoice',invoice2=s)" />

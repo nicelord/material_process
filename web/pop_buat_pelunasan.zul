@@ -57,7 +57,7 @@
                     <span class="input-group-addon">
                         Nilai Invoice :
                     </span>
-                    <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" value="@load(vm.pelunasan.invoice.getTotalNilaiNoTax())"/>
+                    <doublebox readonly="true" class="form-control input-primary" maxlength="20" format=",###.##" value="@load(vm.pelunasan.invoice.getTotalNilaiNoTax())"/>
                 </div>
                 <div class="input-group" hflex="2">
                     <span class="input-group-addon">
@@ -69,7 +69,7 @@
                     <span class="input-group-addon">
                         Sisa Tagihan :
                     </span>
-                    <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" value="@load(vm.pelunasan.invoice.getTotalNilaiNoTax()-vm.pelunasan.invoice.getTotalTerbayar())"/>
+                    <doublebox readonly="true" class="form-control input-primary" maxlength="20" format=",###.##" value="@load(vm.pelunasan.invoice.getTotalNilaiNoTax()-vm.pelunasan.invoice.getTotalTerbayar())"/>
                 </div>
             </hlayout>
             <hlayout>
@@ -99,13 +99,13 @@
                     <span class="input-group-addon">
                         Nilai Pembayaran :
                     </span>
-                    <longbox readonly="@load(vm.pelunasan.invoice eq null)" class="form-control input-primary" maxlength="20" format=",###.#" value="@bind(vm.pelunasan.nilai)"/>
+                    <doublebox readonly="@load(vm.pelunasan.invoice eq null)" class="form-control input-primary" maxlength="20" format=",###.##" value="@bind(vm.pelunasan.nilai)"/>
                 </div>
                 <div class="input-group" hflex="3">
                     <span class="input-group-addon">
                         TOTAL :
                     </span>
-                    <longbox readonly="true" class="form-control input-primary" maxlength="20" format=",###.#" value="@bind(vm.pelunasan.nilai+vm.pelunasan.potPPh+vm.pelunasan.potCN+vm.pelunasan.potAdm)"/>
+                    <doublebox readonly="true" class="form-control input-primary" maxlength="20" format=",###.##" value="@bind(vm.pelunasan.nilai+vm.pelunasan.potPPh+vm.pelunasan.potCN+vm.pelunasan.potAdm)"/>
                 </div>
                
             </hlayout>

@@ -4,6 +4,7 @@ import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.Invoice;
 import com.enseval.ttss.model.InvoiceItem;
 import com.enseval.ttss.model.Manifest;
+import com.enseval.ttss.model.Pelunasan;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
@@ -140,8 +141,13 @@ public class PageInvoicesVM {
 
     @Command
     public void hapusInvoice(@BindingParam("invoice") Invoice invoice) {
-        Messagebox.show("Data invoice akan dihapus, dan item-item didalamnya akan masuk kembali ke kategori item yang belum di invoice. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
+        Messagebox.show("Data invoice akan dihapus, dan item-item didalamnya akan masuk kembali ke kategori item yang belum di invoice. Dan pelunasan yg dibuat atas invoice ini juga akan dihapus. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
             if (t.getName().equals("onOK")) {
+                if(!invoice.getListPelunasan().isEmpty()){
+                    for (Pelunasan p : invoice.getListPelunasan()) {
+                        Ebean.delete(p);
+                    }
+                }
                 for (InvoiceItem item : invoice.getListInvoiceItem()) {
                     Ebean.delete(item);
                 }
@@ -224,6 +230,92 @@ public class PageInvoicesVM {
             OutputStream outputStream = new FileOutputStream(filenya);
 
             JRExporter exporter = new JRPdfExporter();
+            exporter.setExporterInput(new SimpleExporterInput(report));
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+            SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
+            configuration.setMetadataAuthor("Reza Elborneo");  //why not set some config as we like
+            exporter.setConfiguration(configuration);
+            exporter.exportReport();
+            streamReport.close();
+            outputStream.close();
+
+            FileInputStream inputStream = new FileInputStream(filenya);
+            Filedownload.save((InputStream) inputStream, new MimetypesFileTypeMap().getContentType(filenya), filenya.getName());
+
+            filenya.delete();
+
+        } catch (JRException | FileNotFoundException ex4) {
+            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex4);
+        } catch (IOException ex2) {
+            Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex2);
+        }
+        BindUtils.postGlobalCommand(null, null, "refresh", null);
+
+    }
+    
+    
+    @Command
+    public void cetakInvoice2(@BindingParam("invoice") Invoice invoice) {
+
+        Invoice invoice2 = invoice;
+
+        double totalHarga = 0;
+        for (InvoiceItem item : invoice2.getListInvoiceItem()) {
+            totalHarga += item.getHargaSatuan() * item.getJmlKemasan();
+        }
+
+        double net = totalHarga - (totalHarga / 100) * invoice2.getTax();
+
+        int size = invoice2.getListInvoiceItem().size();
+        int kurang = 11 - size;
+        if (kurang > 0) {
+            for (int i = 0; i <= kurang; i++) {
+                InvoiceItem ii = new InvoiceItem();
+                invoice2.getListInvoiceItem().add(ii);
+            }
+        }
+
+        File filenya = new File(Util.setting("pdf_path") + "invoice.docx");
+        filenya.delete();
+
+        try {
+            InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/invoice.docx.jasper");
+            JRDataSource datasource = new JRBeanCollectionDataSource(invoice2.getListInvoiceItem());
+            JRDataSource beanColDataSource = new JRBeanCollectionDataSource(invoice2.getListInvoiceItem());
+
+            Map map = new HashMap();
+            map.put("REPORT_DATA_SOURCE", datasource);
+            map.put("INVOICE_ITEM", beanColDataSource);
+            map.put("NAMA_CUSTOMER", invoice2.getCustomer().getNama());
+            map.put("ALAMAT_CUSTOMER", invoice2.getCustomer().getAlamat());
+            map.put("TELP_CUSTOMER", invoice2.getCustomer().getNomorKontak());
+            map.put("FAX_CUSTOMER", invoice2.getCustomer().getFax());
+            map.put("CC", invoice2.getCcPerson());
+            map.put("DEPT", invoice2.getCcDept());
+            map.put("TOTAL", totalHarga);
+            map.put("NET", net);
+            map.put("TAX", invoice2.getTax());
+            map.put("NO_INVOICE", invoice2.getNomorInvoice());
+            map.put("NPWP", Util.setting("npwp"));
+            map.put("TGL", invoice2.getTglInvoice());
+            map.put("TERM", invoice2.getTerm());
+            map.put("PO", invoice2.getNomorPo());
+            map.put("DO", invoice2.getNomorDo());
+            map.put("CUR", invoice2.getCurrency());
+            map.put("TGL_ANGKUT", invoice2.getTglAngkut());
+            map.put("KET", invoice2.getKeterangan());
+            map.put("PLAT", invoice2.getNmrKendaraan());
+            map.put("TTD", Util.setting("invoice_ttd_person"));
+            map.put("JBT", Util.setting("invoice_ttd_jabatan"));
+            map.put("REK1", Util.setting("invoice_rekening_maybank"));
+            map.put("REK2", Util.setting("invoice_rekening_mandiri"));
+            map.put("FAX", Util.setting("invoice_company_fax"));
+            map.put("EMAIL", Util.setting("invoice_company_email"));
+            map.put("PATH", Executions.getCurrent().getDesktop().getWebApp().getRealPath("/report"));
+            JasperPrint report = JasperFillManager.fillReport(streamReport, map);
+            OutputStream outputStream = new FileOutputStream(filenya);
+
+            JRExporter exporter = new JRDocxExporter();
             exporter.setExporterInput(new SimpleExporterInput(report));
             exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
             SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();

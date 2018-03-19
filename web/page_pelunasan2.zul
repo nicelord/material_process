@@ -1,4 +1,5 @@
 <?init class="com.enseval.ttss.util.AuthenticationInit"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
 <zk>
 
     <style>
@@ -121,7 +122,7 @@
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(vm.format(s.potPPh))"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(vm.format(s.potCN))"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(vm.format(s.potAdm))"/>
-                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(vm.format(s.nilai))"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(c:formatNumber(s.nilai, '###,###,###.##'))"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.kodeInput)"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;" label="@load(s.remark)"/>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sertifikat" pageWidth="595" pageHeight="836" columnWidth="567" leftMargin="14" rightMargin="14" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="7dafb8d3-fcf1-47c3-aee8-9b45e3b6027d">
 	<property name="ireport.zoom" value="1.4615378250000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="243"/>
+	<property name="ireport.y" value="131"/>
 	<style name="table">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#000000"/>
@@ -152,7 +152,7 @@
 	<summary>
 		<band height="596">
 			<staticText>
-				<reportElement x="0" y="18" width="567" height="44" uuid="f708eb7c-a52d-49e5-bfb0-ce745b661772"/>
+				<reportElement x="0" y="33" width="567" height="44" uuid="f708eb7c-a52d-49e5-bfb0-ce745b661772"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="18" isBold="true"/>
 				</textElement>
@@ -160,14 +160,14 @@
 Hazardous Waste Management]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="62" width="567" height="23" uuid="83e9df6c-15a9-4e2a-82ce-e90aa46e5cc7"/>
+				<reportElement x="0" y="77" width="567" height="23" uuid="83e9df6c-15a9-4e2a-82ce-e90aa46e5cc7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="18" isBold="true" isUnderline="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["No. " + $P{NOMOR}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement key="table 4" style="table 4" x="0" y="216" width="567" height="50" uuid="19d158b3-d393-4bdc-b191-9a35a84200a2"/>
+				<reportElement key="table 4" style="table 4" x="0" y="231" width="567" height="50" uuid="19d158b3-d393-4bdc-b191-9a35a84200a2"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Table Dataset 1" uuid="1b8f4009-b244-4ce2-96af-b4d84f90106b">
 						<datasetParameter name="REPORT_DATA_SOURCE">
@@ -264,7 +264,7 @@ Hazardous Waste Management]]></text>
 				</jr:table>
 			</componentElement>
 			<staticText>
-				<reportElement x="0" y="102" width="144" height="20" uuid="639a5462-ea76-4e5b-8c9d-2b4c25122f6b"/>
+				<reportElement x="0" y="117" width="144" height="20" uuid="639a5462-ea76-4e5b-8c9d-2b4c25122f6b"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12"/>
 					<paragraph leftIndent="3"/>
@@ -272,7 +272,7 @@ Hazardous Waste Management]]></text>
 				<text><![CDATA[Waste Generator]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="122" width="144" height="20" uuid="1664ac56-09ca-4540-b300-091380dcacc6"/>
+				<reportElement x="0" y="137" width="144" height="20" uuid="1664ac56-09ca-4540-b300-091380dcacc6"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12"/>
 					<paragraph leftIndent="3"/>
@@ -280,7 +280,7 @@ Hazardous Waste Management]]></text>
 				<text><![CDATA[Address]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="164" width="144" height="20" uuid="ab80ba81-bdd8-40c6-a351-b49601af5c36"/>
+				<reportElement x="0" y="179" width="144" height="20" uuid="ab80ba81-bdd8-40c6-a351-b49601af5c36"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12"/>
 					<paragraph leftIndent="3"/>
@@ -288,7 +288,7 @@ Hazardous Waste Management]]></text>
 				<text><![CDATA[Transporter by]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="184" width="144" height="20" uuid="419cda1b-5a01-4794-b7d3-89dea7f62e60"/>
+				<reportElement x="0" y="199" width="144" height="20" uuid="419cda1b-5a01-4794-b7d3-89dea7f62e60"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12"/>
 					<paragraph leftIndent="3"/>
@@ -296,96 +296,96 @@ Hazardous Waste Management]]></text>
 				<text><![CDATA[As described below]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="144" y="102" width="11" height="20" uuid="aac95b2a-d44d-4dbc-8f2d-b5eea6ddc089"/>
+				<reportElement x="144" y="117" width="11" height="20" uuid="aac95b2a-d44d-4dbc-8f2d-b5eea6ddc089"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="144" y="122" width="11" height="20" uuid="f1af2543-da20-4022-839b-279701a04009"/>
+				<reportElement x="144" y="137" width="11" height="20" uuid="f1af2543-da20-4022-839b-279701a04009"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="144" y="164" width="11" height="20" uuid="7fd9019a-810b-483a-939f-fa78a1ec0137"/>
+				<reportElement x="144" y="179" width="11" height="20" uuid="7fd9019a-810b-483a-939f-fa78a1ec0137"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="144" y="184" width="11" height="20" uuid="7ef59271-d1bb-4b5c-bf2c-6dd7890304b7"/>
+				<reportElement x="144" y="199" width="11" height="20" uuid="7ef59271-d1bb-4b5c-bf2c-6dd7890304b7"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="155" y="102" width="412" height="20" uuid="aae93852-af96-4efa-976e-927ce53b5429"/>
+				<reportElement x="155" y="117" width="412" height="20" uuid="aae93852-af96-4efa-976e-927ce53b5429"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{NAMA_CUSTOMER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="155" y="122" width="268" height="42" uuid="e787609c-6128-4912-be7e-61a4bc0acf70"/>
+				<reportElement x="155" y="137" width="268" height="42" uuid="e787609c-6128-4912-be7e-61a4bc0acf70"/>
 				<textElement verticalAlignment="Top">
-					<font fontName="Tahoma" size="12" isBold="false"/>
+					<font fontName="Tahoma" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{ALAMAT_CUSTOMER}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="155" y="164" width="412" height="20" uuid="b02a47ad-5fa7-44b5-b233-ba049c9f4594"/>
+				<reportElement x="155" y="179" width="412" height="20" uuid="b02a47ad-5fa7-44b5-b233-ba049c9f4594"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{TRANSPORTER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="155" y="184" width="412" height="20" uuid="e1a5026b-5b17-403e-bad0-aa8be3b2778f"/>
+				<reportElement x="155" y="199" width="412" height="20" uuid="e1a5026b-5b17-403e-bad0-aa8be3b2778f"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12" isBold="true"/>
+					<font fontName="Tahoma" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{DESC}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="266" width="568" height="52" uuid="adae0bc3-a3b2-45d1-bd4e-ef10691f3602"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="281" width="568" height="52" uuid="adae0bc3-a3b2-45d1-bd4e-ef10691f3602"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12"/>
+					<font fontName="Tahoma" size="11"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
 				<text><![CDATA[I certify, on behalf of the above reception facilities KPLI Kabil Batam, that the above described waste has been receipt on the date listed above]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="318" width="45" height="17" uuid="63e1a043-3db3-4939-8414-61d069ad0830"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="333" width="45" height="17" uuid="63e1a043-3db3-4939-8414-61d069ad0830"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12"/>
+					<font fontName="Tahoma" size="11"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
 				<text><![CDATA[Batam, ]]></text>
 			</staticText>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement positionType="FixRelativeToBottom" x="45" y="318" width="146" height="17" uuid="dee5127b-54e5-458e-b497-bd29171441a3"/>
+				<reportElement positionType="FixRelativeToBottom" x="45" y="333" width="146" height="17" uuid="dee5127b-54e5-458e-b497-bd29171441a3"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12" isBold="false"/>
+					<font fontName="Tahoma" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{TGL_BUAT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement positionType="FixRelativeToBottom" x="0" y="397" width="155" height="17" uuid="b0d6ff0a-36c6-4228-a032-31bfd37fb401"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="412" width="155" height="17" uuid="b0d6ff0a-36c6-4228-a032-31bfd37fb401"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12" isBold="true" isUnderline="true"/>
+					<font fontName="Tahoma" size="11" isBold="true" isUnderline="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{TTD}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement positionType="FixRelativeToBottom" x="0" y="413" width="155" height="17" uuid="9d5d7c58-4e0c-48be-a886-0ed63145eace"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="428" width="155" height="17" uuid="9d5d7c58-4e0c-48be-a886-0ed63145eace"/>
 				<textElement verticalAlignment="Top">
-					<font fontName="Tahoma" size="12" isBold="false"/>
+					<font fontName="Tahoma" size="11" isBold="false"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{JABATAN}]]></textFieldExpression>
