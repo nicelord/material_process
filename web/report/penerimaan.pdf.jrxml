@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="penerimaan" language="groovy" pageWidth="396" pageHeight="609" columnWidth="356" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="b6cf7754-23ad-452f-95a5-41c048df9466">
 	<property name="ireport.zoom" value="1.6528925619834722"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="274"/>
 	<parameter name="NAMA_CUSTOMER" class="java.lang.String"/>
 	<parameter name="TGL_BUAT" class="java.util.Date"/>
 	<parameter name="MANIFEST" class="java.lang.String"/>
@@ -489,7 +489,7 @@ Telp. 711476 - 711478   Fax. 711449]]></text>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{JML_BERAT} + " " + $P{BERAT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{JML_BERAT}-$P{JML_BERAT}.intValue()!=0?$P{JML_BERAT}:new DecimalFormat("####0").format($P{JML_BERAT}))+ " " + $P{BERAT}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="190" y="300" width="42" height="14" uuid="3cb29a4a-910f-4e32-bc33-56556d90ef4f"/>

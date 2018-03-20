@@ -3,6 +3,7 @@ package com.enseval.ttss.vm;
 import com.avaje.ebean.Ebean;
 import com.enseval.ttss.model.Manifest;
 import com.enseval.ttss.model.Penerimaan;
+import com.enseval.ttss.model.ProsessLimbah;
 import com.enseval.ttss.model.Sertifikat;
 import com.enseval.ttss.model.User;
 import com.enseval.ttss.util.AuthenticationServiceImpl;
@@ -141,13 +142,13 @@ public class PageManifestVM {
         }
 
     }
-    
+
     @Command
     @NotifyChange({"listManifest"})
-    public void saringPenerimaan(@BindingParam("s") String s){
-        if(!s.equalsIgnoreCase("semua")){
+    public void saringPenerimaan(@BindingParam("s") String s) {
+        if (!s.equalsIgnoreCase("semua")) {
             this.filterPenerimaan = s;
-        }else{
+        } else {
             this.filterPenerimaan = "";
         }
         refresh();
@@ -232,7 +233,7 @@ public class PageManifestVM {
         m.put("manifest", manifest);
         Executions.createComponents("pop_revisi_manifest.zul", (Component) null, m);
     }
-    
+
     @Command
     public void duplicateManifest(@BindingParam("manifest") Manifest manifest) {
         Map m = new HashMap();
@@ -243,17 +244,26 @@ public class PageManifestVM {
 
     @Command
     public void deleteManifest() {
-        if (this.selectedManifest.getPenerimaan().getStatusPenerimaan().equals("diterima")) {
-            Messagebox.show("LIMBAH MANIFEST YANG SUDAH DITERIMA TIDAK BISA DI HAPUS!", "Error", Messagebox.OK, Messagebox.ERROR);
-            return;
-        }
+//        if (this.selectedManifest.getPenerimaan().getStatusPenerimaan().equals("diterima")) {
+//            Messagebox.show("LIMBAH MANIFEST YANG SUDAH DITERIMA TIDAK BISA DI HAPUS!", "Error", Messagebox.OK, Messagebox.ERROR);
+//            
+//        }
 
-        Messagebox.show("Data manifest akan dihapus. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
+        Messagebox.show("Menghapus data manifest berarti menghapus data penerimaan dan data proses internal. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
             if (t.getName().equals("onOK")) {
                 try {
 
-                    Ebean.delete(this.selectedManifest);
-                    Ebean.delete(this.selectedManifest.getPenerimaan());
+                    if (this.selectedManifest.getPenerimaan().getProsessLimbah() != null) {
+                        Ebean.delete(this.selectedManifest.getPenerimaan().getProsessLimbah());
+                    }
+
+                    if (this.selectedManifest.getPenerimaan().getOutboundItem() != null) {
+                        Ebean.delete(this.selectedManifest.getPenerimaan().getOutboundItem());
+                    }
+
+                    Ebean.delete(selectedManifest);
+                    Ebean.delete(selectedManifest.getPenerimaan());
+
                     this.selectedManifest = null;
                     BindUtils.postGlobalCommand(null, null, "refresh", null);
                 } catch (Exception e) {
@@ -263,14 +273,14 @@ public class PageManifestVM {
         });
 
     }
-    
+
     @Command
     @NotifyChange({"listManifest"})
-    public void resetSaringTgl(){
+    public void resetSaringTgl() {
         this.tsAkhir = null;
         this.tsAwal = null;
         saring();
-        
+
     }
 
     @Command
@@ -320,12 +330,11 @@ public class PageManifestVM {
             Logger.getLogger(PageInvoicesVM.class.getName()).log(Level.SEVERE, null, ex2);
         }
     }
-    
-    
+
     @Command
-    public void exportExcel(){
+    public void exportExcel() {
         File filenya = new File(Util.setting("pdf_path") + "manifests.xls");
-   
+
         try {
             InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/manifests.xls.jasper");
             JRDataSource datasource = new JRBeanCollectionDataSource(this.listManifest);
@@ -334,7 +343,6 @@ public class PageManifestVM {
             Map map = new HashMap();
             map.put("MANIFESTS", datasource);
 //            map.put("PENERIMAAN", beanColDataSource);
-
 
             JasperPrint report = JasperFillManager.fillReport(streamReport, map, new JREmptyDataSource(1));
             OutputStream outputStream = new FileOutputStream(filenya);

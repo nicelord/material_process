@@ -175,23 +175,23 @@ public class PopInputManifestVM {
             return;
         }
 
-        if (this.manifest.getJmlKemasan() <= 0L && this.manifest.getJmlKemasan2() <= 0L && this.manifest.getJmlKemasan3() <= 0L) {
+        if (this.manifest.getJmlKemasan() < 0L && this.manifest.getJmlKemasan2() < 0L && this.manifest.getJmlKemasan3() < 0L) {
             Messagebox.show("Jumlah kemasan masih kosong!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
         }
 
         if (this.manifest.getJmlKemasan() < 0L) {
-            Messagebox.show("Jumlah kemasan 1 <= 0!", "Error", Messagebox.OK, Messagebox.ERROR);
+            Messagebox.show("Jumlah kemasan 1 < 0!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
         }
 
         if (this.manifest.getJmlKemasan2() < 0L) {
-            Messagebox.show("Jumlah kemasan 2 <= 0!", "Error", Messagebox.OK, Messagebox.ERROR);
+            Messagebox.show("Jumlah kemasan 2 < 0!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
         }
 
         if (this.manifest.getJmlKemasan3() < 0L) {
-            Messagebox.show("Jumlah kemasan 3 <= 0!", "Error", Messagebox.OK, Messagebox.ERROR);
+            Messagebox.show("Jumlah kemasan 3 < 0!", "Error", Messagebox.OK, Messagebox.ERROR);
             return;
         }
 
@@ -223,6 +223,7 @@ public class PopInputManifestVM {
                 Messagebox.show("Satuan kemasan tidak boleh ada yang sama!", "Error", Messagebox.OK, Messagebox.ERROR);
                 return;
             }
+            
         }
 
         try {

@@ -1,6 +1,7 @@
 package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
 import com.enseval.ttss.model.Manifest;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.Sertifikat;
@@ -53,7 +54,6 @@ import org.zkoss.zul.Filedownload;
 public class PagePenerimaanVM {
 
     List<Penerimaan> listPenerimaan = new ArrayList<>();
-    List<Penerimaan> listPenerimaan2 = new ArrayList<>();
     List<Penerimaan> selectedPenerimaans = new ArrayList<>();
     Penerimaan selectedPenerimaan;
     User userLogin;
@@ -70,9 +70,9 @@ public class PagePenerimaanVM {
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
-        this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbah()==null).collect(Collectors.toList()).size();
+        this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbah() == null).collect(Collectors.toList()).size();
         this.jmlPendingInvoice = listPenerimaan.stream().filter(l -> l.getListInvoiceItem().isEmpty()).collect(Collectors.toList()).size();
-        this.listPenerimaan2 = this.listPenerimaan;
+       
     }
 
     @Command
@@ -101,13 +101,14 @@ public class PagePenerimaanVM {
     }
 
     @Command
-    @NotifyChange({"listPenerimaan"})
+    @NotifyChange({"listPenerimaan", "listPenerimaan2"})
     public void doFilterStatusProses() {
         if (this.filterStatusProses.equals("semua")) {
             this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
         } else {
-            this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getProsessLimbah()==null).collect(Collectors.toList());
+            this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getProsessLimbah() == null).collect(Collectors.toList());
         }
+
     }
 
     @Command
@@ -132,13 +133,9 @@ public class PagePenerimaanVM {
     }
 
     @GlobalCommand
-    @NotifyChange({"listPenerimaan", "jmlPendingInvoice", "jmlPendingProses"})
+    @NotifyChange({"listPenerimaan", "listPenerimaan2", "jmlPendingInvoice", "jmlPendingProses"})
     public void refresh() {
-
-        this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbah()==null).collect(Collectors.toList()).size();
-
-        this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
-        this.listPenerimaan2 = this.listPenerimaan;
+        saring();
 
     }
 
@@ -150,21 +147,29 @@ public class PagePenerimaanVM {
 
             LocalDate localDateTimeAwal = this.tglTerimaAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate localDateTimeAkhir = this.tglTerimaAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            this.listPenerimaan = this.listPenerimaan2.stream().filter(l -> (l.getTglPenerimaan().after(Date.from(localDateTimeAwal.atStartOfDay(ZoneId.systemDefault()).toInstant())) && l.getTglPenerimaan().before(Date.from(localDateTimeAkhir.atStartOfDay(ZoneId.systemDefault()).toInstant())))
-                    && l.getManifest().getKodeManifest().toLowerCase().contains(this.filterKodeManifest.toLowerCase())
-                    && l.getManifest().getCustomerPenghasil().getNama().toLowerCase().contains(this.filterCustomer.toLowerCase())
-                    && l.getManifest().getJenisLimbah().getKodeJenis().toLowerCase().contains(this.filterKodeJenis.toLowerCase())
-                    && l.getManifest().getNamaTeknikLimbah().toLowerCase().contains(this.filterNamaTeknik.toLowerCase()))
-                    .collect(Collectors.toList());
+
+            this.listPenerimaan = Ebean.find(Penerimaan.class).where()
+                    .between("tglPenerimaan", Date.from(localDateTimeAwal.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(localDateTimeAkhir.atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                    .contains("manifest.kodeManifest", this.filterKodeManifest)
+                    .contains("manifest.customerPenghasil.nama", this.filterCustomer)
+                    .contains("manifest.jenisLimbah.kodeJenis", this.filterKodeJenis)
+                    .contains("manifest.namaTeknikLimbah", this.filterNamaTeknik)
+                    .eq("isDiterima", true).orderBy("id desc").findList();
+
         } else {
-            this.listPenerimaan = this.listPenerimaan2.stream().filter(l
-                    -> l.getManifest().getKodeManifest().toLowerCase().contains(this.filterKodeManifest.toLowerCase())
-                    && l.getManifest().getCustomerPenghasil().getNama().toLowerCase().contains(this.filterCustomer.toLowerCase())
-                    && l.getManifest().getJenisLimbah().getKodeJenis().toLowerCase().contains(this.filterKodeJenis.toLowerCase())
-                    && l.getManifest().getNamaTeknikLimbah().toLowerCase().contains(this.filterNamaTeknik.toLowerCase()))
-                    .collect(Collectors.toList());
+            this.listPenerimaan = Ebean.find(Penerimaan.class).where()
+                    .contains("manifest.kodeManifest", this.filterKodeManifest)
+                    .contains("manifest.customerPenghasil.nama", this.filterCustomer)
+                    .contains("manifest.jenisLimbah.kodeJenis", this.filterKodeJenis)
+                    .contains("manifest.namaTeknikLimbah", this.filterNamaTeknik)
+                    .eq("isDiterima", true).orderBy("id desc").findList();
+        }
+        
+        if(!this.filterStatusProses.equals("semua")){
+            this.listPenerimaan = listPenerimaan.stream().filter(l -> l.getProsessLimbah() == null).collect(Collectors.toList());
         }
 
+        this.jmlPendingProses = listPenerimaan.stream().filter(l -> l.getProsessLimbah() == null).collect(Collectors.toList()).size();
     }
 
     @Command
@@ -173,7 +178,6 @@ public class PagePenerimaanVM {
         this.tglTerimaAwal = null;
         this.tglTerimaAkhir = null;
         this.listPenerimaan = Ebean.find(Penerimaan.class).where().eq("isDiterima", true).orderBy("id desc").findList();
-        this.listPenerimaan2 = this.listPenerimaan;
     }
 
     @Command
@@ -195,7 +199,7 @@ public class PagePenerimaanVM {
             map.put("NAMA_CUSTOMER", p.getManifest().getCustomerPenghasil().getNama());
             map.put("TGL_BUAT", p.getTglPenerimaan());
             map.put("MANIFEST", p.getManifest().getKodeManifest());
-            map.put("JENIS_LIMBAH", p.getManifest().getKarakteristikLimbah());
+            map.put("JENIS_LIMBAH", p.getManifest().getNamaTeknikLimbah());
             map.put("SOPIR", p.getManifest().getNamaDriver());
             map.put("PLAT", p.getManifest().getNomorKendaraan());
             map.put("KEMASAN", p.getSatuanKemasan());
@@ -267,7 +271,7 @@ public class PagePenerimaanVM {
             map.put("NAMA_CUSTOMER", p.getManifest().getCustomerPenghasil().getNama());
             map.put("TGL_BUAT", p.getTglPenerimaan());
             map.put("MANIFEST", p.getManifest().getKodeManifest());
-            map.put("JENIS_LIMBAH", p.getManifest().getKarakteristikLimbah());
+            map.put("JENIS_LIMBAH", p.getManifest().getNamaTeknikLimbah());
             map.put("SOPIR", p.getManifest().getNamaDriver());
             map.put("PLAT", p.getManifest().getNomorKendaraan());
             map.put("KEMASAN", p.getSatuanKemasan());
@@ -433,14 +437,6 @@ public class PagePenerimaanVM {
 
     public void setFilterStatusProses(String filterStatusProses) {
         this.filterStatusProses = filterStatusProses;
-    }
-
-    public List<Penerimaan> getListPenerimaan2() {
-        return listPenerimaan2;
-    }
-
-    public void setListPenerimaan2(List<Penerimaan> listPenerimaan2) {
-        this.listPenerimaan2 = listPenerimaan2;
     }
 
     public String getFilterKodeManifest() {

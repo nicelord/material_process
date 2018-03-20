@@ -65,7 +65,7 @@
                                     if="${sessionScope.userCredential.getRoles()=='PENERIMA' || 
                                     sessionScope.userCredential.getRoles()=='REPORTING' || 
                                             sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
-                                    selectedItem="@bind(vm.filterStatusProses)" onCheck="@command('doFilterStatusProses')">
+                                    selectedItem="@bind(vm.filterStatusProses)" onCheck="@command('saring')">
                                     <radio label="SEMUA" value="semua"/>
                                     <radio label="@bind('PENDING PROSES '.concat(vm.jmlPendingProses))" value="pending"/>
                                 </radiogroup>

@@ -63,7 +63,7 @@ public class PageOutboundVM {
     User userLogin;
     List<OutboundItem> listOutboundItem;
 
-    String filterManifest = "", filterLimbah = "", filterStatus = "", filterIntExt = "SEMUA";
+    String filterManifest = "", filterLimbah = "", filterStatus = "", filterIntExt = "SEMUA", filterPerusahaan = "";
 
     @AfterCompose
     public void initSetup() {
@@ -92,6 +92,7 @@ public class PageOutboundVM {
                         .where()
                         .isNotNull("tglBuat")
                         .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                        .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPerusahaan), Expr.contains("residu.namaPerusahaan", filterPerusahaan))
                         .contains("namaItem", filterLimbah)
                         .orderBy("id desc").findList();
                 break;
@@ -101,6 +102,7 @@ public class PageOutboundVM {
                         .isNotNull("tglBuat")
                         .isNotNull("residu")
                         .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                        .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPerusahaan), Expr.contains("residu.namaPerusahaan", filterPerusahaan))
                         .contains("namaItem", filterLimbah)
                         .orderBy("id desc").findList();
                 break;
@@ -110,6 +112,7 @@ public class PageOutboundVM {
                         .isNotNull("tglBuat")
                         .isNotNull("penerimaan")
                         .or(Expr.contains("penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("residu.residuId", filterManifest))
+                        .or(Expr.contains("penerimaan.manifest.customerPenghasil.nama", filterPerusahaan), Expr.contains("residu.namaPerusahaan", filterPerusahaan))
                         .contains("namaItem", filterLimbah)
                         .orderBy("id desc").findList();
                 break;
@@ -262,6 +265,14 @@ public class PageOutboundVM {
 
     public void setFilterIntExt(String filterIntExt) {
         this.filterIntExt = filterIntExt;
+    }
+
+    public String getFilterPerusahaan() {
+        return filterPerusahaan;
+    }
+
+    public void setFilterPerusahaan(String filterPerusahaan) {
+        this.filterPerusahaan = filterPerusahaan;
     }
 
 }

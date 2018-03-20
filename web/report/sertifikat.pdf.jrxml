@@ -209,8 +209,8 @@ Hazardous Waste Management]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-								<textField isBlankWhenNull="true">
-									<reportElement x="0" y="0" width="154" height="20" uuid="42c2bcc9-b298-4ab3-8358-55da84797607"/>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="154" height="20" isPrintWhenDetailOverflows="true" uuid="42c2bcc9-b298-4ab3-8358-55da84797607"/>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Tahoma"/>
 										<paragraph leftIndent="4" rightIndent="2"/>
@@ -250,7 +250,7 @@ Hazardous Waste Management]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
-								<textField isBlankWhenNull="true">
+								<textField pattern="" isBlankWhenNull="true">
 									<reportElement x="0" y="0" width="194" height="20" uuid="c728ab94-e62b-4a9e-a7eb-52bc4f48b7a1"/>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Tahoma"/>

@@ -54,7 +54,7 @@
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
                     
                     <auxhead>
-                        <auxheader colspan="7">
+                        <auxheader colspan="8">
                             <hlayout>
                                 
                                 <div class="input-group">
@@ -81,6 +81,7 @@
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
                         <listheader sort="auto(namaItem)" label="KODE MANIFEST/RESIDU"/>
+                        <listheader label="PERUSAHAAN"/>
                         <listheader sort="auto(namaItem)" label="NAMA LIMBAH/RESIDU"/>
                         <listheader sort="auto(jmlKemasan)" label="BANYAK" />
                         <listheader sort="auto(jmlBerat)" label="BERAT" />
@@ -93,6 +94,9 @@
                         </auxheader>
                         <auxheader>
                             <textbox instant="true" value="@bind(vm.filterManifest)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterPerusahaan)" hflex="3" onChange="@command('saring')"/>
                         </auxheader>
                         <auxheader>
                             <textbox instant="true" value="@bind(vm.filterLimbah)" hflex="3" onChange="@command('saring')"/>
@@ -124,6 +128,9 @@
                             <listcell />
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.penerimaan ne null ? s.penerimaan.manifest.kodeManifest : s.residu.residuId)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.penerimaan ne null ? s.penerimaan.manifest.customerPenghasil.nama : s.residu.namaPerusahaan)"/>
                             </listcell>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.namaItem)"/>
@@ -161,7 +168,7 @@
                 
                 
                     <listfoot>
-                        <listfooter span="6" valign="middle">
+                        <listfooter span="7" valign="middle">
                             <div style="float:left;">
                                 <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 
                                         sclass="btn-primary">

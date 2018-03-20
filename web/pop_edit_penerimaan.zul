@@ -124,21 +124,21 @@
                                 <span class="input-group-addon">
                                     Nama limbah :
                                 </span>
-                                <textbox readonly="true" class="form-control input-primary" value="@bind(vm.penerimaan.manifest.namaTeknikLimbah)"/>
+                                <textbox class="form-control input-primary" value="@bind(vm.penerimaan.manifest.namaTeknikLimbah)"/>
                             </div>
                             <hlayout width="100%">
                                 <div class="input-group" hflex="3">
                                     <span class="input-group-addon" >
                                         Kemasan 1 :
                                     </span>
-                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.penerimaan.jmlKemasan)"/>
+                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.penerimaan.jmlKemasan) @save(vm.penerimaan.manifest.jmlKemasan)"/>
                                 </div>
                                 <div class="input-group" hflex="3">
                                     <combobox readonly="true"
                                               hflex="3"
                                               style="width:100%;height:100%"
                                               constraint="no empty"  
-                                              value="@bind(vm.penerimaan.satuanKemasan)">
+                                              value="@bind(vm.penerimaan.satuanKemasan) @save(vm.penerimaan.manifest.satuanKemasan)">
                                         <comboitem label="Pallet"/>
                                         <comboitem label="Drum"/>
                                         <comboitem label="Bag"/>
@@ -156,14 +156,14 @@
                                     <span class="input-group-addon" >
                                         Kemasan 2 :
                                     </span>
-                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.penerimaan.jmlKemasan2)"/>
+                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.penerimaan.jmlKemasan2) @save(vm.penerimaan.manifest.jmlKemasan2)"/>
                                 </div>
                                 <div class="input-group" hflex="3">
                                     <combobox readonly="true"
                                               hflex="3"
                                               style="width:100%;height:100%"
                                               constraint="no empty"  
-                                              value="@bind(vm.penerimaan.satuanKemasan2)">
+                                              value="@bind(vm.penerimaan.satuanKemasan2) @save(vm.penerimaan.manifest.satuanKemasan2)">
                                         <comboitem label="Pallet"/>
                                         <comboitem label="Drum"/>
                                         <comboitem label="Bag"/>
@@ -181,14 +181,14 @@
                                     <span class="input-group-addon" >
                                         Kemasan 3 :
                                     </span>
-                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.penerimaan.jmlKemasan3)"/>
+                                    <longbox sclass="form-control input-primary" hflex="3" placeholder="Banyak" value="@bind(vm.penerimaan.jmlKemasan3) @save(vm.penerimaan.manifest.jmlKemasan3)"/>
                                 </div>
                                 <div class="input-group" hflex="3">
                                     <combobox readonly="true"
                                               hflex="3"
                                               style="width:100%;height:100%"
                                               constraint="no empty"  
-                                              value="@bind(vm.penerimaan.satuanKemasan3)">
+                                              value="@bind(vm.penerimaan.satuanKemasan3) @save(vm.penerimaan.manifest.satuanKemasan3)">
                                         <comboitem label="Pallet"/>
                                         <comboitem label="Drum"/>
                                         <comboitem label="Bag"/>
@@ -206,13 +206,13 @@
                                     <span class="input-group-addon" >
                                         Total berat :
                                     </span>
-                                    <doublebox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.penerimaan.jmlBerat)"/>
+                                    <doublebox sclass="form-control input-primary" placeholder="Banyak" value="@bind(vm.penerimaan.jmlBerat) @save(vm.penerimaan.manifest.jmlBerat)"/>
                                 </div>
                                 <combobox readonly="true" 
                                           hflex="3"
                                           style="width:100%;height:100%"
                                           constraint="no empty"  
-                                          value="@bind(vm.penerimaan.satuanBerat)">
+                                          value="@bind(vm.penerimaan.satuanBerat) @save(vm.penerimaan.manifest.satuanBerat)">
                                     <comboitem label="Liter"/>
                                     <comboitem label="Kg"/>
                                     <comboitem label="M3"/>

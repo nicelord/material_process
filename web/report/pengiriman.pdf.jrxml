@@ -204,8 +204,8 @@
 						</jr:columnHeader>
 						<jr:columnFooter style="table_CH" height="29" rowSpan="1"/>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="147" height="20" uuid="6cd98ffe-2c4f-457a-84c2-9e36c2369361"/>
+							<textField isStretchWithOverflow="true">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="147" height="20" isPrintWhenDetailOverflows="true" uuid="6cd98ffe-2c4f-457a-84c2-9e36c2369361"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
 									<paragraph leftIndent="6" rightIndent="3"/>
@@ -265,13 +265,13 @@
 							</textField>
 						</jr:columnFooter>
 						<jr:detailCell style="table_TD" height="20" rowSpan="1">
-							<textField>
+							<textField pattern="">
 								<reportElement x="0" y="0" width="90" height="20" uuid="e1c92e25-bbcf-4522-ac74-e9cb730e751d"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="8"/>
 									<paragraph leftIndent="3" rightIndent="6"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{jmlBerat}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{jmlBerat}-$F{jmlBerat}.intValue()!=0?$F{jmlBerat}:new DecimalFormat("####0").format($F{jmlBerat})]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

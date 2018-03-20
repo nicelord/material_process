@@ -37,7 +37,9 @@
                         <hlayout >
                             <textbox id="txtCari" hflex="7" value="" sclass="form-control input-primary" placeholder="cari nama"/>
                             <button id="btnCustID" hflex="1" iconSclass="glyphicon glyphicon-search" sclass="btn-primary" onClick="@command('cari')"/>
-                            <button  hflex="2" iconSclass="glyphicon glyphicon-plus" sclass="btn-success" onClick="@command('showTambahCustomer')" label="TAMBAH"/>
+                            <button  
+                                if="${sessionScope.userCredential.getRoles()=='ADMIN'}"
+                                hflex="2" iconSclass="glyphicon glyphicon-plus" sclass="btn-success" onClick="@command('showTambahCustomer')" label="TAMBAH"/>
                         </hlayout>
                     </auxheader>
                 </auxhead>
