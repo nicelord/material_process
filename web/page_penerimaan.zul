@@ -89,7 +89,7 @@
                         <listheader sort="auto(manifest.namaTeknikLimbah)" label="NAMA LIMBAH"/>
                         <listheader sort="auto(jmlKemasan)" label="BANYAK"/>
                         <listheader sort="auto(jmlBerat)" label="BERAT"/>
-                        <listheader sort="auto(jmlBerat)" label="TGL DITERIMA"/>
+                        <listheader sort="auto(tglPenerimaan)" label="TGL DITERIMA"/>
                         <listheader 
                             if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                             sort="auto(jmlBerat)" 

@@ -53,7 +53,7 @@
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
                 
                     <auxhead>
-                        <auxheader colspan="10">
+                        <auxheader colspan="11">
                             <hlayout>
                                 <radiogroup 
                                     if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
@@ -89,7 +89,8 @@
                         <listheader sort="auto(manifest.namaTeknikLimbah)" label="NAMA LIMBAH"/>
                         <listheader sort="auto(jmlKemasan)" label="BANYAK"/>
                         <listheader sort="auto(jmlBerat)" label="BERAT"/>
-                        <listheader sort="auto(jmlBerat)" label="TGL DITERIMA"/>
+                        <listheader sort="auto(tglPenerimaan)" label="TGL DITERIMA"/>
+                        
                         <listheader 
                             if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                             sort="auto(jmlBerat)" 
@@ -99,6 +100,7 @@
                             sort="" 
                             width="150px"
                             label="STATUS PROSES"/>
+                        <listheader sort="auto(prosessLimbah.tglKirim)" label="TGL PROSES"/>
 <!--                        <listheader 
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                             sort="" 
@@ -113,6 +115,7 @@
                         <listheader 
                             if="${sessionScope.userCredential.getRoles()=='REPORTING' || sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                     </listhead>
+                    
                     
                     <auxhead>
                         <auxheader>
@@ -186,7 +189,9 @@
                     <template name="model" var="s">
                         <listitem sclass="mainList">
                             <listcell />
-                            <listcell label="@load(s.manifest.kodeManifest)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.manifest.kodeManifest)"/>
+                            </listcell>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.manifest.customerPenghasil.nama)"/>
                             </listcell>
@@ -207,7 +212,6 @@
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.tglPenerimaan) @converter('formatedDate', format='dd-MM-yyyy')"/>
                             </listcell>
-                            
                             <listcell 
                                 if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
@@ -219,12 +223,17 @@
                                         onClick="@command('showInvoiceList',penerimaan=s)"
                                         if="${!s.listInvoiceItem.isEmpty()}"/>
                             
-                            </listcell>                           
+                            </listcell>   
+                                                   
                             <listcell 
                                 if="${sessionScope.userCredential.getRoles()=='REPORTING' || sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                 style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label sclass="@load(s.prosessLimbah eq null?'label label-warning':'label label-success')" value="@load(s.prosessLimbah eq null?'belum proses':s.prosessLimbah.gudangTujuan)"/>
                             </listcell>
+                            
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.prosessLimbah.tglKirim) @converter('formatedDate', format='dd-MM-yyyy')"/>
+                            </listcell> 
                                                         
                             <listcell>
                                 <hlayout>
@@ -256,7 +265,7 @@
                 
                 
                     <listfoot>
-                        <listfooter span="9" valign="middle">
+                        <listfooter span="10" valign="middle">
                             <div style="float:left;">
                                 
                                 <button onClick="@command('exportExcel')" iconSclass="glyphicon glyphicon-download-alt" label="EXPORT EXCEL" 

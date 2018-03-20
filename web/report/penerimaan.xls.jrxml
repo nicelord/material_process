@@ -37,7 +37,8 @@
 		<field name="jmlBerat" class="java.lang.Double"/>
 		<field name="satuanBerat" class="java.lang.String"/>
 		<field name="tglPenerimaan" class="java.util.Date"/>
-		<field name="prosessLimbahs" class="java.util.List"/>
+		<field name="prosessLimbah" class="java.lang.Object"/>
+		<field name="prosessLimbah.tglKirim" class="java.util.Date"/>
 	</subDataset>
 	<parameter name="PENERIMAAN" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<background>
@@ -60,9 +61,12 @@
 								<text><![CDATA[MANIFEST]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="64" height="20" uuid="fccd1db6-a2be-4a9a-9107-fb6209fa8e99"/>
+								<reportElement x="0" y="0" width="64" height="20" uuid="fccd1db6-a2be-4a9a-9107-fb6209fa8e99">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
@@ -80,7 +84,7 @@
 								<text><![CDATA[PENGIRIM]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
 							<textField>
 								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="73" height="20" isPrintWhenDetailOverflows="true" uuid="22cdfd06-2d7c-4c35-b982-9682bfaf49c1">
 									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
@@ -103,7 +107,7 @@
 								<text><![CDATA[KODE LIMBAH]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
 							<textField>
 								<reportElement x="0" y="0" width="57" height="20" uuid="e1467a9d-bce6-4604-8f80-5d611b9f3c53"/>
 								<textElement verticalAlignment="Middle">
@@ -123,7 +127,7 @@
 								<text><![CDATA[NAMA LIMBAH]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
 							<textField>
 								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="90" height="20" isPrintWhenDetailOverflows="true" uuid="5287e1f6-8b27-4281-843c-ee45ac616152">
 									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
@@ -146,7 +150,7 @@
 								<text><![CDATA[BANYAK]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
 							<textField>
 								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="90" height="20" isPrintWhenDetailOverflows="true" uuid="64c46ae2-74d1-49f7-89e4-30ea7561be04">
 									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
@@ -169,7 +173,7 @@
 								<text><![CDATA[BERAT]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
 							<textField>
 								<reportElement x="0" y="0" width="66" height="20" uuid="ee7b80f0-a559-4e56-9e1d-b2d8499eb8b5"/>
 								<textElement verticalAlignment="Middle">
@@ -189,7 +193,7 @@
 								<text><![CDATA[TGL DITERIMA]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
 							<textField pattern="dd-MMM-yyyy">
 								<reportElement x="0" y="0" width="52" height="20" uuid="2617aa3f-b312-4d4a-85f4-f5b25648cafb"/>
 								<textElement verticalAlignment="Middle">
@@ -209,13 +213,33 @@
 								<text><![CDATA[STATUS PROSES]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
 							<textField>
 								<reportElement x="0" y="0" width="64" height="20" uuid="8aa1ce51-09f6-4349-8964-b59e7960258d"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{prosessLimbahs}.size()==0?"belum proses":($F{prosessLimbahs}.get(0).gudangTujuan)]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{prosessLimbah}==null?"belum proses":($F{prosessLimbah}.gudangTujuan)]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="afd7798a-acfa-4ea1-84c2-d9072a1480df">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="d9ec8d6e-1413-4b22-ae17-2c15c824e3f0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Tahoma" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TGL PROSES]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="21" rowSpan="1">
+							<textField pattern="dd-MMM-yyyy" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="21" uuid="d3548089-7f9d-4f4d-8b0b-26126f20c2e9"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Tahoma"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{prosessLimbah.tglKirim}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

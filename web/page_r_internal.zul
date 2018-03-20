@@ -71,8 +71,8 @@
                                     if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
                                     sessionScope.userCredential.getRoles()=='REPORTING'}"/>
                         <listheader sort="auto(tglTerima)" label="TGL TERIMA"/>
-                        <listheader sort="auto(tglTerima)" label="TGL PROSES"/>
-                        <listheader sort="auto(tglTerima)" label="PROSES" width="200px"
+                        <listheader sort="auto(tglProses)" label="TGL PROSES"/>
+                        <listheader label="PROSES" width="200px"
                                     if="${sessionScope.userCredential.getRoles()=='ADMINISTRATOR'||
                                             sessionScope.userCredential.getRoles()!='REPORTING'}"/>
                     </listhead>
@@ -175,8 +175,12 @@
                     <template name="model" var="s">
                         <listitem sclass="mainList">
                             <listcell />
-                            <listcell label="@load(s.penerimaan.manifest.kodeManifest)"/>
-                            <listcell label="@load(s.gudangPengirim)"/>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.penerimaan.manifest.kodeManifest)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.gudangPengirim)"/>
+                            </listcell>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.userPengirim.nama)"/>
                             </listcell>
