@@ -1,6 +1,9 @@
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+import com.avaje.ebean.Junction;
 import com.enseval.ttss.model.Customer;
+import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.User;
 import java.io.FileReader;
 import java.text.DecimalFormat;
@@ -16,57 +19,28 @@ import org.avaje.agentloader.AgentLoader;
 
 public class TES {
 
-    public static < E > void genericTest( E[] arr ) {
-   
-      for(E e : arr) {
-         System.out.printf("%s ", e);
-      }
-      System.out.println();
-   }
-    
-    public class TES2{
+//
+    public static void main(final String[] args) {
+        AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent", "debug=1");
+        
+        String tujuan = "belum proses";
+        List<Penerimaan> l ;
+        
+        Junction<Penerimaan> j = Ebean.find(Penerimaan.class).where().disjunction();
+        j.add(Expr.eq("isDiterima", true));
+        if(!tujuan.equals("semua")){
+            if(!tujuan.equals("belum proses")){
+                j.where().add(Expr.eq("prosessLimbah.gudangTujuan", tujuan));
+            }else{
+                j.where().add(Expr.isNull("prosessLimbah"));
+            }
+        }
+        l = j.query().findList();
+        System.out.println(l.size());
+        
+        
         
     }
-    public List<String> countWords(List<String> listWords) {
-        List<String> ret = new ArrayList<>();
-        long count = listWords.stream().filter(p->p.toLowerCase().startsWith("m")).count();
-        System.out.println("Number of words starts with M or m : "+count);
-        listWords.stream().filter((s) -> (s.toCharArray().length > 5)).forEachOrdered((s) -> {
-            ret.add(s);
-        });
-        return ret;
-        
-        
-        
-//        String ret[] = new String[v.length];
-//        int pos = 0;
-//        for (String string : v) {
-//            Stack<Character> stackChar = new Stack<>();
-//            char c[] = string.toCharArray();
-//            for (char d : c) {
-//                if (d == '{' || d == '[' || d == '(') {
-//                    stackChar.push(d);
-//                } else {
-//                    if (d == ']' && !stackChar.isEmpty() && stackChar.pop() == '[') {
-//                    } else if (d == '}' && !stackChar.isEmpty() && stackChar.pop() == '{') {
-//                    } else if (d == ')' && !stackChar.isEmpty() && stackChar.pop() == '(') {
-//                    } else {
-//                        ret[pos] = "YES";
-//                    }
-//                }
-//            }
-//
-//            if (!stackChar.isEmpty()) {
-//                ret[pos] = "NO";
-//            } else {
-//                ret[pos] = "YES";
-//            }
-//            pos++;
-//        }
-//        return ret;
-//    }
-//
-//    public static void main(final String[] args) {
 //        Scanner s = new Scanner(System.in);
 //        try {
 //            // Write your code here
@@ -160,7 +134,7 @@ public class TES {
 //            }
 //
 //        }
-    }
+    
 
     public void runtest() {
 

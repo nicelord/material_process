@@ -164,14 +164,14 @@
 				<textFieldExpression><![CDATA[$P{PLAT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="82" y="243" width="31" height="14" uuid="bce3d47c-3ef2-43ac-a20b-2fafc86c35d1"/>
+				<reportElement x="72" y="243" width="41" height="14" uuid="bce3d47c-3ef2-43ac-a20b-2fafc86c35d1"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{KEMASAN}.equals("Pallet")?$P{JML_KEMASAN}:($P{KEMASAN2}.equals( "Pallet" )?$P{JML_KEMASAN2}:($P{KEMASAN3}.equals( "Pallet" )?$P{JML_KEMASAN3}:"0"))]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="66" y="243" width="13" height="14" uuid="d889bac4-1cb7-4cbd-9d45-f384aa942d9f"/>
+				<reportElement x="66" y="243" width="6" height="14" uuid="d889bac4-1cb7-4cbd-9d45-f384aa942d9f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
@@ -282,56 +282,56 @@ Telp. 711476 - 711478   Fax. 711449]]></text>
 				<text><![CDATA[- Pcs]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="66" y="257" width="13" height="14" uuid="ed10bc0f-fc18-451d-ae16-b2ffbd570e08"/>
+				<reportElement x="66" y="257" width="6" height="14" uuid="ed10bc0f-fc18-451d-ae16-b2ffbd570e08"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="66" y="271" width="13" height="14" uuid="970b2282-7538-41af-ba8c-a9f29d7b76c7"/>
+				<reportElement x="66" y="271" width="6" height="14" uuid="970b2282-7538-41af-ba8c-a9f29d7b76c7"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="66" y="286" width="13" height="14" uuid="b71fce3c-dcf4-4aaf-b796-638b3af6f40f"/>
+				<reportElement x="66" y="286" width="6" height="14" uuid="b71fce3c-dcf4-4aaf-b796-638b3af6f40f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="66" y="300" width="13" height="14" uuid="82365768-3259-4bc7-b147-98ee38ff64a6"/>
+				<reportElement x="66" y="300" width="6" height="14" uuid="82365768-3259-4bc7-b147-98ee38ff64a6"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="82" y="257" width="31" height="14" uuid="3382de87-569f-44b4-b12a-0b442bd19dc1"/>
+				<reportElement x="72" y="257" width="41" height="14" uuid="3382de87-569f-44b4-b12a-0b442bd19dc1"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{KEMASAN}.equals("Drum")?$P{JML_KEMASAN}:($P{KEMASAN2}.equals( "Drum" )?$P{JML_KEMASAN2}:($P{KEMASAN3}.equals( "Drum" )?$P{JML_KEMASAN3}:"0"))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="82" y="271" width="31" height="14" uuid="38804ee1-9200-44bb-8186-e1a1dbd5c88a"/>
+				<reportElement x="72" y="271" width="41" height="14" uuid="38804ee1-9200-44bb-8186-e1a1dbd5c88a"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{KEMASAN}.equals("Bag")?$P{JML_KEMASAN}:($P{KEMASAN2}.equals( "Bag" )?$P{JML_KEMASAN2}:($P{KEMASAN3}.equals( "Bag" )?$P{JML_KEMASAN3}:"0"))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="82" y="286" width="31" height="14" uuid="2f8de131-29c2-4a96-b5f1-f1ca1a3c29ab"/>
+				<reportElement x="72" y="286" width="41" height="14" uuid="2f8de131-29c2-4a96-b5f1-f1ca1a3c29ab"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{KEMASAN}.equals("Jerigen")?$P{JML_KEMASAN}:($P{KEMASAN2}.equals( "Jerigen" )?$P{JML_KEMASAN2}:($P{KEMASAN3}.equals( "Jerigen" )?$P{JML_KEMASAN3}:"0"))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="82" y="300" width="31" height="14" uuid="8ae334db-1792-47c5-8591-8c3b93a44d6b"/>
+				<reportElement x="72" y="300" width="41" height="14" uuid="8ae334db-1792-47c5-8591-8c3b93a44d6b"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
@@ -373,7 +373,7 @@ Telp. 711476 - 711478   Fax. 711449]]></text>
 				<text><![CDATA[buah]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="232" y="243" width="13" height="14" uuid="0b5e2667-c574-4b2d-aa47-aaee50342234"/>
+				<reportElement x="232" y="243" width="6" height="14" uuid="0b5e2667-c574-4b2d-aa47-aaee50342234"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
@@ -387,7 +387,7 @@ Telp. 711476 - 711478   Fax. 711449]]></text>
 				<text><![CDATA[- Box]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="248" y="243" width="31" height="14" uuid="0291c490-a7ab-4422-bf11-219cd9e9e1c1"/>
+				<reportElement x="238" y="243" width="41" height="14" uuid="0291c490-a7ab-4422-bf11-219cd9e9e1c1"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
@@ -408,14 +408,14 @@ Telp. 711476 - 711478   Fax. 711449]]></text>
 				<text><![CDATA[- Can]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="248" y="258" width="31" height="14" uuid="71e3b82d-b913-4648-aa36-a432d2ad27a9"/>
+				<reportElement x="238" y="258" width="41" height="14" uuid="71e3b82d-b913-4648-aa36-a432d2ad27a9"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{KEMASAN}.equals("Can")?$P{JML_KEMASAN}:($P{KEMASAN2}.equals( "Can" )?$P{JML_KEMASAN2}:($P{KEMASAN3}.equals( "Can" )?$P{JML_KEMASAN3}:"0"))]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="232" y="258" width="13" height="14" uuid="09921b8b-f61d-4910-a265-36f398418e28"/>
+				<reportElement x="232" y="258" width="6" height="14" uuid="09921b8b-f61d-4910-a265-36f398418e28"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
@@ -436,14 +436,14 @@ Telp. 711476 - 711478   Fax. 711449]]></text>
 				<text><![CDATA[- Bottle]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="248" y="271" width="31" height="14" uuid="8f1c7d07-ded2-4414-8a98-a386beecd16e"/>
+				<reportElement x="238" y="271" width="41" height="14" uuid="8f1c7d07-ded2-4414-8a98-a386beecd16e"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{KEMASAN}.equals("Bottle")?$P{JML_KEMASAN}:($P{KEMASAN2}.equals( "Bottle" )?$P{JML_KEMASAN2}:($P{KEMASAN3}.equals( "Bottle" )?$P{JML_KEMASAN3}:"0"))]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="232" y="271" width="13" height="14" uuid="37231b3c-892a-4256-9c6d-7b1d0ad2c30f"/>
+				<reportElement x="232" y="271" width="6" height="14" uuid="37231b3c-892a-4256-9c6d-7b1d0ad2c30f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
@@ -464,14 +464,14 @@ Telp. 711476 - 711478   Fax. 711449]]></text>
 				<text><![CDATA[- Totes]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="248" y="286" width="31" height="14" uuid="75d7cd26-a6d0-449f-a310-d46025ff2789"/>
+				<reportElement x="238" y="286" width="41" height="14" uuid="75d7cd26-a6d0-449f-a310-d46025ff2789"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{KEMASAN}.equals("Totes")?$P{JML_KEMASAN}:($P{KEMASAN2}.equals( "Totes" )?$P{JML_KEMASAN2}:($P{KEMASAN3}.equals( "Totes" )?$P{JML_KEMASAN3}:"0"))]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="232" y="286" width="13" height="14" uuid="732bf751-26f4-449a-99aa-9b1caa6d31b2"/>
+				<reportElement x="232" y="286" width="6" height="14" uuid="732bf751-26f4-449a-99aa-9b1caa6d31b2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
@@ -485,11 +485,11 @@ Telp. 711476 - 711478   Fax. 711449]]></text>
 				<text><![CDATA[buah]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="248" y="300" width="64" height="14" uuid="d6b5831e-33d0-4c83-9cd9-6bda35f07149"/>
+				<reportElement x="238" y="300" width="41" height="14" uuid="d6b5831e-33d0-4c83-9cd9-6bda35f07149"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{JML_BERAT}-$P{JML_BERAT}.intValue()!=0?$P{JML_BERAT}:new DecimalFormat("####0").format($P{JML_BERAT}))+ " " + $P{BERAT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{JML_BERAT}-$P{JML_BERAT}.intValue()!=0?$P{JML_BERAT}:new DecimalFormat("####0").format($P{JML_BERAT}))]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="190" y="300" width="42" height="14" uuid="3cb29a4a-910f-4e32-bc33-56556d90ef4f"/>
@@ -499,12 +499,19 @@ Telp. 711476 - 711478   Fax. 711449]]></text>
 				<text><![CDATA[Berat]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="232" y="300" width="13" height="14" uuid="2e6c29ab-ee0b-4c96-a658-ea864254986b"/>
+				<reportElement x="232" y="300" width="6" height="14" uuid="2e6c29ab-ee0b-4c96-a658-ea864254986b"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="279" y="300" width="33" height="14" uuid="99597e1e-809b-455f-8314-8ae57e54627f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BERAT}]]></textFieldExpression>
+			</textField>
 		</band>
 	</background>
 </jasperReport>

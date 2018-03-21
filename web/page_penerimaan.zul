@@ -52,22 +52,14 @@
                          model="@load(vm.listPenerimaan)">   
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
                 
-                    <auxhead>
+                    <auxhead
+                    if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                         <auxheader colspan="10">
                             <hlayout>
                                 <radiogroup 
-                                    if="${sessionScope.userCredential.getRoles()=='AKUNTING' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
                                     selectedItem="@bind(vm.filterPendingInvoice)" onCheck="@command('doFilterPending')">
                                     <radio label="SEMUA" value="semua"/>
                                     <radio label="@bind('PENDING INVOICE '.concat(vm.jmlPendingInvoice))" value="pending"/>
-                                </radiogroup>
-                                <radiogroup 
-                                    if="${sessionScope.userCredential.getRoles()=='PENERIMA' || 
-                                    sessionScope.userCredential.getRoles()=='REPORTING' || 
-                                            sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
-                                    selectedItem="@bind(vm.filterStatusProses)" onCheck="@command('saring')">
-                                    <radio label="SEMUA" value="semua"/>
-                                    <radio label="@bind('PENDING PROSES '.concat(vm.jmlPendingProses))" value="pending"/>
                                 </radiogroup>
                             </hlayout>
                         </auxheader>
@@ -164,6 +156,22 @@
                         <auxheader 
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
                             
+                            <button vflex="3" hflex="3" 
+                                    popup="popupjenisitem"
+                                    sclass="btn-info btn-xs" iconSclass="glyphicon glyphicon-filter" 
+                                    label="FILTER" />
+                            <popup id="popupjenisitem" width="150px" style="word-wrap">
+                                <vlayout>
+                                    <button label="GUDANG 1" onClick="@command('filterStatus', s='GUDANG 1')" sclass="btn-success btn-xs" hflex="3" />
+                                    <button label="GUDANG 2" onClick="@command('filterStatus', s='GUDANG 2')" sclass="btn-success btn-xs" hflex="3" />
+                                    <button label="GUDANG 3" onClick="@command('filterStatus', s='GUDANG 3')" sclass="btn-success btn-xs" hflex="3" />
+                                    <button label="GUDANG 4" onClick="@command('filterStatus', s='GUDANG 4')" sclass="btn-success btn-xs" hflex="3" />
+                                    <button label="GUDANG 5" onClick="@command('filterStatus', s='GUDANG 5')" sclass="btn-success btn-xs" hflex="3" />
+                                    <button label="EXTERNAL" onClick="@command('filterStatus', s='EXTERNAL')" sclass="btn-success btn-xs" hflex="3" />
+                                    <button label="belum proses" onClick="@command('filterStatus', s='belum proses')" sclass="btn-warning btn-xs" hflex="3" />
+                                    <button label="semua" onClick="@command('filterStatus', s='semua')" sclass="btn-primary btn-xs" hflex="3" />
+                                </vlayout>
+                            </popup>
                         </auxheader>
 <!--                        <auxheader 
                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}">
@@ -230,7 +238,7 @@
                                                         
                             <listcell>
                                 <hlayout>
-                                             <!--disabled="@load(s.prosessLimbah ne null and s.prosessLimbah.gudangPengirim eq 'PENERIMAAN')"-->
+                                    <!--disabled="@load(s.prosessLimbah ne null and s.prosessLimbah.gudangPengirim eq 'PENERIMAAN')"-->
                                     <button vflex="3" hflex="3" sclass="btn-warning btn-xs" iconSclass="glyphicon glyphicon-edit" label="@load(sessionScope.userCredential.getRoles() eq 'AKUNTING'?'LIHAT MANIFEST':'')" 
                                    
                                             if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"
@@ -254,11 +262,11 @@
                                 <popup id="@load('print'.concat(s.id))" >
                                     <vlayout>
                                         <button sclass="btn-danger btn-xs"  label="PDF" 
-                                                    onClick="@command('cetakPenerimaan',penerimaan=s)"
-                                                    if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                                onClick="@command('cetakPenerimaan',penerimaan=s)"
+                                                if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                                         <button sclass="btn-primary btn-xs" label="DOCX" 
-                                                    onClick="@command('cetakPenerimaan2',penerimaan=s)"
-                                                    if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                                onClick="@command('cetakPenerimaan2',penerimaan=s)"
+                                                if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                                     
                                     </vlayout>
                                 </popup>
