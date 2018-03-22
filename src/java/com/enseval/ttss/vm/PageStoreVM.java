@@ -7,6 +7,8 @@ package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
+import com.avaje.ebean.Junction;
+import com.avaje.ebean.Query;
 import com.enseval.ttss.model.Invoice;
 import com.enseval.ttss.model.OutboundItem;
 import com.enseval.ttss.model.Pengiriman;
@@ -65,13 +67,18 @@ public class PageStoreVM {
 
     boolean select = false;
     List<Store> listSelectedStore = new ArrayList<>();
-    String filterKolom = "", filterLimbah = "", filterSatuanKemasan = "", filterManifest = "", filterPengiriman = "", filterStatusPengiriman = "belum";
+    String filterKolom = "", 
+            filterLimbah = "", 
+            filterSatuanKemasan = "", 
+            filterManifest = "", 
+            filterPengiriman = "", 
+            filterPerusahaan = "",
+            filterStatusPengiriman = "belum";
 
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
-        //this.listStore = Ebean.find(Store.class).orderBy("id desc").findList();
-        doFilterStatusPengiriman();
+        saring();
 
     }
 
@@ -101,7 +108,7 @@ public class PageStoreVM {
     @GlobalCommand
     @NotifyChange({"*"})
     public void refresh() {
-        doFilterStatusPengiriman();
+        saring();
     }
 
     @Command
@@ -120,47 +127,46 @@ public class PageStoreVM {
     @NotifyChange({"*"})
     public void saring() {
 
-        this.listStore = Ebean.find(Store.class)
+        Query<Store> q = Ebean.find(Store.class)
                 .where()
                 .contains("kodeStore", this.filterKolom)
                 .contains("outboundItem.namaItem", this.filterLimbah)
                 .contains("satuanKemasan", this.filterSatuanKemasan)
+                .or(Expr.contains("outboundItem.penerimaan.manifest.customerPenghasil.nama", filterManifest), Expr.contains("outboundItem.residu.namaPerusahaan", filterPerusahaan))
                 .or(Expr.contains("outboundItem.penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("outboundItem.residu.residuId", filterManifest))
-                .contains("pengiriman.idPengiriman", this.filterPengiriman)
-                .orderBy("id desc").findList();
+                .orderBy("id desc");
+
+        if (this.filterStatusPengiriman.equals("belum")) {
+            q.where().isNull("pengiriman.tglKirim");
+        } else if (this.filterStatusPengiriman.equals("sudah")) {
+            q.where().isNotNull("pengiriman.tglKirim");
+        }
+
+        if (!this.filterPengiriman.isEmpty()) {
+            q.where().isNotNull("pengiriman");
+            q.where().contains("pengiriman.idPengiriman", this.filterPengiriman);
+        }
+
+        this.listStore = q.findList();
 
     }
 
     @Command
     @NotifyChange({"*"})
     public void doFilterStatusPengiriman() {
-        if (filterStatusPengiriman.equals("belum")) {
-            this.listStore = Ebean.find(Store.class)
-                    .where()
-                    .isNull("pengiriman.tglKirim")
-                    .orderBy("id desc").findList();
-        } else if (filterStatusPengiriman.equals("sudah")) {
-            this.listStore = Ebean.find(Store.class)
-                    .where()
-                    .isNotNull("pengiriman.tglKirim")
-                    .orderBy("id desc").findList();
-        } else {
-            this.listStore = Ebean.find(Store.class).orderBy("id desc").findList();
-        }
-
+        saring();
     }
-    
+
     @Command
-    public void exportExcel(){
+    public void exportExcel() {
         File filenya = new File(Util.setting("pdf_path") + "kolom_all.xls");
-   
+
         try {
             InputStream streamReport = JRLoader.getFileInputStream(Executions.getCurrent().getDesktop().getWebApp().getRealPath("/") + "/report/kolom_all.xls.jasper");
             JRDataSource datasource = new JRBeanCollectionDataSource(this.listStore);
 
             Map map = new HashMap();
             map.put("KOLOM", datasource);
-
 
             JasperPrint report = JasperFillManager.fillReport(streamReport, map, new JREmptyDataSource(1));
             OutputStream outputStream = new FileOutputStream(filenya);
@@ -278,6 +284,14 @@ public class PageStoreVM {
 
     public void setFilterStatusPengiriman(String filterStatusPengiriman) {
         this.filterStatusPengiriman = filterStatusPengiriman;
+    }
+
+    public String getFilterPerusahaan() {
+        return filterPerusahaan;
+    }
+
+    public void setFilterPerusahaan(String filterPerusahaan) {
+        this.filterPerusahaan = filterPerusahaan;
     }
 
 }

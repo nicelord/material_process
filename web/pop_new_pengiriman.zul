@@ -22,7 +22,7 @@
 
     <window id="pop_new_pengiriman"  
             style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;" 
-            mode="modal" width="30%" vflex="1" 
+            mode="modal" width="40%" vflex="1" 
             title="BUAT PENGIRIMAN BARU" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.enseval.ttss.vm.PopNewPengirimanVM')" closable="true">
         <vbox align="center">
             <grid oddRowSclass="none">
@@ -48,13 +48,13 @@
                                 <textbox class="form-control input-primary" value="@save(vm.pengiriman.perusahaanPengangkut)"/>
                             </div>
                             <hlayout width="100%">
-                                <div class="input-group" hflex="3">
+                                <div class="input-group" hflex="2">
                                     <span class="input-group-addon">
                                         No. Kolom :
                                     </span>
                                     <textbox class="form-control input-primary" value="@save(vm.pengiriman.nomorKolom)"/>
                                 </div>
-                                <div class="input-group" hflex="3">
+                                <div class="input-group" hflex="5">
                                     <span class="input-group-addon">
                                         No. Kontainer :
                                     </span>

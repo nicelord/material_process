@@ -6,6 +6,8 @@
 package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+import com.avaje.ebean.Query;
 import com.enseval.ttss.model.Invoice;
 import com.enseval.ttss.model.OutboundItem;
 import com.enseval.ttss.model.Penerimaan;
@@ -41,24 +43,22 @@ import org.zkoss.zul.Messagebox;
  */
 public class PagePengirimanVM {
 
-    
     User userLogin;
     List<Pengiriman> listPengiriman;
-    
+
     String filterId = "", filterTujuan = "", filterPengangkut = "", filterKolom = "", filterKontainer = "", filterPengiriman = "";
     Date tglAwal, tglAkhir;
-    
 
     @AfterCompose
     public void initSetup() {
         this.userLogin = Ebean.find(User.class, new AuthenticationServiceImpl().getUserCredential().getUser().getId());
         this.listPengiriman = Ebean.find(Pengiriman.class).orderBy("id desc").findList();
-     
+
     }
-    
+
     @Command
     @NotifyChange({"listPengiriman"})
-    public void deletePengiriman(@BindingParam("pengiriman") Pengiriman p){
+    public void deletePengiriman(@BindingParam("pengiriman") Pengiriman p) {
         Messagebox.show("Data pengiriman akan dihapus. Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
             if (t.getName().equals("onOK")) {
                 for (Store store : p.getListStore()) {
@@ -70,36 +70,30 @@ public class PagePengirimanVM {
             }
         });
     }
-    
-    
+
     @Command
     @NotifyChange({"*"})
     public void saring() {
 
-        if (this.tglAwal != null && this.tglAkhir != null) {
-            this.listPengiriman = Ebean.find(Pengiriman.class)
-                    .where()
-                    .contains("idPengiriman", filterId)
-                    .contains("perusahaanTujuan", this.filterTujuan)
-                    .contains("perusahaanPengangkut", this.filterPengangkut)
-                    .contains("nomorKolom", this.filterKolom)
-                    .contains("nomorContainer", this.filterKontainer)
-                    .contains("nomorPengiriman", this.filterPengiriman)
-                    .between("tglKirim",
-                            Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                            Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
-                    .orderBy("id desc").findList();
-        } else {
-            this.listPengiriman = Ebean.find(Pengiriman.class)
-                    .where()
-                    .contains("idPengiriman", filterId)
-                    .contains("perusahaanTujuan", this.filterTujuan)
-                    .contains("perusahaanPengangkut", this.filterPengangkut)
-                    .contains("nomorKolom", this.filterKolom)
-                    .contains("nomorContainer", this.filterKontainer)
-                    .contains("nomorPengiriman", this.filterPengiriman)
-                    .orderBy("id desc").findList();
+        Query<Pengiriman> q = Ebean.find(Pengiriman.class).where()
+                .contains("idPengiriman", filterId)
+                .contains("perusahaanTujuan", this.filterTujuan)
+                .contains("perusahaanPengangkut", this.filterPengangkut)
+                .contains("nomorKolom", this.filterKolom)
+                .contains("nomorContainer", this.filterKontainer)
+                .orderBy("id desc");
+
+        if (tglAwal != null && tglAkhir != null) {
+            q.where().between("tglKirim",
+                    Date.from(this.tglAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                    Date.from(this.tglAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))));
         }
+        
+        if(!this.filterPengiriman.isEmpty()){
+            q.where().contains("nomorPengiriman", this.filterPengiriman);
+        }
+        
+        this.listPengiriman = q.findList();
 
     }
 
@@ -110,17 +104,17 @@ public class PagePengirimanVM {
         this.tglAkhir = null;
         this.listPengiriman = Ebean.find(Pengiriman.class).orderBy("id desc").findList();
     }
-    
+
     @Command
-    public void showDetailPengiriman(@BindingParam("pengiriman") Pengiriman p){
+    public void showDetailPengiriman(@BindingParam("pengiriman") Pengiriman p) {
         Map m = new HashMap();
         m.put("pengiriman", p);
         Executions.createComponents("pop_detail_pengiriman.zul", (Component) null, m);
     }
-    
+
     @GlobalCommand
     @NotifyChange({"*"})
-    public void refresh(){
+    public void refresh() {
         this.listPengiriman = Ebean.find(Pengiriman.class).orderBy("id desc").findList();
     }
 
@@ -203,9 +197,5 @@ public class PagePengirimanVM {
     public void setTglAkhir(Date tglAkhir) {
         this.tglAkhir = tglAkhir;
     }
-    
-    
-
-    
 
 }

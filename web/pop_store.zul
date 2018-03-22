@@ -19,7 +19,7 @@
             style="border-radius:0px;-webkit-border-radius:0px;-moz-border-radius:0px;"
             position="center,top" 
             mode="modal" 
-            width="700px" 
+            width="750px" 
             vflex="1" 
             title="LIST ITEM" 
             border="normal" 
@@ -79,6 +79,7 @@
             <listhead sizable="true" visible="true" >
                 <listheader label="KODE" />
                 <listheader label="PERUSAHAAN" />
+                <listheader label="BERAT MANIFEST" />
                 <listheader sort="auto(namaItem)" label="NAMA ITEM" />
                 <listheader sort="auto(satuanKemasan)" label="KEMASAN" />
                 <listheader sort="auto(jmlKemasan)" label="BANYAK" />
@@ -92,6 +93,7 @@
                 <auxheader>
                     <textbox instant="true" value="@bind(vm.filterPerusahaan)" hflex="3" onChange="@command('saring')"/>
                 </auxheader>
+                <auxheader></auxheader>
                 <auxheader>
                     <textbox instant="true" value="@bind(vm.filterItem)" hflex="3" onChange="@command('saring')"/>
                 </auxheader>
@@ -108,6 +110,10 @@
                 <listitem sclass="mainList">
                     <listcell label="@load(s.outboundItem.penerimaan ne null ? s.outboundItem.penerimaan.manifest.kodeManifest : s.outboundItem.residu.residuId)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell label="@load(s.outboundItem.penerimaan ne null ? s.outboundItem.penerimaan.manifest.customerPenghasil.nama : s.outboundItem.residu.namaPerusahaan)" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(s.outboundItem.penerimaan ne null ? s.outboundItem.penerimaan.jmlBerat : s.outboundItem.residu.jmlBerat)"/>
+                        <label value="@load(s.outboundItem.penerimaan ne null ? s.outboundItem.penerimaan.satuanBerat : s.outboundItem.residu.satuanBerat)"/>
+                    </listcell>
                     <listcell label="@load(s.outboundItem.namaItem)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell label="@load(s.satuanKemasan)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell>
@@ -134,7 +140,7 @@
             </template>	
             
             <listfoot>
-            <listfooter span="6">
+            <listfooter span="7">
                    
                 <button 
                     onClick="@command('exportExcel')" 

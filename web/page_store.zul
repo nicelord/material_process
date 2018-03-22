@@ -53,7 +53,7 @@
                     <custom-attributes org.zkoss.zul.nativebar="true"/>  
                     
                     <auxhead>
-                        <auxheader colspan="10">
+                        <auxheader colspan="11">
                             <button 
                                 vflex="3" 
                                 sclass="btn-success btn-xs" 
@@ -75,7 +75,8 @@
                 
                     <listhead sizable="true" visible="true" >
                         <listheader width="30px" />
-                        <listheader sort="auto(kodeStore)" label="NO. KOLOM"/>
+                        <listheader sort="auto(kodeStore)" label="NO. KOLOM" width="60px" />
+                        <listheader label="PENGHASIL" width="250px" />
                         <listheader sort="auto(namaItem)" label="NAMA LIMBAH/RESIDU"/>
                         <listheader sort="auto(jmlKemasan)" label="TOTAL KEMASAN"/>
                         <listheader sort="auto(satuanKemasan)" label="SATUAN KEMASAN"/>
@@ -93,6 +94,9 @@
                         </auxheader>
                         <auxheader>
                             <textbox instant="true" value="@bind(vm.filterKolom)" hflex="3" onChange="@command('saring')"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox instant="true" value="@bind(vm.filterPerusahaan)" hflex="3" onChange="@command('saring')"/>
                         </auxheader>
                         <auxheader>
                             <textbox instant="true" value="@bind(vm.filterLimbah)" hflex="3" onChange="@command('saring')"/>
@@ -122,6 +126,9 @@
                             <listcell />
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.kodeStore)"/>
+                            </listcell>
+                            <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                                <label value="@load(s.outboundItem.penerimaan ne null ? s.outboundItem.penerimaan.manifest.customerPenghasil.nama : s.outboundItem.residu.namaPerusahaan)"/>
                             </listcell>
                             <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                                 <label value="@load(s.outboundItem.namaItem)"/>
@@ -157,7 +164,7 @@
                 
                 
                     <listfoot>
-                        <listfooter span="10" valign="middle">
+                        <listfooter span="11" valign="middle">
                             <div style="float:left;">
                                 <image id="" src="img/arrow_ltr.png" width=""  height=""/>
                                 <button 
