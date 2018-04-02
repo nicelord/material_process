@@ -61,6 +61,7 @@ public class PopBuatResiduVM {
         }
 
         this.residu.setTipe("hasil");
+        
 
         this.listNamaResidu = Ebean.find(Residu.class).select("namaResidu").setDistinct(true).findList();
 

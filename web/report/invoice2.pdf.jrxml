@@ -207,8 +207,11 @@
 								</textElement>
 								<textFieldExpression><![CDATA[]]></textFieldExpression>
 							</textField>
-							<textField>
-								<reportElement x="0" y="0" width="86" height="21" uuid="dd442819-583e-4fb3-9c24-32d53fabc88b"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="86" height="21" isPrintWhenDetailOverflows="true" uuid="dd442819-583e-4fb3-9c24-32d53fabc88b">
+									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="9"/>
 								</textElement>

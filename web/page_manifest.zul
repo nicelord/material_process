@@ -540,7 +540,10 @@
                                                 if="${sessionScope.userCredential.getRoles()=='ADMIN' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
                                         <button onClick="@command('showWinPenerimaan')" hflex="3" sclass="btn-primary" iconSclass="glyphicon glyphicon-saved" label="TERIMA LIMBAH" 
                                                 disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.penerimaan.isDiterima eq 'true')"
-                                                if="${sessionScope.userCredential.getRoles()=='PENERIMA' || sessionScope.userCredential.getRoles()=='ADMINISTRATOR'}"/>
+                                                if="${sessionScope.userCredential.getRoles()=='PENERIMA'}"/>
+                                        <button onClick="@command('batalPenerimaan')" hflex="3" sclass="btn-danger" iconSclass="glyphicon glyphicon-remove" label="BATALKAN PENERIMAAN" 
+                                                disabled="@load(vm.selectedManifest eq null || vm.selectedManifest.penerimaan.isDiterima eq 'false')"
+                                                if="${sessionScope.userCredential.getRoles()=='PENERIMA'}"/>
                                        
                                     </hlayout>
                                 </footer>

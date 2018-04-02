@@ -40,7 +40,7 @@ public class Residu implements Serializable {
 
     @Temporal(TemporalType.DATE)
     Date tglBuat;
-    
+
     @Temporal(TemporalType.DATE)
     Date tglKirim;
 
@@ -59,11 +59,11 @@ public class Residu implements Serializable {
 
     String satuanBerat = "Kg";
     double jmlBerat = 0;
-    
+
     String gudangTujuan = "EXTERNAL";
 
     String tipe = "";
-    
+
     String namaPerusahaan = "PT. DACB";
 
     public Long getId() {
@@ -178,13 +178,17 @@ public class Residu implements Serializable {
         this.jmlBerat = jmlBerat;
     }
 
-   
-
     public void setCustomResiduId() {
         if (this.getTipe().equals("hasil")) {
-            int count = Ebean.find(Residu.class).where().eq("tipe", "hasil").where().eq("gudangPenghasil", this.getGudangPenghasil()).findRowCount();
-            this.setResiduId("DACB-" + (count + 1) + "-" + this.getGudangPenghasil());
-        }else{
+            int last = 0;
+            try {
+                String count = Ebean.find(Residu.class).where().eq("tipe", "hasil").where().eq("gudangPenghasil", this.getGudangPenghasil()).orderBy("id desc").setMaxRows(1).findUnique().getResiduId();
+                last = Integer.parseInt(count.split("-")[1]);
+            } catch (NullPointerException e) {
+
+            }
+            this.setResiduId("DACB-" + (last+1) + "-" + this.getGudangPenghasil());
+        } else {
             int count = Ebean.find(Residu.class).where().eq("tipe", "keluar").where().eq("gudangPenghasil", this.getGudangPenghasil()).findRowCount();
             this.setResiduId("OUT-DACB-" + (count + 1) + "-" + this.getGudangPenghasil());
         }

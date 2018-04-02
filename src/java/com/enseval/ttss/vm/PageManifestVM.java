@@ -1,6 +1,7 @@
 package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
+import com.enseval.ttss.model.InvoiceItem;
 import com.enseval.ttss.model.Manifest;
 import com.enseval.ttss.model.Penerimaan;
 import com.enseval.ttss.model.ProsessLimbah;
@@ -178,6 +179,31 @@ public class PageManifestVM {
         this.selectedManifest.setUserAkunting(this.userLogin);
         this.selectedManifest.setPenerimaan(p);
         Ebean.update(this.selectedManifest);
+    }
+    
+    @Command
+    @NotifyChange({"listManifest"})
+    public void batalPenerimaan(){
+        Messagebox.show("Membatalkan penerimaan ini berarti menghapus data di gudang lainnya terkait penerimaan ini (jika sudah diproses/diterima gudang lainnya), dan merubah item di invoice (jika sudah dibuatkan invoice). Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
+            if (t.getName().equals("onOK")) {
+                if(selectedManifest.getPenerimaan().getProsessLimbah()!=null){
+                    Ebean.delete(selectedManifest.getPenerimaan().getProsessLimbah());
+                }
+                if(selectedManifest.getPenerimaan().getOutboundItem()!=null){
+                    Ebean.delete(selectedManifest.getPenerimaan().getOutboundItem());
+                }
+                this.selectedManifest.getPenerimaan().setStatusPenerimaan("belum diterima");
+                this.selectedManifest.getPenerimaan().setIsDiterima(false);
+                this.selectedManifest.getPenerimaan().setTglPenerimaan(null);
+                this.selectedManifest.getPenerimaan().setUserPenerima(null);
+                Ebean.update(this.selectedManifest.getPenerimaan());
+                
+                List<InvoiceItem> listIi = Ebean.find(InvoiceItem.class).where().eq("penerimaan", this.selectedManifest.getPenerimaan()).findList();
+                Ebean.delete(listIi);
+                
+                BindUtils.postGlobalCommand(null, null, "refresh", null);
+            }
+        });
     }
 
     @Command
