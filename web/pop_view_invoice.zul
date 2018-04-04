@@ -189,12 +189,17 @@
                     <listcell label="@load(s.jenisItem)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell label="@load(s.penerimaan.manifest.kodeManifest)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell 
-                        if="${s.jenisItem ne 'transportation'}"
+                        if="${s.jenisItem eq 'disposal cost'}"
                         label="@load(s.penerimaan.manifest.namaTeknikLimbah)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell 
                         if="${s.jenisItem eq 'transportation'}"
                         style="text-overflow: ellipsis; white-space: nowrap;">
-                        <textbox class="form-control input-primary" value="@bind(s.transportDetail)"/>
+                        <label value="@load(s.transportDetail)"/>
+                    </listcell>
+                    <listcell 
+                        if="${s.jenisItem eq 'documentation'}"
+                        style="text-overflow: ellipsis; white-space: nowrap;">
+                        <label value="@load(s.documentDetail)"/>
                     </listcell>
                     <listcell label="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell>

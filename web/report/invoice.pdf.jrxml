@@ -102,6 +102,7 @@
 		<field name="satuanKemasan" class="java.lang.String"/>
 		<field name="transportDetail" class="java.lang.String"/>
 		<field name="jenisItem" class="java.lang.String"/>
+		<field name="documentDetail" class="java.lang.String"/>
 	</subDataset>
 	<subDataset name="dataset1" uuid="721948f1-2470-46c5-b0da-f4b5001f9632"/>
 	<parameter name="INVOICE_ITEM" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
@@ -242,7 +243,7 @@
 									<font fontName="Tahoma" size="9"/>
 									<paragraph leftIndent="6" rightIndent="2"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{jenisItem}.equals("transportation")?$F{transportDetail}:$F{penerimaan.manifest.namaTeknikLimbah}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{jenisItem}.equals("transportation")?$F{transportDetail}:($F{jenisItem}.equals("documentation")?$F{documentDetail}:$F{penerimaan.manifest.namaTeknikLimbah})]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -270,7 +271,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="9"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{jmlKemasan}.doubleValue() == 0?"":"PT. DACB"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{jmlKemasan}.doubleValue() == 0 || $F{jenisItem}.equals("transportation") || $F{jenisItem}.equals("documentation")?"":"PT. DACB"]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

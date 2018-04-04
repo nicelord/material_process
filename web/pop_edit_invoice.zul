@@ -226,11 +226,11 @@
                         <vlayout>
                             <button label="LIMBAH" onClick="@command('showDisposalItem')" sclass="btn-info btn-xs" hflex="3" />
                             <button label="TRANSPORTATION" onClick="@command('addTransportItem')" sclass="btn-info btn-xs" hflex="3" />
-                            <button label="DOCUMENTATION" onClick="@command('showDocumentationItem')" sclass="btn-info btn-xs" hflex="3" />
+                            <button label="DOCUMENTATION" onClick="@command('addDocumentationItem')" sclass="btn-info btn-xs" hflex="3" />
                         </vlayout>
                     </popup>
                 </auxheader>
-                <auxheader colspan="5">
+                <auxheader colspan="6">
                     <div style="float:right;">
                         Currency :
                     
@@ -249,6 +249,7 @@
                 <listheader label="MANIFEST" />
                 <listheader label="ITEM" width="200px"/>
                 <listheader label="BANYAK" />
+                <listheader label="SATUAN" />
                 <listheader label="HARGA SATUAN" width="150px"/>
                 <listheader label="JML HARGA" width="150px"/>
                 <listheader label="HAPUS" width="50px"/>
@@ -259,14 +260,24 @@
                     <listcell label="@load(s.jenisItem)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell label="@load(s.penerimaan.manifest.kodeManifest)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell 
-                        if="${s.jenisItem ne 'transportation'}"
+                        if="${s.jenisItem eq 'disposal cost'}"
                         label="@load(s.penerimaan.manifest.namaTeknikLimbah)" style="text-overflow: ellipsis; white-space: nowrap;"/>
                     <listcell 
                         if="${s.jenisItem eq 'transportation'}"
                         style="text-overflow: ellipsis; white-space: nowrap;">
                         <textbox class="form-control input-primary" value="@bind(s.transportDetail)"/>
                     </listcell>
-                    <listcell label="@load(''.concat(s.jmlKemasan).concat(' ').concat(s.satuanKemasan))" style="text-overflow: ellipsis; white-space: nowrap;"/>
+                    <listcell 
+                        if="${s.jenisItem eq 'documentation'}"
+                        style="text-overflow: ellipsis; white-space: nowrap;">
+                        <textbox class="form-control input-primary" value="@bind(s.documentDetail)"/>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <textbox class="form-control input-primary" value="@bind(s.jmlKemasan)"/>
+                    </listcell>
+                    <listcell style="text-overflow: ellipsis; white-space: nowrap;">
+                        <textbox class="form-control input-primary" value="@bind(s.satuanKemasan)"/>
+                    </listcell>
                     <listcell>
                         <div class="input-group" hflex="3">
                             <span class="input-group-addon"><label value="@load(vm.invoice.currency)"/></span>
@@ -293,7 +304,7 @@
             
             
             <listfoot>
-                <listfooter span="4" valign="middle">
+                <listfooter span="5" valign="middle">
                     <div style="float:right">
                         <div class="input-group" width="150px">
                             <span class="input-group-addon">Tax</span>

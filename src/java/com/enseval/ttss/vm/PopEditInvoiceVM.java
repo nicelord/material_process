@@ -139,15 +139,15 @@ public class PopEditInvoiceVM {
         }
     }
 
+    @Command
     @GlobalCommand
     @NotifyChange({"listInvoiceItem"})
-    public void addDocumentationItem(@BindingParam("penerimaan") Penerimaan penerimaan) {
+    public void addDocumentationItem() {
         InvoiceItem item = new InvoiceItem();
         item.setJenisItem("documentation");
-        item.setPenerimaan(penerimaan);
         item.setJmlKemasan(new Long(1));
         item.setSatuanKemasan("doc(s)");
-        
+        item.setDocumentDetail("Documentation charge");
         this.listInvoiceItem.add(item);
         this.invoice.setListInvoiceItem(listInvoiceItem);
     }
@@ -158,7 +158,7 @@ public class PopEditInvoiceVM {
         InvoiceItem item = new InvoiceItem();
         item.setJenisItem("transportation");
         item.setJmlKemasan(new Long(1));
-        item.setSatuanKemasan("trip");
+        item.setSatuanKemasan("trip(s)");
         item.setTransportDetail("Transportation charge");
         
         this.listInvoiceItem.add(item);

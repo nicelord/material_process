@@ -37,6 +37,7 @@ public class InvoiceItem implements Serializable {
     int kemasanKe;
     
     String transportDetail = "";
+    String documentDetail = "";
     
     
 
@@ -123,6 +124,14 @@ public class InvoiceItem implements Serializable {
 
     public void setTransportDetail(String transportDetail) {
         this.transportDetail = transportDetail;
+    }
+
+    public String getDocumentDetail() {
+        return documentDetail;
+    }
+
+    public void setDocumentDetail(String documentDetail) {
+        this.documentDetail = documentDetail;
     }
     
     
