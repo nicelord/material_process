@@ -1,9 +1,11 @@
 package com.enseval.ttss.vm;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Query;
 import com.enseval.ttss.model.InvoiceItem;
 import com.enseval.ttss.model.Manifest;
 import com.enseval.ttss.model.Penerimaan;
+import com.enseval.ttss.model.Pengiriman;
 import com.enseval.ttss.model.ProsessLimbah;
 import com.enseval.ttss.model.Sertifikat;
 import com.enseval.ttss.model.User;
@@ -83,64 +85,25 @@ public class PageManifestVM {
     @NotifyChange({"*"})
     public void saring() {
 
+        Query<Manifest> q = Ebean.find(Manifest.class).where()
+                .contains("kodeManifest", this.filterKode)
+                .contains("customerPenghasil.nama", this.filterPenghasil)
+                .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
+                .contains("namaTeknikLimbah", this.filterNamaTeknik)
+                .startsWith("penerimaan.statusPenerimaan", filterPenerimaan)
+                .orderBy("kodeManifest desc");
+
         if (tsAwal != null && tsAkhir != null) {
-
-            if (userLogin.getAkses().equals("PENERIMA")) {
-                this.listManifest = Ebean.find(Manifest.class)
-                        .where()
-                        .contains("kodeManifest", this.filterKode)
-                        .contains("customerPenghasil.nama", this.filterPenghasil)
-                        .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
-                        .contains("namaTeknikLimbah", this.filterKodeJenis)
-                        .startsWith("penerimaan.statusPenerimaan", filterPenerimaan)
-                        .between("tglBuat",
-                                Date.from(this.tsAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                                Date.from(this.tsAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
-                        .eq("statusApproval", "approved")
-                        .orderBy("kodeManifest desc").findList();
-            } else {
-                this.listManifest = Ebean.find(Manifest.class)
-                        .where()
-                        .contains("kodeManifest", this.filterKode)
-                        .contains("customerPenghasil.nama", this.filterPenghasil)
-                        .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
-                        .contains("namaTeknikLimbah", this.filterKodeJenis)
-                        .startsWith("penerimaan.statusPenerimaan", filterPenerimaan)
-                        .between("tglBuat",
-                                Date.from(this.tsAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                                Date.from(this.tsAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))))
-                        .orderBy("kodeManifest desc").findList();
-            }
-
-        } else {
-//            this.listManifest = this.listManifest2.stream().filter(l
-//                    -> l.getKodeManifest().toLowerCase().contains(this.filterKode.toLowerCase())
-//                    && l.getCustomerPenghasil().getNama().toLowerCase().contains(this.filterPenghasil.toLowerCase())
-//                    && l.getJenisLimbah().getKodeJenis().toLowerCase().contains(this.filterKodeJenis.toLowerCase())
-//                    && l.getNamaTeknikLimbah().toLowerCase().contains(this.filterNamaTeknik.toLowerCase()))
-//                    .collect(Collectors.toList());
-            if (userLogin.getAkses().equals("PENERIMA")) {
-                this.listManifest = Ebean.find(Manifest.class)
-                        .where()
-                        .contains("kodeManifest", this.filterKode)
-                        .contains("customerPenghasil.nama", this.filterPenghasil)
-                        .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
-                        .contains("namaTeknikLimbah", this.filterKodeJenis)
-                        .startsWith("penerimaan.statusPenerimaan", filterPenerimaan)
-                        .eq("statusApproval", "approved")
-                        .orderBy("kodeManifest desc").findList();
-            } else {
-                this.listManifest = Ebean.find(Manifest.class)
-                        .where()
-                        .contains("kodeManifest", this.filterKode)
-                        .contains("customerPenghasil.nama", this.filterPenghasil)
-                        .contains("jenisLimbah.kodeJenis", this.filterKodeJenis)
-                        .contains("namaTeknikLimbah", this.filterKodeJenis)
-                        .startsWith("penerimaan.statusPenerimaan", filterPenerimaan)
-                        .orderBy("kodeManifest desc").findList();
-            }
-
+            q.where().between("tglBuat",
+                    Date.from(this.tsAwal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                    Date.from(this.tsAkhir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59).toInstant(ZoneId.systemDefault().getRules().getOffset(Instant.now()))));
         }
+
+        if (userLogin.getAkses().equals("PENERIMA")) {
+            q.where().eq("statusApproval", "approved");
+        }
+        
+        this.listManifest = q.findList();
 
     }
 
@@ -180,16 +143,16 @@ public class PageManifestVM {
         this.selectedManifest.setPenerimaan(p);
         Ebean.update(this.selectedManifest);
     }
-    
+
     @Command
     @NotifyChange({"listManifest"})
-    public void batalPenerimaan(){
+    public void batalPenerimaan() {
         Messagebox.show("Membatalkan penerimaan ini berarti menghapus data di gudang lainnya terkait penerimaan ini (jika sudah diproses/diterima gudang lainnya), dan merubah item di invoice (jika sudah dibuatkan invoice). Anda yakin?", "Konfirmasi", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event t) -> {
             if (t.getName().equals("onOK")) {
-                if(selectedManifest.getPenerimaan().getProsessLimbah()!=null){
+                if (selectedManifest.getPenerimaan().getProsessLimbah() != null) {
                     Ebean.delete(selectedManifest.getPenerimaan().getProsessLimbah());
                 }
-                if(selectedManifest.getPenerimaan().getOutboundItem()!=null){
+                if (selectedManifest.getPenerimaan().getOutboundItem() != null) {
                     Ebean.delete(selectedManifest.getPenerimaan().getOutboundItem());
                 }
                 this.selectedManifest.getPenerimaan().setStatusPenerimaan("belum diterima");
@@ -197,10 +160,10 @@ public class PageManifestVM {
                 this.selectedManifest.getPenerimaan().setTglPenerimaan(null);
                 this.selectedManifest.getPenerimaan().setUserPenerima(null);
                 Ebean.update(this.selectedManifest.getPenerimaan());
-                
+
                 List<InvoiceItem> listIi = Ebean.find(InvoiceItem.class).where().eq("penerimaan", this.selectedManifest.getPenerimaan()).findList();
                 Ebean.delete(listIi);
-                
+
                 BindUtils.postGlobalCommand(null, null, "refresh", null);
             }
         });
