@@ -213,6 +213,7 @@
                                           value="@bind(vm.manifest.penerimaan.satuanBerat) @save(vm.manifest.satuanBerat)">
                                     <comboitem label="Liter"/>
                                     <comboitem label="Kg"/>
+                                    <comboitem label="Ton"/>
                                     <comboitem label="M3"/>
                                 </combobox>
                             </hlayout>

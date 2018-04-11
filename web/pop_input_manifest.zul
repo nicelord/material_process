@@ -256,6 +256,7 @@
                                         self.setSelectedIndex(0);
                                     </attribute>
                                     <comboitem label="Kg"/>
+                                    <comboitem label="Ton"/>
                                     <comboitem label="Liter"/>
                                     <comboitem label="M3"/>
                                 </combobox>

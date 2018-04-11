@@ -241,8 +241,8 @@
 							<box>
 								<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
 							</box>
-							<textField isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="205" height="21" uuid="f0a74344-d469-4f1c-92ce-e5f8153e6ae1"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="205" height="21" isPrintWhenDetailOverflows="true" uuid="f0a74344-d469-4f1c-92ce-e5f8153e6ae1"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="10"/>
 									<paragraph leftIndent="6" rightIndent="2"/>
