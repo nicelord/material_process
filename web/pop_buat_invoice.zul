@@ -272,7 +272,7 @@
                         <textbox class="form-control input-primary" value="@bind(s.documentDetail)"/>
                     </listcell>
                     <listcell style="text-overflow: ellipsis; white-space: nowrap;">
-                        <textbox class="form-control input-primary" value="@bind(s.jmlKemasan)"/>
+                        <doublebox class="form-control input-primary" value="@bind(s.jmlKemasan)"/>
                     </listcell>
                     <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                         <textbox class="form-control input-primary" value="@bind(s.satuanKemasan)"/>

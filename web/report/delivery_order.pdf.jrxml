@@ -28,7 +28,7 @@
 	</style>
 	<subDataset name="Table Dataset 1" uuid="95031923-2234-42af-8417-2353ffc78049">
 		<field name="num" class="java.lang.Integer"/>
-		<field name="qty" class="java.lang.Integer"/>
+		<field name="qty" class="java.lang.Double"/>
 		<field name="unit" class="java.lang.String"/>
 		<field name="description" class="java.lang.String"/>
 		<field name="remark" class="java.lang.String"/>
@@ -203,7 +203,7 @@
 									<font fontName="Tahoma"/>
 									<paragraph leftIndent="3" rightIndent="3"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{qty}.intValue()>0?$F{qty}:""]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{qty}.doubleValue()==0?"":($F{qty} - $F{qty}.intValue()!=0?$F{qty}:new DecimalFormat("####0").format($F{qty})).toString().replace(".",",")]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

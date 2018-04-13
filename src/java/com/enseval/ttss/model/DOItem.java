@@ -26,7 +26,7 @@ public class DOItem implements Serializable {
     private DeliveryOrder deliveryOrder;
 
     int num;
-    int qty;
+    double qty;
     String unit = "";
     String description = "";
     String remark = "";
@@ -55,13 +55,15 @@ public class DOItem implements Serializable {
         this.num = num;
     }
 
-    public int getQty() {
+    public double getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
+    public void setQty(double qty) {
         this.qty = qty;
     }
+
+   
 
     public String getUnit() {
         return unit;

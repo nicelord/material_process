@@ -206,7 +206,7 @@
                     </listcell>
                     <listcell 
                         style="text-overflow: ellipsis; white-space: nowrap;">
-                        <intbox class="form-control input-primary" value="@bind(s.qty)"/>
+                        <doublebox class="form-control input-primary" value="@bind(s.qty)"/>
                     </listcell>
                     <listcell style="text-overflow: ellipsis; white-space: nowrap;">
                         <textbox class="form-control input-primary" value="@bind(s.unit)"/>
