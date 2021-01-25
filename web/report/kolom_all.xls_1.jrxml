@@ -34,7 +34,6 @@
 		<field name="pengiriman.idPengiriman" class="java.lang.String"/>
 		<field name="outboundItem.penerimaan.manifest.kodeManifest" class="java.lang.String"/>
 		<field name="outboundItem.residu.residuId" class="java.lang.String"/>
-		<field name="outboundItem.penerimaan.manifest.customerPenghasil.nama" class="java.lang.String"/>
 	</subDataset>
 	<parameter name="KOLOM" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<detail>
@@ -55,7 +54,7 @@
 								<text><![CDATA[NO. KOLOM]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="90" height="20" uuid="6c68e7fd-15ef-41dc-a411-893c653a1fbe">
 									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
@@ -78,7 +77,7 @@
 								<text><![CDATA[LIMBAH/RESIDU]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="90" height="20" uuid="da62527c-c300-4a67-a517-4c97177438d5">
 									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
@@ -101,7 +100,7 @@
 								<text><![CDATA[TOTAL KEMASAN]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="90" height="20" uuid="ad3f50dc-c3c0-42ba-b038-1e4121efe36c">
 									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
@@ -124,7 +123,7 @@
 								<text><![CDATA[SATUAN KEMASAN]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="90" height="20" uuid="65e02b70-6dc3-470f-b70d-5f0682575d89">
 									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
@@ -147,7 +146,7 @@
 								<text><![CDATA[TOTAL BERAT]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="90" height="20" uuid="233bc023-375d-432d-bc7f-450f81435a18">
 									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
@@ -170,7 +169,7 @@
 								<text><![CDATA[SATUAN BERAT]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="90" height="20" uuid="d5733c37-ab66-48f5-9dcf-cba7740a0278">
 									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
@@ -193,7 +192,7 @@
 								<text><![CDATA[NO. MANIFEST/RESIDU]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="90" height="20" uuid="5d99f63f-d117-4951-b809-59b528e9a08a">
 									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
@@ -216,7 +215,7 @@
 								<text><![CDATA[ID PENGIRIMAN]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
 							<textField isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="90" height="20" uuid="cfefa1e2-8d48-46d2-8357-b5dc7399a62d">
 									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
@@ -226,29 +225,6 @@
 									<font fontName="Tahoma"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{pengiriman.idPengiriman}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="90" uuid="44098904-78fb-4b8a-8bb8-e4daf2c3e75f">
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="90" height="30" uuid="52e680bb-1c0b-416c-8b49-6335e5813cef"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma" isBold="true"/>
-								</textElement>
-								<text><![CDATA[PENGHASIL]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="30" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="90" height="20" uuid="07ea8cab-a2b0-408c-b632-92a5109013b5">
-									<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
-									<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
-								</reportElement>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Tahoma"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{outboundItem.penerimaan}!=null?$F{outboundItem.penerimaan.manifest.customerPenghasil.nama}:"PT. DACB"]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

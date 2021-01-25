@@ -132,7 +132,7 @@ public class PageStoreVM {
                 .contains("kodeStore", this.filterKolom)
                 .contains("outboundItem.namaItem", this.filterLimbah)
                 .contains("satuanKemasan", this.filterSatuanKemasan)
-                .or(Expr.contains("outboundItem.penerimaan.manifest.customerPenghasil.nama", filterManifest), Expr.contains("outboundItem.residu.namaPerusahaan", filterPerusahaan))
+                .or(Expr.contains("outboundItem.penerimaan.manifest.customerPenghasil.nama", filterPerusahaan), Expr.contains("outboundItem.residu.namaPerusahaan", filterPerusahaan))
                 .or(Expr.contains("outboundItem.penerimaan.manifest.kodeManifest", filterManifest), Expr.contains("outboundItem.residu.residuId", filterManifest))
                 .orderBy("id desc");
 
